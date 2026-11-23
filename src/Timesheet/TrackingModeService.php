@@ -16,8 +16,9 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 final class TrackingModeService
 {
+    private ?TrackingModeInterface $active = null;
+
     /**
-     * @param SystemConfiguration $configuration
      * @param TrackingModeInterface[] $modes
      */
     public function __construct(
@@ -38,14 +39,23 @@ final class TrackingModeService
 
     public function getActiveMode(): TrackingModeInterface
     {
-        $trackingMode = $this->configuration->getTimesheetTrackingMode();
+        // internal caching for the current request
+        // there is no use-case to change that during one requests lifetime
+        if ($this->active === null) {
+            $trackingMode = $this->configuration->getTimesheetTrackingMode();
 
-        foreach ($this->getModes() as $mode) {
-            if ($mode->getId() === $trackingMode) {
-                return $mode;
+            foreach ($this->getModes() as $mode) {
+                if ($mode->getId() === $trackingMode) {
+                    $this->active = $mode;
+                    break;
+                }
+            }
+
+            if ($this->active === null) {
+                throw new ServiceNotFoundException($trackingMode);
             }
         }
 
-        throw new ServiceNotFoundException($trackingMode);
+        return $this->active;
     }
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ko" datatype="plaintext" original="kiosk.en.xlf">
+    <body>
+      <trans-unit id="3349h0x" resname="Kiosk" xml:space="preserve" approved="no">
+        <source>Kiosk</source>
+        <target state="translated">키오스크 모드</target>
+      </trans-unit>
+      <trans-unit id="TcGAXSA" resname="kiosk.login" xml:space="preserve" approved="no">
+        <source>kiosk.login</source>
+        <target state="translated">로그인 화면</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

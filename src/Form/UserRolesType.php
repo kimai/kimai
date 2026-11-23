@@ -13,6 +13,8 @@ use App\Entity\User;
 use App\Form\Type\UserRoleType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -27,8 +29,44 @@ final class UserRolesType extends AbstractType
             ->add('roles', UserRoleType::class, [
                 'multiple' => true,
                 'expanded' => true,
+                'restrict_to_assignable' => true,
             ])
         ;
+
+        $currentUser = $options['user'];
+        if (!$currentUser instanceof User) {
+            return;
+        }
+
+        // the roles a user is not allowed to assign are hidden from the form (see UserRoleType),
+        // so a plain submit would strip them from the edited user.
+        // remember those roles before binding and re-add them afterward, so they can never be
+        // removed by someone who is not allowed to manage them in the first place.
+        $preservedRoles = [];
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($currentUser, &$preservedRoles): void {
+            $user = $event->getData();
+            if (!$user instanceof User) {
+                return;
+            }
+
+            foreach ($user->getRoles() as $role) {
+                if (!$currentUser->canAssignRole($role)) {
+                    $preservedRoles[] = $role;
+                }
+            }
+        });
+
+        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use (&$preservedRoles): void {
+            $user = $event->getData();
+            if (!$user instanceof User) {
+                return;
+            }
+
+            foreach ($preservedRoles as $role) {
+                $user->addRole($role);
+            }
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void

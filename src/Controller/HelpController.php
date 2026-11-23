@@ -32,6 +32,8 @@ final class HelpController extends AbstractController
         $table = new DataTable('help_locales', new BaseQuery());
         $table->addColumn('name', ['class' => 'alwaysVisible', 'orderBy' => false]);
         $table->addColumn('description', ['class' => 'd-none', 'orderBy' => false]);
+        $table->addColumn('date_format', ['class' => 'd-none w-min', 'orderBy' => false, 'title' => 'Date format']);
+        $table->addColumn('time_format', ['class' => 'd-none w-min', 'orderBy' => false, 'title' => 'Time format']);
         $table->addColumn('language', ['class' => 'd-none w-min', 'orderBy' => false]);
         $table->addColumn('date', ['class' => 'alwaysVisible w-min', 'orderBy' => false]);
         $table->addColumn('time', ['class' => 'alwaysVisible w-min text-center', 'orderBy' => false]);
@@ -73,6 +75,8 @@ final class HelpController extends AbstractController
                 'language' => $locale,
                 'name' => Locales::getName($locale, $locale),
                 'description' => Locales::getName($locale, $requestLocale),
+                'time_format' => $service->getTimeFormat($locale),
+                'date_format' => $service->getDateFormat($locale),
                 'date' => $formatter->dateShort($now),
                 'time' => $formatter->time($now),
                 'duration' => $formatter->duration(46120),

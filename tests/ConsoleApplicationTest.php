@@ -11,12 +11,11 @@ namespace App\Tests;
 
 use App\ConsoleApplication;
 use App\Constants;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-/**
- * @covers \App\ConsoleApplication
- */
+#[CoversClass(ConsoleApplication::class)]
 class ConsoleApplicationTest extends TestCase
 {
     public function testVersion(): void

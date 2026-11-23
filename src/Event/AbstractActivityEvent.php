@@ -17,7 +17,7 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 abstract class AbstractActivityEvent extends Event
 {
-    public function __construct(private Activity $activity)
+    public function __construct(private readonly Activity $activity)
     {
     }
 

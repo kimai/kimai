@@ -22,10 +22,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  *
  * @codeCoverageIgnore
  */
-#[AsCommand(name: 'kimai:reload')]
+#[AsCommand(name: 'kimai:reload', description: 'Reload Kimai caches')]
 final class ReloadCommand extends Command
 {
-    public function __construct(private string $projectDirectory, private string $kernelEnvironment)
+    public function __construct(
+        private readonly string $projectDirectory,
+        private readonly string $kernelEnvironment
+    )
     {
         parent::__construct();
     }
@@ -42,10 +45,7 @@ final class ReloadCommand extends Command
 
     protected function configure(): void
     {
-        $this
-            ->setDescription('Reload Kimai caches')
-            ->setHelp('This command will validate the configurations and translations and then clear and rebuild the application cache.')
-        ;
+        $this->setHelp('This will validate configurations and translations and then clear and rebuild the application cache.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -91,7 +91,7 @@ final class ReloadCommand extends Command
         $environment = $this->kernelEnvironment;
 
         // flush the cache, in case values from the database are cached
-        $cacheResult = $this->rebuildCaches($environment, $io, $input, $output);
+        $cacheResult = $this->rebuildCaches($environment, $io, $output);
 
         chdir($path);
 
@@ -116,7 +116,7 @@ final class ReloadCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output): int
+    private function rebuildCaches(string $environment, SymfonyStyle $io, OutputInterface $output): int
     {
         $io->text('Rebuilding your cache, please be patient ...');
 

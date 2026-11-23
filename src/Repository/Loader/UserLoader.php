@@ -77,8 +77,7 @@ final class UserLoader implements LoaderInterface
 
             if (\count($teamIds) > 0) {
                 $qb = $em->createQueryBuilder();
-                /** @var Team[] $teams */
-                $teams = $qb->select('PARTIAL team.{id}', 'members', 'user')
+                $qb->select('PARTIAL team.{id}', 'members', 'user')
                     ->from(Team::class, 'team')
                     ->leftJoin('team.members', 'members')
                     ->leftJoin('members.user', 'user')

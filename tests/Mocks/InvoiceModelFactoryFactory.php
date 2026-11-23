@@ -11,12 +11,21 @@ namespace App\Tests\Mocks;
 
 use App\Activity\ActivityStatisticService;
 use App\Customer\CustomerStatisticService;
+use App\Invoice\Hydrator\InvoiceItemDefaultHydrator;
+use App\Invoice\Hydrator\InvoiceModelActivityHydrator;
+use App\Invoice\Hydrator\InvoiceModelCustomerHydrator;
+use App\Invoice\Hydrator\InvoiceModelDefaultHydrator;
+use App\Invoice\Hydrator\InvoiceModelIssuerHydrator;
+use App\Invoice\Hydrator\InvoiceModelProjectHydrator;
+use App\Invoice\Hydrator\InvoiceModelUserHydrator;
 use App\Invoice\InvoiceModelFactory;
 use App\Project\ProjectStatisticService;
+use App\Timesheet\RateCalculator\DecimalRateCalculator;
+use App\Timesheet\RateCalculator\RateCalculatorMode;
 
 class InvoiceModelFactoryFactory extends AbstractMockFactory
 {
-    public function create(): InvoiceModelFactory
+    public function create(?RateCalculatorMode $rateCalculatorMode = null): InvoiceModelFactory
     {
         /** @var CustomerStatisticService $customerStatistic */
         $customerStatistic = $this->getMockBuilder(CustomerStatisticService::class)->disableOriginalConstructor()->getMock();
@@ -25,6 +34,18 @@ class InvoiceModelFactoryFactory extends AbstractMockFactory
         /** @var ActivityStatisticService $activityStatistic */
         $activityStatistic = $this->getMockBuilder(ActivityStatisticService::class)->disableOriginalConstructor()->getMock();
 
-        return new InvoiceModelFactory($customerStatistic, $projectStatistic, $activityStatistic);
+        $modelHydrators = [
+            new InvoiceModelDefaultHydrator(),
+            new InvoiceModelCustomerHydrator($customerStatistic),
+            new InvoiceModelIssuerHydrator(),
+            new InvoiceModelProjectHydrator($projectStatistic),
+            new InvoiceModelActivityHydrator($activityStatistic),
+            new InvoiceModelUserHydrator(),
+        ];
+        $itemHydrators = [
+            new InvoiceItemDefaultHydrator(),
+        ];
+
+        return new InvoiceModelFactory($rateCalculatorMode ?? new DecimalRateCalculator(), $modelHydrators, $itemHydrators);
     }
 }

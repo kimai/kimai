@@ -9,23 +9,30 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\ExportTemplate;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Event\ExportItemsQueryEvent;
+use App\Export\TooManyItemsExportException;
+use App\Tests\DataFixtures\ExportTemplateFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use Doctrine\ORM\EntityManager;
+use PHPUnit\Framework\Attributes\Group;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use Symfony\Component\DomCrawler\Field\FormField;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
-/**
- * @group integration
- */
-class ExportControllerTest extends ControllerBaseTest
+#[Group('integration')]
+class ExportControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/export/');
     }
 
-    public function testIsSecureForrole(): void
+    public function testIsSecureForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/export/');
     }
@@ -35,7 +42,7 @@ class ExportControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
         $this->request($client, '/export/?performSearch=performSearch');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasNoEntriesWithFilter($client);
     }
@@ -64,7 +71,7 @@ class ExportControllerTest extends ControllerBaseTest
             ->setUser($user)
             ->setAmount(20)
             ->setStartDate($begin)
-            ->setCallback(function (Timesheet $timesheet) use ($team, $em) {
+            ->setCallback(function (Timesheet $timesheet) use ($team, $em): void {
                 $team->addProject($timesheet->getProject());
                 $em->persist($team);
             })
@@ -83,20 +90,28 @@ class ExportControllerTest extends ControllerBaseTest
         $em->flush();
 
         $this->request($client, '/export/?performSearch=performSearch');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         // make sure all existing records are displayed
         $this->assertHasDataTable($client);
         // +1 row for summary
         $this->assertDataTableRowCount($client, 'datatable_export', 22);
 
+        $header = $client->getCrawler()->filter('section.content div.datatable_export table.dataTable thead th');
+        $titles = [];
+        /** @var \DOMElement $th */
+        foreach ($header as $th) {
+            $titles[] = trim($th->textContent);
+        }
+        self::assertEquals([
+            '', 'Date', 'From', 'To', 'User', 'Project', 'Activity', 'Description', 'Tags', 'Duration', 'Unit price', 'Internal price', 'Total price', '',
+        ], $titles);
+
         // assert export type buttons are available
         $expected = [
             'csv' => 'csv',
-            'default.html.twig' => 'default.html.twig',
-            'default-budget.pdf.twig' => 'default-budget.pdf.twig',
-            'default-internal.pdf.twig' => 'default-internal.pdf.twig',
-            'default.pdf.twig' => 'default.pdf.twig',
+            'print' => 'html',
+            'pdf' => 'pdf',
             'xlsx' => 'xlsx'
         ];
         $node = $client->getCrawler()->filter('#export-buttons .startExportBtn');
@@ -106,7 +121,7 @@ class ExportControllerTest extends ControllerBaseTest
             $type = $button->getAttribute('data-type');
             unset($expected[$type]);
         }
-        $this->assertEmpty($expected);
+        self::assertEmpty($expected);
     }
 
     public function testIndexActionWithEntriesForTeamleadDoesNotShowUserWithoutTeam(): void
@@ -126,7 +141,7 @@ class ExportControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->request($client, '/export/?performSearch=performSearch');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         // make sure existing records are not displayed
         $this->assertHasNoEntriesWithFilter($client);
@@ -142,7 +157,7 @@ class ExportControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->request($client, '/export/?performSearch=performSearch');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         // make sure all existing records are displayed
         $this->assertHasDataTable($client);
@@ -152,10 +167,8 @@ class ExportControllerTest extends ControllerBaseTest
         // assert export type buttons are available
         $expected = [
             'csv' => 'csv',
-            'default.html.twig' => 'default.html.twig',
-            'default-budget.pdf.twig' => 'default-budget.pdf.twig',
-            'default-internal.pdf.twig' => 'default-internal.pdf.twig',
-            'default.pdf.twig' => 'default.pdf.twig',
+            'print' => 'html',
+            'pdf' => 'pdf',
             'xlsx' => 'xlsx'
         ];
         $node = $client->getCrawler()->filter('#export-buttons .startExportBtn');
@@ -165,16 +178,201 @@ class ExportControllerTest extends ControllerBaseTest
             $type = $button->getAttribute('data-type');
             unset($expected[$type]);
         }
-        $this->assertEmpty($expected);
+        self::assertEmpty($expected);
+    }
+
+    public function testIndexActionHasSearchAsDefaultSubmitButton(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $this->request($client, '/export/');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        // pressing enter in a filter field submits the form with its first submit button,
+        // which has to run the search and must not save the filter as default
+        $buttons = $client->getCrawler()->filter('form#export-form button[type="submit"]');
+        self::assertGreaterThan(1, $buttons->count());
+        self::assertEquals('performSearch', $buttons->first()->attr('name'));
+    }
+
+    private function importTimesheetsForCurrentMonth(int $amount): void
+    {
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setUser($this->getUserByRole(User::ROLE_USER))
+            ->setAmount($amount)
+            ->setStartDate(new \DateTime('first day of this month'))
+        ;
+        $this->importFixture($fixture);
+    }
+
+    /**
+     * Simulates a plugin that limits the amount of exported items.
+     * @param positive-int $limit
+     */
+    private function limitExportItems(int $limit): void
+    {
+        $eventDispatcher = self::getContainer()->get('event_dispatcher');
+        self::assertInstanceOf(EventDispatcherInterface::class, $eventDispatcher);
+        $eventDispatcher->addListener(ExportItemsQueryEvent::class, function (ExportItemsQueryEvent $event) use ($limit): void {
+            $event->getExportQuery()->setMaxResults($limit);
+        });
+    }
+
+    public function testIndexActionIsNotLimitedByDefault(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->importTimesheetsForCurrentMonth(5);
+
+        $this->request($client, '/export/?performSearch=performSearch');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $crawler = $client->getCrawler();
+        self::assertCount(0, $crawler->filter('div.alert-danger'));
+        self::assertCount(1, $crawler->filter('#export-buttons'));
+        // 5 rows + the summary footer
+        self::assertCount(6, $crawler->filter('section.content table.dataTable tbody tr:not(.warning)'));
+    }
+
+    public function testIndexActionBelowLimitAllowsExport(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->importTimesheetsForCurrentMonth(5);
+        $this->limitExportItems(5);
+
+        $this->request($client, '/export/?performSearch=performSearch');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $crawler = $client->getCrawler();
+        self::assertCount(0, $crawler->filter('div.alert-danger'));
+        self::assertCount(1, $crawler->filter('#export-buttons'));
+    }
+
+    public function testIndexActionAboveLimitBlocksExportAndReportsRealCount(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->importTimesheetsForCurrentMonth(5);
+        $this->limitExportItems(3);
+
+        $this->request($client, '/export/?performSearch=performSearch');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $crawler = $client->getCrawler();
+        self::assertCount(0, $crawler->filter('#export-buttons'));
+        $callout = $crawler->filter('div.alert-danger')->text();
+        // the statistic covers all matching items: the user has to know how far the search must be narrowed down
+        self::assertStringContainsString('returns 5 results', $callout);
+        self::assertStringContainsString('maximum of 3 entries', $callout);
+        // the preview does not show more than the limit: 3 rows + the summary footer
+        self::assertCount(4, $crawler->filter('section.content table.dataTable tbody tr:not(.warning)'));
+    }
+
+    public function testExportActionAboveLimitIsRejectedAndNothingIsMarkedAsExported(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        self::assertInstanceOf(KernelBrowser::class, $client);
+        // the listener belongs to the booted kernel
+        $client->disableReboot();
+        $this->importTimesheetsForCurrentMonth(5);
+        $this->limitExportItems(3);
+
+        $this->request($client, '/export/');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $client->catchExceptions(false);
+        try {
+            $this->submitExport($client, ['renderer' => 'print', 'markAsExported' => 1]);
+            self::fail('Expected that the export is rejected');
+        } catch (TooManyItemsExportException $ex) {
+            self::assertStringContainsString('Limit reached! Found more than the allowed maximum of 3 items for export', $ex->getMessage());
+        }
+
+        $timesheets = $this->getEntityManager()->getRepository(Timesheet::class)->findAll();
+        self::assertCount(5, $timesheets);
+        foreach ($timesheets as $timesheet) {
+            self::assertFalse($timesheet->isExported());
+        }
     }
 
     public function testExportActionWithMissingRenderer(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $this->request($client, '/export/data', 'POST');
 
-        $response = $client->getResponse();
-        $this->assert404($response, 'Missing export renderer');
+        $this->request($client, '/export/', 'GET');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $client->request('POST', $this->createUrl('/export/data'), ['_token' => $this->getExportToken($client)]);
+        $this->assertRouteNotFound($client);
+    }
+
+    public function testExportActionRequiresValidToken(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $client->request('POST', $this->createUrl('/export/data'), ['renderer' => 'print', '_token' => 'not-a-valid-token']);
+
+        $this->assertAccessDenied($client);
+    }
+
+    public function testExportActionWithInvalidFormData(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $this->request($client, '/export/', 'GET');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $this->submitExport($client, ['renderer' => 'print', 'daterange' => 'sfsdfsdfsdf']);
+
+        $this->assertAccessDenied($client);
+    }
+
+    public function testExportActionRequiresTokenToMarkAsExported(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $begin = new \DateTime('first day of this month');
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setUser($this->getUserByRole(User::ROLE_USER))
+            ->setAmount(5)
+            ->setStartDate($begin)
+        ;
+        $this->importFixture($fixture);
+
+        // simulates a cross-site POST: no token, but all other fields are valid
+        $client->request('POST', $this->createUrl('/export/data'), ['renderer' => 'print', 'markAsExported' => 1]);
+
+        $this->assertAccessDenied($client);
+
+        $timesheets = $this->getEntityManager()->getRepository(Timesheet::class)->findAll();
+        self::assertCount(5, $timesheets);
+        /** @var Timesheet $timesheet */
+        foreach ($timesheets as $timesheet) {
+            self::assertFalse($timesheet->isExported());
+        }
+    }
+
+    private function getExportToken(HttpKernelBrowser $client): string
+    {
+        $token = $client->getCrawler()->filter('div#export-token')->attr('data-value');
+        self::assertIsString($token);
+
+        return $token;
+    }
+
+    /**
+     * Simulates the javascript behind the export buttons: it takes the current state of the
+     * toolbar form and posts it, together with the export only fields, to the export route.
+     *
+     * @param array<string, mixed> $params
+     */
+    private function submitExport(HttpKernelBrowser $client, array $params): void
+    {
+        $form = $client->getCrawler()->filter('#export-form')->form();
+        $params = array_merge($form->getValues(), $params);
+        $params['_token'] = $this->getExportToken($client);
+
+        $client->request('POST', $this->createUrl('/export/data'), $params);
     }
 
     public function testExportActionWithInvalidRenderer(): void
@@ -182,19 +380,11 @@ class ExportControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
         $this->request($client, '/export/', 'GET');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('#export-form')->form();
-        $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/export/data'));
-        $node->setAttribute('method', 'POST');
+        $this->submitExport($client, ['renderer' => 'default']);
 
-        $client->submit($form, [
-            'renderer' => 'default'
-        ]);
-
-        $response = $client->getResponse();
-        $this->assert404($response, 'Unknown export renderer');
+        $this->assertRouteNotFound($client);
     }
 
     public function testExportAction(): void
@@ -213,40 +403,117 @@ class ExportControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->request($client, '/export/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
-
-        $form = $client->getCrawler()->filter('#export-form')->form();
-        $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/export/data'));
-        $node->setAttribute('method', 'POST');
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         // don't add daterange to make sure the current month is the default range
-        $client->submit($form, [
-            'renderer' => 'default.html.twig',
-            'markAsExported' => 1
-        ]);
+        $this->submitExport($client, ['renderer' => 'print', 'markAsExported' => 1]);
 
         $response = $client->getResponse();
-        $this->assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());
         $content = $response->getContent();
         $node = $client->getCrawler()->filter('body');
-        $this->assertEquals(1, $node->count());
+        self::assertEquals(1, $node->count());
 
         // poor mans assertions ;-)
         /** @var \DOMElement $element */
         $element = $node->getIterator()[0];
-        $this->assertStringContainsString('export_print', $element->getAttribute('class'));
-        $this->assertStringContainsString('<h2 id="doc-title" contenteditable="true"', $content);
-        $this->assertStringContainsString('<h3 class="card-title" id="doc-summary" contenteditable="true" data-original="Summary">Summary</h3>', $content);
+        self::assertStringContainsString('export_print', $element->getAttribute('class'));
+        self::assertStringContainsString('<h2 id="doc-title" contenteditable="true"', $content);
+        self::assertStringContainsString('<h3 class="card-title" id="doc-summary" contenteditable="true" data-original="Summary">Summary</h3>', $content);
 
         $node = $client->getCrawler()->filter('section.export div#export-records table.dataTable tbody tr');
         // 20 rows + the summary footer
-        $this->assertEquals(21, $node->count());
+        self::assertEquals(21, $node->count());
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
         /** @var Timesheet $timesheet */
         foreach ($timesheets as $timesheet) {
-            $this->assertTrue($timesheet->isExported());
+            self::assertTrue($timesheet->isExported());
         }
+    }
+
+    public function testCreateTemplateIsSecure(): void
+    {
+        $this->assertUrlIsSecured('/export/template-create');
+    }
+
+    public function testCreateTemplateIsSecureForRole(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/export/template-create');
+    }
+
+    public function testCreateTemplateIsSecureForTeamlead(): void
+    {
+        // GHSA-rw46-qg69-vg6h
+        $this->assertUrlIsSecuredForRole(User::ROLE_TEAMLEAD, '/export/template-create');
+    }
+
+    public function testEditTemplateIsSecureForTeamlead(): void
+    {
+        // GHSA-rw46-qg69-vg6h
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        /** @var ExportTemplate[] $templates */
+        $templates = $this->importFixture(new ExportTemplateFixtures());
+        $id = $templates[0]->getId();
+
+        $this->request($client, $this->createUrl('/export/template-edit/' . $id));
+        $this->assertAccessDenied($client);
+    }
+
+    public function testCreateTemplateAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/export/template-create');
+        $form = $client->getCrawler()->filter('form[name=export_template_spreadsheet_form]')->form();
+        $client->submit($form, [
+            'export_template_spreadsheet_form' => [
+                'title' => 'My temaplte name',
+                'renderer' => 'xlsx',
+                'language' => 'de',
+                'columns' => 'date',
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/export/'));
+
+        $templates = $this->getEntityManager()->getRepository(ExportTemplate::class)->findAll();
+        self::assertCount(1, $templates);
+        $template = array_pop($templates);
+        $id = $template->getId();
+
+        $this->request($client, $this->createUrl('/export/template-edit/' . $id));
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $editForm = $client->getCrawler()->filter('form[name=export_template_spreadsheet_form]')->form();
+        $field = $editForm->get('export_template_spreadsheet_form[title]');
+        self::assertInstanceOf(FormField::class, $field);
+        self::assertEquals('My temaplte name', $field->getValue());
+    }
+
+    public function testEditTemplateAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var ExportTemplate[] $templates */
+        $templates = $this->importFixture(new ExportTemplateFixtures());
+
+        $id = $templates[0]->getId();
+
+        $this->request($client, $this->createUrl('/export/template-edit/' . $id));
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $form = $client->getCrawler()->filter('form[name=export_template_spreadsheet_form]')->form();
+        $field = $form->get('export_template_spreadsheet_form[title]');
+        self::assertInstanceOf(FormField::class, $field);
+        self::assertEquals('CSV Test', $field->getValue());
+
+        $client->submit($form, [
+            'export_template_spreadsheet_form' => [
+                'title' => 'My temaplte name',
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/export/'));
+
+        /** @var ExportTemplate $template */
+        $template = $this->getEntityManager()->getRepository(ExportTemplate::class)->find($id);
+        self::assertEquals('My temaplte name', $template->getTitle());
     }
 }

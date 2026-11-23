@@ -17,7 +17,6 @@ class SystemConfigurationFactory
 {
     /**
      * @param array<mixed> $settings
-     * @return SystemConfiguration
      */
     public static function create(ConfigLoaderInterface $repository, array $settings): SystemConfiguration
     {
@@ -26,7 +25,6 @@ class SystemConfigurationFactory
 
     /**
      * @param array<mixed> $settings
-     * @return SystemConfiguration
      */
     public static function createStub(array $settings = []): SystemConfiguration
     {
@@ -44,7 +42,11 @@ class SystemConfigurationFactory
         foreach ($iterator as $value) {
             $keys = [];
             foreach (range(0, $iterator->getDepth()) as $depth) {
-                $keys[] = $iterator->getSubIterator($depth)->key();
+                $key = $iterator->getSubIterator($depth)->key();
+                if (!\is_scalar($key)) {
+                    continue;
+                }
+                $keys[] = $key;
             }
             $newConfig[implode('.', $keys)] = $value;
         }

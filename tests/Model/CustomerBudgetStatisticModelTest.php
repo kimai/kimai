@@ -13,11 +13,10 @@ use App\Entity\Customer;
 use App\Entity\EntityWithBudget;
 use App\Model\BudgetStatisticModel;
 use App\Model\CustomerBudgetStatisticModel;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Model\CustomerBudgetStatisticModel
- */
+#[CoversClass(CustomerBudgetStatisticModel::class)]
 class CustomerBudgetStatisticModelTest extends TestCase
 {
     /**

@@ -1,0 +1,42 @@
+{% extends kimai_context.modalRequest ? 'form.html.twig' : 'base.html.twig' %}
+
+{% block main %}
+    {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+        {% set formOptions = {
+            'title': (template.isNew() ? 'create'|trans : 'edit'|trans),
+            'form': form,
+            'back': path('export_template_create')
+        } %}
+        {% embed formEditTemplate with formOptions %}
+            {% block form_body %}
+                <div class="row">
+                    <div class="col-md-9">
+                        {{ form_row(form.title) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form_row(form.renderer, {attr: {onchange: "changeExportTemplateType(this)"}}) }}
+                    </div>
+                </div>
+                {{ form_row(form.language) }}
+                {{ form_row(form.columns) }}
+                {{ form_rest(form) }}
+            {% endblock %}
+            {% block form_after %}
+                <script>
+                    function changeExportTemplateType(typeElement)
+                    {
+                        typeElement.form.querySelectorAll('[data-type]').forEach(
+                            element => {
+                                if (element.dataset['type'] !== undefined && element.dataset['type'] === typeElement.value) {
+                                    element.classList.remove('d-none');
+                                } else {
+                                    element.classList.add('d-none');
+                                }
+                            }
+                        );
+                    }
+                    changeExportTemplateType(document.getElementById('{{ form.renderer.vars.id }}'));
+                </script>
+            {% endblock %}
+        {% endembed %}
+{% endblock %}

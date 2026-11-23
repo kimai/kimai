@@ -14,7 +14,7 @@ use App\Model\CustomerStatistic;
 
 final class CustomerStatisticEvent extends AbstractCustomerEvent
 {
-    public function __construct(Customer $customer, private CustomerStatistic $statistic, private ?\DateTime $begin = null, private ?\DateTime $end = null)
+    public function __construct(Customer $customer, private readonly CustomerStatistic $statistic, private readonly ?\DateTimeInterface $begin = null, private readonly ?\DateTimeInterface $end = null)
     {
         parent::__construct($customer);
     }
@@ -24,12 +24,12 @@ final class CustomerStatisticEvent extends AbstractCustomerEvent
         return $this->statistic;
     }
 
-    public function getBegin(): ?\DateTime
+    public function getBegin(): ?\DateTimeInterface
     {
         return $this->begin;
     }
 
-    public function getEnd(): ?\DateTime
+    public function getEnd(): ?\DateTimeInterface
     {
         return $this->end;
     }

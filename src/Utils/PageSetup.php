@@ -12,6 +12,9 @@ namespace App\Utils;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 
+/**
+ * @template T
+ */
 final class PageSetup
 {
     private ?string $help = null;
@@ -19,6 +22,7 @@ final class PageSetup
     private string $actionView = 'index';
     private string $translationDomain = 'messages';
     private array $actionPayload = [];
+    /** @var DataTable<T>|null */
     private ?DataTable $dataTable = null;
     private ?FormInterface $paginationForm = null;
 
@@ -51,11 +55,17 @@ final class PageSetup
         return $this->dataTable !== null && $this->dataTable->getSearchForm() !== null;
     }
 
+    /**
+     * @return DataTable<T>|null
+     */
     public function getDataTable(): ?DataTable
     {
         return $this->dataTable;
     }
 
+    /**
+     * @param DataTable<T>|null $dataTable
+     */
     public function setDataTable(?DataTable $dataTable): void
     {
         $this->dataTable = $dataTable;
@@ -66,6 +76,13 @@ final class PageSetup
         return $this->help;
     }
 
+    /**
+     * Setting a relative URL will prepend:
+     * https://www.kimai.org/documentation/
+     *
+     * If you host your documentation on an external page,
+     * you can also set an absolute URL.
+     */
     public function setHelp(?string $help): void
     {
         $this->help = $help;

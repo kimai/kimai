@@ -10,11 +10,10 @@
 namespace App\Tests\API\Model;
 
 use App\API\Model\PageAction;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\API\Model\PageAction
- */
+#[CoversClass(PageAction::class)]
 class PageActionTest extends TestCase
 {
     public function testEmptySettings(): void

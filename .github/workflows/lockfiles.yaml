@@ -1,23 +1,27 @@
 name: Check .lock files
-on:
-    pull_request: null
+
+on: # zizmor: ignore[dangerous-triggers] using the target branch workflow prevents adding new trustedAuthors
+    pull_request_target: null
     push:
         branches:
             - main
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+    cancel-in-progress: true
+
+permissions: {}
+
 jobs:
     lockfiles:
+        permissions:
+            pull-requests: read # read the PR author
         runs-on: ubuntu-latest
         name: Verify lock file integrity
         steps:
-
-            - name: Clone Kimai
-              uses: actions/checkout@v4
-              with:
-                  persist-credentials: false
-
             - name: Prevent file change
-              uses: xalvarez/prevent-file-change-action@v1
+              uses: xalvarez/prevent-file-change-action@440fe0989b54093ce834a504af595ee55967da4d # v3.0.2
               with:
                   githubToken: ${{ secrets.GITHUB_TOKEN }}
-                  pattern: .*\.lock$
-                  trustedAuthors: kevinpapst, dependabot
+                  pattern: .*\.lock$|^\.github\/.*$|^pnpm-lock.yaml$
+                  trustedAuthors: kevinpapst

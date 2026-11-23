@@ -11,6 +11,10 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\Collection;
 
+/**
+ * @method array<Tag> getTags()
+ * @method int getBreak()
+ */
 interface ExportableItem
 {
     public function getId(): ?int;
@@ -70,7 +74,7 @@ interface ExportableItem
     public function getVisibleMetaFields(): array;
 
     /**
-     * @return Collection<MetaTableTypeInterface>
+     * @return Collection|MetaTableTypeInterface[]
      */
     public function getMetaFields(): Collection;
 
@@ -85,4 +89,18 @@ interface ExportableItem
      * Example: "work"
      */
     public function getCategory(): string;
+
+    /*
+     * Returns all assigned tags.
+     * @TODO activate for 3.0
+     * @return Collection<int, Tag>
+     */
+    //public function getTags(): array;
+
+    /*
+     * Returns the break duration.
+     * @TODO activate for 3.0
+     * @return Collection<int, Tag>
+     */
+    //public function getBreak(): int;
 }

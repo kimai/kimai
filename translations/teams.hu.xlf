@@ -2,37 +2,37 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="hu" datatype="plaintext" original="teams.en.xlf">
     <body>
-      <trans-unit id="A_4Fc7c" resname="teams.project_access">
+      <trans-unit id="A_4Fc7c" resname="teams.project_access" xml:space="preserve">
         <source>teams.project_access</source>
-        <target>Jogosultság a projektek eléréséhez</target>
+        <target state="translated">Jogosultság beállítása a projektek eléréséhez</target>
       </trans-unit>
-      <trans-unit id="QchGnbx" resname="teams.customer_access">
+      <trans-unit id="QchGnbx" resname="teams.customer_access" xml:space="preserve">
         <source>teams.customer_access</source>
-        <target>Jogosultság az ügyfelek eléréséhez</target>
+        <target state="translated">Jogosultság beállítása az ügyfelek eléréséhez</target>
       </trans-unit>
-      <trans-unit id=".yIcFDx" resname="team.visibility_global">
+      <trans-unit id=".yIcFDx" resname="team.visibility_global" xml:space="preserve">
         <source>team.visibility_global</source>
-        <target>Mindenki számára látható, mivel még nem lett csoport hozzárendelve.</target>
+        <target state="translated">Mindenki számára látható, mivel még nem lett csapat hozzárendelve.</target>
       </trans-unit>
-      <trans-unit id="hlIIRjb" resname="team.visibility_restricted">
+      <trans-unit id="hlIIRjb" resname="team.visibility_restricted" xml:space="preserve">
         <source>team.visibility_restricted</source>
-        <target>Csak a következő csoportok és adminisztrátorok láthatják.</target>
+        <target state="translated">Csak a következő csapatok és az adminisztrátorok láthatják.</target>
       </trans-unit>
-      <trans-unit id="cZEIdcu" resname="team.create_default">
+      <trans-unit id="cZEIdcu" resname="team.create_default" xml:space="preserve">
         <source>team.create_default</source>
-        <target>Új csoport készítése a jogosultságok korlátozására</target>
+        <target state="translated">Új csapat létrehozása a hozzáférés korlátozására</target>
       </trans-unit>
-      <trans-unit id="sx7AVYH" resname="team.project_visibility_inherited">
+      <trans-unit id="sx7AVYH" resname="team.project_visibility_inherited" xml:space="preserve">
         <source>team.project_visibility_inherited</source>
-        <target>A projekt korlátolt hozzáférésű, mivel csoport engedélyek vannak beállítva a kliensnek.</target>
+        <target state="translated">A projekt korlátozott hozzáférésű, mivel csapat jogosultságok vannak beállítva az ügyfélnél.</target>
       </trans-unit>
-      <trans-unit id="FC4DW27" resname="team.activity_visibility_inherited">
+      <trans-unit id="FC4DW27" resname="team.activity_visibility_inherited" xml:space="preserve">
         <source>team.activity_visibility_inherited</source>
-        <target>A tevékenység korlátolt hozzáférésű, mivel csoport engedélyek vannak beállítva a projektnek és/vagy a kliensnek.</target>
+        <target state="translated">A tevékenység korlátozott hozzáférésű, mivel csapat jogosultságok vannak beállítva a projektnél és/vagy az ügyfélnél.</target>
       </trans-unit>
-      <trans-unit id="6g81kYY" approved="no" resname="team.member">
+      <trans-unit id="6g81kYY" approved="no" resname="team.member" xml:space="preserve">
         <source>team.member</source>
-        <target state="translated">Tagja</target>
+        <target state="translated">Tagok</target>
       </trans-unit>
     </body>
   </file>

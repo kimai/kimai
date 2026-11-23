@@ -10,11 +10,10 @@
 namespace App\Tests\Form\Model;
 
 use App\Form\Model\DateRange;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Form\Model\DateRange
- */
+#[CoversClass(DateRange::class)]
 class DateRangeTest extends TestCase
 {
     public function testDefaultValues(): void

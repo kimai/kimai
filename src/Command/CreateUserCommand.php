@@ -20,10 +20,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'kimai:user:create')]
+#[AsCommand(name: 'kimai:user:create', description: 'Create a new user')]
 final class CreateUserCommand extends AbstractUserCommand
 {
-    public function __construct(private UserService $userService)
+    public function __construct(private readonly UserService $userService)
     {
         parent::__construct();
     }
@@ -33,7 +33,6 @@ final class CreateUserCommand extends AbstractUserCommand
         $roles = implode(',', [User::DEFAULT_ROLE, User::ROLE_ADMIN]);
 
         $this
-            ->setDescription('Create a new user')
             ->setHelp('This command allows you to create a new user.')
             ->addArgument('username', InputArgument::REQUIRED, 'A name for the new user (must be unique)')
             ->addArgument('email', InputArgument::REQUIRED, 'Email address of the new user (must be unique)')
@@ -45,6 +44,7 @@ final class CreateUserCommand extends AbstractUserCommand
             )
             ->addArgument('password', InputArgument::OPTIONAL, 'Password for the new user (requested if not provided)')
             ->addOption('request-password', null, InputOption::VALUE_NONE, 'The user needs to set a new password during next login')
+            ->addOption('ignore-existing', null, InputOption::VALUE_NONE, 'Exit successfully instead of failing if the username or email is already in use')
         ;
     }
 
@@ -55,6 +55,20 @@ final class CreateUserCommand extends AbstractUserCommand
         $username = $input->getArgument('username');
         $email = $input->getArgument('email');
         $role = $input->getArgument('role');
+
+        if (!\is_string($username) || !\is_string($email) || !\is_string($role)) {
+            $io->error('Username, email and role must be given as string.');
+
+            return Command::FAILURE;
+        }
+
+        // allows to call this command repeatedly (eg. on every container start) without failing
+        if ($input->getOption('ignore-existing') === true
+            && ($this->userService->findUserByName($username) !== null || $this->userService->findUserByEmail($email) !== null)) {
+            $io->note(\sprintf('User "%s" already exists, skipping creation.', $username));
+
+            return Command::SUCCESS;
+        }
 
         if (null !== $input->getArgument('password')) {
             $password = $input->getArgument('password');

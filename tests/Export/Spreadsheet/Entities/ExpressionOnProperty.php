@@ -14,5 +14,5 @@ use App\Export\Annotation as Exporter;
 class ExpressionOnProperty
 {
     #[Exporter\Expose(name: 'accessor', label: 'accessor', exp: 'object.foo')]
-    private $foo; // @phpstan-ignore-line
+    private $foo; // @phpstan-ignore missingType.property, property.unused
 }

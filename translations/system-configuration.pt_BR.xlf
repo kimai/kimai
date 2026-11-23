@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="pt-BR" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>Time tracking</source>
-        <target>Rastreamento de tempo</target>
-      </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
         <target>Tema</target>
@@ -74,21 +70,21 @@
         <source>timesheet.default_begin</source>
         <target>Tempo de partida padrão (não usado em todos os modos de rastreamento de tempo)</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>Piso: início, fim e duração serão arredondados para baixo</target>
+        <target state="translated">Início, fim e duração serão arredondados para baixo</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>Padrão: o início será arredondado para baixo, fim e duração para cima</target>
+        <target state="translated">O início será arredondado para baixo, o fim e duração serão arrendodados para cima</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>Mais próximo: arredondamento matemático ao valor mais próximo</target>
+        <target state="translated">Arredondamento matemático para o valor mais próximo</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>Ceil: início, fim e duração serão arredondados</target>
+        <target state="translated">Início, fim e duração serão arredondados</target>
       </trans-unit>
       <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>
@@ -156,7 +152,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>
-        <target>Duração do slot para a exibição da semana e do dia (formato: hh:mm:ss)</target>
+        <target>Duração do slot para a exibição da semana e do dia</target>
       </trans-unit>
       <trans-unit id="RLgv62J" resname="timesheet.rules.lockdown_grace_period">
         <source>timesheet.rules.lockdown_grace_period</source>
@@ -193,10 +189,6 @@
       <trans-unit id="nqWKu27" resname="timesheet.duration_increment">
         <source>timesheet.duration_increment</source>
         <target>Seleção de minutos para a duração</target>
-      </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target>Ano fiscal</target>
       </trans-unit>
       <trans-unit id="2KUm56c" resname="timesheet.rules.allow_overbooking_budget">
         <source>timesheet.rules.allow_overbooking_budget</source>
@@ -313,6 +305,50 @@
       <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve" approved="no">
         <source>allow_duplicate_number</source>
         <target state="translated">Permitir vários usos da mesma numeração</target>
+      </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="translated">Modo de arredondamento</target>
+      </trans-unit>
+      <trans-unit id="uf2_qIW" resname="user_auth_wizard" xml:space="preserve">
+        <source>user_auth_wizard</source>
+        <target state="translated">Exibir o assistente de configuração para novos usuários</target>
+      </trans-unit>
+      <trans-unit id="iobaZJS" resname="user_auth_change">
+        <source>user_auth_change</source>
+        <target state="translated">Alterar a autenticação de usuários com login externo</target>
+      </trans-unit>
+      <trans-unit id="iMmgno5" resname="user_auth_change.help">
+        <source>user_auth_change.help</source>
+        <target state="translated">Permite que superadministradores alterem usuários com logins externos de volta para o login interno no perfil do usuário.</target>
+      </trans-unit>
+      <trans-unit id="6pqJCWV" resname="user_auth_password_strength">
+        <source>user_auth_password_strength</source>
+        <target state="translated">Força da senha</target>
+      </trans-unit>
+      <trans-unit id="0hLoKXm" resname="user_auth_password_strength.help">
+        <source>user_auth_password_strength.help</source>
+        <target state="translated">Aplica-se sempre que uma senha é definida. A força é estimada com base no comprimento e nos tipos de caracteres utilizados.</target>
+      </trans-unit>
+      <trans-unit id="svXdXTq" resname="password_strength.none">
+        <source>password_strength.none</source>
+        <target state="translated">Sem requisitos (apenas extensão mínima)</target>
+      </trans-unit>
+      <trans-unit id="3jD52PB" resname="password_strength.normal">
+        <source>password_strength.normal</source>
+        <target state="translated">Normal</target>
+      </trans-unit>
+      <trans-unit id="0e4HBxu" resname="password_strength.medium">
+        <source>password_strength.medium</source>
+        <target state="translated">Médio</target>
+      </trans-unit>
+      <trans-unit id="VlOVWX7" resname="password_strength.strong">
+        <source>password_strength.strong</source>
+        <target state="translated">Forte</target>
+      </trans-unit>
+      <trans-unit id="R5QYeOG" resname="password_strength.very_strong">
+        <source>password_strength.very_strong</source>
+        <target state="translated">Muito forte</target>
       </trans-unit>
     </body>
   </file>

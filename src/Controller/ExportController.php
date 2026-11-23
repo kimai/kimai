@@ -9,11 +9,16 @@
 
 namespace App\Controller;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\ExportableItem;
+use App\Entity\ExportTemplate;
 use App\Export\Base\DispositionInlineInterface;
+use App\Export\ExportableResultInterface;
 use App\Export\ServiceExport;
 use App\Export\TooManyItemsExportException;
+use App\Form\ExportTemplateSpreadsheetForm;
 use App\Form\Toolbar\ExportToolbarForm;
+use App\Repository\ExportTemplateRepository;
 use App\Repository\Query\ExportQuery;
 use App\Utils\PageSetup;
 use Symfony\Component\Form\FormInterface;
@@ -29,7 +34,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('create_export')]
 final class ExportController extends AbstractController
 {
-    public function __construct(private ServiceExport $export)
+    public function __construct(private readonly ServiceExport $export)
     {
     }
 
@@ -37,69 +42,80 @@ final class ExportController extends AbstractController
     public function indexAction(Request $request): Response
     {
         $query = $this->getDefaultQuery();
-
-        $showPreview = false;
-        $tooManyResults = false;
-        $maxItemsPreview = 500;
-        $entries = [];
+        $preview = null;
 
         $form = $this->getToolbarForm($query, 'GET');
         if ($this->handleSearch($form, $request)) {
             return $this->redirectToRoute('export');
         }
 
-        $byCustomer = [];
+        $maxItems = $this->export->getMaximumResults($query) ?? PHP_INT_MAX;
 
-        if ($form->isValid() && ($query->hasBookmark() || $request->query->has('performSearch'))) {
-            try {
-                $showPreview = true;
-                $entries = $this->getEntries($query);
-                foreach ($entries as $entry) {
-                    $cid = $entry->getProject()->getCustomer()->getId();
-                    if (!isset($byCustomer[$cid])) {
-                        $byCustomer[$cid] = [
-                            'customer' => $entry->getProject()->getCustomer(),
-                            'rate' => 0,
-                            'internalRate' => 0,
-                            'duration' => 0,
-                        ];
-                    }
-                    $byCustomer[$cid]['rate'] += $entry->getRate();
-                    $byCustomer[$cid]['internalRate'] += $entry->getInternalRate() ?? 0.0;
-                    $byCustomer[$cid]['duration'] += $entry->getDuration() ?? 0;
-                }
-            } catch (TooManyItemsExportException $ex) {
-                $tooManyResults = true;
-                $showPreview = false;
-                $entries = [];
-                $this->logException($ex);
-            }
+        if ($form->isSubmitted() && $form->isValid() && ($query->hasBookmark() || $request->query->has('performSearch'))) {
+            $preview = $this->getPreview($query, min(500, $maxItems));
         }
 
         $page = new PageSetup('export');
         $page->setHelp('export.html');
 
+        $buttons = [];
+        foreach ($this->export->getRenderer() as $renderer) {
+            if (method_exists($renderer, 'getType')) {
+                $class = $renderer->getType();
+            } else {
+                // TODO remove me with 3.0
+                $class = \get_class($renderer);
+                $pos = strrpos($class, '\\');
+                if ($pos !== false) {
+                    $class = substr($class, $pos + 1);
+                }
+                $class = strtolower(str_replace('Renderer', '', $class));
+            }
+            $buttons[$class][$renderer->getId()] = [
+                'title' => $renderer->getTitle(),
+                'internal' => method_exists($renderer, 'isInternal') ? $renderer->isInternal() : false,
+            ];
+        }
+
+        if ($this->isGranted('view_other_timesheet')) {
+            $showRates = $this->isGranted('view_rate_other_timesheet');
+        } else {
+            $showRates = $this->isGranted('view_rate_own_timesheet');
+        }
+
         return $this->render('export/index.html.twig', [
             'page_setup' => $page,
-            'too_many' => $tooManyResults,
-            'by_customer' => $byCustomer,
             'query' => $query,
-            'entries' => $entries,
+            'preview' => $preview,
             'form' => $form->createView(),
-            'renderer' => $this->export->getRenderer(),
-            'preview_limit' => $maxItemsPreview,
-            'preview_show' => $showPreview,
-            'decimal' => $this->getUser()->isExportDecimal(),
+            'buttons' => $buttons,
+            'max_export_items' => $maxItems,
+            'show_rates' => $showRates,
         ]);
     }
 
     #[Route(path: '/data', name: 'export_data', methods: ['POST'])]
-    public function export(Request $request): Response
+    public function export(Request $request, SystemConfiguration $systemConfiguration): Response
     {
+        $token = $request->request->get('_token');
+        $token = \is_string($token) ? $token : null;
+
+        if (!$this->isCsrfTokenValid('export.data', $token)) {
+            throw $this->createAccessDeniedException('Invalid security token for export.');
+        }
+
+        // prevent the token from becoming part of the search query
+        $request->request->remove('_token');
+
         $query = $this->getDefaultQuery();
 
         $form = $this->getToolbarForm($query, 'POST');
         $form->handleRequest($request);
+
+        // shouldn't happen in regular use-cases, do not show form errors
+        if ($form->isSubmitted() && !$form->isValid()) {
+            throw $this->createAccessDeniedException('Export form validation failed.');
+        }
 
         $type = $query->getRenderer();
         if (null === $type) {
@@ -112,6 +128,9 @@ final class ExportController extends AbstractController
             throw $this->createNotFoundException('Unknown export renderer');
         }
 
+        $oldMaxExecTime = \ini_get('max_execution_time');
+        ini_set('max_execution_time', $systemConfiguration->getExportTimeout());
+
         // display file inline if supported and `markAsExported` is not set
         if ($renderer instanceof DispositionInlineInterface && !$query->isMarkAsExported()) {
             $renderer->setDispositionInline(true);
@@ -123,6 +142,8 @@ final class ExportController extends AbstractController
         if ($query->isMarkAsExported()) {
             $this->export->setExported($entries);
         }
+
+        ini_set('max_execution_time', $oldMaxExecTime);
 
         return $response;
     }
@@ -140,12 +161,7 @@ final class ExportController extends AbstractController
         return $query;
     }
 
-    /**
-     * @param ExportQuery $query
-     * @return ExportableItem[]
-     * @throws TooManyItemsExportException
-     */
-    private function getEntries(ExportQuery $query): array
+    private function sanitizeQuery(ExportQuery $query): void
     {
         if (null !== $query->getBegin()) {
             $query->getBegin()->setTime(0, 0, 0);
@@ -153,13 +169,30 @@ final class ExportController extends AbstractController
         if (null !== $query->getEnd()) {
             $query->getEnd()->setTime(23, 59, 59);
         }
+    }
+
+    /**
+     * @return ExportableItem[]
+     * @throws TooManyItemsExportException
+     */
+    private function getEntries(ExportQuery $query): array
+    {
+        $this->sanitizeQuery($query);
 
         return $this->export->getExportItems($query);
     }
 
     /**
-     * @param ExportQuery $query
-     * @param string $method
+     * @param non-negative-int $maxItems
+     */
+    private function getPreview(ExportQuery $query, int $maxItems): ExportableResultInterface
+    {
+        $this->sanitizeQuery($query);
+
+        return $this->export->getExportPreview($query, $maxItems);
+    }
+
+    /**
      * @return FormInterface<ExportQuery>
      */
     private function getToolbarForm(ExportQuery $query, string $method): FormInterface
@@ -173,6 +206,45 @@ final class ExportController extends AbstractController
             'attr' => [
                 'id' => 'export-form'
             ]
+        ]);
+    }
+
+    #[Route(path: '/template-create', name: 'export_template_create', methods: ['GET', 'POST'])]
+    #[IsGranted('create_export_template')]
+    public function createExportTemplate(Request $request, ExportTemplateRepository $repository): Response
+    {
+        return $this->editExportForm($this->generateUrl('export_template_create'), $request, $repository, new ExportTemplate());
+    }
+
+    #[Route(path: '/template-edit/{exportTemplate}', name: 'export_template_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('create_export_template')]
+    public function editExportTemplate(ExportTemplate $exportTemplate, Request $request, ExportTemplateRepository $repository): Response
+    {
+        return $this->editExportForm($this->generateUrl('export_template_edit', ['exportTemplate' => $exportTemplate->getId()]), $request, $repository, $exportTemplate);
+    }
+
+    private function editExportForm(string $url, Request $request, ExportTemplateRepository $repository, ExportTemplate $exportTemplate): Response
+    {
+        $form = $this->createForm(ExportTemplateSpreadsheetForm::class, $exportTemplate, [
+            'action' => $url,
+            'method' => 'POST',
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $repository->saveExportTemplate($exportTemplate);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute('export');
+            } catch (\Exception $ex) {
+                $this->handleFormUpdateException($ex, $form);
+            }
+        }
+
+        return $this->render('export/template.html.twig', [
+            'form' => $form->createView(),
+            'template' => $exportTemplate,
         ]);
     }
 }

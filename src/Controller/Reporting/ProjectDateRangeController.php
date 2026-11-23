@@ -32,7 +32,7 @@ final class ProjectDateRangeController extends AbstractController
         $user = $this->getUser();
 
         $defaultStart = $dateFactory->getStartOfMonth();
-        $query = new ProjectDaterangeQuery($defaultStart, $user);
+        $query = new ProjectDateRangeQuery($defaultStart, $user);
         $form = $this->createFormForGetRequest(ProjectDateRangeForm::class, $query, [
             'timezone' => $user->getTimezone()
         ]);
@@ -59,11 +59,12 @@ final class ProjectDateRangeController extends AbstractController
             $byCustomer[$customer->getId()]['projects'][] = $entry;
         }
 
-        return $this->render('reporting/project_daterange.html.twig', [
+        return $this->render('reporting/project/daterange.html.twig', [
             'report_title' => 'report_project_daterange',
             'entries' => $byCustomer,
             'form' => $form->createView(),
-            'queryEnd' => $dateRange->getEnd(),
+            'queryBegin' => $begin,
+            'queryEnd' => $end,
         ]);
     }
 }

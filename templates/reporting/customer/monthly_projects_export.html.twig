@@ -1,30 +1,24 @@
 {% embed 'reporting/customer/monthly_projects_data.html.twig' with {'decimal': true, 'stats': stats, 'dataType': dataType} only %}
-    {% set dataTypeFormat = null %}
-    {% if dataType == 'rate' or dataType == 'internalRate' %}
-        {% set dataTypeFormat = constant('App\\Export\\Base\\AbstractSpreadsheetRenderer::RATE_FORMAT_NO_CURRENCY') %}
-    {% elseif dataType == 'duration' %}
-        {% set dataTypeFormat = constant('App\\Export\\Base\\AbstractSpreadsheetRenderer::DURATION_DECIMAL') %}
-    {% endif %}
     {% set rowspanStyle = 'vertical-align:center' %}
     {% block user_activity %}
         {% if dataType == 'rate' or dataType == 'internalRate' %}
             {{ value|money(currency) }}
         {% else %}
-            {{ value / 3600 }}
+            {{ value|duration(true) }}
         {% endif %}
     {% endblock %}
     {% block project_activity %}
         {% if dataType == 'rate' or dataType == 'internalRate' %}
             {{ value|money(currency) }}
         {% else %}
-            {{ value / 3600 }}
+            {{ value|duration(true) }}
         {% endif %}
     {% endblock %}
     {% block project_total %}
         {% if dataType == 'rate' or dataType == 'internalRate' %}
             {{ value|money(currency) }}
         {% else %}
-            {{ value / 3600 }}
+            {{ value|duration(true) }}
         {% endif %}
     {% endblock %}
 {% endembed %}

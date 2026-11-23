@@ -15,6 +15,7 @@ use App\Entity\Project;
 use App\Event\ProjectCreateEvent;
 use App\Event\ProjectCreatePostEvent;
 use App\Event\ProjectCreatePreEvent;
+use App\Event\ProjectDeleteEvent;
 use App\Event\ProjectMetaDefinitionEvent;
 use App\Event\ProjectUpdatePostEvent;
 use App\Event\ProjectUpdatePreEvent;
@@ -31,6 +32,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 final class ProjectService
 {
+    private int $generatedNumbers = 0;
+
     public function __construct(
         private readonly ProjectRepository $repository,
         private readonly SystemConfiguration $configuration,
@@ -38,6 +41,11 @@ final class ProjectService
         private readonly ValidatorInterface $validator
     )
     {
+    }
+
+    public function loadMetaFields(Project $project): void
+    {
+        $this->dispatcher->dispatch(new ProjectMetaDefinitionEvent($project));
     }
 
     public function createNewProject(?Customer $customer = null): Project
@@ -49,12 +57,24 @@ final class ProjectService
             $project->setCustomer($customer);
         }
 
-        $this->dispatcher->dispatch(new ProjectMetaDefinitionEvent($project));
+        $this->loadMetaFields($project);
         $this->dispatcher->dispatch(new ProjectCreateEvent($project));
 
         return $project;
     }
 
+    public function saveProject(Project $project, ?Context $context = null): Project
+    {
+        if ($project->isNew()) {
+            return $this->saveNewProject($project, $context); // @phpstan-ignore method.deprecated
+        } else {
+            return $this->updateProject($project); // @phpstan-ignore method.deprecated
+        }
+    }
+
+    /**
+     * @deprecated since 2.35 - use saveProject() instead
+     */
     public function saveNewProject(Project $project, ?Context $context = null): Project
     {
         if (null !== $project->getId()) {
@@ -77,8 +97,13 @@ final class ProjectService
         return $project;
     }
 
+    public function deleteProject(Project $project, ?Project $replace = null): void
+    {
+        $this->dispatcher->dispatch(new ProjectDeleteEvent($project, $replace));
+        $this->repository->deleteProject($project, $replace);
+    }
+
     /**
-     * @param Project $project
      * @param string[] $groups
      * @throws ValidationFailedException
      */
@@ -87,10 +112,13 @@ final class ProjectService
         $errors = $this->validator->validate($project, null, $groups);
 
         if ($errors->count() > 0) {
-            throw new ValidationFailedException($errors, 'Validation Failed');
+            throw new ValidationFailedException($errors);
         }
     }
 
+    /**
+     * @deprecated since 2.35 - use saveProject() instead
+     */
     public function updateProject(Project $project): Project
     {
         $this->validateProject($project);
@@ -102,8 +130,12 @@ final class ProjectService
         return $project;
     }
 
-    public function findProjectByName(string $name): ?Project
+    public function findProjectByName(string $name, ?Customer $customer): ?Project
     {
+        if ($customer !== null) {
+            return $this->repository->findOneBy(['name' => $name, 'customer' => $customer->getId()]);
+        }
+
         return $this->repository->findOneBy(['name' => $name]);
     }
 
@@ -120,14 +152,26 @@ final class ProjectService
         }
 
         // we cannot use max(number) because a varchar column returns unexpected results
-        $start = $this->repository->countProject();
+        $count = $this->repository->countProject();
+        $start = $count + $this->generatedNumbers;
         $i = 0;
+        $createDate = new \DateTimeImmutable();
 
         do {
             $start++;
 
-            $numberGenerator = new NumberGenerator($format, function (string $originalFormat, string $format, int $increaseBy) use ($start): string|int {
+            $numberGenerator = new NumberGenerator($format, function (string $originalFormat, string $format, int $increaseBy) use ($start, $createDate): string|int {
                 return match ($format) {
+                    'Y' => $createDate->format('Y'),
+                    'y' => $createDate->format('y'),
+                    'M' => $createDate->format('m'),
+                    'm' => $createDate->format('n'),
+                    'D' => $createDate->format('d'),
+                    'd' => $createDate->format('j'),
+                    'YY' => (int) $createDate->format('Y') + $increaseBy,
+                    'yy' => (int) $createDate->format('y') + $increaseBy,
+                    'MM' => (int) $createDate->format('m') + $increaseBy,
+                    'DD' => (int) $createDate->format('d') + $increaseBy,
                     'pc' => $start + $increaseBy,
                     default => $originalFormat,
                 };
@@ -140,6 +184,10 @@ final class ProjectService
         if ($project !== null) {
             return null;
         }
+
+        // Remember how far we advanced — including iterations spent skipping numbers that
+        // already exist — so the next call on this instance starts beyond the issued number.
+        $this->generatedNumbers = $start - $count;
 
         return $number;
     }

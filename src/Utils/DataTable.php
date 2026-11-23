@@ -15,13 +15,15 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Traversable;
 
+/**
+ * @template T
+ */
 final class DataTable implements \Countable, \IteratorAggregate
 {
+    /** @var Pagination<T>|null */
     private ?Pagination $pagination = null;
     private ?FormInterface $searchForm = null;
-    /**
-     * @var FormInterface<MultiUpdateTableDTO>|null
-     */
+    /** @var FormInterface<MultiUpdateTableDTO>|null */
     private ?FormInterface $batchForm = null;
     private array $columns = [];
     private array $reloadEvents = [];
@@ -46,11 +48,17 @@ final class DataTable implements \Countable, \IteratorAggregate
         return $this->pagination;
     }
 
+    /**
+     * @return Pagination<T>|null
+     */
     public function getPagination(): ?Pagination
     {
         return $this->pagination;
     }
 
+    /**
+     * @param Pagination<T>|null $pagination
+     */
     public function setPagination(?Pagination $pagination): void
     {
         $this->pagination = $pagination;
@@ -88,13 +96,12 @@ final class DataTable implements \Countable, \IteratorAggregate
 
     /**
      * @param FormInterface<MultiUpdateTableDTO>|null $batchForm
-     * @return void
      */
     public function setBatchForm(?FormInterface $batchForm): void
     {
         $this->batchForm = $batchForm;
 
-        if (!\array_key_exists('id', $this->columns)) {
+        if ($batchForm !== null && !\array_key_exists('id', $this->columns)) {
             $this->addColumn('id', [
                 'class' => 'alwaysVisible multiCheckbox',
                 'orderBy' => false,
@@ -203,7 +210,11 @@ final class DataTable implements \Countable, \IteratorAggregate
 
     public function getIterator(): Traversable
     {
-        return $this->pagination?->getIterator();
+        if ($this->pagination === null) {
+            throw new \Exception('Must call setPagination() before getIterator()');
+        }
+
+        return $this->pagination->getIterator();
     }
 
     public function count(): int

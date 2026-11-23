@@ -30,6 +30,14 @@
         <source>wizard.done.description</source>
         <target state="translated">اکنون مهمترین تنظیمات تکمیل شده است. موارد بسیار دیگری وجود دارد که می توانید بعداً در نمایه کاربری خود آنها را سفارشی کنید.</target>
       </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title" xml:space="preserve">
+        <source>wizard.password.title</source>
+        <target state="translated">رمز عبور شما</target>
+      </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description" xml:space="preserve">
+        <source>wizard.password.description</source>
+        <target state="translated">لطفا رمز عبور جدید خود را که از این پس برای ورود به سیستم استفاده خواهد شد، وارد کنید.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

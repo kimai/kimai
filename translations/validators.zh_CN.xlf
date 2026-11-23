@@ -6,9 +6,9 @@
         <source>This value is not a valid role.</source>
         <target>此值不是有效角色。</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
-        <source>The end date must not be before the start date.</source>
-        <target state="translated">结束日期不得早于开始日期。</target>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
+        <source>The end date must not be earlier than the start date.</source>
+        <target state="needs-translation">结束日期不得早于开始日期。</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
@@ -110,7 +110,7 @@
         <source>You do not have enough overtime, remaining are {{ value }}.</source>
         <target state="translated">您的加班时间不足，剩余时间为 {{ value }}。</target>
       </trans-unit>
-      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day.">
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
         <target state="translated">在第一个工作日之前不能预约缺席。</target>
       </trans-unit>

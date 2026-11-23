@@ -17,7 +17,7 @@ use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
 final class LastLoginSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private UserRepository $repository)
+    public function __construct(private readonly UserRepository $repository)
     {
     }
 
@@ -26,7 +26,7 @@ final class LastLoginSubscriber implements EventSubscriberInterface
         return [
             // triggered for programmatic logins like "password reset" or "registration"
             UserInteractiveLoginEvent::class => 'onImplicitLogin',
-            // We do not use the InteractiveLoginEvent because it is not triggered e.g. for SAML
+            // the InteractiveLoginEvent is not triggered e.g. for SAML
             LoginSuccessEvent::class => 'onFormLogin',
         ];
     }
@@ -35,8 +35,7 @@ final class LastLoginSubscriber implements EventSubscriberInterface
     {
         $user = $event->getUser();
 
-        $user->setLastLogin(new \DateTime('now', new \DateTimeZone($user->getTimezone())));
-        $this->repository->saveUser($user);
+        $this->repository->updateLastLogin($user);
     }
 
     public function onFormLogin(LoginSuccessEvent $event): void
@@ -44,8 +43,7 @@ final class LastLoginSubscriber implements EventSubscriberInterface
         $user = $event->getUser();
 
         if ($user instanceof User) {
-            $user->setLastLogin(new \DateTime('now', new \DateTimeZone($user->getTimezone())));
-            $this->repository->saveUser($user);
+            $this->repository->updateLastLogin($user);
         }
     }
 }

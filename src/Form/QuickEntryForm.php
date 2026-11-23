@@ -18,6 +18,7 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Valid;
@@ -33,6 +34,18 @@ final class QuickEntryForm extends AbstractType
         $builder->addModelTransformer(new CallbackTransformer(
             function ($value) {
                 // page is loaded, nothing to do
+                if (!$value instanceof QuickEntryWeek) {
+                    return $value;
+                }
+
+                foreach ($value->getRows() as $row) {
+                    foreach ($row->getTimesheets() as $timesheet) {
+                        foreach ($timesheet->getMetaFields() as $metaField) {
+                            $row->setMetaFieldValue($metaField);
+                        }
+                    }
+                }
+
                 return $value;
             },
             function (?QuickEntryWeek $value) {
@@ -49,6 +62,24 @@ final class QuickEntryForm extends AbstractType
                     foreach ($row->getTimesheets() as $timesheet) {
                         $timesheet->setProject($project);
                         $timesheet->setActivity($activity);
+                        foreach ($row->getMetaFields() as $metaField) {
+                            if (null === ($name = $metaField->getName())) {
+                                continue;
+                            }
+
+                            if (null === $timesheet->getMetaField($name)) {
+                                $timesheet->setMetaField($metaField);
+                            }
+
+                            if (null === ($tmpField = $timesheet->getMetaField($name))) {
+                                continue;
+                            }
+
+                            if ($tmpField->getValue() !== $metaField->getValue()) {
+                                $tmpField->setValue($metaField->getValue());
+                                $timesheet->markAsModified();
+                            }
+                        }
                     }
                 }
 
@@ -56,29 +87,59 @@ final class QuickEntryForm extends AbstractType
             }
         ));
 
-        $builder->add('rows', CollectionType::class, [
+        $newOptions = [
             'label' => false,
             'entry_type' => QuickEntryWeekType::class,
-            'entry_options' => [
-                'label' => false,
-                'duration_minutes' => $this->configuration->getTimesheetIncrementDuration(),
-                // this is NOT the start_date, because it would prevent projects from appearing
-                // in the first days of the week, if the projects ends at the end of the week
-                // the validation still triggers if the user selects days outside the project range
-                'start_date' => $options['end_date'],
-                'end_date' => $options['end_date'],
-                'empty_data' => function (FormInterface $form) use ($options) {
-                    return clone $options['prototype_data'];
-                },
-                'prototype_data' => clone $options['prototype_data'],
-            ],
             'prototype_data' => $options['prototype_data'],
-            'allow_add' => true,
             'constraints' => [
                 new Valid(),
                 new All(['constraints' => [new QuickEntryModel()]])
             ],
-        ]);
+        ];
+
+        $entryOptions = [
+            'label' => false,
+            'duration_minutes' => $this->configuration->getTimesheetIncrementDuration(),
+            // this is NOT the start_date, because it would prevent projects from appearing in the
+            // first days of the week if the project ends at the end of the week.
+            // the validation still triggers if the user selects days outside the project range.
+            'start_date' => $options['end_date'],
+            'end_date' => $options['end_date'],
+        ];
+
+        if ($options['prototype_data'] !== null) {
+            $entryOptions['prototype_data'] = clone $options['prototype_data'];
+            $entryOptions['empty_data'] = function (FormInterface $form) use ($options) {
+                if ($options['prototype_data'] instanceof QuickEntryModel) {
+                    return clone $options['prototype_data'];
+                }
+                throw new \Exception('Invalid Prototype given');
+            };
+            $newOptions['allow_add'] = true;
+        }
+
+        $newOptions['entry_options'] = $entryOptions;
+
+        $builder->add('rows', CollectionType::class, $newOptions);
+    }
+
+    public function finishView(FormView $view, FormInterface $form, array $options): void
+    {
+        usort($view['rows']->children, function (FormView $a, FormView $b) {
+            /** @var \App\Model\QuickEntryModel $objectA */
+            $objectA = $a->vars['data'];
+            /** @var \App\Model\QuickEntryModel $objectB */
+            $objectB = $b->vars['data'];
+
+            $existingA = $objectA->hasExistingTimesheet();
+            $existingB = $objectB->hasExistingTimesheet();
+
+            if ($existingA === $existingB) {
+                return 0;
+            }
+
+            return ($existingA && !$existingB) ? -1 : 1;
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void

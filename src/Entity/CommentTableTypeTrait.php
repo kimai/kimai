@@ -9,27 +9,39 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 trait CommentTableTypeTrait
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?int $id = null;
-    #[ORM\Column(name: 'message', type: 'text', nullable: false)]
+    #[ORM\Column(name: 'message', type: Types::TEXT, nullable: false)]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?string $message = null;
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?User $createdBy = null;
-    #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
+    #[ORM\Column(name: 'created_at', type: Types::DATETIME_MUTABLE, nullable: false)]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?\DateTime $createdAt = null;
-    #[ORM\Column(name: 'pinned', type: 'boolean', nullable: false, options: ['default' => false])]
+    #[ORM\Column(name: 'pinned', type: Types::BOOLEAN, nullable: false, options: ['default' => false])]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private bool $pinned = false;
 
     public function getId(): ?int

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="et" datatype="plaintext" original="wizard.en.xlf">
+    <body>
+      <trans-unit id="9XidDHG" resname="wizard.intro.title" xml:space="preserve">
+        <source>wizard.intro.title</source>
+        <target state="translated">Tere tulemast Kimaisse</target>
+      </trans-unit>
+      <trans-unit id="X0ws5mu" resname="wizard.intro.description" xml:space="preserve">
+        <source>wizard.intro.description</source>
+        <target state="translated">See juhis aitab sul muuta Kimaid vastavalt oma vajadustele.</target>
+      </trans-unit>
+      <trans-unit id="FCMK0ph" resname="wizard.separator" xml:space="preserve">
+        <source>wizard.separator</source>
+        <target state="translated">Teie seaded</target>
+      </trans-unit>
+      <trans-unit id="8_e6ApF" resname="wizard.profile.title" xml:space="preserve">
+        <source>wizard.profile.title</source>
+        <target state="translated">Teie profiil</target>
+      </trans-unit>
+      <trans-unit id="Mo1506M" resname="wizard.profile.description" xml:space="preserve">
+        <source>wizard.profile.description</source>
+        <target state="translated">Mõned põhiseaded, mis muudavad Kimai'ga töötamise lihtsamaks.</target>
+      </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title" xml:space="preserve">
+        <source>wizard.password.title</source>
+        <target state="translated">Teie salasõna</target>
+      </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description" xml:space="preserve">
+        <source>wizard.password.description</source>
+        <target state="translated">Palun sisesta oma uus parool, mida kasutatakse edaspidi sisselogimiseks.</target>
+      </trans-unit>
+      <trans-unit id="8p.2pXa" resname="wizard.done.title" xml:space="preserve">
+        <source>wizard.done.title</source>
+        <target state="translated">Õnnitlused</target>
+      </trans-unit>
+      <trans-unit id="k1SzMuI" resname="wizard.done.description" xml:space="preserve">
+        <source>wizard.done.description</source>
+        <target state="translated">Olulisemad seaded on nüüd määratud. Kasutajaprofiilis on veel palju valikuid, mida saate hiljem kohandada.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

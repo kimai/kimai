@@ -18,14 +18,6 @@
         <source>daterangepicker.thisWeek</source>
         <target state="translated">Tämä viikko</target>
       </trans-unit>
-      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth">
-        <source>daterangepicker.lastMonth</source>
-        <target state="translated">Edellinen kuukausi</target>
-      </trans-unit>
-      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth">
-        <source>daterangepicker.thisMonth</source>
-        <target state="translated">Tämä kuukausi</target>
-      </trans-unit>
       <trans-unit id="_9rEFED" resname="daterangepicker.lastYear">
         <source>daterangepicker.lastYear</source>
         <target state="translated">Edellinen vuosi</target>
@@ -33,6 +25,14 @@
       <trans-unit id="XgIrZS3" resname="daterangepicker.thisYear">
         <source>daterangepicker.thisYear</source>
         <target state="translated">Tämä vuosi</target>
+      </trans-unit>
+      <trans-unit id="m0lJOke" resname="daterangepicker.allTime" xml:space="preserve">
+        <source>daterangepicker.allTime</source>
+        <target state="translated">Koko ajanjakso</target>
+      </trans-unit>
+      <trans-unit id="AY_E9UR" resname="daterangepicker.thisYearUntilNow" xml:space="preserve">
+        <source>This year — until today</source>
+        <target state="translated">Tänä vuonna – tähän päivään asti</target>
       </trans-unit>
     </body>
   </file>

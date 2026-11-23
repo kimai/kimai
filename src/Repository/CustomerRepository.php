@@ -21,10 +21,11 @@ use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\CustomerQueryHydrate;
+use App\Repository\Search\SearchConfiguration;
+use App\Repository\Search\SearchHelper;
 use App\Utils\Pagination;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Andx;
@@ -35,10 +36,8 @@ use Doctrine\ORM\QueryBuilder;
  */
 class CustomerRepository extends EntityRepository
 {
-    use RepositorySearchTrait;
-
     /**
-     * @param int[] $customerIDs
+     * @param array<int, string|int> $customerIDs
      * @return array<Customer>
      */
     public function findByIds(array $customerIDs): array
@@ -134,8 +133,6 @@ class CustomerRepository extends EntityRepository
 
     /**
      * Returns a query builder that is used for CustomerType and your own 'query_builder' option.
-     *
-     * @internal
      */
     public function getQueryBuilderForFormType(CustomerFormTypeQuery $query): QueryBuilder
     {
@@ -194,6 +191,9 @@ class CustomerRepository extends EntityRepository
                 case 'vat_id':
                     $orderBy = 'c.vatId';
                     break;
+                case 'invoice_email':
+                    $orderBy = 'c.invoiceEmail';
+                    break;
                 default:
                     $orderBy = 'c.' . $orderBy;
                     break;
@@ -209,29 +209,20 @@ class CustomerRepository extends EntityRepository
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
 
-        $this->addSearchTerm($qb, $query);
+        $configuration = new SearchConfiguration(
+            ['c.name', 'c.comment', 'c.company', 'c.vatId', 'c.number', 'c.contact', 'c.phone', 'c.email', 'c.address', 'c.invoiceEmail'],
+            CustomerMeta::class,
+            'customer'
+        );
+        $helper = new SearchHelper($configuration);
+        $helper->addSearchTerm($qb, $query);
 
         return $qb;
     }
 
-    private function getMetaFieldClass(): string
-    {
-        return CustomerMeta::class;
-    }
-
-    private function getMetaFieldName(): string
-    {
-        return 'customer';
-    }
-
     /**
-     * @return array<string>
+     * @return Pagination<Customer>
      */
-    private function getSearchableFields(): array
-    {
-        return ['c.name', 'c.comment', 'c.company', 'c.vatId', 'c.number', 'c.contact', 'c.phone', 'c.email', 'c.address'];
-    }
-
     public function getPagerfantaForQuery(CustomerQuery $query): Pagination
     {
         return new Pagination($this->getPaginatorForQuery($query), $query);
@@ -349,7 +340,7 @@ class CustomerRepository extends EntityRepository
             $em->remove($delete);
             $em->flush();
             $em->commit();
-        } catch (ORMException $ex) {
+        } catch (\Exception $ex) {
             $em->rollback();
             throw $ex;
         }

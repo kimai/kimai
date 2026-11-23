@@ -28,8 +28,8 @@ class PermissionService
     private ?array $cacheAll = null;
 
     public function __construct(
-        private RolePermissionRepository $repository,
-        private CacheInterface $cache
+        private readonly RolePermissionRepository $repository,
+        private readonly CacheInterface $cache
     ) {
     }
 

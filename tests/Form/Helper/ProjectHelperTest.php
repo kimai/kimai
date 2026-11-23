@@ -14,12 +14,11 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Form\Helper\ProjectHelper;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Form\Helper\ProjectHelper
- */
+#[CoversClass(ProjectHelper::class)]
 class ProjectHelperTest extends TestCase
 {
     private function createSut(string $format): ProjectHelper
@@ -106,5 +105,43 @@ class ProjectHelperTest extends TestCase
         self::assertEquals('FOO BAR - dating: 27.12.2018 -  - dating: 27.12.2018-', $helper->getChoiceLabel($project));
         $project->setEnd(new \DateTime('2019-02-14 01:23:45'));
         self::assertEquals('FOO BAR - dating: 27.12.2018 - dating: 14.02.2019 - dating: 27.12.2018-dating: 14.02.2019', $helper->getChoiceLabel($project));
+    }
+
+    public function testGetChoiceLabelKeepsMaxLengthName(): void
+    {
+        $helper = $this->createSut(ProjectHelper::PATTERN_NAME);
+
+        $name = str_repeat('a', 150);
+        $project = new Project();
+        $project->setName($name);
+        self::assertEquals($name, $helper->getChoiceLabel($project));
+    }
+
+    public function testGetChoiceLabelKeepsMaxLengthNameWithNumber(): void
+    {
+        $helper = $this->createSut(ProjectHelper::PATTERN_NUMBER . ProjectHelper::PATTERN_SPACER . ProjectHelper::PATTERN_NAME);
+
+        $name = str_repeat('a', 150);
+        $project = new Project();
+        $project->setName($name);
+        $project->setNumber('1234567890');
+
+        $label = $helper->getChoiceLabel($project);
+        self::assertEquals('1234567890 - ' . $name, $label);
+        self::assertEquals(163, \strlen($label));
+    }
+
+    public function testGetChoiceLabelIsTruncated(): void
+    {
+        $helper = $this->createSut(ProjectHelper::PATTERN_NAME . ProjectHelper::PATTERN_SPACER . ProjectHelper::PATTERN_CUSTOMER);
+
+        $name = str_repeat('a', 150);
+        $project = new Project();
+        $project->setName($name);
+        $project->setCustomer(new Customer(str_repeat('b', 100)));
+
+        $label = $helper->getChoiceLabel($project);
+        self::assertEquals(180, \strlen($label));
+        self::assertEquals($name . ' - ' . str_repeat('b', 27), $label);
     }
 }

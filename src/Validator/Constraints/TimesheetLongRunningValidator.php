@@ -11,6 +11,7 @@ namespace App\Validator\Constraints;
 
 use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet as TimesheetEntity;
+use App\Utils\Duration;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -64,7 +65,7 @@ final class TimesheetLongRunningValidator extends ConstraintValidator
             return;
         }
 
-        $format = new \App\Utils\Duration();
+        $format = new Duration();
         $hours = $format->format($maxMinutes * 60);
 
         $this->context->buildViolation($constraint->message)

@@ -10,11 +10,10 @@
 namespace App\Tests\Event;
 
 use App\Event\RevenueStatisticEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\RevenueStatisticEvent
- */
+#[CoversClass(RevenueStatisticEvent::class)]
 class RevenueStatisticEventTest extends TestCase
 {
     public function testDefaultValues(): void

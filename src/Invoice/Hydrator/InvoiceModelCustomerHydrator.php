@@ -12,12 +12,13 @@ namespace App\Invoice\Hydrator;
 use App\Customer\CustomerStatisticService;
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
+use Symfony\Component\Intl\Countries;
 
 final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
 {
     use BudgetHydratorTrait;
 
-    public function __construct(private CustomerStatisticService $customerStatisticService)
+    public function __construct(private readonly CustomerStatisticService $customerStatisticService)
     {
     }
 
@@ -25,38 +26,48 @@ final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
     {
         $customer = $model->getCustomer();
 
-        if (null === $customer) {
-            return [];
-        }
+        $prefix = 'customer.';
+        $language = $model->getTemplate()->getLanguage();
+        $country = $customer->getCountry();
 
         $values = [
-            'customer.id' => $customer->getId(),
-            'customer.address' => $customer->getAddress() ?? '',
-            'customer.name' => $customer->getName() ?? '',
-            'customer.contact' => $customer->getContact() ?? '',
-            'customer.company' => $customer->getCompany() ?? '',
-            'customer.vat' => $customer->getVatId() ?? '', // deprecated since 2.0.15
-            'customer.vat_id' => $customer->getVatId() ?? '',
-            'customer.number' => $customer->getNumber() ?? '',
-            'customer.country' => $customer->getCountry(),
-            'customer.homepage' => $customer->getHomepage() ?? '',
-            'customer.comment' => $customer->getComment() ?? '',
-            'customer.email' => $customer->getEmail() ?? '',
-            'customer.fax' => $customer->getFax() ?? '',
-            'customer.phone' => $customer->getPhone() ?? '',
-            'customer.mobile' => $customer->getMobile() ?? '',
-            'customer.invoice_text' => $customer->getInvoiceText() ?? '',
+            $prefix . 'id' => $customer->getId(),
+            $prefix . 'address' => $customer->getFormattedAddress() ?? '', // deprecated since 2.44
+            $prefix . 'address_line1' => $customer->getAddressLine1() ?? '',
+            $prefix . 'address_line2' => $customer->getAddressLine2() ?? '',
+            $prefix . 'address_line3' => $customer->getAddressLine3() ?? '',
+            $prefix . 'postcode' => $customer->getPostCode() ?? '',
+            $prefix . 'city' => $customer->getCity() ?? '',
+            $prefix . 'name' => $customer->getName() ?? '',
+            $prefix . 'contact' => $customer->getContact() ?? '',
+            $prefix . 'company' => $customer->getCompany() ?? '',
+            $prefix . 'language' => $customer->getLanguage() ?? '',
+            $prefix . 'vat' => $customer->getVatId() ?? '', // deprecated since 2.0.15
+            $prefix . 'vat_id' => $customer->getVatId() ?? '',
+            $prefix . 'number' => $customer->getNumber() ?? '',
+            $prefix . 'country' => $country,
+            $prefix . 'country_name' => $country !== null ? Countries::getName($country, $language) : null,
+            $prefix . 'homepage' => $customer->getHomepage() ?? '',
+            $prefix . 'comment' => $customer->getComment() ?? '',
+            $prefix . 'email' => $customer->getEmail() ?? '',
+            $prefix . 'fax' => $customer->getFax() ?? '',
+            $prefix . 'phone' => $customer->getPhone() ?? '',
+            $prefix . 'mobile' => $customer->getMobile() ?? '',
+            $prefix . 'invoice_text' => $customer->getInvoiceText() ?? '',
+            $prefix . 'invoice_email' => $customer->getInvoiceEmail() ?? '',
+            $prefix . 'buyer_reference' => $customer->getBuyerReference() ?? '',
         ];
 
-        /** @var \DateTime $end */
-        $end = $model->getQuery()->getEnd();
-        $statistic = $this->customerStatisticService->getBudgetStatisticModel($customer, $end);
+        $end = $model->getQuery()?->getEnd();
+        if ($end !== null) {
+            $statistic = $this->customerStatisticService->getBudgetStatisticModel($customer, $end);
 
-        $values = array_merge($values, $this->getBudgetValues('customer.', $statistic, $model));
+            $values = array_merge($values, $this->getBudgetValues($prefix, $statistic, $model));
+        }
 
         foreach ($customer->getMetaFields() as $metaField) {
             $values = array_merge($values, [
-                'customer.meta.' . $metaField->getName() => $metaField->getValue(),
+                $prefix . 'meta.' . $metaField->getName() => $metaField->getValue(),
             ]);
         }
 

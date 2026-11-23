@@ -40,7 +40,7 @@ abstract class AbstractWidget implements WidgetInterface
 
     public function getWidth(): int
     {
-        return WidgetInterface::WIDTH_SMALL;
+        return WidgetInterface::WIDTH_HALF;
     }
 
     public function getPermissions(): array

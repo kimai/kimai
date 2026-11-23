@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="et" datatype="plaintext" original="system-configuration.en.xlf">
+    <body>
+      <trans-unit id="PLggHn." resname="theme" xml:space="preserve">
+        <source>theme</source>
+        <target state="translated">Teema</target>
+      </trans-unit>
+      <trans-unit id="mPRUBFX" resname="theme.markdown_content" xml:space="preserve">
+        <source>theme.markdown_content</source>
+        <target state="translated">Luba markdown-formaate kirjeldustes ja kommentaarides</target>
+      </trans-unit>
+      <trans-unit id="SnkW0Pk" resname="theme.avatar_url" xml:space="preserve">
+        <source>theme.avatar_url</source>
+        <target state="translated">Luba kasutada avatari pildiks URL-i</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -30,6 +30,14 @@
         <source>wizard.profile.description</source>
         <target state="translated">Einige grundlegende Einstellungen, um Ihnen die Arbeit mit Kimai zu erleichtern.</target>
       </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title" xml:space="preserve">
+        <source>wizard.password.title</source>
+        <target state="translated">Ihr Passwort</target>
+      </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description" xml:space="preserve">
+        <source>wizard.password.description</source>
+        <target state="translated">Bitte geben Sie Ihr neues Passwort ein, das von nun an für die Anmeldung gelten soll.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

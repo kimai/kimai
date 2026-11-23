@@ -36,7 +36,7 @@ export default class KimaiHotkeys extends KimaiPlugin {
                     elements[0].click();
                 }
             }
-        })
+        });
     }
 
     // adopted from Bootstrap 5.1.1, MIT

@@ -10,11 +10,10 @@
 namespace App\Tests;
 
 use App\Constants;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Constants
- */
+#[CoversClass(Constants::class)]
 class ConstantsTest extends TestCase
 {
     public function testBuild(): void

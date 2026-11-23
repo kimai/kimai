@@ -9,7 +9,7 @@
 
 namespace App\Repository\Query;
 
-class TagQuery extends BaseQuery
+class TagQuery extends BaseQuery implements VisibilityInterface
 {
     use VisibilityTrait;
 

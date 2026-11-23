@@ -48,9 +48,4 @@ final class Version20240214061246 extends AbstractMigration
 
         $schema->dropTable('kimai2_access_token');
     }
-
-    public function isTransactional(): bool
-    {
-        return false;
-    }
 }

@@ -11,7 +11,9 @@ namespace App\Saml;
 
 use App\Configuration\SamlConfigurationInterface;
 use App\Entity\User;
+use App\User\ExternalUserSanitizer;
 use App\User\UserService;
+use App\Validator\ValidationFailedException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
@@ -26,6 +28,7 @@ final class SamlProvider
         private readonly UserService $userService,
         private readonly UserProviderInterface $userProvider,
         private readonly SamlConfigurationInterface $configuration,
+        private readonly ExternalUserSanitizer $userSanitizer,
         private readonly LoggerInterface $logger
     ) {
     }
@@ -52,9 +55,12 @@ final class SamlProvider
             $this->hydrateUser($user, $token);
             $this->userService->saveUser($user);
         } catch (\Exception $ex) {
-            $this->logger->error($ex->getMessage());
+            $reason = $ex instanceof ValidationFailedException ? $ex->getViolationsAsString() : $ex->getMessage();
+            $this->logger->error(
+                \sprintf('Failed creating or hydrating SAML user "%s": %s', $token->getUserIdentifier() ?? '*unknown*', $reason)
+            );
             throw new AuthenticationException(
-                \sprintf('Failed creating or hydrating user "%s": %s', $token->getUserIdentifier(), $ex->getMessage())
+                \sprintf('Failed creating or hydrating user "%s": %s', $token->getUserIdentifier() ?? '*unknown*', $reason)
             );
         }
 
@@ -97,6 +103,9 @@ final class SamlProvider
             $field = $mapping['kimai'];
             $attribute = $mapping['saml'];
             $value = $this->getPropertyValue($token, $attribute);
+            if ($value === null) {
+                continue;
+            }
             $setter = 'set' . ucfirst($field);
             if (method_exists($user, $setter)) {
                 $user->$setter($value);
@@ -115,9 +124,12 @@ final class SamlProvider
 
         $user->setUserIdentifier($token->getUserIdentifier());
         $user->setAuth(User::AUTH_SAML);
+
+        // a broken attribute mapping must not prevent the login
+        $this->userSanitizer->sanitize($user);
     }
 
-    private function getPropertyValue(SamlLoginAttributes $token, $attribute): string
+    private function getPropertyValue(SamlLoginAttributes $token, $attribute): ?string
     {
         $results = [];
         $attributes = $token->getAttributes();
@@ -129,11 +141,16 @@ final class SamlProvider
             }
             if ($part[0] === '$') {
                 $key = substr($part, 1);
-                if (!\array_key_exists($key, $attributes)) {
+                $optional = false;
+                if ($key[0] === '$') {
+                    $key = substr($key, 1);
+                    $optional = true;
+                }
+                if (!$optional && !\array_key_exists($key, $attributes)) {
                     throw new \RuntimeException('Missing SAML attribute in response: ' . $key);
                 }
 
-                if (\is_array($attributes[$key]) && isset($attributes[$key][0])) {
+                if (\array_key_exists($key, $attributes) && \is_array($attributes[$key]) && isset($attributes[$key][0])) {
                     $results[] = $attributes[$key][0];
                 }
             } else {
@@ -142,9 +159,9 @@ final class SamlProvider
         }
 
         if (!empty($results)) {
-            return implode(' ', $results);
+            return implode(' ', $results); // @phpstan-ignore argument.type
         }
 
-        return $attribute;
+        return null;
     }
 }

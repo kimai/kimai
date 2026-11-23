@@ -2,7 +2,7 @@
 
 {% block main %}
     {{ include(kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
-        'title': ('permissions'|trans({}, 'actions')) ~ ': ' ~ activity.name,
+        'title': ('permissions'|trans) ~ ': ' ~ activity.name,
         'form': form,
         'back': path('activity_details', {'id': activity.id})
     }) }}

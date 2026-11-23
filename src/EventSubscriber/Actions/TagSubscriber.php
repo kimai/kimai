@@ -46,14 +46,13 @@ final class TagSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('view_other_timesheet')) {
-            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet', ['tags' => $name])]);
+            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet.filter', 'url' => $this->path('admin_timesheet', ['tags' => $name])]);
         }
 
         if ($event->isIndexView() && $this->isGranted('delete_tag')) {
             $event->addAction('trash', [
                 'url' => $this->path('delete_tag', ['id' => $id]),
                 'class' => 'api-link text-red',
-                'translation_domain' => 'actions',
                 'attr' => [
                     'data-event' => 'kimai.tagDelete kimai.tagUpdate',
                     'data-method' => 'DELETE',

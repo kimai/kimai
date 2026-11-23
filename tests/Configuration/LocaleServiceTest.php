@@ -10,11 +10,11 @@
 namespace App\Tests\Configuration;
 
 use App\Configuration\LocaleService;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Configuration\LocaleService
- */
+#[CoversClass(LocaleService::class)]
 class LocaleServiceTest extends TestCase
 {
     protected function getSut(array $settings): LocaleService
@@ -106,10 +106,10 @@ class LocaleServiceTest extends TestCase
     public function testGetAllLocales(): void
     {
         $sut = $this->getSut([]);
-        $this->assertEquals([], $sut->getAllLocales());
+        self::assertEquals([], $sut->getAllLocales());
 
         $sut = $this->getSut($this->getDefaultSettings());
-        $this->assertEquals(['de', 'en', 'en_AU', 'pt_BR', 'it', 'fr', 'fr_BE', 'fr_CA', 'es', 'ru', 'ar', 'hu'], $sut->getAllLocales());
+        self::assertEquals(['de', 'en', 'en_AU', 'pt_BR', 'it', 'fr', 'fr_BE', 'fr_CA', 'es', 'ru', 'ar', 'hu'], $sut->getAllLocales());
     }
 
     public function testInvalidLocaleWithGivenLocale(): void
@@ -124,42 +124,40 @@ class LocaleServiceTest extends TestCase
     public function testGetDurationFormat(): void
     {
         $sut = $this->getSut($this->getDefaultSettings());
-        $this->assertEquals('%h:%m', $sut->getDurationFormat('de'));
+        self::assertEquals('%h:%m', $sut->getDurationFormat('de'));
     }
 
     public function testGetDateFormat(): void
     {
         $sut = $this->getSut($this->getDefaultSettings());
-        $this->assertEquals('d.m.Y', $sut->getDateFormat('de'));
+        self::assertEquals('d.m.Y', $sut->getDateFormat('de'));
     }
 
     public function testGetDateTimeFormat(): void
     {
         $sut = $this->getSut($this->getDefaultSettings());
-        $this->assertEquals('d.m.Y H:i', $sut->getDateTimeFormat('de'));
+        self::assertEquals('d.m.Y H:i', $sut->getDateTimeFormat('de'));
     }
 
     public function testGetTimeFormat(): void
     {
         $sut = $this->getSut($this->getDefaultSettings());
-        $this->assertEquals('H:i', $sut->getTimeFormat('de'));
-        $this->assertEquals('H:i:s', $sut->getTimeFormat('en'));
+        self::assertEquals('H:i', $sut->getTimeFormat('de'));
+        self::assertEquals('H:i:s', $sut->getTimeFormat('en'));
     }
 
-    /**
-     * @dataProvider getNearestTranslationLocaleData
-     */
+    #[DataProvider('getNearestTranslationLocaleData')]
     public function testGetNearestTranslationLocale(string $locale, string $expected): void
     {
         $sut = $this->getSut($this->getDefaultSettings());
         $actual = $sut->getNearestTranslationLocale($locale);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
      * @return array<int, array<int, string>>
      */
-    public function getNearestTranslationLocaleData(): array
+    public static function getNearestTranslationLocaleData(): array
     {
         return [
             ['de', 'de'], // registered and translated: use it

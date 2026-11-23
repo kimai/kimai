@@ -10,7 +10,9 @@
 namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -19,18 +21,33 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class CalendarViewType extends AbstractType
 {
     public const DEFAULT_VIEW = 'month';
+    public const CHOICES = [
+        'month' => 'month',
+        'agendaWeek' => 'week',
+        'agendaDay' => 'day',
+    ];
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder->addModelTransformer(new CallbackTransformer(
+            function ($transform) {
+                return match ($transform) {
+                    'agendaDay', 'day' => 'day',
+                    'agendaWeek', 'week' => 'week',
+                    default => self::DEFAULT_VIEW,
+                };
+            },
+            function ($reverseTransform) {
+                return $reverseTransform;
+            }
+        ));
+    }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $choices = [
-            'month' => 'month',
-            'agendaWeek' => 'agendaWeek',
-            'agendaDay' => 'agendaDay',
-        ];
-
         $resolver->setDefaults([
             'required' => true,
-            'choices' => $choices,
+            'choices' => self::CHOICES,
             'search' => false,
         ]);
     }

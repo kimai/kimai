@@ -8,5 +8,5 @@
     <img alt="{{ get_title() }}" style="max-width: 150px;"
          src="{% if '://' in tabler_bundle.getLogoUrl() %}{{ tabler_bundle.getLogoUrl() }}{% else %}{{ asset(tabler_bundle.getLogoUrl()) }}{% endif %}">
 {% else %}
-    <p>{{ get_title('', '<br>')|raw }}</p>
+    <p>{{ get_title()|raw }}</p>
 {% endif %}

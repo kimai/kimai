@@ -11,12 +11,12 @@ namespace App\Tests\Timesheet;
 
 use App\Tests\Mocks\TrackingModeServiceFactory;
 use App\Timesheet\TrackingMode\PunchInOutMode;
+use App\Timesheet\TrackingModeService;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
-/**
- * @covers \App\Timesheet\TrackingModeService
- */
+#[CoversClass(TrackingModeService::class)]
 class TrackingModeServiceTest extends TestCase
 {
     public function testDefaultTrackingModesAreRegistered(): void

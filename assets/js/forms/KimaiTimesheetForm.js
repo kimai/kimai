@@ -32,43 +32,31 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
             return;
         }
 
-        if (this._beginDate !== undefined) {
-            this._beginDate.removeEventListener('change', this._beginListener);
-            delete this._beginListener;
-            delete this._beginDate;
-        }
+        // fields can be null, e.g. begin and end do not exist in duration-only mode
+        this._beginDate?.removeEventListener('change', this._beginListener);
+        this._beginTime?.removeEventListener('change', this._beginListener);
+        this._beginTime?.removeEventListener('blur', this._beginBlurListener);
+        this._endTime?.removeEventListener('change', this._endListener);
+        this._endTime?.removeEventListener('blur', this._endBlurListener);
+        this._duration?.removeEventListener('change', this._durationListener);
+        this._durationToggle?.removeEventListener('click', this._durationToggleListener);
+        this._activity?.removeEventListener('create', this._activityListener);
 
-        if (this._beginTime !== undefined) {
-            this._beginTime.removeEventListener('change', this._beginListener);
-            delete this._beginTime;
-        }
+        delete this._beginListener;
+        delete this._beginBlurListener;
+        delete this._endListener;
+        delete this._endBlurListener;
+        delete this._durationListener;
+        delete this._durationToggleListener;
+        delete this._activityListener;
 
-        if (this._endTime !== undefined) {
-            this._endTime.removeEventListener('change', this._endListener);
-            delete this._endTime;
-        }
-
-        if (this._duration !== undefined) {
-            this._duration.removeEventListener('change', this._durationListener);
-            delete this._durationListener;
-            delete this._duration;
-        }
-
-        if (this._durationToggle !== undefined && this._durationToggle !== null) {
-            this._durationToggle.removeEventListener('change', this._durationToggleListener);
-            delete this._durationToggleListener;
-            delete this._durationToggle;
-        }
-
-        if (this._activity !== undefined) {
-            this._activity.removeEventListener('create', this._activityListener);
-            delete this._activityListener;
-            delete this._activity;
-        }
-
-        if (this._project !== undefined) {
-            delete this._project;
-        }
+        delete this._beginDate;
+        delete this._beginTime;
+        delete this._endTime;
+        delete this._duration;
+        delete this._durationToggle;
+        delete this._activity;
+        delete this._project;
     }
 
     activateForm(form)
@@ -108,12 +96,16 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
         }
 
         this._beginListener = () => this._changedBegin();
+        this._beginBlurListener = () => this._parseBeginTime();
         this._endListener = () => this._changedEnd();
+        this._endBlurListener = () => this._parseEndTime();
         this._durationListener = () => this._changedDuration();
 
         this._beginDate.addEventListener('change', this._beginListener);
         this._beginTime.addEventListener('change', this._beginListener);
+        this._beginTime.addEventListener('blur', this._beginBlurListener);
         this._endTime.addEventListener('change', this._endListener);
+        this._endTime.addEventListener('blur', this._endBlurListener);
         this._duration.addEventListener('change', this._durationListener);
 
         if (this._duration !== null && this._durationToggle !== null) {
@@ -122,6 +114,150 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
             };
             this._durationToggle.addEventListener('click', this._durationToggleListener);
         }
+    }
+
+    _parseBeginTime()
+    {
+        if (this._beginTime.value === '') {
+            return;
+        }
+
+        let newBeginTime = this._formatTimeForParsing(this._beginTime.value, this._beginTime.dataset['format']);
+        if (newBeginTime !== this._beginTime.value) {
+            this._beginTime.value = newBeginTime;
+            this._changedBegin();
+        }
+    }
+
+    _parseEndTime()
+    {
+        if (this._endTime.value === '') {
+            return;
+        }
+
+        let newEndTime = this._formatTimeForParsing(this._endTime.value, this._endTime.dataset['format']);
+        if (newEndTime !== this._endTime.value) {
+            this._endTime.value = newEndTime;
+            this._changedEnd();
+        }
+    }
+
+    /**
+     * Receives a time, written by a human, probably in an invalid format.
+     * This method supports 12-hour or 24-hour format, the format string contains an uppercase "A" in case of the 12-hour format.
+     * If it is 12-hour format, then always en-US locallized with AM/PM.
+     *
+     * Ruleset:
+     * - Some locales use a dot instead of a colon, always replace the dot in HH.mm with a colon as in HH:mm
+     * - If there is an "am" or "pm", always uppercase them
+     * - Split the string into time and prefix: if AM/PM is included remove it and remember for later
+     * - If the time is a 1 or 2 character long number: use as hours
+     * - If the time now is 3 character long: use the 1 char as hour and the 2 and 3 char as minute
+     * - If the time now is 4 character long: use the 1 and 2 char as hour and the 3 and 4 char as minutes
+     * - If the format is 12-hour: try to identify the correct time and suffix
+     * - If the format is 12-hour and misses the AM/PM: try to detect whether it
+     * - If the time contains AM or PM, make sure that it is always prefixed by a space character
+     *
+     * @param {string} time
+     * @param {string} format
+     * @returns {string}
+     * @private
+     */
+    _formatTimeForParsing(time, format)
+    {
+        let formatted = time.trim();
+
+        // replace invalid separators with colon
+        formatted = formatted.replace(/\.|;|,/g, ':');
+        // uppercase 12-hour format
+        formatted = formatted.replace(/am/i, 'AM');
+        formatted = formatted.replace(/pm/i, 'PM');
+
+        // Split time and AM/PM suffix if present
+        let suffix = '';
+        let hour = 0;
+        let minute = 0;
+
+        let timePart = formatted;
+        const ampmMatch = formatted.match(/\s*(AM|PM)$/i);
+        if (ampmMatch) {
+            suffix = ampmMatch[1].toUpperCase();
+            timePart = formatted.replace(/\s*(AM|PM)$/i, '').trim();
+        }
+
+        if (timePart.indexOf(':') !== -1) {
+            const match = timePart.match(/(?:(\d+):)?(\d+)/);
+            hour = parseInt(match?.[1] || 0, 10);
+            minute = parseInt(match?.[2] || 0, 10);
+        } else {
+            timePart = timePart.replace(/:/, '');
+
+            if (/^\d{1,2}$/.test(timePart)) {
+                hour = timePart;
+            }
+
+            if (/^\d{3}$/.test(timePart)) {
+                hour = timePart.slice(0, 1);
+                minute = timePart.slice(1);
+            }
+
+            if (/^\d{4}$/.test(timePart)) {
+                hour = timePart.slice(0, 2);
+                minute = timePart.slice(2);
+            }
+        }
+
+        hour = parseInt(hour);
+        minute = parseInt(minute);
+
+        // just in case a person entered a wrong time like 35 hours
+        hour = hour % 24;
+        minute = minute % 60;
+
+        // format is 12-hour
+        if (format.toUpperCase().indexOf('A') !== -1) {
+            // time entered in 24-hour: convert to 12-hour format
+            if (hour > 12 && hour < 24) {
+                hour = hour - 12;
+                suffix = 'PM';
+            }
+
+            // if the person forgot to add a suffix, calculate it and convert time
+            if (suffix === '') {
+                if (hour === 0) {
+                    hour = 12;
+                    suffix = 'AM';
+                } else if (hour === 12) {
+                    suffix = 'PM';
+                } else {
+                    suffix = 'AM';
+                }
+            }
+
+            if (suffix === 'PM' && hour === 0) {
+                hour = 12;
+            }
+
+        } else {
+            // this is the 34-hour format branch
+
+            // check if the person entered time in 12-hour format and convert it
+            if (suffix === 'AM' && hour === 12) {
+                hour = 0;
+            } else if (suffix === 'PM' && hour !== 12) {
+                hour = (hour + 12) % 24;
+            }
+
+            // make sure we have no suffix
+            suffix = '';
+        }
+
+        formatted = hour + ':' + minute.toString().padStart(2, '0');
+        if (suffix !== '') {
+            formatted = formatted + ' ' + suffix.trim();
+        }
+
+        return formatted;
     }
 
     _isDurationConnected()
@@ -287,14 +423,14 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
 
     /**
      * Ruleset:
-     * - invalid duration => skip
+     * - invalid or empty duration => skip
      * - if begin and end are empty: set begin to now and end to duration
      * - if begin is empty and end is not empty: set begin to end minus duration
      * - if begin is not empty and end is empty and duration is > 0 (running records = 0): set end to begin plus duration
      */
     _changedDuration()
     {
-        if (!this._isDurationConnected()) {
+        if (!this._isDurationConnected() || this._duration.value === '' || this._duration.validity.patternMismatch) {
             return;
         }
 
@@ -315,11 +451,11 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
         if (begin === null && end === null) {
             const newBegin = DateTime.now();
             this._applyDateToField(newBegin, this._beginDate, this._beginTime);
-            this._applyDateToField(newBegin.plus({seconds: seconds}), null, this._endTime);
+            this._addSecondsToEndDate(newBegin, seconds);
         } else if (begin === null && end !== null) {
             this._applyDateToField(end.minus({seconds: seconds}), this._beginDate, this._beginTime);
         } else if (begin !== null && seconds >= 0) {
-            this._applyDateToField(begin.plus({seconds: seconds}), null, this._endTime);
+            this._addSecondsToEndDate(begin, seconds);
         }
     }
 
@@ -367,7 +503,23 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
      */
     _getParsedDuration()
     {
-        return this.getDateUtils().parseDuration(this._duration.value.toUpperCase());
+        return this.getDateUtils().parseDuration(this._duration.value, this._duration.dataset['durationMode']);
+    }
+
+    /**
+     * @param {DateTime} dateTime
+     * @param {int} seconds
+     * @private
+     */
+    _addSecondsToEndDate(dateTime, seconds)
+    {
+        // if the duration is longer than one day, the end field should be empty
+        // so kimai can calculate it after submitting the data from start + duration
+        if (seconds < 86400) {
+            this._applyDateToField(dateTime.plus({seconds: seconds}), null, this._endTime);
+        } else {
+            this._endTime.value = '';
+        }
     }
 
     /**
@@ -389,5 +541,4 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
         }
         timeField.value = this.getDateUtils().format(timeField.dataset['format'], dateTime);
     }
-
 }

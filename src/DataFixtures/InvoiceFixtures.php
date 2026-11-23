@@ -9,6 +9,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -29,6 +30,8 @@ final class InvoiceFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('en_US');
+        /** @var non-empty-array<Customer> $customers */
+        $customers = $manager->getRepository(Customer::class)->findBy(['visible' => true]);
 
         foreach ($this->getInvoiceConfigs($faker) as $invoiceConfig) {
             // name, title, renderer, calculator, numberGenerator, company, vat, dueDays, address, paymentTerms
@@ -38,15 +41,16 @@ final class InvoiceFixtures extends Fixture
             $template->setRenderer($invoiceConfig[2]);
             $template->setCalculator($invoiceConfig[3]);
             $template->setNumberGenerator($invoiceConfig[4]);
-            $template->setCompany($invoiceConfig[5]);
+            $template->setCompany($invoiceConfig[5]); // @phpstan-ignore method.deprecated
+            $template->setCustomer($customers[array_rand($customers)]);
             $template->setVat($invoiceConfig[6]);
             $template->setDueDays($invoiceConfig[7]);
             $template->setPaymentTerms($invoiceConfig[8]);
             $template->setLanguage('en');
-            $template->setAddress($this->generateAddress($faker));
+            $template->setAddress($this->generateAddress($faker)); // @phpstan-ignore method.deprecated
             $template->setContact($this->generateContact($faker));
             $template->setPaymentDetails($this->generatePaymentDetails($faker));
-            $template->setVatId($faker->creditCardNumber());
+            $template->setVatId($faker->creditCardNumber()); // @phpstan-ignore method.deprecated
 
             $manager->persist($template);
             $manager->flush();
@@ -54,8 +58,7 @@ final class InvoiceFixtures extends Fixture
     }
 
     /**
-     * @param Generator $faker
-     * @return array
+     * @return array<array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: int, 7: int, 8: string}>
      */
     private function getInvoiceConfigs(Generator $faker): array
     {

@@ -14,11 +14,10 @@ use App\Entity\ActivityMeta;
 use App\Entity\EntityWithMetaFields;
 use App\Entity\MetaTableTypeInterface;
 use App\Entity\Timesheet;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Entity\ActivityMeta
- */
-class ActivityMetaTest extends AbstractMetaEntityTest
+#[CoversClass(ActivityMeta::class)]
+class ActivityMetaTest extends AbstractMetaEntityTestCase
 {
     protected function getEntity(): EntityWithMetaFields
     {

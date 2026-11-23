@@ -27,6 +27,7 @@ final class RuntimeExtensions extends AbstractExtension
     public function getFunctions(): array
     {
         return [
+            new TwigFunction('theme_event', [ThemeExtension::class, 'themeEvent'], ['is_safe' => ['html']]),
             new TwigFunction('trigger', [ThemeExtension::class, 'trigger'], ['needs_environment' => true]),
             new TwigFunction('actions', [ThemeExtension::class, 'actions']),
             new TwigFunction('get_title', [ThemeExtension::class, 'generateTitle']),
@@ -46,7 +47,7 @@ final class RuntimeExtensions extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('md2html', [MarkdownExtension::class, 'markdownToHtml'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
+            new TwigFilter('md2html', [MarkdownExtension::class, 'markdownToHtml'], ['is_safe' => ['html']]),
             new TwigFilter('desc2html', [MarkdownExtension::class, 'timesheetContent'], ['is_safe' => ['html']]),
             new TwigFilter('comment2html', [MarkdownExtension::class, 'commentContent'], ['is_safe' => ['html']]),
             new TwigFilter('comment1line', [MarkdownExtension::class, 'commentOneLiner'], ['pre_escape' => 'html', 'is_safe' => ['html']]),

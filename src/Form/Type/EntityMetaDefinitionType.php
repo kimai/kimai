@@ -30,7 +30,7 @@ final class EntityMetaDefinitionType extends AbstractType
     {
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 /** @var MetaTableTypeInterface $definition */
                 $definition = $event->getData();
 

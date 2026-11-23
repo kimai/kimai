@@ -9,6 +9,7 @@
 
 namespace App\API;
 
+use App\API\Serializer\RateExclusionStrategy;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Event\RecentActivityEvent;
@@ -26,6 +27,7 @@ use App\Repository\UserRepository;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Utils\SearchTerm;
+use App\Validator\MetaFieldValidator;
 use App\Validator\ValidationFailedException;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -37,7 +39,9 @@ use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints;
 
@@ -51,13 +55,15 @@ final class TimesheetController extends BaseApiController
     public const GROUPS_FORM = ['Default', 'Entity', 'Timesheet', 'Not_Expanded'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Timesheet', 'Not_Expanded'];
     public const GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'Timesheet', 'Expanded'];
+    public const RECENT_ACTIVITIES_MAX_SIZE = 100;
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
         private readonly TimesheetRepository $repository,
         private readonly TagRepository $tagRepository,
         private readonly EventDispatcherInterface $dispatcher,
-        private readonly TimesheetService $service
+        private readonly TimesheetService $service,
+        private readonly AuthorizationCheckerInterface $security
     ) {
     }
 
@@ -67,10 +73,43 @@ final class TimesheetController extends BaseApiController
     }
 
     /**
-     * Returns a collection of timesheet records (which are visible to the user)
+     * The rate groups are always requested, the per-record permission filtering
+     * is applied by the RateExclusionStrategy.
+     *
+     * @param array<string> $groups
+     * @param array<string> $rateGroups
+     */
+    private function renderRateAwareView(View $view, array $groups, array $rateGroups): Response
+    {
+        $context = $view->getContext();
+        $context->setGroups(array_merge($groups, $rateGroups));
+        $context->addExclusionStrategy(new RateExclusionStrategy($this->security));
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * @param iterable<Timesheet> $timesheets
+     * @param array<string> $groups
+     */
+    private function renderCollection(iterable $timesheets, array $groups): Response
+    {
+        return $this->renderRateAwareView(new View($timesheets, Response::HTTP_OK), $groups, ['Timesheet_Rate']);
+    }
+
+    /**
+     * @param array<string> $groups
+     */
+    private function renderEntity(Timesheet $timesheet, array $groups): Response
+    {
+        return $this->renderRateAwareView(new View($timesheet, Response::HTTP_OK), $groups, ['Timesheet_Rate', 'Timesheet_Entity_Rate']);
+    }
+
+    /**
+     * Fetch timesheets
      */
     #[IsGranted(new Expression("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')"))]
-    #[OA\Response(response: 200, description: 'Returns a collection of timesheet records. The datetime fields are given in the users local time including the timezone offset (ISO-8601).', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TimesheetCollection')))]
+    #[OA\Response(response: 200, description: 'Returns a collection of timesheets. The datetime fields are given in the users local time including the timezone offset (ISO-8601).', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TimesheetCollection')))]
     #[Route(methods: ['GET'], path: '', name: 'get_timesheets')]
     #[Rest\QueryParam(name: 'user', requirements: '\d+|all', strict: true, nullable: true, description: "User ID to filter timesheets. Needs permission 'view_other_timesheet', pass 'all' to fetch data for all user (default: current user)")]
     #[Rest\QueryParam(name: 'users', map: true, requirements: '\d+', strict: true, nullable: true, default: [], description: 'List of user IDs to filter, e.g.: users[]=1&users[]=2 (ignored if user=all)')]
@@ -81,18 +120,18 @@ final class TimesheetController extends BaseApiController
     #[Rest\QueryParam(name: 'activity', requirements: '\d+', strict: true, nullable: true, description: 'Activity ID to filter timesheets')]
     #[Rest\QueryParam(name: 'activities', map: true, requirements: '\d+', strict: true, nullable: true, default: [], description: 'List of activity IDs to filter, e.g.: activities[]=1&activities[]=2')]
     #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display, renders a 404 if not found (default: 1)')]
-    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page (default: 50)')]
+    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page (default: 50, max: 500)')]
     #[Rest\QueryParam(name: 'tags', map: true, strict: true, nullable: true, default: [], description: 'List of tag names, e.g. tags[]=bar&tags[]=foo')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|begin|end|rate', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, begin, end, rate (default: begin)')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: DESC)')]
-    #[Rest\QueryParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records after this date will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
-    #[Rest\QueryParam(name: 'end', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records before this date will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
+    #[Rest\QueryParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records started at or after this date-time will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
+    #[Rest\QueryParam(name: 'end', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records started at or before this date-time will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
     #[Rest\QueryParam(name: 'exported', requirements: '0|1', strict: true, nullable: true, description: 'Use this flag if you want to filter for export state. Allowed values: 0=not exported, 1=exported (default: all)')]
     #[Rest\QueryParam(name: 'active', requirements: '0|1', strict: true, nullable: true, description: 'Filter for running/active records. Allowed values: 0=stopped, 1=active (default: all)')]
     #[Rest\QueryParam(name: 'billable', requirements: '0|1', strict: true, nullable: true, description: 'Filter for non-/billable records. Allowed values: 0=non-billable, 1=billable (default: all)')]
     #[Rest\QueryParam(name: 'full', requirements: '0|1|true|false', strict: true, nullable: true, description: 'Allows to fetch full objects including subresources. Allowed values: 0|1|false|true (default: false)')]
-    #[Rest\QueryParam(name: 'term', description: 'Free search term')]
-    #[Rest\QueryParam(name: 'modified_after', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records changed after this date will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
+    #[Rest\QueryParam(name: 'term', description: 'Free search term', nullable: true)]
+    #[Rest\QueryParam(name: 'modified_after', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records changed after this date will be included. You need to pass in a UTC date-time, as this field is stored in UTC (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
     public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository, ProjectRepository $projectRepository, ActivityRepository $activityRepository, UserRepository $userRepository): Response
     {
         $query = new TimesheetQuery(false);
@@ -112,6 +151,9 @@ final class TimesheetController extends BaseApiController
 
             if (!$seeAll) {
                 foreach ($userRepository->findByIds($users) as $user) {
+                    if (!$this->isGranted('access_user', $user)) {
+                        throw $this->createAccessDeniedException('Cannot access user: ' . $user->getId());
+                    }
                     $query->addUser($user);
                 }
             }
@@ -125,45 +167,42 @@ final class TimesheetController extends BaseApiController
 
         /** @var array<int> $customers */
         $customers = $paramFetcher->get('customers');
-        $customer = $paramFetcher->get('customer');
-        if (\is_string($customer) && $customer !== '') {
-            $customers[] = $customer;
+        $cu = $paramFetcher->get('customer');
+        if (\is_string($cu) && $cu !== '') {
+            $customers[] = $cu;
         }
 
-        foreach (array_unique($customers) as $customerId) {
-            $customer = $customerRepository->find($customerId);
-            if ($customer === null) {
-                throw $this->createNotFoundException('Unknown customer: ' . $customerId);
+        foreach ($customerRepository->findByIds(array_unique($customers)) as $customer) {
+            if (!$this->isGranted('access', $customer)) {
+                throw $this->createAccessDeniedException('Cannot access Customer: ' . $customer->getId());
             }
             $query->addCustomer($customer);
         }
 
         /** @var array<int> $projects */
         $projects = $paramFetcher->get('projects');
-        $project = $paramFetcher->get('project');
-        if (\is_string($project) && $project !== '') {
-            $projects[] = $project;
+        $pr = $paramFetcher->get('project');
+        if (\is_string($pr) && $pr !== '') {
+            $projects[] = $pr;
         }
 
-        foreach (array_unique($projects) as $projectId) {
-            $project = $projectRepository->find($projectId);
-            if ($project === null) {
-                throw $this->createNotFoundException('Unknown project: ' . $project);
+        foreach ($projectRepository->findByIds(array_unique($projects)) as $project) {
+            if (!$this->isGranted('access', $project)) {
+                throw $this->createAccessDeniedException('Cannot access Project: ' . $project->getId());
             }
             $query->addProject($project);
         }
 
         /** @var array<int> $activities */
         $activities = $paramFetcher->get('activities');
-        $activity = $paramFetcher->get('activity');
-        if (\is_string($activity) && $activity !== '') {
-            $activities[] = $activity;
+        $ac = $paramFetcher->get('activity');
+        if (\is_string($ac) && $ac !== '') {
+            $activities[] = $ac;
         }
 
-        foreach (array_unique($activities) as $activityId) {
-            $activity = $activityRepository->find($activityId);
-            if ($activity === null) {
-                throw $this->createNotFoundException('Unknown activity: ' . $activity);
+        foreach ($activityRepository->findByIds(array_unique($activities)) as $activity) {
+            if (!$this->isGranted('access', $activity)) {
+                throw $this->createAccessDeniedException('Cannot access Activity: ' . $activity->getId());
             }
             $query->addActivity($activity);
         }
@@ -171,20 +210,13 @@ final class TimesheetController extends BaseApiController
         /** @var array<string> $tags */
         $tags = $paramFetcher->get('tags');
         if (\is_array($tags) && \count($tags) > 0) {
-            $tags = $this->tagRepository->findTagsByName($tags, true);
-            foreach ($tags as $tag) {
+            $tagsByName = $this->tagRepository->findTagsByName($tags, true);
+            if (\count($tagsByName) === 0) {
+                throw new BadRequestHttpException('Given tags were not found');
+            }
+            foreach ($tagsByName as $tag) {
                 $query->addTag($tag);
             }
-        }
-
-        $order = $paramFetcher->get('order');
-        if (\is_string($order) && $order !== '') {
-            $query->setOrder($order);
-        }
-
-        $orderBy = $paramFetcher->get('orderBy');
-        if (\is_string($orderBy) && $orderBy !== '') {
-            $query->setOrderBy($orderBy);
         }
 
         $factory = $this->getDateTimeFactory();
@@ -234,43 +266,40 @@ final class TimesheetController extends BaseApiController
             $query->setSearchTerm(new SearchTerm($term));
         }
 
-        if (!empty($modifiedAfter = $paramFetcher->get('modified_after'))) {
-            $query->setModifiedAfter($factory->createDateTime($modifiedAfter));
+        $modifiedAfter = $paramFetcher->get('modified_after');
+        if (\is_string($modifiedAfter)) {
+            $query->setModifiedAfter(new \DateTimeImmutable($modifiedAfter, new \DateTimeZone('UTC')));
         }
 
-        $pagination = $this->repository->getPagerfantaForQuery($query);
-        $view = $this->createPaginatedView($pagination);
+        $data = $this->repository->getPagerfantaForQuery($query);
+
+        $groups = self::GROUPS_COLLECTION;
 
         $full = $paramFetcher->get('full');
         if ($full === '1' || $full === 'true') {
-            $view->getContext()->setGroups(self::GROUPS_COLLECTION_FULL);
-        } else {
-            $view->getContext()->setGroups(self::GROUPS_COLLECTION);
+            $groups = self::GROUPS_COLLECTION_FULL;
         }
 
-        return $this->viewHandler->handle($view);
+        return $this->renderCollection($data, $groups);
     }
 
     /**
-     * Returns one timesheet record
+     * Fetch timesheet
      */
     #[IsGranted('view', 'timesheet')]
-    #[OA\Response(response: 200, description: 'Returns one timesheet record. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO 8601.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
-    #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to fetch', required: true)]
+    #[OA\Response(response: 200, description: 'Returns one timesheet. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO 8601.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet ID to fetch', required: true)]
     #[Route(methods: ['GET'], path: '/{id}', name: 'get_timesheet', requirements: ['id' => '\d+'])]
     public function getAction(Timesheet $timesheet): Response
     {
-        $view = new View($timesheet, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($timesheet, self::GROUPS_ENTITY);
     }
 
     /**
-     * Creates a new timesheet record
+     * Create timesheet
      */
     #[IsGranted('create_own_timesheet')]
-    #[OA\Post(description: 'Creates a new timesheet record for the current user and returns it afterwards.', responses: [new OA\Response(response: 200, description: 'Returns the new created timesheet', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))])]
+    #[OA\Post(description: 'Creates a new timesheet for the current user and returns it afterwards.', responses: [new OA\Response(response: 200, description: 'Returns the new created timesheet', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEditForm'))]
     #[Route(methods: ['POST'], path: '', name: 'post_timesheet')]
     #[Rest\QueryParam(name: 'full', strict: true, nullable: true, description: 'Allows to fetch fully serialized objects including subresources (TimesheetExpanded). Allowed values: true (default: false)')]
@@ -297,17 +326,13 @@ final class TimesheetController extends BaseApiController
 
         if ($form->isValid()) {
             try {
-                $this->service->saveNewTimesheet($timesheet);
-
-                $view = new View($timesheet, 200);
+                $this->service->saveTimesheet($timesheet);
 
                 if (null !== $paramFetcher->get('full')) {
-                    $view->getContext()->setGroups(self::GROUPS_ENTITY_FULL);
-                } else {
-                    $view->getContext()->setGroups(self::GROUPS_ENTITY);
+                    return $this->renderEntity($timesheet, self::GROUPS_ENTITY_FULL);
                 }
 
-                return $this->viewHandler->handle($view);
+                return $this->renderEntity($timesheet, self::GROUPS_ENTITY);
             } catch (ValidationFailedException $ex) {
                 $form->addError(new FormError($ex->getMessage()));
             }
@@ -320,11 +345,11 @@ final class TimesheetController extends BaseApiController
     }
 
     /**
-     * Update an existing timesheet record
+     * Update timesheet
      */
     #[IsGranted('edit', 'timesheet')]
-    #[OA\Patch(description: 'Update an existing timesheet record, you can pass all or just a subset of the attributes.', responses: [new OA\Response(response: 200, description: 'Returns the updated timesheet', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))])]
-    #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to update', required: true)]
+    #[OA\Patch(description: 'Update timesheet, you can pass all or just a subset of the attributes.', responses: [new OA\Response(response: 200, description: 'Returns the updated timesheet', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet ID to update', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEditForm'))]
     #[Route(methods: ['PATCH'], path: '/{id}', name: 'patch_timesheet', requirements: ['id' => '\d+'])]
     public function patchAction(Request $request, Timesheet $timesheet): Response
@@ -338,7 +363,7 @@ final class TimesheetController extends BaseApiController
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
             'include_billable' => $this->isGranted('edit_billable', $timesheet),
-            'include_user' => $this->isGranted('edit', $timesheet),
+            'include_user' => $this->isGranted('edit_other_timesheet'),
             'allow_begin_datetime' => $mode->canUpdateTimesWithAPI(),
             'allow_end_datetime' => $mode->canUpdateTimesWithAPI(),
             'date_format' => self::DATE_FORMAT,
@@ -354,20 +379,17 @@ final class TimesheetController extends BaseApiController
             return $this->viewHandler->handle($view);
         }
 
-        $this->service->updateTimesheet($timesheet);
+        $this->service->saveTimesheet($timesheet);
 
-        $view = new View($timesheet, Response::HTTP_OK);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($timesheet, self::GROUPS_ENTITY);
     }
 
     /**
-     * Delete an existing timesheet record
+     * Delete timesheet
      */
     #[IsGranted('delete', 'timesheet')]
-    #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one timesheet record')])]
-    #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to delete', required: true)]
+    #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one timesheet')])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet ID to delete', required: true)]
     #[Route(methods: ['DELETE'], path: '/{id}', name: 'delete_timesheet', requirements: ['id' => '\d+'])]
     public function deleteAction(Timesheet $timesheet): Response
     {
@@ -379,13 +401,13 @@ final class TimesheetController extends BaseApiController
     }
 
     /**
-     * Returns the collection of recent user activities
+     * Fetch recent user activities
      */
     #[IsGranted('view_own_timesheet')]
-    #[OA\Response(response: 200, description: 'Returns the collection of recent user activities (always the latest entry of a unique working set grouped by customer, project and activity)', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TimesheetCollectionExpanded')))]
+    #[OA\Response(response: 200, description: 'Returns a collection of recent user activities (always the latest entry of a unique working set grouped by customer, project and activity)', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TimesheetCollectionExpanded')))]
     #[Route(methods: ['GET'], path: '/recent', name: 'recent_timesheet')]
-    #[Rest\QueryParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records after this date will be included. Default: today - 1 year (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
-    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries (default: 10)')]
+    #[Rest\QueryParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records started at or after this date will be included. Default: today - 1 year (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
+    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries (default: 10, maximum: ' . self::RECENT_ACTIVITIES_MAX_SIZE . ')')]
     public function recentAction(ParamFetcherInterface $paramFetcher): Response
     {
         $user = $this->getUser();
@@ -394,10 +416,11 @@ final class TimesheetController extends BaseApiController
 
         $reqLimit = $paramFetcher->get('size');
         if (\is_string($reqLimit) && $reqLimit !== '') {
-            $limit = (int) $reqLimit;
+            $limit = min((int) $reqLimit, self::RECENT_ACTIVITIES_MAX_SIZE);
         }
 
-        if (null !== ($reqBegin = $paramFetcher->get('begin'))) {
+        $reqBegin = $paramFetcher->get('begin');
+        if (\is_string($reqBegin)) {
             $begin = $this->getDateTimeFactory($user)->createDateTime($reqBegin);
         }
 
@@ -406,17 +429,16 @@ final class TimesheetController extends BaseApiController
         $recentActivity = new RecentActivityEvent($user, $data);
         $this->dispatcher->dispatch($recentActivity);
 
-        $view = new View($recentActivity->getRecentActivities(), 200);
-        $view->getContext()->setGroups(self::GROUPS_COLLECTION_FULL);
+        $recent = $recentActivity->getRecentActivities();
 
-        return $this->viewHandler->handle($view);
+        return $this->renderCollection($recent, self::GROUPS_COLLECTION_FULL);
     }
 
     /**
-     * Returns the collection of active timesheet records
+     * Fetch active timesheets
      */
     #[IsGranted('view_own_timesheet')]
-    #[OA\Response(response: 200, description: 'Returns the collection of active timesheet records for the current user', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TimesheetCollectionExpanded')))]
+    #[OA\Response(response: 200, description: 'Returns a collection of active timesheets for the current user', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TimesheetCollectionExpanded')))]
     #[Route(methods: ['GET'], path: '/active', name: 'active_timesheet')]
     public function activeAction(): Response
     {
@@ -425,40 +447,31 @@ final class TimesheetController extends BaseApiController
 
         $data = $this->repository->getActiveEntries($user);
 
-        $view = new View($data, 200);
-        $view->getContext()->setGroups(self::GROUPS_COLLECTION_FULL);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderCollection($data, self::GROUPS_COLLECTION_FULL);
     }
 
     /**
-     * Stops an active timesheet record.
-     *
-     * This route is available via GET and PATCH, as users over and over again run into errors when stopping.
-     * Likely caused by a slow JS engine and a fast-click after page reload.
+     * Stop active timesheet
      */
     #[IsGranted('stop', 'timesheet')]
-    #[OA\Response(response: 200, description: 'Stops an active timesheet record and returns it afterwards.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
-    #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to stop', required: true)]
-    #[Route(methods: ['GET'], path: '/{id}/stop', name: 'stop_timesheet_get', requirements: ['id' => '\d+'])]
+    #[OA\Response(response: 200, description: 'Stops an active timesheet and returns it afterwards.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet ID to stop', required: true)]
     #[Route(methods: ['PATCH'], path: '/{id}/stop', name: 'stop_timesheet', requirements: ['id' => '\d+'])]
     public function stopAction(Timesheet $timesheet): Response
     {
         $this->service->stopTimesheet($timesheet);
 
-        $view = new View($timesheet, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($timesheet, self::GROUPS_ENTITY);
     }
 
     /**
-     * Restarts a previously stopped timesheet record for the current user
+     * Restart timesheet
+     *
+     * The restarted timesheet will be created for the current user
      */
     #[IsGranted('start', 'timesheet')]
-    #[OA\Response(response: 200, description: 'Restarts a timesheet record for the same customer, project, activity combination. The current user will be the owner of the new record. Kimai tries to stop running records, which is expected to fail depending on the configured rules. Data will be copied from the original record if requested.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
-    #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to restart', required: true)]
-    #[Route(methods: ['GET'], path: '/{id}/restart', name: 'restart_timesheet_get', requirements: ['id' => '\d+'])]
+    #[OA\Response(response: 200, description: 'Restart a timesheet for the same customer, project, activity combination. The current user will be the owner of the new record. Kimai tries to stop running records, which is expected to fail depending on the configured rules. Data will be copied from the original record if requested.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet ID to restart', required: true)]
     #[Route(methods: ['PATCH'], path: '/{id}/restart', name: 'restart_timesheet', requirements: ['id' => '\d+'])]
     #[Rest\RequestParam(name: 'copy', requirements: 'all', strict: true, nullable: true, description: 'Whether data should be copied to the new entry. Allowed values: all (default: nothing is copied)')]
     #[Rest\RequestParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Changes the restart date to the given one (default: now)')]
@@ -472,7 +485,11 @@ final class TimesheetController extends BaseApiController
         $factory = $this->getDateTimeFactory();
 
         $begin = $factory->createDateTime();
-        if (null !== ($beginTmp = $paramFetcher->get('begin'))) {
+        $beginTmp = $paramFetcher->get('begin');
+        if (\is_string($beginTmp)) {
+            if (!$this->getTrackingMode()->canUpdateTimesWithAPI()) {
+                throw $this->createAccessDeniedException('Cannot set begin in the current tracking mode');
+            }
             $begin = $factory->createDateTime($beginTmp);
         }
 
@@ -484,8 +501,7 @@ final class TimesheetController extends BaseApiController
 
         $copy = $paramFetcher->get('copy');
         if ($copy === 'all') {
-            $copyTimesheet->setHourlyRate($timesheet->getHourlyRate());
-            $copyTimesheet->setFixedRate($timesheet->getFixedRate());
+            // we do NOT copy rates, as those should always be calculated from the configured settings
             $copyTimesheet->setDescription($timesheet->getDescription());
             $copyTimesheet->setBillable($timesheet->isBillable());
 
@@ -507,39 +523,33 @@ final class TimesheetController extends BaseApiController
 
         $this->service->restartTimesheet($copyTimesheet, $timesheet);
 
-        $view = new View($copyTimesheet, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($copyTimesheet, self::GROUPS_ENTITY);
     }
 
     /**
-     * Duplicates an existing timesheet record
+     * Duplicate timesheet
      */
     #[IsGranted('duplicate', 'timesheet')]
-    #[OA\Response(response: 200, description: 'Duplicates a timesheet record, resetting the export state only.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
-    #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to duplicate', required: true)]
+    #[OA\Response(response: 200, description: 'Duplicates a timesheet, resetting the export state only.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet ID to duplicate', required: true)]
     #[Route(methods: ['PATCH'], path: '/{id}/duplicate', name: 'duplicate_timesheet', requirements: ['id' => '\d+'])]
     public function duplicateAction(Timesheet $timesheet): Response
     {
         $copyTimesheet = clone $timesheet;
 
         $this->dispatcher->dispatch(new TimesheetDuplicatePreEvent($copyTimesheet, $timesheet));
-        $this->service->saveNewTimesheet($copyTimesheet);
+        $this->service->saveTimesheet($copyTimesheet);
         $this->dispatcher->dispatch(new TimesheetDuplicatePostEvent($copyTimesheet, $timesheet));
 
-        $view = new View($copyTimesheet, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($copyTimesheet, self::GROUPS_ENTITY);
     }
 
     /**
-     * Switch the export state of a timesheet record to (un-)lock it
+     * Toggle timesheet export state
      */
     #[IsGranted('edit_export', 'timesheet')]
     #[OA\Response(response: 200, description: 'Switches the exported state on the record and therefor locks / unlocks it for further updates. Needs edit_export_*_timesheet permission.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
-    #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to switch export state', required: true)]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet ID to switch export state', required: true)]
     #[Route(methods: ['PATCH'], path: '/{id}/export', name: 'export_timesheet', requirements: ['id' => '\d+'])]
     public function exportAction(Timesheet $timesheet): Response
     {
@@ -549,41 +559,37 @@ final class TimesheetController extends BaseApiController
 
         $timesheet->setExported(!$timesheet->isExported());
 
-        $this->service->updateTimesheet($timesheet);
+        $this->service->saveTimesheet($timesheet);
 
-        $view = new View($timesheet, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($timesheet, self::GROUPS_ENTITY);
     }
 
     /**
-     * Sets the value of a meta-field for an existing timesheet.
+     * Update timesheet custom-field
      */
     #[IsGranted('edit', 'timesheet')]
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
-    #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to set the meta-field value for', required: true)]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet ID to set the meta-field value for', required: true)]
     #[Route(methods: ['PATCH'], path: '/{id}/meta', requirements: ['id' => '\d+'])]
-    #[Rest\RequestParam(name: 'name', strict: true, nullable: false, description: 'The meta-field name')]
+    #[Rest\RequestParam(name: 'name', requirements: [new Constraints\Type('string')], strict: true, nullable: false, description: 'The meta-field name')]
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
-    public function metaAction(Timesheet $timesheet, ParamFetcherInterface $paramFetcher): Response
+    public function metaAction(Timesheet $timesheet, ParamFetcherInterface $paramFetcher, MetaFieldValidator $metaFieldValidator): Response
     {
         $event = new TimesheetMetaDefinitionEvent($timesheet);
         $this->dispatcher->dispatch($event);
 
         $name = $paramFetcher->get('name');
+        $value = $paramFetcher->get('value');
 
         if (!\is_string($name) || null === ($meta = $timesheet->getMetaField($name))) {
             throw $this->createNotFoundException('Unknown meta-field requested');
         }
 
-        $meta->setValue($paramFetcher->get('value'));
+        $metaFieldValidator->validate($timesheet, $meta, $value);
+        $meta->setValue($value);
 
-        $this->service->updateTimesheet($timesheet);
+        $this->service->saveTimesheet($timesheet);
 
-        $view = new View($timesheet, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($timesheet, self::GROUPS_ENTITY);
     }
 }

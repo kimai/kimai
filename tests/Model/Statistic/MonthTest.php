@@ -11,11 +11,11 @@ namespace App\Tests\Model\Statistic;
 
 use App\Model\Statistic\Month;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @covers \App\Model\Statistic\Month
- */
-class MonthTest extends AbstractTimesheetTest
+#[CoversClass(Month::class)]
+class MonthTest extends AbstractTimesheetTestCase
 {
     public function testDefaultValues(): void
     {
@@ -29,7 +29,7 @@ class MonthTest extends AbstractTimesheetTest
         self::assertSame(0.0, $sut->getBillableRate());
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
         yield ['01', '01', 1];
         yield ['02', '02', 2];
@@ -57,9 +57,7 @@ class MonthTest extends AbstractTimesheetTest
         yield [12, '12', 12];
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testAllowedMonths($init, $month, $number): void
     {
         $sut = new Month($init);
@@ -67,7 +65,7 @@ class MonthTest extends AbstractTimesheetTest
         self::assertEquals($number, $sut->getMonthNumber());
     }
 
-    public function getInvalidTestData()
+    public static function getInvalidTestData()
     {
         yield ['00'];
         yield ['13'];
@@ -76,9 +74,7 @@ class MonthTest extends AbstractTimesheetTest
         yield [19];
     }
 
-    /**
-     * @dataProvider getInvalidTestData
-     */
+    #[DataProvider('getInvalidTestData')]
     public function testInvalidMonths($month): void
     {
         $this->expectException(InvalidArgumentException::class);

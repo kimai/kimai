@@ -14,7 +14,7 @@ namespace App\Tests\Form\Type;
  */
 class TypeTestModel extends \ArrayObject
 {
-    public function __set(string $name, string|int|null $value)
+    public function __set(string $name, string|int|null|array $value)
     {
         $this->offsetSet($name, $value);
     }

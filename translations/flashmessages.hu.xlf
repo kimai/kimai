@@ -6,49 +6,49 @@
         <source>warning</source>
         <target>Figyelmeztetés</target>
       </trans-unit>
-      <trans-unit id="WmrEP_5" resname="timesheet.stop.success">
+      <trans-unit id="WmrEP_5" resname="timesheet.stop.success" xml:space="preserve">
         <source>timesheet.stop.success</source>
-        <target>Idő rögzítése leállítva</target>
+        <target state="translated">Időrögzítés leállítva</target>
       </trans-unit>
-      <trans-unit id="NPBnpK_" resname="timesheet.stop.error">
+      <trans-unit id="NPBnpK_" resname="timesheet.stop.error" xml:space="preserve">
         <source>timesheet.stop.error</source>
-        <target>Az idő rögzítését nem lehet leállítani a következő okból</target>
+        <target state="translated">Az időrögzítést nem lehet leállítani</target>
       </trans-unit>
-      <trans-unit id="CCUoZga" resname="timesheet.start.success">
+      <trans-unit id="CCUoZga" resname="timesheet.start.success" xml:space="preserve">
         <source>timesheet.start.success</source>
-        <target>Idő rögzítése elindítva</target>
+        <target state="translated">Időrögzítés elindítva</target>
       </trans-unit>
-      <trans-unit id="3w9tuox" resname="timesheet.start.error">
+      <trans-unit id="3w9tuox" resname="timesheet.start.error" xml:space="preserve">
         <source>timesheet.start.error</source>
-        <target>Az idő rögzítését nem lehet elindítani a következő okból</target>
+        <target state="translated">Az időrögzítést nem lehet elindítani</target>
       </trans-unit>
-      <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
+      <trans-unit id="kPINWEK" resname="timesheet.locked.warning" xml:space="preserve">
         <source>timesheet.locked.warning</source>
-        <target>Egy már exportált rögzítést szerkesztesz</target>
+        <target state="translated">Egy már exportált bejegyzést szerkesztesz</target>
       </trans-unit>
       <trans-unit id="72Ih8zO" resname="action.update.success">
         <source>action.update.success</source>
         <target>Változtatások sikeresen elmentve</target>
       </trans-unit>
-      <trans-unit id="xeu1LSy" resname="action.update.error">
+      <trans-unit id="xeu1LSy" resname="action.update.error" xml:space="preserve">
         <source>action.update.error</source>
-        <target>A változtatásokat nem lehet elmenteni a következő okból: %reason%</target>
+        <target state="translated">A változtatásokat nem lehet elmenteni: %reason%</target>
       </trans-unit>
       <trans-unit id="YV50HDB" resname="action.delete.success">
         <source>action.delete.success</source>
         <target>Bejegyzés törölve</target>
       </trans-unit>
-      <trans-unit id="mW91Tmb" resname="action.delete.error">
+      <trans-unit id="mW91Tmb" resname="action.delete.error" xml:space="preserve">
         <source>action.delete.error</source>
-        <target>A bejegyzést nem lehet törölni a következő okból: %reason%</target>
+        <target state="translated">A bejegyzést nem lehet törölni: %reason%</target>
       </trans-unit>
-      <trans-unit id="B_cz49z" resname="invoice.first_template">
+      <trans-unit id="B_cz49z" resname="invoice.first_template" xml:space="preserve">
         <source>invoice.first_template</source>
-        <target>Létre kell hoznod az első számla sablonodat mielőtt folytatnád</target>
+        <target state="translated">Először létre kell hoznod egy számla sablont</target>
       </trans-unit>
-      <trans-unit id="wejAEcR" resname="action.upload.error">
+      <trans-unit id="wejAEcR" resname="action.upload.error" xml:space="preserve">
         <source>action.upload.error</source>
-        <target>A fájlt nem lehetett feltölteni vagy menteni ezért: %reason%</target>
+        <target state="translated">A fájlt nem lehetett feltölteni vagy menteni: %reason%</target>
       </trans-unit>
       <trans-unit resname="action.csrf.error" id="bOE_q5R">
         <source>action.csrf.error</source>

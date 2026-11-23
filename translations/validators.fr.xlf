@@ -6,9 +6,9 @@
         <source>This value is not a valid role.</source>
         <target>Cette valeur n'est pas un rôle valide.</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
-        <source>End date must not be earlier then start date.</source>
-        <target>La date de fin ne doit pas être antérieure à la date de début.</target>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
+        <source>The end date must not be earlier than the start date.</source>
+        <target state="translated">La date de fin ne doit pas être antérieure à la date de début.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
@@ -118,7 +118,7 @@
         <source>An absence must have a date.</source>
         <target state="translated">Une absence doit avoir une date.</target>
       </trans-unit>
-      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day.">
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
         <target state="translated">Une absence ne peut être programmée avant votre première journée de travail.</target>
       </trans-unit>
@@ -153,6 +153,46 @@
       <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve">
         <source>The CSRF token is invalid. Please try to resubmit the form.</source>
         <target state="translated">Essayez de soumettre à nouveau le formulaire. Si le problème persiste, actualisez la page via le navigateur.</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target state="translated">Une absence ne peut pas être enregistrée après le dernier jour ouvrable.</target>
+      </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target state="translated">La période sélectionnée ne peut pas être verrouillée : des demandes d’absence non confirmées sont en attente.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">La durée ne peut pas être négative.</target>
+      </trans-unit>
+      <trans-unit id="EDEDQtZ" resname="These characters are not allowed: {{ chars }}" xml:space="preserve">
+        <source>These characters are not allowed: {{ chars }}</source>
+        <target state="translated">Les caractères suivants ne sont pas autorisés : {{ chars }}</target>
+      </trans-unit>
+      <trans-unit id="7hNS8l3" resname="A maximum duration of {{ value }} is allowed." xml:space="preserve">
+        <source>A maximum duration of {{ value }} is allowed.</source>
+        <target state="translated">Une durée maximale de {{ value }} est permise.</target>
+      </trans-unit>
+      <trans-unit id="Dp2KT8W" resname="The field {{ field }} is required, please select a value" xml:space="preserve">
+        <source>Please select a value for {{ field }}</source>
+        <target state="translated">Veuillez sélectionner une valeur pour {{ field }}</target>
+      </trans-unit>
+      <trans-unit id="5vkuQs2" resname="The project is locked until %date%, please choose a later date." xml:space="preserve">
+        <source>The project is locked until %date%, please choose a later date.</source>
+        <target state="translated">Le projet est verrouillé jusqu'à %date%, veuillez choisir une date ultérieure.</target>
+      </trans-unit>
+      <trans-unit id="vgsD_Cw" resname="The project is locked for the selected times." xml:space="preserve">
+        <source>The project is locked for the selected times.</source>
+        <target state="translated">Le projet est verrouillé pour les temps sélectionnés.</target>
+      </trans-unit>
+      <trans-unit id="5Yso.63" resname="The new password must be different from the current password.">
+        <source>The new password must be different from the current password.</source>
+        <target state="translated">Le nouveau mot de passe doit être différent du mot de passe actuel.</target>
+      </trans-unit>
+      <trans-unit id="Y38WSIo" resname="Half days cannot be combined with filling up to the expected working time.">
+        <source>Half days cannot be combined with filling up to the expected working time.</source>
+        <target state="translated">Les demi-journées ne peuvent pas être cumulées pour atteindre la durée de travail prévue.</target>
       </trans-unit>
     </body>
   </file>

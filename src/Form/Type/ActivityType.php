@@ -26,7 +26,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class ActivityType extends AbstractType
 {
-    public function __construct(private ActivityHelper $activityHelper, private ProjectHelper $projectHelper)
+    public function __construct(private readonly ActivityHelper $activityHelper, private readonly ProjectHelper $projectHelper)
     {
     }
 
@@ -35,10 +35,12 @@ final class ActivityType extends AbstractType
         return $this->activityHelper->getChoiceLabel($activity);
     }
 
-    public function groupBy(Activity $activity, $key, $index): ?string
+    public function groupBy(Activity $activity, $key, $index): string
     {
         if (null === $activity->getProject()) {
-            return null;
+            // this creates a optgroup with an empty title. previously this was null, which resulted in options without optgroup
+            // and those are ordered by Tomselect at the top - so globals always came first, see #4674
+            return '';
         }
 
         return $this->projectHelper->getChoiceLabel($activity->getProject());
@@ -72,7 +74,7 @@ final class ActivityType extends AbstractType
             'choice_label' => [$this, 'getChoiceLabel'],
             'choice_attr' => [$this, 'getChoiceAttributes'],
             'group_by' => [$this, 'groupBy'],
-            'query_builder_for_user' => true,
+            'query_builder_for_user' => true, // @deprecated since 2.67
             // @var Project|Project[]|int|int[]|null
             'projects' => null,
             // @var Activity|Activity[]|int|int[]|null
@@ -93,10 +95,7 @@ final class ActivityType extends AbstractType
         $resolver->setDefault('query_builder', function (Options $options) {
             return function (ActivityRepository $repo) use ($options) {
                 $query = new ActivityFormTypeQuery($options['activities'], $options['projects']);
-
-                if (true === $options['query_builder_for_user']) {
-                    $query->setUser($options['user']);
-                }
+                $query->setUser($options['user']);
 
                 if (null !== $options['ignore_activity']) {
                     $query->setActivityToIgnore($options['ignore_activity']);

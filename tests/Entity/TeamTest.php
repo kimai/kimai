@@ -17,11 +17,10 @@ use App\Entity\Team;
 use App\Entity\TeamMember;
 use App\Entity\User;
 use Doctrine\Common\Collections\Collection;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Entity\Team
- */
+#[CoversClass(Team::class)]
 class TeamTest extends TestCase
 {
     public function testDefaultValues(): void
@@ -44,6 +43,7 @@ class TeamTest extends TestCase
     {
         $sut = new Team('foo');
         self::assertNull($sut->getColor());
+        self::assertEquals('#e135f4', $sut->getColorSafe());
         self::assertFalse($sut->hasColor());
 
         $sut->setColor(Constants::DEFAULT_COLOR);
@@ -284,7 +284,9 @@ class TeamTest extends TestCase
         self::assertSame($p, $sut->getProjects()[0]);
         self::assertSame($a, $sut->getActivities()[0]);
         self::assertSame($u, $sut->getTeamleads()[0]);
-        self::assertSame($u, $sut->getMembers()[0]->getUser());
+        $firstMember = $sut->getMembers()[0];
+        self::assertInstanceOf(TeamMember::class, $firstMember);
+        self::assertSame($u, $firstMember->getUser());
         self::assertSame($member->getUser(), $sut->getUsers()[1]);
     }
 }

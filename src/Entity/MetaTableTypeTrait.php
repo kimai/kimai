@@ -10,6 +10,8 @@
 namespace App\Entity;
 
 use App\Form\Type\YesNoType;
+use App\Validator\Constraints as Constraints;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -22,13 +24,14 @@ trait MetaTableTypeTrait
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[Serializer\Exclude]
     private ?int $id = null;
     /**
      * Name of the meta (custom) field
      */
-    #[ORM\Column(name: 'name', type: 'string', length: 50, nullable: false)]
+    #[ORM\Column(name: 'name', type: Types::STRING, length: 50, nullable: false)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\NotNull]
     #[Assert\Length(min: 2, max: 50)]
     #[Serializer\Expose]
@@ -37,12 +40,12 @@ trait MetaTableTypeTrait
     /**
      * Value of the meta (custom) field
      */
-    #[ORM\Column(name: 'value', type: 'text', length: 65535, nullable: true)]
+    #[ORM\Column(name: 'value', type: Types::TEXT, length: 65535, nullable: true)]
     #[Assert\Length(max: 65535)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?string $value = null;
-    #[ORM\Column(name: 'visible', type: 'boolean', nullable: false, options: ['default' => false])]
+    #[ORM\Column(name: 'visible', type: Types::BOOLEAN, nullable: false, options: ['default' => false])]
     #[Assert\NotNull]
     private bool $visible = false;
     private ?string $label = null;
@@ -61,11 +64,12 @@ trait MetaTableTypeTrait
     /**
      * Used for data conversion during form transformation.
      *
-     * ATTENTION: This field can be used to temporary hold data in another format (e.g. array) during form transformation.
-     * TODO unclear when "array" should happen. the above statement is old and maybe we can remove the "mixed” type
+     * This field can be used to temporary hold data in another format (e.g. array) during form transformation.
      */
     private mixed $data = null;
     private bool $updated = false;
+    private ?string $section = null;
+    private ?string $formTheme = null;
 
     public function getName(): ?string
     {
@@ -109,16 +113,14 @@ trait MetaTableTypeTrait
 
         // unchecked checkboxes / false bool would save an empty string in the database
         // those cannot be searched in the database
-        if (null !== $value) {
-            switch ($this->type) {
-                case YesNoType::class:
-                case CheckboxType::class:
-                    if (!\is_int($value) && !\is_bool($value) && !\is_string($value)) {
-                        throw new \InvalidArgumentException('Failed converting meta-field bool value');
-                    } else {
-                        $value = (string) $value;
-                    }
-            }
+        switch ($this->type) {
+            case YesNoType::class:
+            case CheckboxType::class:
+                if ($value === false || $value === '' || !\is_scalar($value)) {
+                    $value = 0;
+                } else {
+                    $value = 1;
+                }
         }
 
         if ($value === null) {
@@ -194,13 +196,11 @@ trait MetaTableTypeTrait
 
     public function merge(MetaTableTypeInterface $meta): MetaTableTypeInterface
     {
-        $this
-            ->setConstraints($meta->getConstraints())
-            ->setIsRequired($meta->isRequired())
-            ->setIsVisible($meta->isVisible())
-            ->setOptions($meta->getOptions())
-            ->setOrder($meta->getOrder())
-        ;
+        $this->setConstraints($meta->getConstraints());
+        $this->setIsRequired($meta->isRequired());
+        $this->setIsVisible($meta->isVisible());
+        $this->setOptions($meta->getOptions());
+        $this->setOrder($meta->getOrder());
 
         if ($meta->getLabel() !== null) {
             $this->setLabel($meta->getLabel());
@@ -208,6 +208,10 @@ trait MetaTableTypeTrait
 
         if ($meta->getType() !== null) {
             $this->setType($meta->getType());
+        }
+
+        if ($meta->getSection() !== null) {
+            $this->setSection($meta->getSection());
         }
 
         return $this;
@@ -267,11 +271,31 @@ trait MetaTableTypeTrait
         }
     }
 
+    public function setSection(?string $section): void
+    {
+        $this->section = $section;
+    }
+
+    public function getSection(): ?string
+    {
+        return $this->section;
+    }
+
     /**
      * Whether this field is defined by a plugin or just a value stored in the database.
      */
     public function isDefined(): bool
     {
         return $this->type !== null;
+    }
+
+    public function getFormTheme(): ?string
+    {
+        return $this->formTheme;
+    }
+
+    public function setFormTheme(string $formTheme): void
+    {
+        $this->formTheme = $formTheme;
     }
 }

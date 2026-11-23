@@ -20,7 +20,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @final
@@ -162,7 +162,7 @@ class ActivityStatisticService
     /**
      * @param Activity[] $activities
      */
-    private function createStatisticQueryBuilder(array $activities, \DateTimeInterface $begin = null, ?\DateTimeInterface $end = null): QueryBuilder
+    private function createStatisticQueryBuilder(array $activities, ?\DateTimeInterface $begin = null, ?\DateTimeInterface $end = null): QueryBuilder
     {
         $qb = $this->timesheetRepository->createQueryBuilder('t');
         $qb

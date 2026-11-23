@@ -1,5 +1,10 @@
 {% block dd_timesheet %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% import "calendar/widgets.html.twig" as calendar %}
-    {{ calendar.dd_event(widgets.label_color(entry.title, entry.color), entry.project ? widgets.label_customer(entry.project.customer) : null, entry.project ? widgets.label_project(entry.project) : null, null) }}
+    {% if entry.activity is not null %}
+        {% set title = widgets.label_activity(entry.activity, entry.activity.color) %}
+    {% else %}
+        {% set title = widgets.label_color(entry.title, entry.color) %}
+    {% endif %}
+    {{ calendar.dd_event(title, entry.project ? widgets.label_customer(entry.project.customer) : null, entry.project ? widgets.label_project(entry.project) : null, null) }}
 {% endblock %}

@@ -9,23 +9,17 @@
 
 namespace App\Tests\Entity;
 
+use App\Entity\CommentTableTypeTrait;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Entity\CustomerComment
- * @covers \App\Entity\CommentTableTypeTrait
- */
-class CustomerCommentTest extends AbstractCommentEntityTest
+#[CoversClass(CommentTableTypeTrait::class)]
+#[CoversClass(CustomerComment::class)]
+class CustomerCommentTest extends AbstractCommentEntityTestCase
 {
     protected function getEntity(): CustomerComment
     {
         return new CustomerComment(new Customer('foo'));
-    }
-
-    public function testEntitySpecificMethods(): void
-    {
-        $sut = $this->getEntity();
-        self::assertNotNull($sut->getCustomer());
     }
 }

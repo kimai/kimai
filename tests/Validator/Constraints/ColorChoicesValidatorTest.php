@@ -11,15 +11,17 @@ namespace App\Tests\Validator\Constraints;
 
 use App\Validator\Constraints\ColorChoices;
 use App\Validator\Constraints\ColorChoicesValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\ColorChoices
- * @covers \App\Validator\Constraints\ColorChoicesValidator
  * @extends ConstraintValidatorTestCase<ColorChoicesValidator>
  */
+#[CoversClass(ColorChoices::class)]
+#[CoversClass(ColorChoicesValidator::class)]
 class ColorChoicesValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): ColorChoicesValidator
@@ -27,7 +29,7 @@ class ColorChoicesValidatorTest extends ConstraintValidatorTestCase
         return new ColorChoicesValidator();
     }
 
-    public function getValidColors()
+    public static function getValidColors(): iterable
     {
         yield ['#000000'];
         yield ['#fff000'];
@@ -47,18 +49,15 @@ class ColorChoicesValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate('#000', new NotBlank());
     }
 
-    /**
-     * @dataProvider getValidColors
-     * @param string $color
-     */
-    public function testConstraintWithValidColor($color): void
+    #[DataProvider('getValidColors')]
+    public function testConstraintWithValidColor(?string $color): void
     {
         $constraint = new ColorChoices();
         $this->validator->validate($color, $constraint);
         $this->assertNoViolation();
     }
 
-    public function getInvalidColors()
+    public static function getInvalidColors(): iterable
     {
         yield ['sdf_sdf|#000000', null, 'sdf_sdf', '#000000'];
         yield ['sdfghjklöß.|#aaabbb', null, 'sdfghjklöß.', '#aaabbb'];
@@ -75,15 +74,22 @@ class ColorChoicesValidatorTest extends ConstraintValidatorTestCase
         yield ['#ffdd', '#ffdd', null];
         yield ['#ffddd', '#ffddd', null];
         yield ['#ffddddd', '#ffddddd', null];
+        // an invalid entry placed *after* a valid "bare" color (where name === code) must still
+        // be reported - every comma-separated entry has to be validated, not only the ones up to
+        // the first bare color
+        yield ['#fffaaa,fffaaa', 'fffaaa', null];
+        yield ['#fffaaa,#f', '#f', null];
+        yield ['#fffaaa,string', 'string', null];
+        yield ['#fffaaa,abcdefghijklmnopqrstu|#aaabbb', null, 'abcdefghijklmnopqrstu', '#aaabbb'];
     }
 
     /**
-     * @dataProvider getInvalidColors
      * @param string $color
      * @param string|null $invalidColor
      * @param string|null $invalidName
      * @param string|null $invalidNameCode
      */
+    #[DataProvider('getInvalidColors')]
     public function testValidationError(string $color, $invalidColor = null, $invalidName = null, $invalidNameCode = null): void
     {
         $constraint = new ColorChoices();

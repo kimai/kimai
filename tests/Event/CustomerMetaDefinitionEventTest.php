@@ -11,17 +11,16 @@ namespace App\Tests\Event;
 
 use App\Entity\Customer;
 use App\Event\CustomerMetaDefinitionEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\CustomerMetaDefinitionEvent
- */
+#[CoversClass(CustomerMetaDefinitionEvent::class)]
 class CustomerMetaDefinitionEventTest extends TestCase
 {
     public function testGetterAndSetter(): void
     {
         $customer = new Customer('foo');
         $sut = new CustomerMetaDefinitionEvent($customer);
-        $this->assertSame($customer, $sut->getEntity());
+        self::assertSame($customer, $sut->getEntity());
     }
 }

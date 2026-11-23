@@ -25,7 +25,7 @@ class ActivityTestMetaFieldSubscriberMock implements EventSubscriberInterface
         ];
     }
 
-    public function loadMeta(ActivityMetaDefinitionEvent $event)
+    public function loadMeta(ActivityMetaDefinitionEvent $event): void
     {
         $definition = (new ActivityMeta())
             ->setName('metatestmock')

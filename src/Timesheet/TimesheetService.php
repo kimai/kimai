@@ -45,12 +45,12 @@ final class TimesheetService
     private array $doNotValidateCodes = [];
 
     public function __construct(
-        private SystemConfiguration $configuration,
-        private TimesheetRepository $repository,
-        private TrackingModeService $trackingModeService,
-        private EventDispatcherInterface $dispatcher,
-        private AuthorizationCheckerInterface $auth,
-        private ValidatorInterface $validator
+        private readonly SystemConfiguration $configuration,
+        private readonly TimesheetRepository $repository,
+        private readonly TrackingModeService $trackingModeService,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly AuthorizationCheckerInterface $auth,
+        private readonly ValidatorInterface $validator
     ) {
     }
 
@@ -101,18 +101,17 @@ final class TimesheetService
     public function restartTimesheet(Timesheet $timesheet, Timesheet $copyFrom): Timesheet
     {
         $this->dispatcher->dispatch(new TimesheetRestartPreEvent($timesheet, $copyFrom));
-        $this->saveNewTimesheet($timesheet);
+        $this->saveNewTimesheet($timesheet); // @phpstan-ignore method.deprecated
         $this->dispatcher->dispatch(new TimesheetRestartPostEvent($timesheet, $copyFrom));
 
         return $timesheet;
     }
 
     /**
-     * @param Timesheet $timesheet
-     * @return Timesheet
      * @throws ValidationFailedException for invalid timesheets or running timesheets that should be stopped
      * @throws InvalidArgumentException for already persisted timesheets
      * @throws AccessDeniedException if user is not allowed to start timesheet
+     * @deprecated since 2.36.0 - use saveTimesheet() instead
      */
     public function saveNewTimesheet(Timesheet $timesheet): Timesheet
     {
@@ -120,8 +119,9 @@ final class TimesheetService
             throw new InvalidArgumentException('Cannot create timesheet, already persisted');
         }
 
-        if (null === $timesheet->getEnd() && !$this->auth->isGranted('start', $timesheet)) {
-            throw new AccessDeniedException('You are not allowed to start this timesheet record');
+        $permission = ($timesheet->isRunning()) ? 'start' : 'create';
+        if (!$this->auth->isGranted($permission, $timesheet)) {
+            throw new AccessDeniedException(\sprintf('You are not allowed to %s this timesheet record', $permission));
         }
 
         $this->repository->begin();
@@ -152,12 +152,19 @@ final class TimesheetService
         return $timesheet;
     }
 
+    public function saveTimesheet(Timesheet $timesheet): Timesheet
+    {
+        if ($timesheet->getId() === null) {
+            return $this->saveNewTimesheet($timesheet); // @phpstan-ignore method.deprecated
+        } else {
+            return $this->updateTimesheet($timesheet); // @phpstan-ignore method.deprecated
+        }
+    }
+
     /**
-     * Does NOT validate the given timesheet!
+     * Does NOT validate the given timesheet.
      *
-     * @param Timesheet $timesheet
-     * @return Timesheet
-     * @throws \Exception
+     * @deprecated since 2.36.0 - use saveTimesheet() instead
      */
     public function updateTimesheet(Timesheet $timesheet): Timesheet
     {
@@ -233,11 +240,10 @@ final class TimesheetService
     }
 
     /**
-     * @param Timesheet $timesheet
      * @param string[] $groups
      * @throws ValidationFailedException
      */
-    private function validateTimesheet(Timesheet $timesheet, array $groups = []): void
+    public function validateTimesheet(Timesheet $timesheet, array $groups = []): void
     {
         $errors = $this->validator->validate($timesheet, null, $groups);
 
@@ -248,7 +254,7 @@ final class TimesheetService
                     continue;
                 }
 
-                throw new ValidationFailedException($errors, 'Validation Failed');
+                throw new ValidationFailedException($errors);
             }
         }
     }

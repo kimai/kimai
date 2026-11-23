@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="bg" datatype="plaintext" original="tasks.en.xlf">
+    <body>
+      <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="no">
+        <source>report_tasks_assigned</source>
+        <target state="translated">Задачи по потребител</target>
+      </trans-unit>
+      <trans-unit id="8c0YWZm" resname="report_tasks_teams" xml:space="preserve" approved="no">
+        <source>report_tasks_teams</source>
+        <target state="translated">Екипни задачи</target>
+      </trans-unit>
+      <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="no">
+        <source>task.start</source>
+        <target state="translated">Започнu обработката</target>
+      </trans-unit>
+      <trans-unit id="XD7TZh7" resname="task.stop" xml:space="preserve" approved="no">
+        <source>task.stop</source>
+        <target state="translated">Пауза на обработката</target>
+      </trans-unit>
+      <trans-unit id="sG_9DvK" resname="task.assign" xml:space="preserve" approved="no">
+        <source>task.assign</source>
+        <target state="translated">Възложи ми</target>
+      </trans-unit>
+      <trans-unit id="qLewfPg" resname="task.unassign" xml:space="preserve" approved="no">
+        <source>task.unassign</source>
+        <target state="translated">Задача за издаване</target>
+      </trans-unit>
+      <trans-unit id="F1_rg1R" resname="task.reopen" xml:space="preserve" approved="no">
+        <source>task.reopen</source>
+        <target state="translated">Повторно отваряне на задачата</target>
+      </trans-unit>
+      <trans-unit id="duBK63z" resname="task.close" xml:space="preserve" approved="no">
+        <source>task.close</source>
+        <target state="translated">Завършете задачата</target>
+      </trans-unit>
+      <trans-unit id="t.y642H" resname="task.create" xml:space="preserve" approved="no">
+        <source>task.create</source>
+        <target state="translated">Създаване на задача</target>
+      </trans-unit>
+      <trans-unit id="s6YOYaU" resname="Tasks" xml:space="preserve" approved="no">
+        <source>Tasks</source>
+        <target state="translated">Задачи</target>
+      </trans-unit>
+      <trans-unit id="7f4C38O" resname="tasks.pending" xml:space="preserve" approved="no">
+        <source>tasks.pending</source>
+        <target state="translated">Чакащи задачи</target>
+      </trans-unit>
+      <trans-unit id="rLKr7Zu" resname="tasks.my" xml:space="preserve" approved="no">
+        <source>tasks.my</source>
+        <target state="translated">Моите задачи</target>
+      </trans-unit>
+      <trans-unit id="FhEb.Hn" resname="task.help.title" xml:space="preserve" approved="no">
+        <source>task.help.title</source>
+        <target state="translated">Кратко описание на задачата</target>
+      </trans-unit>
+      <trans-unit id="WCaBimL" resname="task.help.end" xml:space="preserve" approved="no">
+        <source>task.help.end</source>
+        <target state="translated">Задачата трябва да бъде изпълнена до тази дата</target>
+      </trans-unit>
+      <trans-unit id="taZkyYV" resname="task.help.user" xml:space="preserve" approved="no">
+        <source>task.help.user</source>
+        <target state="translated">Присвояване на тази задача на потребител</target>
+      </trans-unit>
+      <trans-unit id="QF_bQPv" resname="task.help.team" xml:space="preserve" approved="no">
+        <source>task.help.team</source>
+        <target state="translated">Възложете тази задача на екип</target>
+      </trans-unit>
+      <trans-unit id="kMOottI" resname="task.widget_rows" xml:space="preserve" approved="no">
+        <source>task.widget_rows</source>
+        <target state="translated">Брой задачи на страница в уиджета за табло</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Оценка на времето</target>
+      </trans-unit>
+      <trans-unit id="ZCSPtzc" resname="task.help.estimation" xml:space="preserve" approved="no">
+        <source>task.help.estimation</source>
+        <target state="translated">Очаквано време, необходимо за изпълнение на задачата в чч:мм</target>
+      </trans-unit>
+      <trans-unit id="SzbkpWy" resname="task.help.description" xml:space="preserve" approved="no">
+        <source>task.help.description</source>
+        <target state="translated">Това описание ще бъде копирано във всеки запис в отчета за работно време</target>
+      </trans-unit>
+      <trans-unit id="zJvuPBv" resname="task.help.tags" xml:space="preserve" approved="no">
+        <source>task.help.tags</source>
+        <target state="translated">Тези етикети ще бъдат копирани във всеки запис в отчета за работно време</target>
+      </trans-unit>
+      <trans-unit id="agwwK.J" resname="task_no_estimation" xml:space="preserve" approved="no">
+        <source>task_no_estimation</source>
+        <target state="translated">Без оценка</target>
+      </trans-unit>
+      <trans-unit id="kgA8TVH" resname="task_with_estimation" xml:space="preserve" approved="no">
+        <source>task_with_estimation</source>
+        <target state="translated">С оценка</target>
+      </trans-unit>
+      <trans-unit id="H.zMNfb" resname="task_started" xml:space="preserve" approved="no">
+        <source>task_started</source>
+        <target state="translated">Работата започна</target>
+      </trans-unit>
+      <trans-unit id="cu1.2JS" resname="task_not_started" xml:space="preserve" approved="no">
+        <source>task_not_started</source>
+        <target state="translated">Не е започнато</target>
+      </trans-unit>
+      <trans-unit id="ZwdUYYa" resname="task_overdue" xml:space="preserve" approved="no">
+        <source>task_overdue</source>
+        <target state="translated">Просрочено</target>
+      </trans-unit>
+      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
+        <source>task_todo</source>
+        <target state="translated">Задача</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

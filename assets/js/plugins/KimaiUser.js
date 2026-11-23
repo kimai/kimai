@@ -49,4 +49,11 @@ export default class KimaiUser extends KimaiPlugin {
         return this.user.superAdmin;
     }
 
+    /**
+     * @returns {array}
+     */
+    getRoles() {
+        return this.user.roles;
+    }
+
 }

@@ -21,21 +21,22 @@ use App\Event\ActivityUpdatePreEvent;
 use App\Repository\ActivityRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\ValidationFailedException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-/**
- * @covers \App\Activity\ActivityService
- */
+#[CoversClass(ActivityService::class)]
 class ActivityServiceTest extends TestCase
 {
     private function getSut(
         ?EventDispatcherInterface $dispatcher = null,
         ?ValidatorInterface $validator = null,
-        ?ActivityRepository $repository = null
+        ?ActivityRepository $repository = null,
+        array $configuration = []
     ): ActivityService {
         if ($repository === null) {
             $repository = $this->createMock(ActivityRepository::class);
@@ -50,24 +51,11 @@ class ActivityServiceTest extends TestCase
             $validator->method('validate')->willReturn(new ConstraintViolationList());
         }
 
-        $configuration = SystemConfigurationFactory::createStub(['activity' => []]);
+        $configuration = SystemConfigurationFactory::createStub(['activity' => $configuration]);
 
         $service = new ActivityService($repository, $configuration, $dispatcher, $validator);
 
         return $service;
-    }
-
-    public function testCannotSavePersistedProjectAsNew(): void
-    {
-        $project = $this->createMock(Activity::class);
-        $project->expects($this->once())->method('getId')->willReturn(1);
-
-        $sut = $this->getSut();
-
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Cannot create activity, already persisted');
-
-        $sut->saveNewActivity($project);
     }
 
     public function testsaveNewActivityHasValidationError(): void
@@ -83,7 +71,7 @@ class ActivityServiceTest extends TestCase
         $this->expectException(ValidationFailedException::class);
         $this->expectExceptionMessage('Validation Failed');
 
-        $sut->saveNewActivity(new Activity());
+        $sut->saveActivity(new Activity());
     }
 
     public function testUpdateDispatchesEvents(): void
@@ -106,18 +94,14 @@ class ActivityServiceTest extends TestCase
 
         $sut = $this->getSut($dispatcher);
 
-        $sut->updateActivity($project);
+        $sut->saveActivity($project);
     }
 
     public function testcreateNewActivityDispatchesEvents(): void
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event) {
-            if ($event instanceof ActivityMetaDefinitionEvent) {
-                self::assertInstanceOf(Activity::class, $event->getEntity());
-            } elseif ($event instanceof ActivityCreateEvent) {
-                self::assertInstanceOf(Activity::class, $event->getActivity());
-            } else {
+            if (!$event instanceof ActivityMetaDefinitionEvent && !$event instanceof ActivityCreateEvent) {
                 $this->fail('Invalid event received');
             }
 
@@ -136,11 +120,7 @@ class ActivityServiceTest extends TestCase
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event) {
-            if ($event instanceof ActivityCreatePreEvent) {
-                self::assertInstanceOf(Activity::class, $event->getActivity());
-            } elseif ($event instanceof ActivityCreatePostEvent) {
-                self::assertInstanceOf(Activity::class, $event->getActivity());
-            } else {
+            if (!$event instanceof ActivityCreatePreEvent && !$event instanceof ActivityCreatePostEvent) {
                 $this->fail('Invalid event received');
             }
 
@@ -150,7 +130,7 @@ class ActivityServiceTest extends TestCase
         $sut = $this->getSut($dispatcher);
 
         $activity = new Activity();
-        $sut->saveNewActivity($activity);
+        $sut->saveActivity($activity);
     }
 
     public function testcreateNewActivityWithoutCustomer(): void
@@ -162,5 +142,88 @@ class ActivityServiceTest extends TestCase
 
         $project = $sut->createNewActivity();
         self::assertNull($project->getProject());
+    }
+
+    /**
+     * @param \Closure(\DateTimeInterface): string $expected
+     */
+    #[DataProvider('getTestData')]
+    public function testActivityNumber(string $format, \Closure $expected): void
+    {
+        $sut = $this->getSut(null, null, null, ['number_format' => $format]);
+
+        $date = new \DateTimeImmutable();
+        $activity = $sut->createNewActivity();
+
+        self::assertEquals($expected($date), $activity->getNumber());
+    }
+
+    public function testActivityNumberIncrementsForMultipleCreateCallsOnSameInstance(): void
+    {
+        $sut = $this->getSut(null, null, null, ['number_format' => '{ac,1}']);
+
+        $activity1 = $sut->createNewActivity();
+        $activity2 = $sut->createNewActivity();
+        $activity3 = $sut->createNewActivity();
+
+        // countActivity() is mocked and returns 0, the formatter normalizes increaseBy=0 to 1,
+        // so the first generated number is 2. The in-instance counter must bump subsequent calls.
+        self::assertEquals('2', $activity1->getNumber());
+        self::assertEquals('3', $activity2->getNumber());
+        self::assertEquals('4', $activity3->getNumber());
+    }
+
+    /**
+     * @return array<int, array{0: string, 1: \Closure(\DateTimeInterface): string}>
+     */
+    public static function getTestData(): array
+    {
+        $literal = static fn (string $value): \Closure => static fn (): string => $value;
+        $date = static fn (string $format): \Closure => static fn (\DateTimeInterface $d): string => $d->format($format);
+        $yearLong = static fn (int $add): \Closure => static fn (\DateTimeInterface $d): string => (string) ((int) $d->format('Y') + $add);
+        $yearShort = static fn (int $add): \Closure => static fn (\DateTimeInterface $d): string => (string) ((int) $d->format('y') + $add);
+        $monthShort = static fn (int $add): \Closure => static fn (\DateTimeInterface $d): string => (string) ((int) $d->format('m') + $add);
+        $dayShort = static fn (int $add): \Closure => static fn (\DateTimeInterface $d): string => (string) ((int) $d->format('d') + $add);
+
+        return [
+            // simple tests for single calls
+            ['{ac,1}', $literal('2')],
+            ['{ac,2}', $literal('02')],
+            ['{ac,3}', $literal('002')],
+            ['{ac,4}', $literal('0002')],
+            ['{Y}', $date('Y')],
+            ['{y}', $date('y')],
+            ['{M}', $date('m')],
+            ['{m}', $date('n')],
+            ['{D}', $date('d')],
+            ['{d}', $date('j')],
+            // number formatting
+            ['{Y,6}', static fn (\DateTimeInterface $d): string => '00' . $d->format('Y')],
+            ['{M,3}', static fn (\DateTimeInterface $d): string => '0' . $d->format('m')],
+            ['{D,3}', static fn (\DateTimeInterface $d): string => '0' . $d->format('d')],
+            // increment dates
+            ['{YY}', $yearLong(1)],
+            ['{YY+1}', $yearLong(1)],
+            ['{YY+2}', $yearLong(2)],
+            ['{YY+3}', $yearLong(3)],
+            ['{YY-1}', $yearLong(-1)],
+            ['{YY-2}', $yearLong(-2)],
+            ['{YY-3}', $yearLong(-3)],
+            ['{yy}', $yearShort(1)],
+            ['{yy+1}', $yearShort(1)],
+            ['{yy+2}', $yearShort(2)],
+            ['{yy+3}', $yearShort(3)],
+            ['{yy-1}', $yearShort(-1)],
+            ['{yy-2}', $yearShort(-2)],
+            ['{yy-3}', $yearShort(-3)],
+            ['{MM}', $monthShort(1)], // cast to int removes leading zero
+            ['{MM+1}', $monthShort(1)], // cast to int removes leading zero
+            ['{MM+2}', $monthShort(2)], // cast to int removes leading zero
+            ['{MM+3}', $monthShort(3)], // cast to int removes leading zero
+            ['{DD}', $dayShort(1)], // cast to int removes leading zero
+            ['{DD+1}', $dayShort(1)], // cast to int removes leading zero
+            ['{DD+2}', $dayShort(2)], // cast to int removes leading zero
+            ['{DD+3}', $dayShort(3)], // cast to int removes leading zero
+        ];
     }
 }

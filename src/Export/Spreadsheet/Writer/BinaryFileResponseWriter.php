@@ -11,7 +11,6 @@ namespace App\Export\Spreadsheet\Writer;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 final class BinaryFileResponseWriter implements WriterInterface
@@ -19,10 +18,9 @@ final class BinaryFileResponseWriter implements WriterInterface
     private string $prefix;
 
     /**
-     * @param WriterInterface $writer
      * @param string $prefix is only urlencoded but not validated and can break the response if you pass in invalid character
      */
-    public function __construct(private WriterInterface $writer, string $prefix)
+    public function __construct(private readonly WriterInterface $writer, string $prefix)
     {
         $this->prefix = urlencode($prefix);
     }

@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="lt2Y2LO" resname="timesheet" approved="yes">
-        <source>Time tracking</source>
-        <target state="final">Monitoraggio del tempo</target>
-      </trans-unit>
       <trans-unit id="PLggHn." resname="theme" approved="yes">
         <source>theme</source>
         <target state="final">Tema</target>
@@ -64,7 +60,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration" approved="yes">
         <source>calendar.slot_duration</source>
-        <target state="final">Durata slot per la vista settimanale e giornaliera (hh:mm:ss)</target>
+        <target state="final">Durata slot per la vista settimanale e giornaliera</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding" approved="yes">
         <source>branding</source>
@@ -130,21 +126,21 @@
         <source>Sunday</source>
         <target state="final">Domenica</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil" approved="yes">
+      <trans-unit id="jmsE4EY" resname="Ceil" approved="yes" xml:space="preserve">
         <source>Ceil</source>
-        <target state="final">Ceil: inizio, fine e durata verranno arrotondati per eccesso</target>
+        <target state="final">Inizio, fine e durata saranno arrotondati per eccesso</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest" approved="yes">
+      <trans-unit id="Y_qmsDz" resname="Closest" approved="yes" xml:space="preserve">
         <source>Closest</source>
-        <target state="final">Closest: arrotondamento matematico al valore più vicino</target>
+        <target state="final">Arrotondamento matematico al valore più vicino</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default" approved="yes">
+      <trans-unit id="IbERy.5" resname="Default" approved="yes" xml:space="preserve">
         <source>Default</source>
-        <target state="final">Standard: l'inizio verrà arrotondato per difetto, la fine e la durata per eccesso</target>
+        <target state="final">L'inizio sarà arrotondato per difetto, la fine e la durata per eccesso</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor" approved="yes">
+      <trans-unit id="0mjJxEk" resname="Floor" approved="yes" xml:space="preserve">
         <source>Floor</source>
-        <target state="final">Floor: inizio, fine e durata verranno arrotondati per difetto</target>
+        <target state="final">Inizio, fine e durata saranno arrotondati per difetto</target>
       </trans-unit>
       <trans-unit id="ZCg9UVM" resname="timesheet.rules.allow_overlapping_records" approved="yes">
         <source>timesheet.rules.allow_overlapping_records</source>
@@ -201,10 +197,6 @@
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin" approved="yes">
         <source>timesheet.default_begin</source>
         <target state="final">Orario di inizio predefinito (non usato in tutte le modalità di monitoraggio del tempo)</target>
-      </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year" approved="yes">
-        <source>company.financial_year</source>
-        <target state="final">Anno finanziario</target>
       </trans-unit>
       <trans-unit id="SnkW0Pk" resname="theme.avatar_url" approved="yes">
         <source>theme.avatar_url</source>
@@ -313,6 +305,14 @@
       <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve" approved="yes">
         <source>allow_duplicate_number</source>
         <target state="final">Consenti più utilizzi dello stesso numero</target>
+      </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="yes" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="final">Modalità di arrotondamento</target>
+      </trans-unit>
+      <trans-unit id="uf2_qIW" resname="user_auth_wizard" xml:space="preserve" approved="yes">
+        <source>user_auth_wizard</source>
+        <target state="final">Mostra la procedura guidata di configurazione per i nuovi utenti</target>
       </trans-unit>
     </body>
   </file>

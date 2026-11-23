@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ru" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
-        <source>button_copy_url_to_browser</source>
-        <target>Если кнопка не работает, пожалуйста, скопируйте &amp; и вставьте следующую ссылку в адресную строку браузера: %url%</target>
-      </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target>Это автоматически сгенерированное письмо. Пожалуйста, не отвечайте на него, ответ не будет прочитан.</target>
@@ -26,21 +22,53 @@
         <source>registration.intro</source>
         <target>Вы зарегистрировались в Kimai time-tracker с электронным адресом %email%. Пожалуйста, активируйте свою учетную запись в течение нескольких часов, пока ссылка не истекла.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target>Сбросить пароль</target>
+        <target state="translated">Зайти через Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">Это может произойти …</target>
+        <target state="translated">Зайдите в ваш аккаунт</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target>Сбросить пароль</target>
+        <target state="translated">Войти</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">… вы забыли пароль? Не беспокойтесь: Kimai поможет Вам создать новый:</target>
+        <target state="translated">Данная ссылка будет активна только в течении 15 минут.</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="needs-translation">Запрошено подтверждение: %user%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Ваш запрос был отклонён</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Ваш запрос был одобрен</target>
+      </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">Отсутствует: %user% (%type%)</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Ваш запрос на авторизацию был отказан %created_by%.
+
+%list%
+
+Пожалуйста проверьте свой запрос здесь: %url%</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="needs-translation">Ваш запрос был одабрён %created_by%.
+
+%list%
+
+Вы можете найти все свои запросы под: %url%</target>
       </trans-unit>
     </body>
   </file>

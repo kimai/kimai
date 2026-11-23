@@ -14,15 +14,16 @@ use App\Tests\Security\TestUserEntity;
 use App\User\UserService;
 use App\Validator\Constraints\User;
 use App\Validator\Constraints\UserValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\User
- * @covers \App\Validator\Constraints\UserValidator
  * @extends ConstraintValidatorTestCase<UserValidator>
  */
+#[CoversClass(\App\Validator\Constraints\User::class)]
+#[CoversClass(UserValidator::class)]
 class UserValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): UserValidator
@@ -36,19 +37,19 @@ class UserValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate('foo', new NotBlank()); // @phpstan-ignore-line
+        $this->validator->validate('foo', new NotBlank()); // @phpstan-ignore argument.type
     }
 
     public function testNullIsValid(): void
     {
-        $this->validator->validate(null, new User(['message' => 'myMessage'])); // @phpstan-ignore-line
+        $this->validator->validate(null, new User(['message' => 'myMessage'])); // @phpstan-ignore argument.type
 
         $this->assertNoViolation();
     }
 
     public function testNonUserIsValid(): void
     {
-        $this->validator->validate(new TestUserEntity(), new User(['message' => 'myMessage'])); // @phpstan-ignore-line
+        $this->validator->validate(new TestUserEntity(), new User(['message' => 'myMessage'])); // @phpstan-ignore argument.type
 
         $this->assertNoViolation();
     }

@@ -11,11 +11,10 @@ namespace App\Tests\Invoice\Hydrator;
 
 use App\Invoice\Hydrator\InvoiceItemDefaultHydrator;
 use App\Tests\Invoice\Renderer\RendererTestTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Invoice\Hydrator\InvoiceItemDefaultHydrator
- */
+#[CoversClass(InvoiceItemDefaultHydrator::class)]
 class InvoiceItemDefaultHydratorTest extends TestCase
 {
     use RendererTestTrait;
@@ -35,18 +34,45 @@ class InvoiceItemDefaultHydratorTest extends TestCase
             ['meta_fields' => []],
         ];
 
+        $calculator = $model->getCalculator();
+        self::assertNotNull($calculator);
+
         $i = 0;
-        foreach ($model->getCalculator()->getEntries() as $entry) {
+        foreach ($calculator->getEntries() as $entry) {
             $result = $sut->hydrate($entry);
             $exp = $expected[$i++];
             $this->assertEntryStructure($result, $exp['meta_fields']);
             if (\array_key_exists('description', $exp)) {
-                $this->assertEquals($exp['description'], $result['entry.description']);
+                self::assertEquals($exp['description'], $result['entry.description']);
             }
             if (\array_key_exists('description_safe', $exp)) {
-                $this->assertEquals($exp['description_safe'], $result['entry.description_safe']);
+                self::assertEquals($exp['description_safe'], $result['entry.description_safe']);
             }
         }
+    }
+
+    public function testDateProcessUsesTwentyFourHourFormat(): void
+    {
+        $model = $this->getInvoiceModel();
+
+        $sut = new InvoiceItemDefaultHydrator();
+        $sut->setInvoiceModel($model);
+
+        $calculator = $model->getCalculator();
+        self::assertNotNull($calculator);
+
+        $dateProcessValues = [];
+        foreach ($calculator->getEntries() as $entry) {
+            $result = $sut->hydrate($entry);
+            $dateProcessValues[] = $result['entry.date_process'];
+        }
+
+        // afternoon times must not be truncated to an ambiguous 12-hour value:
+        // with the buggy "h" format 14:00 became "02:00:00" and 18:00 became "06:00:00"
+        self::assertContains('2020-12-13 14:00:00', $dateProcessValues);
+        self::assertContains('2020-08-12 18:00:00', $dateProcessValues);
+        self::assertNotContains('2020-12-13 02:00:00', $dateProcessValues);
+        self::assertNotContains('2020-08-12 06:00:00', $dateProcessValues);
     }
 
     public function assertEntryStructure(array $model, array $metaFields): void
@@ -57,6 +83,7 @@ class InvoiceItemDefaultHydratorTest extends TestCase
             'entry.description_safe',
             'entry.amount',
             'entry.rate',
+            'entry.rate_fixed',
             'entry.rate_nc',
             'entry.rate_plain',
             'entry.rate_internal',
@@ -85,6 +112,7 @@ class InvoiceItemDefaultHydratorTest extends TestCase
             'entry.user_alias',
             'entry.user_display',
             'entry.user_title',
+            'entry.user_account',
             'entry.user_preference.foo',
             'entry.user_preference.mad',
             'entry.activity',
@@ -106,7 +134,7 @@ class InvoiceItemDefaultHydratorTest extends TestCase
         }
 
         foreach ($keys as $key) {
-            $this->assertArrayHasKey($key, $model);
+            self::assertArrayHasKey($key, $model);
         }
 
         $expectedKeys = array_merge([], $keys);
@@ -114,7 +142,7 @@ class InvoiceItemDefaultHydratorTest extends TestCase
         $givenKeys = array_keys($model);
         sort($givenKeys);
 
-        $this->assertEquals($expectedKeys, $givenKeys);
-        $this->assertEquals(\count($keys), \count($givenKeys));
+        self::assertEquals($expectedKeys, $givenKeys);
+        self::assertEquals(\count($keys), \count($givenKeys));
     }
 }

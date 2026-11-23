@@ -10,12 +10,12 @@
 namespace App\Tests\Repository\Query;
 
 use App\Entity\User;
+use App\Repository\Query\BaseQuery;
 use App\Repository\Query\TimesheetQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Repository\Query\TimesheetQuery
- * @covers \App\Repository\Query\BaseQuery
- */
+#[CoversClass(TimesheetQuery::class)]
+#[CoversClass(BaseQuery::class)]
 class TimesheetQueryTest extends BaseQueryTest
 {
     public function testQuery(): void
@@ -158,7 +158,7 @@ class TimesheetQueryTest extends BaseQueryTest
             $sut->setExported(2);
         } catch (\InvalidArgumentException $exception) {
             $catched = true;
-            $this->assertEquals('Unknown export state given', $exception->getMessage());
+            self::assertEquals('Unknown export state given', $exception->getMessage());
         }
 
         self::assertTrue($catched);
@@ -169,7 +169,7 @@ class TimesheetQueryTest extends BaseQueryTest
         self::assertNull($sut->getModifiedAfter());
         $date = new \DateTime('-3 hours');
 
-        self::assertInstanceOf(TimesheetQuery::class, $sut->setModifiedAfter($date));
+        $sut->setModifiedAfter($date);
         self::assertNotNull($sut->getModifiedAfter()); // just here to fix a PHPStan issue
         self::assertSame($date, $sut->getModifiedAfter());
     }

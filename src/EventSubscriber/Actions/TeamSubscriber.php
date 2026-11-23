@@ -36,7 +36,7 @@ final class TeamSubscriber extends AbstractActionsSubscriber
             }
 
             if ($this->isGranted('create_team')) {
-                $event->addAction('copy', ['url' => $this->path('team_duplicate', ['id' => $team->getId()]), 'title' => 'copy', 'translation_domain' => 'actions', 'class' => 'modal-ajax-form']);
+                $event->addAction('copy', ['url' => $this->path('team_duplicate', ['id' => $team->getId()]), 'title' => 'copy', 'class' => 'modal-ajax-form']);
             }
         }
 
@@ -44,7 +44,6 @@ final class TeamSubscriber extends AbstractActionsSubscriber
             $event->addAction('trash', [
                 'url' => $this->path('delete_team', ['id' => $team->getId()]),
                 'class' => 'api-link text-red',
-                'translation_domain' => 'actions',
                 'attr' => [
                     'data-event' => 'kimai.teamDelete kimai.teamUpdate',
                     'data-method' => 'DELETE',

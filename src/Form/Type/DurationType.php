@@ -23,6 +23,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class DurationType extends AbstractType
 {
+    /**
+     * Plain integers are interpreted as hours.
+     */
+    public const PARSE_MODE_DEFAULT = 'default';
+    /**
+     * Plain integers below 10 are interpreted as hours, all others as minutes.
+     */
+    public const PARSE_MODE_INTEGER_MINUTES = 'integer_minutes';
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -32,9 +41,20 @@ final class DurationType extends AbstractType
             'preset_minutes' => null,
             'toggle' => false,
             'max_hours' => 24,
-            'icon' => 'clock',
+            'icon' => 'duration',
+            // how the frontend interprets user input, see PARSE_MODE_* constants
+            'parse_mode' => self::PARSE_MODE_DEFAULT,
+            // the frontend removes negative values, unless they are explicitly allowed
+            'allow_negative' => false,
+            'documentation' => [
+                'type' => 'string',
+                'description' => 'Duration - supports various formats: https://www.kimai.org/documentation/duration-format.html',
+                'example' => '01:30',
+            ]
         ]);
         $resolver->setAllowedTypes('max_hours', 'int');
+        $resolver->setAllowedValues('parse_mode', [self::PARSE_MODE_DEFAULT, self::PARSE_MODE_INTEGER_MINUTES]);
+        $resolver->setAllowedTypes('allow_negative', 'bool');
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
@@ -44,6 +64,15 @@ final class DurationType extends AbstractType
             $class .= ' ' . $view->vars['attr']['class'];
         }
         $view->vars['attr']['class'] = $class;
+        $view->vars['attr']['autocomplete'] = 'off';
+        $view->vars['attr']['data-duration-mode'] = $options['parse_mode'];
+        if ($options['allow_negative']) {
+            $view->vars['attr']['data-duration-negative'] = '1';
+        }
+        // allows the frontend to detect invalid values, using the same rules as the server-side validation
+        if (!isset($view->vars['attr']['pattern'])) {
+            $view->vars['attr']['pattern'] = (new DurationConstraint())->getHtmlPattern();
+        }
         $view->vars['toggle'] = $options['toggle'];
 
         if ($options['preset_hours'] !== null && $options['preset_minutes'] !== null) {

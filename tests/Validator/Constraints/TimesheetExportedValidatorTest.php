@@ -13,16 +13,17 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Validator\Constraints\TimesheetExported;
 use App\Validator\Constraints\TimesheetExportedValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimesheetExported
- * @covers \App\Validator\Constraints\TimesheetExportedValidator
  * @extends ConstraintValidatorTestCase<TimesheetExportedValidator>
  */
+#[CoversClass(TimesheetExported::class)]
+#[CoversClass(TimesheetExportedValidator::class)]
 class TimesheetExportedValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): TimesheetExportedValidator

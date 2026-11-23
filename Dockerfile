@@ -4,13 +4,29 @@
 # | . \| | | | | | | (_| | |
 # |_|\_\_|_| |_| |_|\__,_|_|
 #
+# Kimai images for:
+# - plain PHP FPM   (kimai/kimai2:fpm)
+# - Apache with PHP (kimai/kimai2:apache)
+# - Development     (kimai/kimai2:dev)
+# ---------------------------------------------------------------------
+# For local testing by maintainer:
+#
+# docker build --no-cache -t kimai-fpm --build-arg BASE=fpm .
+# docker build --no-cache -t kimai-apache --build-arg BASE=apache .
+# docker run -d --name kimai-apache-app kimai-apache
+# docker exec -ti kimai-apache-app /bin/bash
+# ---------------------------------------------------------------------
+# Official PHP images: https://hub.docker.com/_/php/
+# https://github.com/docker-library/docs/blob/master/php/README.md#supported-tags-and-respective-dockerfile-links
+# Pass-through Arguments: https://benkyriakou.com/posts/docker-args-empty
+# Best practices: https://docs.docker.com/build/building/best-practices/
+# ---------------------------------------------------------------------
 
-# Source base [fpm/apache]
+# Source base, one of: fpm, apache
 ARG BASE="fpm"
-ARG PHP_VER="8.2"
-ARG COMPOSER_VER="latest"
-# Branch name
-ARG KIMAI="main"
+# Kimai version label (used for OCI labels and the KIMAI env var inside the image).
+# The actual source is read from the local build context, not fetched by version.
+ARG KIMAI="dev"
 # Timezone for images
 ARG TIMEZONE="Europe/Berlin"
 
@@ -18,32 +34,210 @@ ARG TIMEZONE="Europe/Berlin"
 # Shared tools
 ###########################
 
-# full kimai source
-FROM alpine:latest AS git-dev
-# pass-through Arguments in every stage. See: https://benkyriakou.com/posts/docker-args-empty
-ARG KIMAI
+# composer base image
+FROM composer:latest AS composer
+
+###########################
+# PHP extensions
+###########################
+
+# fpm alpine php extension base
+FROM php:8.5-fpm-alpine AS fpm-php-ext-base
+RUN apk add --no-cache \
+    # build-tools
+    autoconf \
+    dpkg \
+    dpkg-dev \
+    file \
+    g++ \
+    gcc \
+    icu-dev \
+    libatomic \
+    libc-dev \
+    libgomp \
+    libmagic \
+    m4 \
+    make \
+    mpc1 \
+    mpfr4 \
+    musl-dev \
+    perl \
+    re2c \
+    # gd
+    freetype-dev \
+    libpng-dev \
+    # icu
+    icu-dev \
+    icu-data-full \
+    # ldap
+    openldap-dev \
+    libldap \
+    # zip
+    libzip-dev \
+    # xsl
+    libxslt-dev
+
+# apache debian php extension base
+FROM php:8.5-apache AS apache-php-ext-base
+RUN apt-get update && \
+    apt-get install -y \
+        libldap2-dev \
+        libicu-dev \
+        libpng-dev \
+        libzip-dev \
+        libxslt1-dev \
+        libfreetype6-dev
+
+# php extension gd - 13.86s
+FROM ${BASE}-php-ext-base AS php-ext-gd
+RUN docker-php-ext-configure gd \
+        --with-freetype && \
+    docker-php-ext-install -j$(nproc) gd
+
+# php extension intl : 15.26s
+FROM ${BASE}-php-ext-base AS php-ext-intl
+RUN docker-php-ext-install -j$(nproc) intl
+
+# php extension ldap : 8.45s
+FROM ${BASE}-php-ext-base AS php-ext-ldap
+RUN docker-php-ext-configure ldap && \
+    docker-php-ext-install -j$(nproc) ldap
+
+# php extension pdo_mysql : 6.14s
+FROM ${BASE}-php-ext-base AS php-ext-pdo_mysql
+RUN docker-php-ext-install -j$(nproc) pdo_mysql
+
+# php extension zip : 8.18s
+FROM ${BASE}-php-ext-base AS php-ext-zip
+RUN docker-php-ext-install -j$(nproc) zip
+
+# php extension xsl : ?.?? s
+FROM ${BASE}-php-ext-base AS php-ext-xsl
+RUN docker-php-ext-install -j$(nproc) xsl
+
+###########################
+# fpm base build
+###########################
+
+FROM php:8.5-fpm-alpine AS fpm-base
 ARG TIMEZONE
-RUN apk add --no-cache git && \
-    git clone --depth 1 --branch ${KIMAI} https://github.com/kimai/kimai.git /opt/kimai
+RUN apk add --no-cache \
+        bash \
+        coreutils \
+        freetype \
+        haveged \
+        icu \
+        icu-data-full \
+        libldap \
+        libpng \
+        libzip \
+        libxslt-dev \
+        fcgi \
+        tzdata && \
+    touch /use_fpm && \
+    sed -i "s/;ping.path/ping.path/g" /usr/local/etc/php-fpm.d/www.conf && \
+    sed -i "s/;access.suppress_path\[\] = \/ping/access.suppress_path\[\] = \/ping/g" /usr/local/etc/php-fpm.d/www.conf
 
-# production kimai source
-FROM git-dev AS git-prod
-WORKDIR /opt/kimai
-RUN rm -r tests
+EXPOSE 9000
 
+HEALTHCHECK --interval=20s --timeout=10s --retries=3 \
+    CMD \
+    SCRIPT_NAME=/ping \
+    SCRIPT_FILENAME=/ping \
+    REQUEST_METHOD=GET \
+    cgi-fcgi -bind -connect 127.0.0.1:9000 || exit 1
 
-# FPM base
-FROM kimai/kimai-base:fpm AS fpm-base
+###########################
+# apache base build
+###########################
 
-# Apache base
-FROM kimai/kimai-base:apache AS apache-base
+FROM php:8.5-apache AS apache-base
+ARG TIMEZONE
+RUN apt-get update && \
+    apt-get install -y \
+        bash \
+        unzip \
+        git \
+        haveged \
+        libicu76 \
+        libldap-common \
+        libpng16-16t64 \
+        libzip5 \
+        libxslt1.1 \
+        libfreetype6 \
+        tzdata \
+        tzdata-legacy \
+        unzip && \
+    echo "Listen 8001" > /etc/apache2/ports.conf && \
+    a2enmod rewrite && \
+    touch /use_apache
+
 COPY .docker/000-default.conf /etc/apache2/sites-available/000-default.conf
+
+EXPOSE 8001
+
+HEALTHCHECK --interval=20s --timeout=10s --retries=3 \
+    CMD curl -f http://127.0.0.1:8001 || exit 1
 
 ###########################
 # global base build
 ###########################
 
-FROM ${BASE}-base AS base
+FROM ${BASE}-base AS php-base
+ARG TIMEZONE
+
+ENV TIMEZONE=${TIMEZONE}
+RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} > /etc/timezone && \
+    # make composer home dir
+    mkdir /composer  && \
+    chown -R www-data:www-data /composer
+
+# copy composer
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+# copy php extensions
+
+# PHP extension xsl
+COPY --from=php-ext-xsl /usr/local/etc/php/conf.d/docker-php-ext-xsl.ini /usr/local/etc/php/conf.d/docker-php-ext-xsl.ini
+COPY --from=php-ext-xsl /usr/local/lib/php/extensions/no-debug-non-zts-20250925/xsl.so /usr/local/lib/php/extensions/no-debug-non-zts-20250925/xsl.so
+# PHP extension pdo_mysql
+COPY --from=php-ext-pdo_mysql /usr/local/etc/php/conf.d/docker-php-ext-pdo_mysql.ini /usr/local/etc/php/conf.d/docker-php-ext-pdo_mysql.ini
+COPY --from=php-ext-pdo_mysql /usr/local/lib/php/extensions/no-debug-non-zts-20250925/pdo_mysql.so /usr/local/lib/php/extensions/no-debug-non-zts-20250925/pdo_mysql.so
+# PHP extension zip
+COPY --from=php-ext-zip /usr/local/etc/php/conf.d/docker-php-ext-zip.ini /usr/local/etc/php/conf.d/docker-php-ext-zip.ini
+COPY --from=php-ext-zip /usr/local/lib/php/extensions/no-debug-non-zts-20250925/zip.so /usr/local/lib/php/extensions/no-debug-non-zts-20250925/zip.so
+# PHP extension ldap
+COPY --from=php-ext-ldap /usr/local/etc/php/conf.d/docker-php-ext-ldap.ini /usr/local/etc/php/conf.d/docker-php-ext-ldap.ini
+COPY --from=php-ext-ldap /usr/local/lib/php/extensions/no-debug-non-zts-20250925/ldap.so /usr/local/lib/php/extensions/no-debug-non-zts-20250925/ldap.so
+# PHP extension gd
+COPY --from=php-ext-gd /usr/local/etc/php/conf.d/docker-php-ext-gd.ini /usr/local/etc/php/conf.d/docker-php-ext-gd.ini
+COPY --from=php-ext-gd /usr/local/lib/php/extensions/no-debug-non-zts-20250925/gd.so /usr/local/lib/php/extensions/no-debug-non-zts-20250925/gd.so
+# PHP extension intl
+COPY --from=php-ext-intl /usr/local/etc/php/conf.d/docker-php-ext-intl.ini /usr/local/etc/php/conf.d/docker-php-ext-intl.ini
+COPY --from=php-ext-intl /usr/local/lib/php/extensions/no-debug-non-zts-20250925/intl.so /usr/local/lib/php/extensions/no-debug-non-zts-20250925/intl.so
+
+# ICU timezone data
+# ICU (used by IntlDateFormatter) ships its own copy of the timezone database, which usually differs from the one
+# bundled with PHP. Different rules lead to wrong formatted dates (e.g. Africa/Cairo DST), so we load the ICU timezone
+# data of the same release as PHP's at runtime (PHP "2026.5" = tzdata "2026e"):
+# https://unicode-org.github.io/icu/userguide/datetime/timezone/#icu4c-tz-update-with-drop-in-res-files-icu-54-and-newer
+# Files are taken from https://github.com/unicode-org/icu-data/tree/main/tzdata/icunew
+# The "44/le" files work for all little-endian platforms (linux/amd64 and linux/arm64).
+# The build fails if the release is not available or if ICU does not use the downloaded files.
+ENV ICU_TIMEZONE_FILES_DIR=/usr/local/share/icu/tzdata
+RUN ICU_TZDATA=$(php -r 'if (preg_match("/^(\d{4})\.(\d{1,2})$/", timezone_version_get(), $m) !== 1 || (int) $m[2] < 1 || (int) $m[2] > 26) { fwrite(STDERR, "Unsupported PHP timezone version " . timezone_version_get() . PHP_EOL); exit(1); } echo $m[1] . chr(96 + (int) $m[2]);') && \
+    echo "Using ICU timezone data ${ICU_TZDATA}" && \
+    mkdir -p ${ICU_TIMEZONE_FILES_DIR} && \
+    for file in metaZones timezoneTypes windowsZones zoneinfo64; do \
+        curl -fsSL -o "${ICU_TIMEZONE_FILES_DIR}/${file}.res" "https://raw.githubusercontent.com/unicode-org/icu-data/main/tzdata/icunew/${ICU_TZDATA}/44/le/${file}.res" || exit 1; \
+    done && \
+    php -r 'if (IntlTimeZone::getTZDataVersion() !== $argv[1]) { fwrite(STDERR, "ICU timezone data " . IntlTimeZone::getTZDataVersion() . " does not match " . $argv[1] . PHP_EOL); exit(1); }' "${ICU_TZDATA}"
+
+###########################
+# global base build
+###########################
+
+FROM php-base AS base
 ARG KIMAI
 ARG TIMEZONE
 
@@ -55,8 +249,7 @@ LABEL org.opencontainers.image.title="Kimai" \
       org.opencontainers.image.source="https://github.com/kimai/kimai" \
       org.opencontainers.image.version="${KIMAI}" \
       org.opencontainers.image.vendor="Kevin Papst" \
-      org.opencontainers.image.licenses="AGPL-3.0" \
-      org.opencontainers.image.base.name="docker.io/library/alpine"
+      org.opencontainers.image.licenses="AGPL-3.0"
 
 ENV KIMAI=${KIMAI}
 ENV TIMEZONE=${TIMEZONE}
@@ -65,76 +258,68 @@ RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} >
     chown -R www-data:www-data /composer
 
 # copy startup script & DB checking script
-COPY .docker/startup.sh /startup.sh
-COPY .docker/service.sh /service.sh
-COPY .docker/self-test.sh /self-test.sh
 COPY .docker/dbtest.php /dbtest.php
+COPY .docker/entrypoint.sh /entrypoint.sh
 
-ENV DATABASE_URL="mysql://kimai:kimai@127.0.0.1:3306/kimai?charset=utf8mb4&serverVersion=5.7.40"
-ENV APP_SECRET=change_this_to_something_unique
+ENV DATABASE_URL="mysql://kimai:kimai@127.0.0.1:3306/kimai?charset=utf8mb4&serverVersion=8.3"
+# APP_SECRET is intentionally not set here. The entrypoint resolves it (user-provided
+# via -e APP_SECRET=... wins; otherwise a unique value is generated and persisted to
+# the var/data volume and mirrored into .env.local). Setting it as a Dockerfile ENV
+# would create a real env var that always wins over .env*, breaking `docker exec`
+# console invocations.
 # The default container name for nginx is nginx
-ENV TRUSTED_PROXIES=nginx,localhost,127.0.0.1
-ENV TRUSTED_HOSTS=nginx,localhost,127.0.0.1
+ENV TRUSTED_PROXIES=127.0.0.1
 ENV MAILER_FROM=kimai@example.com
 ENV MAILER_URL=null://localhost
 ENV ADMINPASS=
 ENV ADMINMAIL=
-ENV DB_TYPE=
-ENV DB_USER=
-ENV DB_PASS=
-ENV DB_HOST=
-ENV DB_PORT=
-ENV DB_BASE=
-ENV COMPOSER_MEMORY_LIMIT=-1
-# If this set then the image will start, run a self test and then exit. It's used for the release process
-ENV TEST_AND_EXIT=
-ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV USER_ID=
 ENV GROUP_ID=
+# default values to configure composer behavior
+ENV COMPOSER_MEMORY_LIMIT=-1
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 VOLUME [ "/opt/kimai/var" ]
 
-CMD [ "/startup.sh" ]
-
+CMD [ "/entrypoint.sh" ]
 
 ###########################
 # final builds
 ###########################
 
-# developement build
+# development build
 FROM base AS dev
-# copy kimai develop source
-COPY --from=git-dev --chown=www-data:www-data /opt/kimai /opt/kimai
+# copy kimai source from local build context (see .dockerignore for what is excluded)
+COPY --chown=www-data:www-data . /opt/kimai
 COPY .docker /assets
 # do the composer deps installation
-RUN echo \$PATH
 RUN \
     export COMPOSER_HOME=/composer && \
     composer --no-ansi install --working-dir=/opt/kimai --optimize-autoloader && \
-    composer --no-ansi clearcache && \
     composer --no-ansi require --working-dir=/opt/kimai laminas/laminas-ldap && \
+    composer --no-ansi clearcache && \
     cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini && \
     chown -R www-data:www-data /opt/kimai /usr/local/etc/php/php.ini && \
-    mkdir -p /opt/kimai/var/logs && chmod 777 /opt/kimai/var/logs && \
+    mkdir -p /opt/kimai/var/log && chmod 777 /opt/kimai/var/log && \
     sed "s/128M/-1/g" /usr/local/etc/php/php.ini-development > /opt/kimai/php-cli.ini && \
     sed -i "s/env php/env -S php -c \/opt\/kimai\/php-cli.ini/g" /opt/kimai/bin/console && \
-    tar -C /opt/kimai -zcvf /var/tmp/public.tgz public && \
-    /opt/kimai/bin/console kimai:version | awk '{print $2}' > /opt/kimai/version.txt
+    /opt/kimai/bin/console kimai:version | awk '{print $2}' > /opt/kimai/version.txt && \
+    rm -rf /opt/kimai/var/cache/*
 ENV APP_ENV=dev
 ENV DATABASE_URL=
-ENV memory_limit=256M
+ENV memory_limit=512M
 
-# production build
+# the "prod" stage (production build) is configured as last stage in the file, as this is the default target in BuildKit
 FROM base AS prod
-# copy kimai production source
-COPY --from=git-prod --chown=www-data:www-data /opt/kimai /opt/kimai
+# copy kimai source from local build context (see .dockerignore for what is excluded)
+COPY --chown=www-data:www-data . /opt/kimai
 COPY .docker /assets
 # do the composer deps installation
 RUN \
     export COMPOSER_HOME=/composer && \
     composer --no-ansi install --working-dir=/opt/kimai --no-dev --optimize-autoloader && \
+    composer --no-ansi require --update-no-dev --working-dir=/opt/kimai laminas/laminas-ldap && \
     composer --no-ansi clearcache && \
-    composer --no-ansi require --working-dir=/opt/kimai laminas/laminas-ldap && \
     cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini && \
     sed -i "s/expose_php = On/expose_php = Off/g" /usr/local/etc/php/php.ini && \
     sed -i "s/;opcache.enable=1/opcache.enable=1/g" /usr/local/etc/php/php.ini && \
@@ -143,11 +328,13 @@ RUN \
     sed -i "s/;opcache.max_accelerated_files=10000/opcache.max_accelerated_files=100000/g" /usr/local/etc/php/php.ini && \
     sed -i "s/opcache.validate_timestamps=1/opcache.validate_timestamps=0/g" /usr/local/etc/php/php.ini && \
     sed -i "s/session.gc_maxlifetime = 1440/session.gc_maxlifetime = 604800/g" /usr/local/etc/php/php.ini && \
-    mkdir -p /opt/kimai/var/logs && chmod 777 /opt/kimai/var/logs && \
+    sed -i "s/;session.upload_progress.enabled = On/session.upload_progress.enabled = Off/g" /usr/local/etc/php/php.ini && \
+    sed -i "s/;fatal_error_backtraces = On/fatal_error_backtraces = Off/g" /usr/local/etc/php/php.ini && \
+    mkdir -p /opt/kimai/var/log && chmod 777 /opt/kimai/var/log && \
     sed "s/128M/-1/g" /usr/local/etc/php/php.ini-development > /opt/kimai/php-cli.ini && \
     chown -R www-data:www-data /opt/kimai /usr/local/etc/php/php.ini && \
-    tar -C /opt/kimai -zcvf /var/tmp/public.tgz public && \
-    /opt/kimai/bin/console kimai:version | awk '{print $2}' > /opt/kimai/version.txt
+    /opt/kimai/bin/console kimai:version | awk '{print $2}' > /opt/kimai/version.txt && \
+    rm -rf /opt/kimai/var/cache/*
 ENV APP_ENV=prod
 ENV DATABASE_URL=
-ENV memory_limit=256M
+ENV memory_limit=512M

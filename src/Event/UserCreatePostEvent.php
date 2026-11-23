@@ -9,9 +9,9 @@
 
 namespace App\Event;
 
-/**
- * Triggered for new user instances, which were just saved.
- */
+use App\Webhook\Attribute\AsWebhook;
+
+#[AsWebhook(name: 'user.created', description: 'Triggered after a user was created', payload: 'object.getUser()')]
 final class UserCreatePostEvent extends AbstractUserEvent
 {
 }

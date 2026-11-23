@@ -25,7 +25,7 @@ class ProjectTestMetaFieldSubscriberMock implements EventSubscriberInterface
         ];
     }
 
-    public function loadMeta(ProjectMetaDefinitionEvent $event)
+    public function loadMeta(ProjectMetaDefinitionEvent $event): void
     {
         $definition = (new ProjectMeta())
             ->setName('metatestmock')

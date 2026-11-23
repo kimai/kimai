@@ -12,11 +12,10 @@ namespace App\Tests\Model;
 use App\Entity\User;
 use App\Model\DailyStatistic;
 use App\Model\Statistic\StatisticDate;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Model\DailyStatistic
- */
+#[CoversClass(DailyStatistic::class)]
 class DailyStatisticTest extends TestCase
 {
     public function testStatistic(): void

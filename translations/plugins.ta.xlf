@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ta" datatype="plaintext" original="plugins.en.xlf">
+    <body>
+      <trans-unit id="vFSLi54" resname="plugin.none_installed" xml:space="preserve" approved="yes">
+        <source>plugin.none_installed</source>
+        <target state="final">உங்களிடம் இதுவரை செருகுநிரல்கள் எதுவும் நிறுவப்படவில்லை.</target>
+      </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace" xml:space="preserve" approved="yes">
+        <source>Available plugins</source>
+        <target state="final">கிடைக்கும் செருகுநிரல்கள்</target>
+      </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy" xml:space="preserve" approved="yes">
+        <source>Buy now</source>
+        <target state="final">இப்போது வாங்க</target>
+      </trans-unit>
+      <trans-unit id="jZAB0yx" resname="shop" xml:space="preserve" approved="yes">
+        <source>Plugin Shop</source>
+        <target state="final">மேலும் நீட்டிப்புகள்</target>
+      </trans-unit>
+      <trans-unit id="aNvGEaj" resname="update_available" xml:space="preserve">
+        <source>Update available</source>
+        <target state="translated">புதிய பதிப்பு உள்ளது: %version%</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

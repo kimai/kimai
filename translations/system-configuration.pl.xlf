@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="pl" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>Time tracking</source>
-        <target state="translated">Śledzenie czasu</target>
-      </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
         <target state="translated">Motyw graficzny</target>
@@ -62,9 +58,9 @@
         <source>calendar.visibleHours.end</source>
         <target>Koniec widocznego zakresu czasu</target>
       </trans-unit>
-      <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
+      <trans-unit id="BYy.c1V" resname="calendar.slot_duration" xml:space="preserve">
         <source>calendar.slot_duration</source>
-        <target>Przedział czasowy dla widoku dziennego i tygodniowego (format: gg:mm:ss)</target>
+        <target state="translated">Przedział czasowy dla widoku dziennego i tygodniowego</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>
@@ -130,21 +126,21 @@
         <source>Sunday</source>
         <target state="translated">niedziela</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target state="translated">Sufit: początek, koniec i długość (czas trwania) będą zaokrąglane w górę</target>
+        <target state="translated">Początek, koniec i długość (czas trwania) będą zaokrąglane w górę</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target state="translated">Najbliższe: matematyczne zaokrąglanie do najbliższej wartości</target>
+        <target state="translated">Matematyczne zaokrąglanie do najbliższej wartości</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target state="translated">Standard: początek będzie zaokrąglany w dół, koniec i długość (czas trwania) w górę</target>
+        <target state="translated">Początek będzie zaokrąglany w dół, koniec i długość (czas trwania) w górę</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target state="translated">W dół: początek, koniec i długość (czas trwania) będą zaokrąglane w dół</target>
+        <target state="translated">Początek, koniec i długość (czas trwania) będą zaokrąglane w dół</target>
       </trans-unit>
       <trans-unit id="6CSB6iM" resname="first_weekday">
         <source>first_weekday</source>
@@ -238,10 +234,6 @@
         <source>off</source>
         <target>Wyłącz</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target state="translated">Rok budżetowy</target>
-      </trans-unit>
       <trans-unit id="wrnXs_a" resname="timesheet.rules.lockdown_period_timezone">
         <source>timesheet.rules.lockdown_period_timezone</source>
         <target state="translated">Strefa czasowa (jeśli jest pusta, używana jest strefa czasowa danego użytkownika)</target>
@@ -313,6 +305,10 @@
       <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve">
         <source>allow_duplicate_number</source>
         <target state="translated">Zezwalaj na wielokrotne użycie tego samego numeru</target>
+      </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="translated">Tryb zaokrąglenia</target>
       </trans-unit>
     </body>
   </file>

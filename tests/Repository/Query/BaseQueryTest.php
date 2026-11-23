@@ -18,8 +18,11 @@ use App\Form\Model\DateRange;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\DateRangeInterface;
+use App\Repository\Query\DateRangeTrait;
 use App\Repository\Query\TimesheetQuery;
+use App\Repository\Query\VisibilityInterface;
 use App\Utils\SearchTerm;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\DataMapperInterface;
@@ -27,9 +30,7 @@ use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
 
-/**
- * @covers \App\Repository\Query\BaseQuery
- */
+#[CoversClass(BaseQuery::class)]
 class BaseQueryTest extends TestCase
 {
     public function testQuery(): void
@@ -210,26 +211,25 @@ class BaseQueryTest extends TestCase
 
     protected function assertActivity(TimesheetQuery $sut): void
     {
-        $this->assertEquals([], $sut->getActivities());
-        $this->assertFalse($sut->hasActivities());
+        self::assertEquals([], $sut->getActivities());
+        self::assertFalse($sut->hasActivities());
 
         $expected = new Activity();
         $expected->setName('foo-bar');
 
         $sut->addActivity($expected);
-        $this->assertEquals([$expected], $sut->getActivities());
-        $this->assertTrue($sut->hasActivities());
+        self::assertEquals([$expected], $sut->getActivities());
+        self::assertTrue($sut->hasActivities());
 
         $expected2 = new Activity();
         $expected2->setName('foo-bar2');
 
         $sut->addActivity($expected2);
-        $this->assertEquals([$expected, $expected2], $sut->getActivities());
-        $this->assertEquals([], $sut->getActivityIds());
+        self::assertEquals([$expected, $expected2], $sut->getActivities());
 
         $sut->setActivities([]);
-        $this->assertEquals([], $sut->getActivities());
-        $this->assertFalse($sut->hasActivities());
+        self::assertEquals([], $sut->getActivities());
+        self::assertFalse($sut->hasActivities());
 
         $activity = $this->createMock(Activity::class);
         $activity->method('getId')->willReturn(13);
@@ -247,35 +247,39 @@ class BaseQueryTest extends TestCase
         $activity->method('getId')->willReturn(27);
         $sut->addActivity($activity);
 
-        $this->assertEquals([13, 27], $sut->getActivityIds());
+        $ids = [];
+        foreach ($sut->getActivities() as $activity) {
+            $ids[] = $activity->getId();
+        }
+        self::assertEquals([13, 27, null, 27], $ids);
     }
 
     protected function assertCustomer(BaseQuery $sut): void
     {
-        $this->assertTrue(method_exists($sut, 'getCustomers'));
-        $this->assertTrue(method_exists($sut, 'setCustomers'));
-        $this->assertTrue(method_exists($sut, 'hasCustomers'));
-        $this->assertTrue(method_exists($sut, 'addCustomer'));
-        $this->assertTrue(method_exists($sut, 'getCustomerIds'));
+        self::assertTrue(method_exists($sut, 'getCustomers'));
+        self::assertTrue(method_exists($sut, 'setCustomers'));
+        self::assertTrue(method_exists($sut, 'hasCustomers'));
+        self::assertTrue(method_exists($sut, 'addCustomer'));
+        self::assertTrue(method_exists($sut, 'getCustomerIds'));
 
-        $this->assertEquals([], $sut->getCustomers());
-        $this->assertFalse($sut->hasCustomers());
+        self::assertEquals([], $sut->getCustomers());
+        self::assertFalse($sut->hasCustomers());
 
         $expected = new Customer('foo-bar');
 
         $sut->addCustomer($expected);
-        $this->assertEquals([$expected], $sut->getCustomers());
-        $this->assertTrue($sut->hasCustomers());
+        self::assertEquals([$expected], $sut->getCustomers());
+        self::assertTrue($sut->hasCustomers());
 
         $expected2 = new Customer('foo-bar2');
 
         $sut->addCustomer($expected2);
-        $this->assertEquals([$expected, $expected2], $sut->getCustomers());
-        $this->assertEquals([], $sut->getCustomerIds());
+        self::assertEquals([$expected, $expected2], $sut->getCustomers());
+        self::assertEquals([], $sut->getCustomerIds());
 
         $sut->setCustomers([]);
-        $this->assertEquals([], $sut->getCustomers());
-        $this->assertFalse($sut->hasCustomers());
+        self::assertEquals([], $sut->getCustomers());
+        self::assertFalse($sut->hasCustomers());
 
         $customer = $this->createMock(Customer::class);
         $customer->method('getId')->willReturn(13);
@@ -293,33 +297,33 @@ class BaseQueryTest extends TestCase
         $customer->method('getId')->willReturn(27);
         $sut->addCustomer($customer);
 
-        $this->assertEquals([13, 27], $sut->getCustomerIds());
+        self::assertEquals([13, 27], $sut->getCustomerIds());
     }
 
     protected function assertProject(ActivityQuery $sut): void
     {
-        $this->assertEquals([], $sut->getProjects());
-        $this->assertFalse($sut->hasProjects());
+        self::assertEquals([], $sut->getProjects());
+        self::assertFalse($sut->hasProjects());
 
         $expected = new Project();
         $expected->setName('foo-bar');
 
         $sut->setProjects([]);
-        $this->assertEquals([], $sut->getProjects());
+        self::assertEquals([], $sut->getProjects());
 
         $sut->addProject($expected);
-        $this->assertEquals([$expected], $sut->getProjects());
-        $this->assertTrue($sut->hasProjects());
+        self::assertEquals([$expected], $sut->getProjects());
+        self::assertTrue($sut->hasProjects());
 
         $expected2 = new Project();
         $expected2->setName('foo-bar2');
 
         $sut->addProject($expected2);
-        $this->assertEquals([$expected, $expected2], $sut->getProjects());
-        $this->assertEquals([], $sut->getProjectIds());
+        self::assertEquals([$expected, $expected2], $sut->getProjects());
+        self::assertEquals([], $sut->getProjectIds());
 
         $sut->setProjects([]);
-        $this->assertFalse($sut->hasProjects());
+        self::assertFalse($sut->hasProjects());
 
         $project = $this->createMock(Project::class);
         $project->method('getId')->willReturn(13);
@@ -337,13 +341,38 @@ class BaseQueryTest extends TestCase
         $project->method('getId')->willReturn(27);
         $sut->addProject($project);
 
-        $this->assertEquals([13, 27], $sut->getProjectIds());
+        self::assertEquals([13, 27], $sut->getProjectIds());
+    }
+
+    protected function assertVisibility(VisibilityInterface $sut): void
+    {
+        self::assertEquals(VisibilityInterface::SHOW_VISIBLE, $sut->getVisibility());
+
+        $sut->setVisibility(VisibilityInterface::SHOW_BOTH);
+        self::assertEquals(VisibilityInterface::SHOW_BOTH, $sut->getVisibility());
+
+        $sut->setVisibility(VisibilityInterface::SHOW_HIDDEN);
+        self::assertEquals(VisibilityInterface::SHOW_HIDDEN, $sut->getVisibility());
+
+        $sut->setVisibility(VisibilityInterface::SHOW_VISIBLE);
+        self::assertEquals(VisibilityInterface::SHOW_VISIBLE, $sut->getVisibility());
+    }
+
+    public function testHasFullDateRangeWithoutDateRange(): void
+    {
+        $sut = new class() {
+            use DateRangeTrait;
+        };
+
+        self::assertNull($sut->getDateRange());
+        self::assertFalse($sut->hasFullDateRange());
     }
 
     protected function assertDateRangeTrait(DateRangeInterface $sut): void
     {
         self::assertNull($sut->getBegin());
         self::assertNull($sut->getEnd());
+        self::assertFalse($sut->hasFullDateRange());
 
         $dateRange = new DateRange();
         $sut->setDateRange($dateRange);
@@ -351,9 +380,13 @@ class BaseQueryTest extends TestCase
         self::assertSame($dateRange, $sut->getDateRange());
         self::assertNull($sut->getBegin());
         self::assertNull($sut->getEnd());
+        self::assertFalse($sut->hasFullDateRange());
 
         $dateRange->setBegin(new \DateTimeImmutable('2013-11-23 13:45:07'));
+        self::assertFalse($sut->hasFullDateRange());
+
         $dateRange->setEnd(new \DateTimeImmutable('2014-01-01 23:45:11'));
+        self::assertTrue($sut->hasFullDateRange());
 
         $begin1 = new \DateTimeImmutable('2013-11-23 00:00:00');
         $end1 = new \DateTimeImmutable('2014-01-01 23:59:59');

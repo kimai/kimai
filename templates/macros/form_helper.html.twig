@@ -1,0 +1,7 @@
+{% macro metafields(form, section) %}
+    {% for meta in form.metaFields|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
+        {% if meta.vars.data.section is same as (section) %}
+            {{ form_row(meta.value, {'row_attr': {'class': 'mb-3 ' ~  form.vars.name ~ '_row_' ~ form.metaFields.vars.name ~ '_' ~ meta.vars.name}}) }}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}

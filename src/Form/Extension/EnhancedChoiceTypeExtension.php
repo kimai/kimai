@@ -40,16 +40,20 @@ final class EnhancedChoiceTypeExtension extends AbstractTypeExtension
 
         $extendedOptions = ['class' => 'selectpicker'];
 
-        if ($options['multiple']) {
+        if (\array_key_exists('multiple', $options) && $options['multiple']) {
             $extendedOptions['size'] = 1;
         }
 
-        if (false !== $options['width']) {
+        if (\array_key_exists('width', $options) && false !== $options['width']) {
             $extendedOptions['data-width'] = $options['width'];
         }
 
-        if (false === $options['search']) {
+        if (\array_key_exists('search', $options) && false === $options['search']) {
             $extendedOptions['data-disable-search'] = 1;
+        }
+
+        if (\array_key_exists('order', $options) && true === $options['order']) {
+            $extendedOptions['data-order'] = 1;
         }
 
         // there is a very weird logic in vendor/symfony/twig-bridge/Resources/views/Form/form_div_layout.html.twig
@@ -75,5 +79,9 @@ final class EnhancedChoiceTypeExtension extends AbstractTypeExtension
         $resolver->setDefined(['search']);
         $resolver->setAllowedTypes('search', 'boolean');
         $resolver->setDefault('search', true);
+
+        $resolver->setDefined(['order']);
+        $resolver->setAllowedTypes('order', 'boolean');
+        $resolver->setDefault('order', false);
     }
 }

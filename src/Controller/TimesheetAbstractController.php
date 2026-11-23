@@ -23,7 +23,6 @@ use App\Form\MultiUpdate\TimesheetMultiUpdate;
 use App\Form\MultiUpdate\TimesheetMultiUpdateDTO;
 use App\Form\TimesheetEditForm;
 use App\Form\TimesheetPreCreateForm;
-use App\Form\Toolbar\TimesheetExportToolbarForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\TimesheetQuery;
@@ -34,7 +33,6 @@ use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,11 +41,11 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class TimesheetAbstractController extends AbstractController
 {
     public function __construct(
-        protected TimesheetRepository $repository,
-        protected EventDispatcherInterface $dispatcher,
-        protected TimesheetService $service,
-        protected SystemConfiguration $configuration,
-        protected TagRepository $tagRepository
+        protected readonly TimesheetRepository $repository,
+        protected readonly EventDispatcherInterface $dispatcher,
+        protected readonly TimesheetService $service,
+        protected readonly SystemConfiguration $configuration,
+        protected readonly TagRepository $tagRepository
     ) {
     }
 
@@ -85,30 +83,34 @@ abstract class TimesheetAbstractController extends AbstractController
             $table->addColumn('endtime', ['class' => 'd-none d-sm-table-cell text-center text-nowrap', 'orderBy' => 'end']);
         }
 
+        if ($this->configuration->isBreakTimeEnabled()) {
+            $table->addColumn('break', ['class' => 'text-end text-nowrap', 'orderBy' => false]);
+        }
+
         $table->addColumn('duration', ['class' => 'text-end text-nowrap']);
 
         if ($canSeeRate) {
             $table->addColumn('hourlyRate', ['class' => 'text-end d-none text-nowrap']);
-            $table->addColumn('internalRate', ['class' => 'text-end text-nowrap d-none d-xxl-table-cell']);
-            $table->addColumn('rate', ['class' => 'text-end text-nowrap']);
+            $table->addColumn('internalRate', ['class' => 'text-end text-nowrap d-none']);
+            $table->addColumn('rate', ['class' => 'text-end text-nowrap d-none']);
         }
 
         $table->addColumn('customer', ['class' => 'd-none d-md-table-cell']);
         $table->addColumn('project', ['class' => 'd-none d-xl-table-cell']);
         $table->addColumn('activity', ['class' => 'd-none d-xl-table-cell']);
         $table->addColumn('description', ['class' => 'd-none']);
-        $table->addColumn('tags', ['class' => 'd-none badges', 'orderBy' => false]);
+        $table->addColumn('tags', ['class' => 'd-none', 'orderBy' => false]);
 
         foreach ($metaColumns as $metaColumn) {
             $table->addColumn('mf_' . $metaColumn->getName(), ['title' => $metaColumn->getLabel(), 'class' => 'd-none', 'orderBy' => false, 'data' => $metaColumn]);
         }
 
         if ($canSeeUsername) {
-            $table->addColumn('username', ['class' => 'd-none d-md-table-cell', 'orderBy' => false]);
+            $table->addColumn('username', ['class' => 'd-none d-md-table-cell', 'orderBy' => 'user']);
         }
 
-        $table->addColumn('billable', ['class' => 'text-center d-none w-min', 'orderBy' => false]);
-        $table->addColumn('exported', ['class' => 'text-center d-none w-min', 'orderBy' => false]);
+        $table->addColumn('billable', ['class' => 'text-center d-none w-min']);
+        $table->addColumn('exported', ['class' => 'text-center d-none w-min']);
         $table->addColumn('actions', ['class' => 'actions']);
 
         $page = $this->createPageSetup();
@@ -145,17 +147,15 @@ abstract class TimesheetAbstractController extends AbstractController
         $event = new TimesheetMetaDefinitionEvent($entry);
         $this->dispatcher->dispatch($event);
 
-        $page = $request->get('page');
-        $page = is_numeric($page) ? (int) $page : 1;
-        $editForm = $this->getEditForm($entry, $page);
+        $editForm = $this->getEditForm($entry);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->service->updateTimesheet($entry);
+                $this->service->saveTimesheet($entry);
                 $this->flashSuccess('action.update.success');
 
-                return $this->redirectToRoute($this->getTimesheetRoute(), ['page' => $request->get('page', 1)]);
+                return $this->redirectToRoute($this->getTimesheetRoute());
             } catch (\Exception $ex) {
                 $this->flashUpdateException($ex);
             }
@@ -184,7 +184,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
         if ($createForm->isSubmitted() && $createForm->isValid()) {
             try {
-                $this->service->saveNewTimesheet($entry);
+                $this->service->saveTimesheet($entry);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute($this->getTimesheetRoute());
@@ -216,7 +216,7 @@ abstract class TimesheetAbstractController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->dispatcher->dispatch(new TimesheetDuplicatePreEvent($copyTimesheet, $timesheet));
-                $this->service->saveNewTimesheet($copyTimesheet);
+                $this->service->saveTimesheet($copyTimesheet);
                 $this->dispatcher->dispatch(new TimesheetDuplicatePostEvent($copyTimesheet, $timesheet));
                 $this->flashSuccess('action.update.success');
 
@@ -233,19 +233,22 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
-    protected function export(Request $request, ServiceExport $serviceExport): Response
+    protected function export(string $type, Request $request, ServiceExport $serviceExport): Response
     {
+        $exporter = $serviceExport->getTimesheetExporterById($type);
+
+        if (null === $exporter) {
+            throw $this->createNotFoundException();
+        }
+
         $query = $this->createDefaultQuery();
         $query->setOrder(BaseQuery::ORDER_ASC);
 
-        $form = $this->getExportForm($query);
-
-        if ($request->isMethod(Request::METHOD_POST)) {
-            $request->query->set('performSearch', true);
-        }
+        $form = $this->getToolbarForm($query);
+        $request->query->set('performSearch', true);
 
         if ($this->handleSearch($form, $request)) {
-            return $this->redirectToRoute($this->getExportRoute());
+            return $this->redirectToRoute($this->getTimesheetRoute());
         }
 
         $this->prepareQuery($query);
@@ -259,29 +262,15 @@ abstract class TimesheetAbstractController extends AbstractController
         }
 
         $entries = $this->repository->getTimesheetResult($query);
-        $stats = $entries->getStatistic();
 
-        // perform the real export
-        if ($request->isMethod(Request::METHOD_POST)) {
-            $type = $request->request->get('exporter');
-            if (null !== $type) {
-                $exporter = $serviceExport->getTimesheetExporterById($type);
+        $oldMaxExecTime = \ini_get('max_execution_time');
+        ini_set('max_execution_time', $this->configuration->getExportTimeout());
 
-                if (null === $exporter) {
-                    $form->addError(new FormError('Invalid timesheet exporter given'));
-                } else {
-                    return $exporter->render($entries->getResults(), $query);
-                }
-            }
-        }
+        $response = $exporter->render($entries->getResults(), $query);
 
-        return $this->render('timesheet/layout-export.html.twig', [
-            'page_setup' => new PageSetup('export'),
-            'form' => $form->createView(),
-            'route_back' => $this->getTimesheetRoute(),
-            'exporter' => $serviceExport->getTimesheetExporter(),
-            'stats' => $stats,
-        ]);
+        ini_set('max_execution_time', $oldMaxExecTime);
+
+        return $response;
     }
 
     protected function multiUpdate(Request $request): Response
@@ -311,23 +300,18 @@ abstract class TimesheetAbstractController extends AbstractController
         $form = $this->getMultiUpdateForm($dto);
         $form->handleRequest($request);
 
-        // remove all, which are not allowed to be edited
+        // deny the entire batch if it contains a single timesheet that is not allowed to be edited
+        /** @var Timesheet[] $timesheets */
         $timesheets = [];
-        $disallowed = 0;
-        /** @var Timesheet $timesheet */
         foreach ($dto->getEntities() as $timesheet) {
-            if (!$this->isGranted('edit', $timesheet)) {
-                $disallowed++;
+            if (!$timesheet instanceof Timesheet) {
                 continue;
+            }
+            if (!$this->isGranted('edit', $timesheet)) {
+                throw $this->createAccessDeniedException('Not allowed to edit timesheet ' . $timesheet->getId());
             }
             $timesheets[] = $timesheet;
         }
-
-        if ($disallowed > 0) {
-            $this->flashWarning(\sprintf('You are missing the permission to edit %s timesheets', $disallowed));
-        }
-
-        $dto->setEntities($timesheets);
 
         if (\count($timesheets) === 0) {
             return $this->redirectToRoute($this->getTimesheetRoute());
@@ -335,7 +319,6 @@ abstract class TimesheetAbstractController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $execute = false;
-            /** @var Timesheet $timesheet */
             foreach ($timesheets as $timesheet) {
                 if ($dto->isReplaceDescription()) {
                     $timesheet->setDescription($dto->getDescription());
@@ -374,11 +357,13 @@ abstract class TimesheetAbstractController extends AbstractController
                     $timesheet->setBillable($dto->isBillable());
                     $execute = true;
                 }
+                if (null !== $dto->getBreak()) {
+                    $timesheet->setBreak($dto->getBreak());
+                    $execute = true;
+                }
 
                 if ($dto->isRecalculateRates()) {
-                    $timesheet->setFixedRate(null);
-                    $timesheet->setHourlyRate(null);
-                    $timesheet->setInternalRate(null);
+                    $timesheet->resetRates();
                     $execute = true;
                 } elseif (null !== $dto->getFixedRate()) {
                     $timesheet->setFixedRate($dto->getFixedRate());
@@ -406,12 +391,16 @@ abstract class TimesheetAbstractController extends AbstractController
 
             if ($execute) {
                 try {
+                    foreach ($timesheets as $timesheet) {
+                        $this->service->validateTimesheet($timesheet);
+                    }
+
                     $this->service->updateMultipleTimesheets($timesheets);
                     $this->flashSuccess('action.update.success');
 
                     return $this->redirectToRoute($this->getTimesheetRoute());
                 } catch (\Exception $ex) {
-                    $this->flashUpdateException($ex);
+                    $this->handleFormUpdateException($ex, $form);
                 }
             } else {
                 $this->flashSuccess(\sprintf('No changes for %s entries detected.', \count($timesheets)));
@@ -510,14 +499,13 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
-    private function getEditForm(Timesheet $entry, int $page): FormInterface
+    private function getEditForm(Timesheet $entry): FormInterface
     {
         $mode = $this->getTrackingMode();
 
         return $this->createForm($this->getEditFormClassName(), $entry, [
             'action' => $this->generateUrl($this->getEditRoute(), [
                 'id' => $entry->getId(),
-                'page' => $page,
             ]),
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_exported' => $this->isGranted('edit_export', $entry),
@@ -540,16 +528,6 @@ abstract class TimesheetAbstractController extends AbstractController
                 'page' => $query->getPage(),
             ]),
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
-            'include_user' => $this->includeUserInForms('toolbar'),
-        ]);
-    }
-
-    private function getExportForm(TimesheetQuery $query): FormInterface
-    {
-        return $this->createSearchForm(TimesheetExportToolbarForm::class, $query, [
-            'action' => $this->generateUrl($this->getExportRoute()),
-            'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
-            'method' => Request::METHOD_POST,
             'include_user' => $this->includeUserInForms('toolbar'),
         ]);
     }
@@ -607,11 +585,6 @@ abstract class TimesheetAbstractController extends AbstractController
         return 'timesheet_multi_delete';
     }
 
-    protected function getExportRoute(): string
-    {
-        return 'timesheet_export';
-    }
-
     protected function canSeeStartEndTime(): bool
     {
         return $this->getTrackingMode()->canSeeBeginAndEndTimes();
@@ -660,6 +633,9 @@ abstract class TimesheetAbstractController extends AbstractController
         return 'timesheet';
     }
 
+    /**
+     * @return PageSetup<Timesheet>
+     */
     protected function createPageSetup(): PageSetup
     {
         $page = new PageSetup('timesheet.title');

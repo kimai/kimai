@@ -17,17 +17,9 @@
 
 {# compare templates/page_setup.html.twig block table_actions #}
 {% macro actions(dataTable) %}
-    {% set btnClass = '' %}
-    {% set bgClass = '' %}
-    {% if not tabler_bundle.isNavbarOverlapping() and not tabler_bundle.isDarkMode() %}
-        {% set btnClass = 'btn-white' %}
-        {% set bgClass = 'bg-white' %}
-    {% endif %}
     <div class="btn-list">
     {% if dataTable.hasConfiguration() %}
-        <a class="btn btn-icon {{ btnClass }}" href="#" data-bs-toggle="modal" data-bs-target="#modal_{{ dataTable.getTableName() }}" title="{{ 'modal.columns.title'|trans }}">
-            {{ icon('columns', true) }}
-        </a>
+        {{ _self.datatable_column_modal_link(dataTable.getTableName()) }}
     {% endif %}
     {% set form = dataTable.getSearchForm() %}
     {% if form is not null %}
@@ -40,9 +32,9 @@
         {% set order = form_widget(form.order) %}
         {% set filterCount = dataTable.getQuery().countFilter() %}
         <div class="input-group inline-search position-static">
-            <button type="button" class="btn {{ btnClass }} dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-haspopup="true" aria-expanded="false" id="search-dropdown-btn" title="{{ 'search_filter'|trans }}">
+            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-haspopup="true" aria-expanded="false" id="search-dropdown-btn" title="{{ 'search_filter'|trans }}">
                 {{ icon('filter', true) }}
-                {% if filterCount > 0 %}<span class="badge badge-pill bg-blue ms-1 d-none d-md-inline">{{ filterCount }}</span>{% endif %}
+                {% if filterCount > 0 %}<span class="badge badge-notification bg-primary text-primary-fg ms-1 d-none d-sm-inline">{{ filterCount }}</span>{% endif %}
             </button>
             <div class="dropdown-menu p-3 search-dropdown" data-popper-placement="bottom-start" aria-labelledby="search-dropdown-btn">
                 {{ form_rest(form) }}
@@ -64,9 +56,9 @@
                 </div>
             </div>
             {{ searchTerm|raw }}
-            <span class="input-group-text {{ bgClass }}">
+            <span class="input-group-text">
                 {% set bookmarkToken = csrf_token('search') %}
-                {% set searchBtnClass = 'btn btn-icon btn-sm btn-ghost-secondary' %}
+                {% set searchBtnClass = 'btn btn-icon btn-sm btn-ghost-secondary p-1' %}
                 <input type="hidden" name="_token" value="{{ bookmarkToken }}">
                 <button type="submit" class="{{ searchBtnClass }}" data-toggle="tooltip" title="{{ 'search'|trans }}">
                     {{ icon('search') }}
@@ -83,9 +75,9 @@
                 {% endif %}
 
                 {% if filterCount > 0 and not form.vars.data.isBookmarkSearch() %}
-                    <button class="{{ searchBtnClass }} text-orange" type="submit" id="resetSearchFilter" name="resetSearchFilter" data-toggle="tooltip" title="{{ 'remove_filter'|trans }}">
+                    <a class="{{ searchBtnClass }} text-orange" href="{{ path(app.request.attributes.get('_route')) }}" data-toggle="tooltip" title="{{ 'remove_filter'|trans }}">
                         {{ icon('cancel') }}
-                    </button>
+                    </a>
                 {% endif %}
             </span>
         </div>
@@ -163,7 +155,7 @@
 </div>
 {% endmacro %}
 
-{% macro datatable_header(tableName, columns, query, options) %}
+{% macro datatable_header(tableName, columns, query = null, options = {}) %}
     {% set visibility = initialize_datatable(app.user, app.session, tableName, columns) %}
     {% if query is not null %}
         {% set orderBy = options.orderBy|default(query.orderBy) %}
@@ -175,15 +167,17 @@
     {% set reloadEvent = options.reload|default('') %}
     {% set boxClass = options.boxClass ?? 'card data_table' %}
     {% set columnModal = options.columnConfig ?? true %}
-    {% set responsive = options.responsive ?? false %}
+    {% set stickyFirst = options.stickyFirst ?? false %} {#  Turns on responsive automatically #}
+    {% set responsive = options.responsive ?? stickyFirst %}
     {% set sticky = options.sticky ?? true %}
+    {% set tableClasses = options.tableClasses ?? '' %}
     {% set contextMenuId = options.contextMenuId is defined ? options.contextMenuId : 'datatable_' ~ tableName ~ '_contextmenu' %}
 
     <div class="{{ boxClass }} datatable_{{ tableName }}">
         <div class="card-body p-0{% if responsive %} table-responsive{% endif %}">
             <div class="dataTables_wrapper form-inline">
                 <div id="{{ contextMenuId }}" class="dropdown-menu d-none"></div>
-                <table class="table table-hover dataTable" role="grid" data-reload-event="kimai.reset_column_visibility {{ reloadEvent }}" data-context-menu="{{ contextMenuId }}">
+                <table class="table table-hover dataTable{% if stickyFirst %} table-sticky-first{% endif %}{% if tableClasses != '' %} {{ tableClasses }}{% endif %}" role="grid" data-reload-event="kimai.reset_column_visibility {{ reloadEvent }}" data-context-menu="{{ contextMenuId }}">
                     <thead{% if sticky %} class="sticky-top"{% endif %}>
                         <tr>
                         {%- for title, headerOptions in columns -%}
@@ -223,14 +217,10 @@
                             {% endif %}
                             <th data-field="{{ title }}" {% if not headerOptions.orderBy is same as(false) %}data-order="{{ headerOptions.orderBy }}" {% endif %}class="{{ headerClass }}"{% if ariaSort is defined %} aria-sort="{{ ariaSort }}"{% endif %}>
                             {% if title is not empty and title == 'actions' and columnModal is not same as (false) %}
-
-                                <a class="link-secondary" href="#" data-bs-toggle="modal" data-bs-target="#modal_{{ tableName }}">
-                                    {{ icon('columns', true) }}
-                                </a>
-
+                                {{ _self.datatable_column_modal_link(tableName, 'link-secondary') }}
                             {% else %}
                                 {% if headerOptions.batchUpdate is defined %}
-                                    <input type="checkbox" id="multi_update_all" class="multiupdater form-check-input m-0 align-middle" title="{{ 'batch_table_checkbox_all'|trans }}">
+                                    <input type="checkbox" id="multi_update_all_{{ tableName }}" class="multi_update_all multiupdater form-check-input m-0 align-middle" title="{{ 'batch_table_checkbox_all'|trans }}">
                                 {% endif %}
                                 {{ headerTitle }}
                                 {% if headerOptions.html_after is defined %}
@@ -248,7 +238,7 @@
 {{- datatable_column_class(name, column) -}}
 {% endmacro %}
 
-{% macro data_table_footer(entries, route, multi_update_form) %}
+{% macro data_table_footer(entries, route = null, multi_update_form = null) %}
                 </tbody>
             </table>
         </div>
@@ -256,7 +246,7 @@
     {% if (route is not empty and entries is not null) or multi_update_form is not null %}
     <div class="card-footer d-flex align-items-center">
         {% if multi_update_form is not null %}
-            {{ form_start(multi_update_form, {'attr': {'id': 'multi_update_form', 'style': 'display:none', 'data-question': 'update_multiple'|trans}}) }}
+            {{ form_start(multi_update_form, {'attr': {'class': 'multi_update_form', 'style': 'display:none', 'data-question': '%action%'}}) }}
                 {% for formChild in multi_update_form.children %}
                     {{ form_widget(formChild) }}
                 {% endfor %}
@@ -286,4 +276,10 @@
 
 {% macro datatable_multiupdate_row(id) %}
     <input type="checkbox" name="id" value="{{ id }}" class="multi_update_single multiupdater form-check-input m-0 align-middle" title="{{ 'batch_table_checkbox'|trans }}">
+{% endmacro %}
+
+{% macro datatable_column_modal_link(tableName, class = null) %}
+    <a class="{{ class ?? 'btn btn-icon' }}" href="#" data-bs-toggle="modal" data-bs-target="#modal_{{ tableName }}" data-toggle="tooltip" title="{{ 'modal.columns.title'|trans }}">
+        {{ icon('columns', true) }}
+    </a>
 {% endmacro %}

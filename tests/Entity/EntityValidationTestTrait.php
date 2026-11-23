@@ -49,11 +49,11 @@ trait EntityValidationTestTrait
                 unset($violatedFields[$propertyPath]);
             }
 
-            $this->assertTrue($foundField, 'Failed finding violation for field: ' . $propertyPath);
+            self::assertTrue($foundField, 'Failed finding violation for field: ' . $propertyPath);
         }
 
-        $this->assertEmpty($violatedFields, \sprintf('Unexpected violations found: %s', implode(', ', $violatedFields)));
-        $this->assertEquals($expected, $countViolations, \sprintf('Expected %s violations, found %s in %s.', $expected, $actual, implode(', ', array_keys($violatedFields))));
+        self::assertEmpty($violatedFields, \sprintf('Unexpected violations found: %s', implode(', ', $violatedFields)));
+        self::assertEquals($expected, $countViolations, \sprintf('Expected %s violations, found %s in %s.', $expected, $actual, implode(', ', array_keys($violatedFields))));
     }
 
     public function assertHasNoViolations($entity, $groups = null): void
@@ -65,6 +65,6 @@ trait EntityValidationTestTrait
         $violations = $validator->validate($entity, null, $groups);
         $actual = $violations->count();
 
-        $this->assertEquals(0, $actual, \sprintf('Expected 0 violations, found %s.', $actual));
+        self::assertEquals(0, $actual, \sprintf('Expected 0 violations, found %s.', $actual));
     }
 }

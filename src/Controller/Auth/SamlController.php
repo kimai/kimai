@@ -12,18 +12,25 @@ namespace App\Controller\Auth;
 use App\Configuration\SamlConfigurationInterface;
 use App\Saml\SamlAuthFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
+use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 #[Route(path: '/saml')]
 final class SamlController extends AbstractController
 {
+    use TargetPathTrait;
+
     public function __construct(
         private readonly SamlAuthFactory $authFactory,
-        private readonly SamlConfigurationInterface $samlConfiguration
+        private readonly SamlConfigurationInterface $samlConfiguration,
+        private readonly Security $security,
     )
     {
     }
@@ -54,19 +61,30 @@ final class SamlController extends AbstractController
             throw new \RuntimeException($error);
         }
 
-        // this does set headers and exit as $stay is not set to true
-        $redirectTarget = $session->get('_security.main.target_path');
+        $firewallName = $this->security->getFirewallConfig($request)?->getName();
+        if ($firewallName === null || $firewallName === '') {
+            throw new ServiceUnavailableHttpException(message: 'Unknown firewall.');
+        }
+
+        // this can be an absolute URL including query parameters
+        $redirectTarget = $this->getTargetPath($session, $firewallName);
         if ($redirectTarget === null || $redirectTarget === '') {
             $redirectTarget = $this->generateUrl('homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
         }
 
-        $url = $this->authFactory->create()->login($redirectTarget, [], false, false, true);
+        // the protocol defines max 80 byte for RelayState, even if most IdP support more - see #5752
+        if (method_exists($this->samlConfiguration, 'cleanupLongRelayState') && $this->samlConfiguration->cleanupLongRelayState()) {
+            if (\strlen($redirectTarget) > 80 && ($pos = stripos($redirectTarget, '?')) !== false) {
+                $redirectTarget = substr($redirectTarget, 0, $pos);
+            }
+        }
 
+        $url = $this->authFactory->create()->login($redirectTarget, [], false, false, true);
         if ($url === null) {
             throw new \RuntimeException('SAML login failed');
         }
 
-        return $this->redirect($url);
+        return new RedirectResponse($url);
     }
 
     #[Route(path: '/metadata', name: 'saml_metadata')]

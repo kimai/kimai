@@ -10,11 +10,11 @@
 namespace App\Tests\Repository\Query;
 
 use App\Repository\Query\ExportQuery;
+use App\Repository\Query\TimesheetQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Repository\Query\ExportQuery
- * @covers \App\Repository\Query\TimesheetQuery
- */
+#[CoversClass(ExportQuery::class)]
+#[CoversClass(TimesheetQuery::class)]
 class ExportQueryTest extends TimesheetQueryTest
 {
     public function testQuery(): void
@@ -24,7 +24,7 @@ class ExportQueryTest extends TimesheetQueryTest
         $this->assertPage($sut);
         $this->assertPageSize($sut);
         $this->assertOrderBy($sut, 'begin');
-        $this->assertOrder($sut, ExportQuery::ORDER_ASC);
+        $this->assertOrder($sut);
 
         $this->assertUser($sut);
         $this->assertCustomer($sut);
@@ -38,21 +38,21 @@ class ExportQueryTest extends TimesheetQueryTest
 
     public function assertMarkAsExported(ExportQuery $sut): void
     {
-        $this->assertFalse($sut->isMarkAsExported());
+        self::assertFalse($sut->isMarkAsExported());
 
         $sut->setMarkAsExported(true);
-        $this->assertTrue($sut->isMarkAsExported());
+        self::assertTrue($sut->isMarkAsExported());
     }
 
     public function assertRenderer(ExportQuery $sut): void
     {
-        $this->assertNull($sut->getRenderer());
+        self::assertNull($sut->getRenderer());
 
         $exportTypes = ['html', 'csv', 'pdf', 'xlsx', 'ods'];
 
         foreach ($exportTypes as $type) {
             $sut->setRenderer($type);
-            $this->assertEquals($type, $sut->getRenderer());
+            self::assertEquals($type, $sut->getRenderer());
         }
     }
 }

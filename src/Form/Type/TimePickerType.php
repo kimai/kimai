@@ -11,6 +11,7 @@ namespace App\Form\Type;
 
 use App\Configuration\LocaleService;
 use App\Utils\FormFormatConverter;
+use App\Utils\JavascriptFormatConverter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -18,33 +19,47 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class TimePickerType extends AbstractType
 {
-    public function __construct(private LocaleService $localeService)
+    public function __construct(private readonly LocaleService $localeService)
     {
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $format = $this->localeService->getTimeFormat(\Locale::getDefault());
-        $converter = new FormFormatConverter();
-        $formFormat = $converter->convert($format);
-
         $resolver->setDefaults([
             'input' => 'string',
-            'format' => $formFormat,
-            'placeholder' => $formFormat, // $format
+            'locale' => \Locale::getDefault(),
             'model_timezone' => date_default_timezone_get(),
             'view_timezone' => date_default_timezone_get(),
             'block_prefix' => 'time'
         ]);
+
+        $resolver->setDefault('time_format', function (Options $options): string {
+            // We used the configured time format via "getTimeFormat()" for entering times before, but it caused issues.
+            // So now we only allow two different input types: 12-hour with AM/PM suffix and 24-hour
+            return $this->localeService->is24Hour($options['locale']) ? 'HH:mm' : 'h:mm a';
+        });
+
+        $resolver->setDefault('format', function (Options $options): string {
+            $converter = new FormFormatConverter();
+
+            return $converter->convert($options['time_format']);
+        });
+
+        $resolver->setDefault('placeholder', function (Options $options): string {
+            return $options['time_format'];
+        });
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['format'] = $options['format'];
+        $view->vars['time_format'] = $options['time_format'];
+        $view->vars['js_format'] = (new JavascriptFormatConverter())->convert($options['time_format']); // @phpstan-ignore argument.type
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

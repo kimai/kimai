@@ -6,8 +6,8 @@
         <source>This value is not a valid role.</source>
         <target state="translated">Detta värdet är inte en giltig roll.</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
-        <source>End date must not be earlier then start date.</source>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
+        <source>The end date must not be earlier than the start date.</source>
         <target state="translated">Slutdatumet får inte vara tidigare än startdatumet.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
@@ -153,6 +153,22 @@
       <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve">
         <source>The CSRF token is invalid. Please try to resubmit the form.</source>
         <target state="translated">Försök att skicka in formuläret igen. Om problemet kvarstår, ladda om din webbläsare.</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target state="translated">En frånvaro kan inte bokas efter den sista arbetsdagen.</target>
+      </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target state="translated">Vald period kan inte låsas: det finns obekräftade frånvaroförfrågningar.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">Tidslängden kan inte vara negativ.</target>
+      </trans-unit>
+      <trans-unit id="EDEDQtZ" resname="These characters are not allowed: {{ chars }}" xml:space="preserve">
+        <source>These characters are not allowed: {{ chars }}</source>
+        <target state="translated">Följande tecken är inte tillåtna: {{ chars }}</target>
       </trans-unit>
     </body>
   </file>

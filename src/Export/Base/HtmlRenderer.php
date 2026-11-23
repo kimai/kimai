@@ -18,40 +18,50 @@ use App\Event\MetaDisplayEventInterface;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Event\UserPreferenceDisplayEvent;
+use App\Export\ExportRendererInterface;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\Query\TimesheetQuery;
-use App\Twig\SecurityPolicy\ExportPolicy;
+use App\Twig\SecurityPolicy\StrictPolicy;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Twig\Extension\SandboxExtension;
 
-class HtmlRenderer
+/**
+ * TODO 3.0 remove default values from constructor parameters and make class final
+ * @final
+ */
+#[Exclude]
+class HtmlRenderer implements ExportRendererInterface
 {
     use RendererTrait;
 
-    /**
-     * @var string
-     */
-    private $id = 'html';
-    /**
-     * @var string
-     */
-    private $template = 'default.html.twig';
-
     public function __construct(
-        protected Environment $twig,
-        protected EventDispatcherInterface $dispatcher,
-        private ProjectStatisticService $projectStatisticService,
-        private ActivityStatisticService $activityStatisticService
+        protected readonly Environment $twig,
+        protected readonly EventDispatcherInterface $dispatcher,
+        private readonly ProjectStatisticService $projectStatisticService,
+        private readonly ActivityStatisticService $activityStatisticService,
+        private string $id = 'html', // deprecated default parameter - TODO 3.0
+        private readonly string $title = 'print', // deprecated default parameter - TODO 3.0
+        private string $template = 'export/print.html.twig', // deprecated default parameter - TODO 3.0
     ) {
     }
 
+    public function isInternal(): bool
+    {
+        return false;
+    }
+
+    public function getType(): string
+    {
+        return 'html';
+    }
+
     /**
-     * @param MetaDisplayEventInterface $event
      * @return MetaTableTypeInterface[]
      */
     protected function findMetaColumns(MetaDisplayEventInterface $event): array
@@ -74,14 +84,9 @@ class HtmlRenderer
     }
 
     /**
-     * @param ExportableItem[] $timesheets
-     * @param TimesheetQuery $query
-     * @return Response
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @param ExportableItem[] $exportItems
      */
-    public function render(array $timesheets, TimesheetQuery $query): Response
+    public function render(array $exportItems, TimesheetQuery $query): Response
     {
         $timesheetMetaFields = $this->findMetaColumns(new TimesheetMetaDisplayEvent($query, TimesheetMetaDisplayEvent::EXPORT));
         $customerMetaFields = $this->findMetaColumns(new CustomerMetaDisplayEvent($query->copyTo(new CustomerQuery()), CustomerMetaDisplayEvent::EXPORT));
@@ -92,19 +97,22 @@ class HtmlRenderer
         $this->dispatcher->dispatch($event);
         $userPreferences = $event->getPreferences();
 
-        $summary = $this->calculateSummary($timesheets);
+        $summary = $this->calculateSummary($exportItems);
 
         // enable basic security measures
-        $sandbox = new SandboxExtension(new ExportPolicy());
+        if (!$this->twig->hasExtension(SandboxExtension::class)) {
+            $this->twig->addExtension(new SandboxExtension(new StrictPolicy()));
+        }
+
+        $sandbox = $this->twig->getExtension(SandboxExtension::class);
         $sandbox->enableSandbox();
-        $this->twig->addExtension($sandbox);
 
         $content = $this->twig->render($this->getTemplate(), array_merge([
-            'entries' => $timesheets,
+            'entries' => $exportItems,
             'query' => $query,
             'summaries' => $summary,
-            'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectStatisticService),
-            'activity_budgets' => $this->calculateActivityBudget($timesheets, $query, $this->activityStatisticService),
+            'budgets' => $this->calculateProjectBudget($exportItems, $query, $this->projectStatisticService),
+            'activity_budgets' => $this->calculateActivityBudget($exportItems, $query, $this->activityStatisticService),
             'timesheetMetaFields' => $timesheetMetaFields,
             'customerMetaFields' => $customerMetaFields,
             'projectMetaFields' => $projectMetaFields,
@@ -112,7 +120,11 @@ class HtmlRenderer
             'userPreferences' => $userPreferences,
         ], $this->getOptions($query)));
 
+        // allows to run in development mode, otherwise toolbar would be blocked
+        $sandbox->disableSandbox();
+
         $response = new Response();
+        $response->headers->set('Content-Type', 'text/html');
         $response->setContent($content);
 
         return $response;
@@ -120,25 +132,32 @@ class HtmlRenderer
 
     protected function getTemplate(): string
     {
-        return '@export/' . $this->template;
+        return $this->template;
     }
 
-    public function setTemplate(string $filename): HtmlRenderer
+    /**
+     * @deprecated since 2.40.0
+     */
+    public function setTemplate(string $filename): void
     {
-        $this->template = $filename;
-
-        return $this;
+        $this->template = '@export/' . $filename;
     }
 
-    public function setId(string $id): HtmlRenderer
+    /**
+     * @deprecated since 2.40.0
+     */
+    public function setId(string $id): void
     {
         $this->id = $id;
-
-        return $this;
     }
 
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
     }
 }

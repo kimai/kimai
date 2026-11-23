@@ -44,8 +44,12 @@ final class TimesheetToolbarForm extends AbstractType
         $this->addExportStateChoice($builder);
         $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);
-        $this->addOrder($builder);
-        $this->addOrderBy($builder, TimesheetQuery::TIMESHEET_ORDER_ALLOWED);
+
+        $query = $options['data'];
+        if ($query instanceof TimesheetQuery) {
+            $this->addOrder($builder);
+            $this->addOrderBy($builder, $query->getAllowedOrderColumns());
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

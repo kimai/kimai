@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="518eY_l" resname="report_project_details">
         <source>report_project_details</source>
-        <target state="translated">Projekt Details</target>
+        <target state="translated">Projektdetails</target>
       </trans-unit>
       <trans-unit id="1gBKwGH" resname="report_inactive_project">
         <source>report_inactive_project</source>
@@ -45,6 +45,10 @@
       <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects">
         <source>report_customer_monthly_projects</source>
         <target state="translated">Projekte nach Monat, Tätigkeit und Benutzer</target>
+      </trans-unit>
+      <trans-unit id="Yz_lySk" resname="report_customer_view" xml:space="preserve">
+        <source>report_customer_view</source>
+        <target state="translated">Kundenübersicht</target>
       </trans-unit>
     </body>
   </file>

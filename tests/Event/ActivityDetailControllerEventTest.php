@@ -12,12 +12,11 @@ namespace App\Tests\Event;
 use App\Entity\Activity;
 use App\Event\AbstractActivityEvent;
 use App\Event\ActivityDetailControllerEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Event\AbstractActivityEvent
- * @covers \App\Event\ActivityDetailControllerEvent
- */
-class ActivityDetailControllerEventTest extends AbstractActivityEventTest
+#[CoversClass(AbstractActivityEvent::class)]
+#[CoversClass(ActivityDetailControllerEvent::class)]
+class ActivityDetailControllerEventTest extends AbstractActivityEventTestCase
 {
     protected function createActivityEvent(Activity $activity): AbstractActivityEvent
     {
@@ -29,6 +28,6 @@ class ActivityDetailControllerEventTest extends AbstractActivityEventTest
         /** @var ActivityDetailControllerEvent $event */
         $event = $this->createActivityEvent(new Activity());
         $event->addController('Foo\\Bar::helloWorld');
-        $this->assertEquals(['Foo\\Bar::helloWorld'], $event->getController());
+        self::assertEquals(['Foo\\Bar::helloWorld'], $event->getController());
     }
 }

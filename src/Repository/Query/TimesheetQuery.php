@@ -25,15 +25,19 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
     public const STATE_EXPORTED = 4;
     public const STATE_NOT_EXPORTED = 5;
 
-    public const TIMESHEET_ORDER_ALLOWED = ['begin', 'end', 'duration', 'rate', 'hourlyRate', 'customer', 'project', 'activity', 'description'];
+    /**
+     * @deprecated since 2.31.0
+     */
+    public const TIMESHEET_ORDER_ALLOWED = ['begin', 'end', 'duration', 'rate', 'hourlyRate', 'customer', 'project', 'activity', 'description', 'billable', 'exported'];
 
     private ?User $timesheetUser = null;
     /** @var array<Activity> */
     private array $activities = [];
     private int $state = self::STATE_ALL;
     private int $exported = self::STATE_ALL;
+    /** @var int<0, max>|null */
     private ?int $maxResults = null;
-    private ?\DateTime $modifiedAfter = null;
+    private ?\DateTimeInterface $modifiedAfter = null;
     /**
      * @var array<Tag>
      */
@@ -42,6 +46,10 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
      * @var array<User>
      */
     private array $users = [];
+    /**
+     * @var array<TimesheetQueryHint>
+     */
+    private array $queryHints = [];
 
     public function __construct(bool $resetTimes = true)
     {
@@ -57,6 +65,17 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
             'users' => [],
             'activities' => [],
         ]);
+        $this->setAllowedOrderColumns(self::TIMESHEET_ORDER_ALLOWED); // @phpstan-ignore-line
+    }
+
+    public function addQueryHint(TimesheetQueryHint $hint): void
+    {
+        $this->queryHints[] = $hint;
+    }
+
+    public function hasQueryHint(TimesheetQueryHint $hint): bool
+    {
+        return \in_array($hint, $this->queryHints, true);
     }
 
     protected function copyFrom(BaseQuery $query): void
@@ -70,11 +89,17 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
         }
     }
 
+    /**
+     * @return int<0, max>|null
+     */
     public function getMaxResults(): ?int
     {
         return $this->maxResults;
     }
 
+    /**
+     * @param int<0, max>|null $maxResults
+     */
     public function setMaxResults(?int $maxResults): void
     {
         $this->maxResults = $maxResults;
@@ -126,18 +151,6 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
     public function setUser(?User $user): void
     {
         $this->timesheetUser = $user;
-    }
-
-    /**
-     * @return array<int>
-     */
-    public function getActivityIds(): array
-    {
-        return array_values(array_filter(array_unique(array_map(function (Activity $activity) {
-            return $activity->getId();
-        }, $this->activities)), function ($id) {
-            return $id !== null;
-        }));
     }
 
     /**
@@ -238,15 +251,13 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
         $this->tags[$tag->getId()] = $tag;
     }
 
-    public function getModifiedAfter(): ?\DateTime
+    public function getModifiedAfter(): ?\DateTimeInterface
     {
         return $this->modifiedAfter;
     }
 
-    public function setModifiedAfter(\DateTime $modifiedAfter): TimesheetQuery
+    public function setModifiedAfter(\DateTimeInterface $modifiedAfter): void
     {
         $this->modifiedAfter = $modifiedAfter;
-
-        return $this;
     }
 }

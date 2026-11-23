@@ -1,25 +1,29 @@
-{% 
+{%
     set options = {
-        'teams': teams, 
-        'team': team|default(null), 
-        'route_create': route_create|default(null), 
-        'route_edit': route_edit|default(null), 
+        'teams': teams,
+        'route_create': route_create|default(null),
+        'route_edit': route_edit|default(null),
         'empty_message': empty_message|default('team.visibility_global')
-    } 
+    }
 %}
-{% embed '@theme/embeds/card.html.twig' with options %}
+{% embed '@theme/embeds/card.html.twig' with options only %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% block box_tools %}
-        {% if route_create is not null and (teams|length == 0 or team is null) and is_granted('create_team') %}
-            {{ widgets.card_tool_button('create', {'title': 'team.create_default', 'translation_domain': 'teams', 'url': route_create}) }}
+        {% if route_create is not null and is_granted('create_team') %}
+            {{ widgets.card_tool_button('create', {
+                'title': 'team.create_default',
+                'translation_domain': 'teams',
+                'url': route_create,
+                'class': 'modal-ajax-form open-edit',
+            }) }}
         {% endif %}
         {% if route_edit is not null %}
-            {{ widgets.card_tool_button('edit', {'class': 'modal-ajax-form open-edit', 'title': 'action.edit', 'url': route_edit}) }}
+            {{ widgets.card_tool_button('edit', {'class': 'modal-ajax-form open-edit', 'title': 'edit', 'url': route_edit}) }}
         {% endif %}
     {% endblock %}
     {% block box_attributes %}id="team_listing_box"{% endblock %}
     {% block box_title %}
-        {{ 'permissions'|trans({}, 'actions') }}
+        {{ 'permissions'|trans }}
         {% if teams|length > 0 %}<small class="text-body-secondary d-none d-sm-inline ms-1">{{ 'team.visibility_restricted'|trans({}, 'teams') }}</small>{% endif %}
     {% endblock %}
     {% block box_body_class %}{% if teams|length > 0 %}p-0{% endif %}{% endblock %}

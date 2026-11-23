@@ -20,16 +20,14 @@
 
 {% block main %}
     {% if form is defined %}
-    <div class="card mb-3">
-        <div class="card-body">
-            {% block report_form %}
-                {{ form_start(form, {'attr': {'class': 'form-reporting', 'id': 'report-form'}}) }}
-                <div class="{% block report_form_container_class %}btn-list w-100{% endblock %}">
-                    {% block report_form_layout %}{{ form_rest(form) }}{% endblock %}
-                </div>
-                {{ form_end(form) }}
-            {% endblock %}
-        </div>
+    <div class="mb-3">
+        {% block report_form %}
+            {{ form_start(form, {'attr': {'class': 'form-reporting', 'id': 'report-form'}}) }}
+            <div class="{% block report_form_container_class %}btn-list w-100{% endblock %}">
+                {% block report_form_layout %}{{ form_rest(form) }}{% endblock %}
+            </div>
+            {{ form_end(form) }}
+        {% endblock %}
     </div>
     {% endif %}
 

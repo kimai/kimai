@@ -40,13 +40,11 @@ final class InvoiceDocumentSubscriber extends AbstractActionsSubscriber
 
         /** @var bool $inUse */
         $inUse = \array_key_exists('in_use', $payload) ? $payload['in_use'] : false;
-        /** @var string $token */
-        $token = \array_key_exists('token', $payload) ? $payload['token'] : null;
 
         $event->addAction('download', ['url' => $this->path('admin_invoice_document_download', ['document' => $document->getId()])]);
 
         if (!$inUse) {
-            $event->addDelete($this->path('invoice_document_delete', ['id' => $document->getId(), 'token' => $token]), false);
+            $event->addDelete($this->path('delete_invoice_document', ['id' => $document->getId()]), false, 'kimai.invoiceDocumentUpdate');
         }
     }
 }

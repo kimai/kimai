@@ -21,7 +21,7 @@ trait RendererTrait
      * FIXME use statistic events to calculate budgets and do NOT iterate all results!
      *
      * @param ExportableItem[] $exportItems
-     * @return array
+     * @return array<mixed>
      */
     protected function calculateSummary(array $exportItems): array
     {
@@ -33,15 +33,15 @@ trait RendererTrait
             $activityId = 'none';
             $userId = 'none';
             $customer = null;
-            $project = null;
-            $activity = null;
             $currency = null;
 
             if (null !== ($project = $exportItem->getProject())) {
-                $customer = $project->getCustomer();
-                $customerId = $customer->getId();
                 $projectId = $project->getId();
-                $currency = $customer->getCurrency();
+                $customer = $project->getCustomer();
+                if ($customer !== null) {
+                    $customerId = $customer->getId();
+                    $currency = $customer->getCurrency();
+                }
             }
 
             if (null !== ($activity = $exportItem->getActivity())) {
@@ -72,9 +72,12 @@ trait RendererTrait
                     'users' => []
                 ];
 
-                if ($project !== null) {
+                if ($customer !== null) {
                     $summary[$id]['customer'] = $customer->getName();
                     $summary[$id]['customer_item'] = $customer;
+                }
+
+                if ($project !== null) {
                     $summary[$id]['project'] = $project->getName();
                     $summary[$id]['project_item'] = $project;
                 }
@@ -171,7 +174,7 @@ trait RendererTrait
      * @param ExportableItem[] $exportItems
      * @param TimesheetQuery $query
      * @param ProjectStatisticService $projectStatisticService
-     * @return array
+     * @return array<mixed>
      */
     protected function calculateProjectBudget(array $exportItems, TimesheetQuery $query, ProjectStatisticService $projectStatisticService): array
     {
@@ -180,16 +183,17 @@ trait RendererTrait
         $empty = new TimesheetCountedStatistic();
 
         foreach ($exportItems as $exportItem) {
-            $customer = null;
-            $project = null;
             $customerId = 'none';
             $projectId = 'none';
+            $time = 0;
+            $money = 0;
 
             if (null !== ($project = $exportItem->getProject())) {
-                $customer = $project->getCustomer();
-                $customerId = $customer->getId();
+                $customerId = $project->getCustomer()?->getId();
                 $projectId = $project->getId();
                 $projects[] = $project;
+                $time = $project->getTimeBudget();
+                $money = $project->getBudget();
             }
 
             $id = $customerId . '_' . $projectId;
@@ -197,8 +201,8 @@ trait RendererTrait
             if (!isset($summary[$id])) {
                 $summary[$id] = [
                     'totals' => $empty->jsonSerialize(),
-                    'time' => $project->getTimeBudget(),
-                    'money' => $project->getBudget(),
+                    'time' => $time,
+                    'money' => $money,
                     'time_left' => null,
                     'money_left' => null,
                     'time_left_total' => null,
@@ -213,8 +217,11 @@ trait RendererTrait
 
         foreach ($allBudgets as $projectId => $statisticModel) {
             $project = $statisticModel->getProject();
-            $id = $project->getCustomer()->getId() . '_' . $projectId;
+            $id = $project->getCustomer()?->getId() . '_' . $projectId;
             $total = $statisticModel->getStatisticTotal();
+            if ($total === null) {
+                continue;
+            }
             $summary[$id]['totals'] = $total->jsonSerialize();
             if ($statisticModel->hasTimeBudget()) {
                 $summary[$id]['time_left'] = $statisticModel->getTimeBudgetOpenRelative();
@@ -256,7 +263,7 @@ trait RendererTrait
      * @param ExportableItem[] $exportItems
      * @param TimesheetQuery $query
      * @param ActivityStatisticService $activityStatisticService
-     * @return array
+     * @return array<mixed>
      */
     protected function calculateActivityBudget(array $exportItems, TimesheetQuery $query, ActivityStatisticService $activityStatisticService): array
     {
@@ -267,8 +274,6 @@ trait RendererTrait
         foreach ($exportItems as $exportItem) {
             $customerId = 'none';
             $projectId = 'none';
-            $project = null;
-            $activity = null;
 
             if (null === ($activity = $exportItem->getActivity())) {
                 continue;
@@ -282,7 +287,7 @@ trait RendererTrait
 
             if (null !== ($project = $exportItem->getProject())) {
                 $projectId = $project->getId();
-                $customerId = $project->getCustomer()->getId();
+                $customerId = $project->getCustomer()?->getId();
             }
 
             $id = $customerId . '_' . $projectId;
@@ -312,9 +317,14 @@ trait RendererTrait
 
         foreach ($allBudgets as $activityId => $statisticModel) {
             $project = $statisticModel->getActivity()->getProject();
-            $id = $project->getCustomer()->getId() . '_' . $project->getId();
+            if ($project === null) {
+                continue;
+            }
+            $id = $project->getCustomer()?->getId() . '_' . $project->getId();
             $total = $statisticModel->getStatisticTotal();
-            $summary[$id][$activityId]['totals'] = $total->jsonSerialize();
+            if ($total !== null) {
+                $summary[$id][$activityId]['totals'] = $total->jsonSerialize();
+            }
             if ($statisticModel->hasTimeBudget()) {
                 $summary[$id][$activityId]['time_left'] = $statisticModel->getTimeBudgetOpenRelative();
                 $summary[$id][$activityId]['time_left_total'] = $statisticModel->getTimeBudgetOpen();

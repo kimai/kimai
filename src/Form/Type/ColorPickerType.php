@@ -16,6 +16,9 @@ use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @implements DataTransformerInterface<string, string>
+ */
 final class ColorPickerType extends AbstractType implements DataTransformerInterface
 {
     public const DEFAULT_COLOR = Constants::DEFAULT_COLOR;
@@ -37,15 +40,21 @@ final class ColorPickerType extends AbstractType implements DataTransformerInter
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function transform(mixed $data): mixed
     {
-        if (empty($data)) {
+        if (!\is_string($data) || $data === '') {
             return self::DEFAULT_COLOR;
         }
 
         return $data;
     }
 
+    /**
+     * @return string
+     */
     public function reverseTransform(mixed $value): mixed
     {
         return null === $value ? self::DEFAULT_COLOR : $value;

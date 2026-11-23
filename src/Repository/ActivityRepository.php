@@ -21,36 +21,23 @@ use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\ActivityFormTypeQuery;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\ActivityQueryHydrate;
+use App\Repository\Search\SearchConfiguration;
+use App\Repository\Search\SearchHelper;
 use App\Utils\Pagination;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<Activity>
+ * @extends EntityRepository<Activity>
  */
 class ActivityRepository extends EntityRepository
 {
-    use RepositorySearchTrait;
-
     /**
-     * @param Project $project
-     * @return array<Activity>
-     */
-    public function findByProject(Project $project): array
-    {
-        $query = new ActivityQuery();
-        $query->addProject($project);
-
-        return $this->getActivitiesForQuery($query);
-    }
-
-    /**
-     * @param int[] $activityIds
+     * @param array<int, string|int> $activityIds
      * @return array<Activity>
      */
     public function findByIds(array $activityIds): array
@@ -164,8 +151,6 @@ class ActivityRepository extends EntityRepository
 
     /**
      * Returns a query builder that is used for ActivityType and your own 'query_builder' option.
-     *
-     * @internal
      */
     public function getQueryBuilderForFormType(ActivityFormTypeQuery $query): QueryBuilder
     {
@@ -342,27 +327,15 @@ class ActivityRepository extends EntityRepository
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams(), $query->isGlobalsOnly());
 
-        $this->addSearchTerm($qb, $query);
+        $configuration = new SearchConfiguration(
+            ['a.name', 'a.comment', 'a.number'],
+            ActivityMeta::class,
+            'activity'
+        );
+        $helper = new SearchHelper($configuration);
+        $helper->addSearchTerm($qb, $query);
 
         return $qb;
-    }
-
-    private function getMetaFieldClass(): string
-    {
-        return ActivityMeta::class;
-    }
-
-    private function getMetaFieldName(): string
-    {
-        return 'activity';
-    }
-
-    /**
-     * @return array<string>
-     */
-    private function getSearchableFields(): array
-    {
-        return ['a.name', 'a.comment', 'a.number'];
     }
 
     /**
@@ -381,6 +354,9 @@ class ActivityRepository extends EntityRepository
         return (int) $qb->getQuery()->getSingleScalarResult(); // @phpstan-ignore-line
     }
 
+    /**
+     * @return Pagination<Activity>
+     */
     public function getPagerfantaForQuery(ActivityQuery $query): Pagination
     {
         return new Pagination($this->getPaginatorForQuery($query), $query);
@@ -440,7 +416,7 @@ class ActivityRepository extends EntityRepository
             $em->remove($delete);
             $em->flush();
             $em->commit();
-        } catch (ORMException $ex) {
+        } catch (\Exception $ex) {
             $em->rollback();
             throw $ex;
         }

@@ -11,22 +11,27 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @template-implements PasswordUpgraderInterface<User>
+ * @deprecated since 2.54 - see https://www.kimai.org/en/blog/2026/removing-api-passwords
  */
 class ApiUserRepository implements UserLoaderInterface, PasswordUpgraderInterface
 {
-    public function __construct(private UserRepository $userRepository)
+    public function __construct(private readonly UserRepository $userRepository)
     {
     }
 
     public function loadUserByIdentifier(string $identifier): ?UserInterface
     {
-        return $this->userRepository->loadUserByIdentifier($identifier);
+        try {
+            return $this->userRepository->loadUserByIdentifier($identifier);
+        } catch (UserNotFoundException $ex) {
+            return null;
+        }
     }
 
     public function upgradePassword(PasswordAuthenticatedUserInterface|UserInterface $user, string $newHashedPassword): void

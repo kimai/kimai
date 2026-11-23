@@ -19,6 +19,22 @@ final class InvoiceSubscriber extends AbstractActionsSubscriber
         return 'invoice';
     }
 
+    /**
+     * Status changes are POST requests, whose CSRF token is submitted in the request body.
+     *
+     * @return array<string, mixed>
+     */
+    private function createStatusAction(Invoice $invoice, string $status): array
+    {
+        return [
+            'url' => '#',
+            'onclick' => 'return kimaiInvoiceStatus(this)',
+            'attr' => [
+                'data-href' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => $status]),
+            ],
+        ];
+    }
+
     public function onActions(PageActionsEvent $event): void
     {
         $payload = $event->getPayload();
@@ -41,27 +57,33 @@ final class InvoiceSubscriber extends AbstractActionsSubscriber
             $event->addAction('download', ['url' => $this->path('admin_invoice_download', ['id' => $invoice->getId()]), 'target' => '_blank']);
         }
 
-        if ($event->countActions() > 0) {
-            $event->addDivider();
-        }
+        // status changes rely on the form token and javascript of the invoice listing and redirect back to it
+        $allowStatusChange = $event->isIndexView();
+        $statusActions = [];
 
         if ($allowCreate) {
-            if (!$invoice->isPending()) {
-                $event->addAction('invoice.pending', ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'pending', 'token' => $payload['token']])]);
-            } else {
-                $event->addAction('invoice.paid', ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'paid', 'token' => $payload['token']]), 'class' => 'modal-ajax-form']);
+            if ($invoice->isPending()) {
+                $statusActions['invoice.paid'] = ['url' => $this->path('admin_invoice_paid', ['id' => $invoice->getId()]), 'class' => 'modal-ajax-form'];
+            } elseif ($allowStatusChange) {
+                $statusActions['invoice.pending'] = $this->createStatusAction($invoice, 'pending');
             }
         }
 
-        $allowDelete = $this->isGranted('delete_invoice');
-        if (!$invoice->isCanceled()) {
-            $id = $allowDelete ? 'invoice.cancel' : 'trash';
-            $event->addAction($id, ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'canceled', 'token' => $payload['token']]), 'title' => 'invoice.cancel', 'translation_domain' => 'actions']);
+        if ($allowStatusChange && !$invoice->isCanceled()) {
+            $statusActions['invoice.cancel'] = $this->createStatusAction($invoice, 'canceled');
+        }
+
+        if ($event->countActions() > 0 && \count($statusActions) > 0) {
+            $event->addDivider();
+        }
+
+        foreach ($statusActions as $name => $action) {
+            $event->addAction($name, $action);
         }
 
         if ($this->isGranted('delete_invoice')) {
             $event->addDivider();
-            $event->addDelete($this->path('admin_invoice_delete', ['id' => $invoice->getId(), 'token' => $payload['token']]), false);
+            $event->addDelete($this->path('delete_invoice', ['id' => $invoice->getId()]), false, 'kimai.invoiceUpdate');
         }
     }
 }

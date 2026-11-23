@@ -16,11 +16,10 @@ use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Invoice\NumberGenerator\DateNumberGenerator
- */
+#[CoversClass(DateNumberGenerator::class)]
 class DateNumberGeneratorTest extends TestCase
 {
     private function getSut(bool $hasInitialInvoice, bool $followingInvoices)
@@ -45,8 +44,8 @@ class DateNumberGeneratorTest extends TestCase
         $sut = $this->getSut(false, false);
         $sut->setModel((new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery()));
 
-        $this->assertEquals(date('ymd'), $sut->getInvoiceNumber());
-        $this->assertEquals('date', $sut->getId());
+        self::assertEquals(date('ymd'), $sut->getInvoiceNumber());
+        self::assertEquals('date', $sut->getId());
     }
 
     public function testGetInvoiceNumberWithExisting(): void
@@ -54,8 +53,8 @@ class DateNumberGeneratorTest extends TestCase
         $sut = $this->getSut(true, false);
         $sut->setModel((new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery()));
 
-        $this->assertEquals(date('ymd-01'), $sut->getInvoiceNumber());
-        $this->assertEquals('date', $sut->getId());
+        self::assertEquals(date('ymd-01'), $sut->getInvoiceNumber());
+        self::assertEquals('date', $sut->getId());
     }
 
     public function testGetInvoiceNumberWithManyExisting(): void
@@ -63,7 +62,7 @@ class DateNumberGeneratorTest extends TestCase
         $sut = $this->getSut(true, true);
         $sut->setModel((new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery()));
 
-        $this->assertEquals(date('ymd-99'), $sut->getInvoiceNumber());
-        $this->assertEquals('date', $sut->getId());
+        self::assertEquals(date('ymd-99'), $sut->getInvoiceNumber());
+        self::assertEquals('date', $sut->getId());
     }
 }

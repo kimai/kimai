@@ -14,21 +14,21 @@
         <source>short</source>
         <target>Timer: tidsregistreringer summeret, ét indlæg i alt</target>
       </trans-unit>
-      <trans-unit id="BPiZbad" resname="user">
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
         <source>user</source>
-        <target>Bruger: ét indlæg per bruger</target>
+        <target state="translated">Bruger</target>
       </trans-unit>
-      <trans-unit id="BlGGO.X" resname="activity">
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
         <source>activity</source>
-        <target>Aktivitet: ét indlæg per aktivitet</target>
+        <target state="translated">Aktivitet</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project">
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
         <source>project</source>
-        <target>Projekt: ét indlæg per projekt</target>
+        <target state="translated">Projekt</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target>Dato: ét indlæg per dag (bruger startdato)</target>
+        <target state="translated">Dato</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price" xml:space="preserve">
         <source>price</source>

@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="en" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
-        <source>button_copy_url_to_browser</source>
-        <target>If the button doesn't work, please copy &amp; paste the following URL to your browser: %url%</target>
-      </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target>This is an auto generated e-mail. Please do not reply, the address will not be read.</target>
@@ -28,39 +24,71 @@
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject">
         <source>reset.subject</source>
-        <target>Reset your password</target>
+        <target>Sign in to Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve" approved="yes">
         <source>Forgot your password?</source>
-        <target state="final">Forgot your password?</target>
+        <target state="final">Sign in to your account</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button">
         <source>reset.button</source>
-        <target>Reset your password</target>
+        <target>Sign in</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve" approved="yes">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="final">Don't worry, Kimai will help you create a new one!</target>
+        <target>This link will only be valid for the next 15 minutes.</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject">
         <source>absence_created_supervisor_subject</source>
-        <target>New absence | %absence_user% | %absence_type%</target>
+        <target>New absence: %user% (%type%)</target>
       </trans-unit>
       <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
-        <source>A new absence was created for %absence_user%.
+        <source>A new absence was created for %user%.
 
-%absence_type% - %absence_comment%
+%list%
 
-%absence_list%
+Please review them at: %url%</source>
+        <target state="translated">A new absence was created for %user%.
 
-Please review them at: %approval_url%</source>
-        <target state="translated">A new absence was created for %absence_user%.
+%list%
 
-%absence_type% - %absence_comment%
+Please review them at: %url%</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">Approval requested: %user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">An approval for %user% was requested.
 
-%absence_list%
+%list%
 
-Please review them at: %approval_url%</target>
+Please review them at: %url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Your request has been rejected</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Your authorisation request has been rejected by %created_by%.
+
+%list%
+
+Please review your requests at: %url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Your request has been approved</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">Your request has been approved by %created_by%.
+
+%list%
+
+You can find all your enquiries under: %url%</target>
       </trans-unit>
     </body>
   </file>

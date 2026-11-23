@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="mk" datatype="plaintext" original="invoice-renderer.en.xlf">
+    <body>
+      <trans-unit id="hOcTt2G" resname="invoice_renderer" xml:space="preserve">
+        <source>invoice_renderer</source>
+        <target state="translated">Шаблон за фактура</target>
+      </trans-unit>
+      <trans-unit id="7mEUv6C" resname="help.upload" xml:space="preserve">
+        <source>help.upload</source>
+        <target state="translated">Внимание: постоечките датотеки ќе бидат избришани. Дозволени типови на датотеки се: %extensions%.</target>
+      </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer" xml:space="preserve">
+        <source>download_invoice_renderer</source>
+        <target state="translated">Можете да преземете дополнителни шаблони тука</target>
+      </trans-unit>
+      <trans-unit id="E5BwZHT" resname="programmatic" xml:space="preserve">
+        <source>programmatic</source>
+        <target state="translated">За понатамошна обработка</target>
+      </trans-unit>
+      <trans-unit id="Utbj3k_" resname="invoice" xml:space="preserve">
+        <source>invoice</source>
+        <target state="translated">Фактура</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve" approved="no">
+        <source>Invoice</source>
+        <target state="translated">Фактура</target>
+      </trans-unit>
+      <trans-unit id="mC2ePrm" resname="text" xml:space="preserve">
+        <source>text</source>
+        <target state="translated">Текст</target>
+      </trans-unit>
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
+        <source>timesheet</source>
+        <target state="translated">Временски лист</target>
+      </trans-unit>
+      <trans-unit id="m1UyfD9" resname="service-date" approved="no" xml:space="preserve">
+        <source>Single service date</source>
+        <target state="translated">Датум на услуга</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

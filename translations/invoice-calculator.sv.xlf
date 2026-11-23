@@ -18,9 +18,9 @@
         <source>user</source>
         <target state="translated">Användare</target>
       </trans-unit>
-      <trans-unit id="BlGGO.X" resname="activity">
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
         <source>activity</source>
-        <target state="translated">Aktivitet grupperad - en post per aktivitet</target>
+        <target state="translated">Aktivitet</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
         <source>project</source>

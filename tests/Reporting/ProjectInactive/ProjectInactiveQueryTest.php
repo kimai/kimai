@@ -11,11 +11,10 @@ namespace App\Tests\Reporting\ProjectInactive;
 
 use App\Entity\User;
 use App\Reporting\ProjectInactive\ProjectInactiveQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Reporting\ProjectInactive\ProjectInactiveQuery
- */
+#[CoversClass(ProjectInactiveQuery::class)]
 class ProjectInactiveQueryTest extends TestCase
 {
     public function testDefaults(): void

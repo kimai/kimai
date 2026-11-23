@@ -11,11 +11,10 @@ namespace App\Tests\Event;
 
 use App\Event\InvoiceDocumentsEvent;
 use App\Model\InvoiceDocument;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\InvoiceDocumentsEvent
- */
+#[CoversClass(InvoiceDocumentsEvent::class)]
 class InvoiceDocumentsEventTest extends TestCase
 {
     public function testDefaultValues(): void

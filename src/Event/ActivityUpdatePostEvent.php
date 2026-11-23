@@ -9,9 +9,9 @@
 
 namespace App\Event;
 
-/**
- * Triggered for activity instances, which were updated.
- */
+use App\Webhook\Attribute\AsWebhook;
+
+#[AsWebhook(name: 'activity.updated', description: 'Triggered after an activity was updated', payload: 'object.getActivity()')]
 final class ActivityUpdatePostEvent extends AbstractActivityEvent
 {
 }

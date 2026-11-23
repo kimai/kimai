@@ -31,7 +31,7 @@ final class SystemConfigurationType extends AbstractType
     {
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 /** @var Configuration $preference */
                 $preference = $event->getData();
 

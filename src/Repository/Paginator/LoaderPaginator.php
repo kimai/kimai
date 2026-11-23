@@ -41,7 +41,7 @@ final class LoaderPaginator implements PaginatorInterface
      */
     private function getQuery(): Query
     {
-        return $this->queryBuilder->getQuery(); // @phpstan-ignore-line
+        return $this->queryBuilder->getQuery();
     }
 
     /**

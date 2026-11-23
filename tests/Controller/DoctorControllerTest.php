@@ -10,11 +10,11 @@
 namespace App\Tests\Controller;
 
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @group integration
- */
-class DoctorControllerTest extends ControllerBaseTest
+#[Group('integration')]
+class DoctorControllerTest extends AbstractControllerBaseTestCase
 {
     public function testDoctorIsSecure(): void
     {
@@ -37,10 +37,38 @@ class DoctorControllerTest extends ControllerBaseTest
         self::assertTrue($counter === 6 || $counter === 5);
     }
 
+    public function testFlushLogIsNotPossibleWithGet(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $this->request($client, '/doctor/flush-log');
+
+        self::assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $client->getResponse()->getStatusCode());
+    }
+
     public function testFlushLogWithInvalidCsrf(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
-        $this->assertInvalidCsrfToken($client, '/doctor/flush-log/rsetdzfukgli78t6r5uedtjfzkugl', $this->createUrl('/doctor'));
+        $this->request($client, '/doctor/flush-log', 'POST', ['form' => ['_token' => 'rsetdzfukgli78t6r5uedtjfzkugl']]);
+
+        $this->assertIsRedirect($client);
+        $this->assertRedirectUrl($client, $this->createUrl('/doctor'));
+        $client->followRedirect();
+        $this->assertHasFlashError($client, 'The action could not be performed: invalid security token.');
+    }
+
+    public function testFlushLog(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/doctor');
+
+        $form = $client->getCrawler()->filter('form[action$="/doctor/flush-log"]')->form();
+        self::assertEquals('POST', $form->getMethod());
+
+        $client->submit($form);
+
+        $this->assertIsRedirect($client);
+        $this->assertRedirectUrl($client, $this->createUrl('/doctor'));
     }
 }

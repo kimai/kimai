@@ -11,10 +11,9 @@ namespace App\Tests\Repository\Query;
 
 use App\Entity\User;
 use App\Repository\Query\TeamQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Repository\Query\TeamQuery
- */
+#[CoversClass(TeamQuery::class)]
 class TeamQueryTest extends BaseQueryTest
 {
     public function testQuery(): void
@@ -22,16 +21,13 @@ class TeamQueryTest extends BaseQueryTest
         $sut = new TeamQuery();
 
         $this->assertBaseQuery($sut, 'name');
-        $this->assertInstanceOf(TeamQuery::class, $sut);
-
         $this->assertUsers($sut);
-
         $this->assertResetByFormError(new TeamQuery(), 'name');
     }
 
     public function assertUsers(TeamQuery $sut): void
     {
-        $this->assertEmpty($sut->getUsers());
+        self::assertEmpty($sut->getUsers());
 
         $user = $this->createMock(User::class);
         $user->method('getId')->willReturn(1);
@@ -50,6 +46,6 @@ class TeamQueryTest extends BaseQueryTest
         $sut->addUser($user);
         $sut->removeUser($user);
 
-        $this->assertCount(2, $sut->getUsers());
+        self::assertCount(2, $sut->getUsers());
     }
 }

@@ -9,10 +9,12 @@
 
 namespace App\Project;
 
+use App\Activity\ActivityService;
 use App\Entity\Project;
 use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRateRepository;
+use App\Repository\Query\ActivityQuery;
 
 final class ProjectDuplicationService
 {
@@ -20,7 +22,8 @@ final class ProjectDuplicationService
         private readonly ProjectService $projectService,
         private readonly ActivityRepository $activityRepository,
         private readonly ProjectRateRepository $projectRateRepository,
-        private readonly ActivityRateRepository $activityRateRepository
+        private readonly ActivityRateRepository $activityRateRepository,
+        private readonly ActivityService $activityService
     ) {
     }
 
@@ -45,7 +48,7 @@ final class ProjectDuplicationService
             $newProject->setEnd(null);
         }
 
-        $this->projectService->saveNewProject($newProject);
+        $this->projectService->saveProject($newProject);
 
         foreach ($this->projectRateRepository->getRatesForProject($project) as $rate) {
             $newRate = clone $rate;
@@ -53,7 +56,11 @@ final class ProjectDuplicationService
             $this->projectRateRepository->saveRate($newRate);
         }
 
-        $allActivities = $this->activityRepository->findByProject($project);
+        $query = new ActivityQuery();
+        $query->addProject($project);
+        $query->setExcludeGlobals(true);
+
+        $allActivities = $this->activityRepository->getActivitiesForQuery($query);
         foreach ($allActivities as $activity) {
             $newActivity = clone $activity;
             $newActivity->setProject($newProject);
@@ -63,7 +70,7 @@ final class ProjectDuplicationService
                 $newActivity->setMetaField($newMetaField);
             }
 
-            $this->activityRepository->saveActivity($newActivity);
+            $this->activityService->saveActivity($newActivity);
 
             foreach ($this->activityRateRepository->getRatesForActivity($activity) as $rate) {
                 $newRate = clone $rate;

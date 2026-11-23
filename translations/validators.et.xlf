@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="et" datatype="plaintext" original="validators.en.xlf">
+    <body>
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team." xml:space="preserve">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target state="translated">Meeskonnale peab olema määratud vähemalt üks liider.</target>
+      </trans-unit>
+      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match." xml:space="preserve">
+        <source>The entered passwords don't match.</source>
+        <target state="translated">Sisestatud paroolid ei ühti.</target>
+      </trans-unit>
+      <trans-unit id="6u6oCwB" resname="The email is already used." xml:space="preserve">
+        <source>This e-mail address is already in use.</source>
+        <target state="translated">See e-maili aadress on juba kasutusel.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

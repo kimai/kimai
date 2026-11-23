@@ -31,6 +31,9 @@ final class BudgetType extends AbstractType
             'choices' => [
                 'budgetType_month' => self::TYPE_MONTH,
             ],
+            'documentation' => [
+                'description' => 'The type of budget. Only submit if you want to use a monthly budget.',
+            ],
         ]);
     }
 

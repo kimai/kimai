@@ -12,11 +12,10 @@ namespace App\Tests\Reporting\ProjectDateRange;
 use App\Entity\Customer;
 use App\Entity\User;
 use App\Reporting\ProjectDateRange\ProjectDateRangeQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Reporting\ProjectDateRange\ProjectDateRangeQuery
- */
+#[CoversClass(ProjectDateRangeQuery::class)]
 class ProjectDateRangeQueryTest extends TestCase
 {
     public function testDefaults(): void

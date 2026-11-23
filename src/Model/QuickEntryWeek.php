@@ -23,7 +23,7 @@ class QuickEntryWeek
      */
     private array $rows = [];
 
-    public function __construct(private \DateTime $startDate)
+    public function __construct(private readonly \DateTime $startDate)
     {
     }
 
@@ -73,13 +73,13 @@ class QuickEntryWeek
             $result = 0;
         } elseif ($aName === null && $bName !== null) {
             $result = 1;
-        } elseif ($aName !== null && $bName === null) {
+        } elseif ($aName !== null && $bName === null) { // @phpstan-ignore notIdentical.alwaysTrue
             $result = -1;
         } else {
-            $result = strcmp((string) $aName, (string) $bName);
+            $result = strcmp($aName, $bName);
         }
 
-        return  $result < 0 ? -1 : 1;
+        return $result < 0 ? -1 : 1;
     }
 
     /**

@@ -12,7 +12,6 @@ namespace App\Form\Type;
 use App\Form\DataTransformer\StringToArrayTransformer;
 use App\Form\Helper\ProjectHelper;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\ReversedTransformer;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -44,7 +43,6 @@ final class ProjectTypePatternType extends AbstractType
 
         $resolver->setDefaults([
             'label' => 'choice_pattern',
-            'multiple' => true,
             'choices' => [
                 $number => ProjectHelper::PATTERN_NUMBER,
                 $orderNumber => ProjectHelper::PATTERN_ORDERNUMBER,
@@ -58,6 +56,6 @@ final class ProjectTypePatternType extends AbstractType
 
     public function getParent(): string
     {
-        return ChoiceType::class;
+        return ChoiceOrderedType::class;
     }
 }

@@ -12,17 +12,26 @@ namespace App\Tests\Timesheet\TrackingMode;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Timesheet\TrackingMode\PunchInOutMode;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-/**
- * @covers \App\Timesheet\TrackingMode\PunchInOutMode
- */
+#[CoversClass(PunchInOutMode::class)]
 class PunchInOutModeTest extends TestCase
 {
+    private function createSut(bool $allowApiTimes = false): PunchInOutMode
+    {
+        $auth = $this->createMock(AuthorizationCheckerInterface::class);
+        $auth->method('isGranted')->willReturn($allowApiTimes);
+
+        return new PunchInOutMode($auth);
+    }
+
     public function testDefaultValues(): void
     {
-        $sut = new PunchInOutMode();
+        $sut = $this->createSut();
 
         self::assertFalse($sut->canEditBegin());
         self::assertFalse($sut->canEditEnd());
@@ -32,6 +41,45 @@ class PunchInOutModeTest extends TestCase
         self::assertEquals('punch', $sut->getId());
     }
 
+    public function testValuesForAdmin(): void
+    {
+        $sut = $this->createSut(true);
+
+        self::assertFalse($sut->canEditBegin());
+        self::assertFalse($sut->canEditEnd());
+        self::assertFalse($sut->canEditDuration());
+        self::assertTrue($sut->canUpdateTimesWithAPI());
+        self::assertTrue($sut->canSeeBeginAndEndTimes());
+        self::assertEquals('punch', $sut->getId());
+    }
+
+    /**
+     * @return array<int, array{0: array<string>, 1: bool}>
+     */
+    public static function getApiTimesPermissionData(): array
+    {
+        return [
+            [[], false],
+            [['view_other_timesheet'], false],
+            [['edit_other_timesheet'], true],
+            [['view_other_timesheet', 'edit_other_timesheet'], true],
+        ];
+    }
+
+    /**
+     * @param array<string> $permissions
+     */
+    #[DataProvider('getApiTimesPermissionData')]
+    public function testCanUpdateTimesWithAPIRequiresEditOtherTimesheet(array $permissions, bool $expected): void
+    {
+        $auth = $this->createMock(AuthorizationCheckerInterface::class);
+        $auth->method('isGranted')->willReturnCallback(fn (string $attribute): bool => \in_array($attribute, $permissions, true));
+
+        $sut = new PunchInOutMode($auth);
+
+        self::assertSame($expected, $sut->canUpdateTimesWithAPI());
+    }
+
     public function testCreate(): void
     {
         $startingTime = new \DateTime('22:54');
@@ -39,7 +87,7 @@ class PunchInOutModeTest extends TestCase
         $timesheet->setBegin($startingTime);
         $request = new Request();
 
-        $sut = new PunchInOutMode();
+        $sut = $this->createSut();
         $sut->create($timesheet, $request);
         self::assertEquals($timesheet->getBegin(), $startingTime);
     }
@@ -49,7 +97,7 @@ class PunchInOutModeTest extends TestCase
         $timesheet = (new Timesheet())->setUser(new User());
         $request = new Request();
 
-        $sut = new PunchInOutMode();
+        $sut = $this->createSut();
         $sut->create($timesheet, $request);
         self::assertInstanceOf(\DateTime::class, $timesheet->getBegin());
     }

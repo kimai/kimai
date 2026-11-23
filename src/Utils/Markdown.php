@@ -15,7 +15,7 @@ namespace App\Utils;
 final class Markdown
 {
     private ?ParsedownExtension $parser = null;
-    private ?\Parsedown $parserFull = null;
+    private ?Parsedown $parserFull = null;
 
     public function toHtml(string $text): string
     {
@@ -33,7 +33,7 @@ final class Markdown
     public function withFullMarkdownSupport(string $text): string
     {
         if ($this->parserFull === null) {
-            $this->parserFull = new \Parsedown();
+            $this->parserFull = new Parsedown();
             $this->parserFull->setUrlsLinked(true);
             $this->parserFull->setBreaksEnabled(true);
             $this->parserFull->setSafeMode(true);

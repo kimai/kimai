@@ -52,17 +52,13 @@ final class TeamVoter extends Voter
     {
         $user = $token->getUser();
 
-        if (!$user instanceof User) {
+        if (!$user instanceof User || !($subject instanceof Team)) {
             return false;
         }
 
-        switch ($attribute) {
-            case 'edit':
-            case 'delete':
-                // changing existing teams should be limited to admins and teamleads
-                if (!$user->isAdmin() && !$user->isSuperAdmin() && !$user->isTeamleadOf($subject)) {
-                    return false;
-                }
+        // changing existing teams should be limited to admins and teamleads
+        if (!$user->isAdmin() && !$user->isSuperAdmin() && !$user->isTeamleadOf($subject)) {
+            return false;
         }
 
         return $this->permissionManager->hasRolePermission($user, $attribute . '_team');

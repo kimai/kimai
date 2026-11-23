@@ -46,6 +46,10 @@
         <source>invoice.first_template</source>
         <target>事前に請求書のテンプレートを作成する必要があります</target>
       </trans-unit>
+      <trans-unit id="wejAEcR" resname="action.upload.error" xml:space="preserve">
+        <source>action.upload.error</source>
+        <target state="translated">ファイルがアップロードやセーブできませんでした：%reason%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -89,7 +89,7 @@ export default class KimaiContextMenu {
             }
             dropdownElement.removeEventListener('click', dropdownListener);
             document.removeEventListener('click', dropdownListener);
-        }
+        };
 
         dropdownElement.addEventListener('click', dropdownListener);
         document.addEventListener('click', dropdownListener);

@@ -13,10 +13,10 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 final class ValidationFailedException extends \RuntimeException
 {
-    public function __construct(private ConstraintViolationListInterface $violations, ?string $message = null)
+    public function __construct(private readonly ConstraintViolationListInterface $violations, ?string $message = null)
     {
         if ($message === null) {
-            $message = 'Validation failed';
+            $message = 'Validation Failed';
         }
         parent::__construct($message, 400);
     }
@@ -24,5 +24,19 @@ final class ValidationFailedException extends \RuntimeException
     public function getViolations(): ConstraintViolationListInterface
     {
         return $this->violations;
+    }
+
+    /**
+     * Returns all violations in a human readable format, e.g. to be used in log messages.
+     */
+    public function getViolationsAsString(): string
+    {
+        $messages = [];
+
+        foreach ($this->violations as $violation) {
+            $messages[] = \sprintf('%s: %s', $violation->getPropertyPath(), $violation->getMessage());
+        }
+
+        return implode(', ', $messages);
     }
 }

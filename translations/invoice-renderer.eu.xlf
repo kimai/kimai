@@ -18,6 +18,10 @@
         <source>service-date</source>
         <target>Autonomoa</target>
       </trans-unit>
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve" approved="no">
+        <source>Invoice</source>
+        <target state="translated">Faktura</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -89,6 +89,14 @@ class Kernel extends BaseKernel
 
         $plugins = [];
         $finder = new Finder();
+        $finder->ignoreUnreadableDirs()->directories()->name('*Bundle-*');
+        foreach ($finder->in($pluginsDir) as $bundleDir) {
+            throw new \Exception(
+                \sprintf('Bundle "%s" has invalid directory name. Remove the version number, see https://www.kimai.org/documentation/plugin-management.html.', $bundleDir->getRelativePathname())
+            );
+        }
+
+        $finder = new Finder();
         $finder->ignoreUnreadableDirs()->directories()->name('*Bundle');
         /** @var SplFileInfo $bundleDir */
         foreach ($finder->in($pluginsDir) as $bundleDir) {
@@ -109,7 +117,7 @@ class Kernel extends BaseKernel
                 throw new \Exception(\sprintf('Bundle "%s" does not implement %s, which is not supported since 2.0.', $bundleName, PluginInterface::class));
             }
 
-            $meta = new PluginMetadata($fullPath);
+            $meta = PluginMetadata::createFromPath($fullPath);
 
             if ($meta->getKimaiVersion() > Constants::VERSION_ID) {
                 throw new \Exception(\sprintf('Bundle "%s" requires minimum Kimai version %s, but yours is lower: %s (%s). Please update Kimai or use a lower Plugin version.', $bundleName, $meta->getKimaiVersion(), Constants::VERSION, Constants::VERSION_ID));
@@ -157,7 +165,7 @@ class Kernel extends BaseKernel
         $container->addCompilerPass(new WidgetCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
     }
 
-    private function configureRoutes(RoutingConfigurator $routes): void // @phpstan-ignore-line
+    private function configureRoutes(RoutingConfigurator $routes): void
     {
         $configDir = $this->getConfigDir();
 
@@ -169,11 +177,8 @@ class Kernel extends BaseKernel
             $routes->import($configDir . '/routes/' . $this->environment . '/*.yaml');
         }
 
-        // load application routes
-        $routes->import($configDir . '/routes.yaml');
-
         foreach ($this->getBundles() as $bundle) {
-            if (str_contains(\get_class($bundle), 'KimaiPlugin\\')) {
+            if ($bundle instanceof PluginInterface || str_contains(\get_class($bundle), 'KimaiPlugin\\')) {
                 if (is_dir($bundle->getPath() . '/Resources/config/')) {
                     $routes->import($bundle->getPath() . '/Resources/config/routes' . self::CONFIG_EXTS);
                 } elseif (is_dir($bundle->getPath() . '/config/')) {
@@ -181,5 +186,8 @@ class Kernel extends BaseKernel
                 }
             }
         }
+
+        // load application routes as last one, so bundles cannot override application ones
+        $routes->import($configDir . '/routes.yaml');
     }
 }

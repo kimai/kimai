@@ -13,11 +13,10 @@ use App\Entity\Project;
 use App\Model\ProjectBudgetStatisticModel;
 use App\Model\Statistic\BudgetStatistic;
 use App\Reporting\ProjectView\ProjectViewModel;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Reporting\ProjectView\ProjectViewModel
- */
+#[CoversClass(ProjectViewModel::class)]
 class ProjectViewModelTest extends TestCase
 {
     public function testDefaults(): void

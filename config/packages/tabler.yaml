@@ -6,20 +6,18 @@
 #
 tabler:
     options:
-        # dark or normal layout
+        theme_auto: true
         dark_mode: false
-        # condensed = one nav-bar, false = two nav-bars
         navbar_condensed: true
-        # overlap = https://preview.tabler.io/layout-navbar-overlap.html
-        navbar_overlap: true
-        # boxed layout (true) or full-screen (false)
+        navbar_overlap: false
+        navbar_dark: true
         boxed_layout: false
-        # right to left = true
         rtl_mode: false
-        # true = only avatar, false = show username and title as well
-        user_menu_condensed: true
-        # url to your company logo
+        user_menu_condensed: false
         logo_url: "touch-icon-192x192.png"
+        theme_base: "neutral"
+        theme_radius: 0.5
+        theme_primary: "blue"
 
     knp_menu:
         enable: false
@@ -47,6 +45,7 @@ tabler:
         barcode: fas fa-barcode
         bookmark: far fa-star
         bookmarked: fas fa-star
+        break: fas fa-utensils
         calendar: far fa-calendar-alt
         cancel: fas fa-times
         clock: far fa-clock
@@ -68,14 +67,15 @@ tabler:
         documentation: fas fa-book
         dot: fas fa-circle
         download: fas fa-download
-        duration: far fa-hourglass
+        duration: fas fa-stopwatch
         edit: far fa-edit
-        end: fas fa-stopwatch
-        export: fas fa-file-export
+        end: fas fa-hourglass-end
+        export: fas fa-download
         failure: fas fa-times
         fax: fas fa-fax
         filter: fas fa-filter
         help: far fa-question-circle
+        holiday: fas fa-umbrella-beach
         home: fas fa-home
         info: fas fa-info-circle
         import: fas fa-file-import
@@ -96,6 +96,7 @@ tabler:
         ods: fas fa-table
         off: fas fa-toggle-off
         on: fas fa-toggle-on
+        other: fas fa-file-alt
         password: fas fa-key
         pause: fas fa-pause
         pause-small: far fa-pause-circle
@@ -109,6 +110,7 @@ tabler:
         profile: fas fa-user-edit
         profile-stats: far fa-chart-bar
         project: fas fa-briefcase
+        public-holiday: fas fa-calendar-day
         repeat: fas fa-repeat
         reporting: far fa-chart-bar
         report: far fa-chart-bar
@@ -120,6 +122,7 @@ tabler:
         save: far fa-save
         search: fas fa-search
         settings: fas fa-cog
+        sickness: fas fa-prescription-bottle-medical
         shop: fas fa-shopping-cart
         spinner: fas fa-spinner
         start: fas fa-play
@@ -131,6 +134,7 @@ tabler:
         team: fas fa-users
         timesheet: fas fa-clock
         timesheet-team: fas fa-user-clock
+        time-off: fas fa-couch
         trash: far fa-trash-alt
         unlocked: fas fa-unlock-alt
         upload: fas fa-upload

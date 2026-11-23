@@ -14,15 +14,16 @@ use App\Repository\CustomerRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\Constraints\Customer as CustomerConstraint;
 use App\Validator\Constraints\CustomerValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\Customer
- * @covers \App\Validator\Constraints\CustomerValidator
  * @extends ConstraintValidatorTestCase<CustomerValidator>
  */
+#[CoversClass(CustomerConstraint::class)]
+#[CoversClass(CustomerValidator::class)]
 class CustomerValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): CustomerValidator

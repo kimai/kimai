@@ -9,9 +9,6 @@
 
 namespace App\Model;
 
-/**
- * @internal do not use in plugins, no BC promise given!
- */
 interface BudgetStatisticModelInterface
 {
     public function isMonthlyBudget(): bool;

@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use App\Export\Annotation as Exporter;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,34 +18,40 @@ use Symfony\Component\Validator\Constraints as Assert;
 trait BudgetTrait
 {
     /**
-     * The total monetary budget, will be zero if not configured.
+     * The total monetary budget (default: 0).
+     *
+     * Optional. Only included if the current user may see the monetary budget of this record (`budget_<object>` and `budget_team<lead>_<object>` permission).
      */
-    #[ORM\Column(name: 'budget', type: 'float', nullable: false)]
+    #[ORM\Column(name: 'budget', type: Types::FLOAT, nullable: false)]
     #[Assert\Range(min: 0.00, max: 900000000000.00)]
     #[Assert\NotNull]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Activity_Entity', 'Project_Entity', 'Customer_Entity'])]
-    #[Exporter\Expose(label: 'budget', type: 'float')]
+    #[Serializer\Groups(['Budget_Money'])]
+    #[Exporter\Expose(label: 'budget', type: 'float', permissions: ['budget'])]
     private float $budget = 0.00;
     /**
-     * The time budget in seconds, will be zero if not configured.
+     * The time budget in seconds (default: 0).
+     *
+     * Optional. Only included if the current user may see the time budget of this record (`time_<object>` and `time_team<lead>_<object>` permission).
      */
-    #[ORM\Column(name: 'time_budget', type: 'integer', nullable: false)]
+    #[ORM\Column(name: 'time_budget', type: Types::INTEGER, nullable: false)]
     #[Assert\Range(min: 0, max: 2145600000)]
     #[Assert\NotNull]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Activity_Entity', 'Project_Entity', 'Customer_Entity'])]
-    #[Exporter\Expose(label: 'timeBudget', type: 'duration')]
+    #[Serializer\Groups(['Budget_Time'])]
+    #[Exporter\Expose(label: 'timeBudget', type: 'duration', permissions: ['time'])]
     private int $timeBudget = 0;
     /**
      * The type of budget:
-     *  - null      = default / full time
-     *  - month     = monthly budget
+     *  - null = default / full time
+     *  - month = monthly budget
+     *
+     * Optional. Only included if the current user may see the monetary or the time budget of this record.
      */
-    #[ORM\Column(name: 'budget_type', type: 'string', length: 10, nullable: true)]
+    #[ORM\Column(name: 'budget_type', type: Types::STRING, length: 10, nullable: true)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Activity_Entity', 'Project_Entity', 'Customer_Entity'])]
-    #[Exporter\Expose(label: 'budgetType')]
+    #[Serializer\Groups(['Budget_Money', 'Budget_Time'])]
+    #[Exporter\Expose(label: 'budgetType', permissions: ['time', 'budget'])]
     private ?string $budgetType = null;
 
     public function setBudget(float $budget): void

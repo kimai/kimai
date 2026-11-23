@@ -9,23 +9,17 @@
 
 namespace App\Tests\Entity;
 
+use App\Entity\CommentTableTypeTrait;
 use App\Entity\Project;
 use App\Entity\ProjectComment;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Entity\ProjectComment
- * @covers \App\Entity\CommentTableTypeTrait
- */
-class ProjectCommentTest extends AbstractCommentEntityTest
+#[CoversClass(CommentTableTypeTrait::class)]
+#[CoversClass(ProjectComment::class)]
+class ProjectCommentTest extends AbstractCommentEntityTestCase
 {
     protected function getEntity(): ProjectComment
     {
         return new ProjectComment(new Project());
-    }
-
-    public function testEntitySpecificMethods(): void
-    {
-        $sut = $this->getEntity();
-        self::assertNotNull($sut->getProject());
     }
 }

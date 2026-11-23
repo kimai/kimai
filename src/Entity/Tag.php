@@ -9,7 +9,9 @@
 
 namespace App\Entity;
 
-use App\Utils\Color;
+use App\Repository\TagRepository;
+use App\Validator\Constraints as Constraints;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -17,43 +19,40 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'kimai2_tags')]
 #[ORM\UniqueConstraint(columns: ['name'])]
-#[ORM\Entity(repositoryClass: 'App\Repository\TagRepository')]
+#[ORM\Entity(repositoryClass: TagRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[ORM\Index(columns: ['visible'])]
 #[UniqueEntity('name')]
 #[Serializer\ExclusionPolicy('all')]
-#[Serializer\VirtualProperty('ColorSafe', exp: 'object.getColorSafe()', options: [new Serializer\SerializedName('color-safe'), new Serializer\Type(name: 'string'), new Serializer\Groups(['Default'])])]
 class Tag
 {
     /**
-     * Internal Tag ID
+     * Tag ID
      */
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?int $id = null;
     /**
-     * The tag name
+     * Tag name cannot contain the character: " < > = ,
      */
-    #[ORM\Column(name: 'name', type: 'string', length: 100, nullable: false)]
+    #[ORM\Column(name: 'name', type: Types::STRING, length: 100, nullable: false)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 100, normalizer: 'trim')]
     #[Assert\Regex(pattern: '/,/', message: 'Tag name cannot contain comma', match: false)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?string $name = null;
-    #[ORM\Column(name: 'visible', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[ORM\Column(name: 'visible', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private bool $visible = true;
 
     use ColorTrait;
-
-    public function __construct()
-    {
-    }
 
     public function getId(): ?int
     {
@@ -85,10 +84,5 @@ class Tag
     public function __toString(): string
     {
         return $this->getName();
-    }
-
-    public function getColorSafe(): string
-    {
-        return $this->getColor() ?? (new Color())->getRandom($this->getName());
     }
 }

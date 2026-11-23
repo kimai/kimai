@@ -46,6 +46,10 @@
         <source>report_customer_monthly_projects</source>
         <target state="translated">Projektit kuukauden, toiminnan ja käyttäjän mukaan</target>
       </trans-unit>
+      <trans-unit id="Yz_lySk" resname="report_customer_view" xml:space="preserve">
+        <source>report_customer_view</source>
+        <target state="translated">Asiakaskatsaus</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

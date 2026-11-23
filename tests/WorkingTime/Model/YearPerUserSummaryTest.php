@@ -13,11 +13,10 @@ use App\Entity\User;
 use App\WorkingTime\Model\Year;
 use App\WorkingTime\Model\YearPerUserSummary;
 use App\WorkingTime\Model\YearSummary;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\WorkingTime\Model\YearPerUserSummary
- */
+#[CoversClass(YearPerUserSummary::class)]
 class YearPerUserSummaryTest extends TestCase
 {
     public function testDefaults(): void
@@ -60,6 +59,5 @@ class YearPerUserSummaryTest extends TestCase
         self::assertEquals(371358, $sut->getExpectedTime());
         self::assertEquals(1, $sut->count());
         self::assertEquals([$summary], $sut->getSummaries());
-        self::assertInstanceOf(\Traversable::class, $sut->getIterator());
     }
 }

@@ -1,5 +1,3 @@
-// Hint: if something doesn't work as expected: yarn upgrade --latest
-
 const Encore = require('@symfony/webpack-encore');
 
 Encore
@@ -16,24 +14,29 @@ Encore
     .addEntry('chart', './assets/chart.js')
     .addEntry('calendar', './assets/calendar.js')
     .addEntry('dashboard', './assets/dashboard.js')
+    .addEntry('highlight', './assets/highlight.js')
 
     .splitEntryChunks()
-    .configureSplitChunks(function(splitChunks) {
+    .configureSplitChunks((splitChunks) => {
         splitChunks.chunks = 'async';
     })
-
-    // in the past there was a bug with empty hashes in entrypoints.json, disable if it happens again
-    .enableIntegrityHashes(Encore.isProduction())
     .enableSingleRuntimeChunk()
+
+    .configureBabel((config) => {
+        config.sourceType = 'unambiguous';
+        config.plugins.push('@babel/plugin-syntax-dynamic-import');
+    })
+    .configureBabelPresetEnv((config) => {
+        config.useBuiltIns = 'usage';
+        config.corejs = 3;
+        config.targets = {};
+        config.modules = false;
+    })
+
+    .enableIntegrityHashes(Encore.isProduction())
     .enableVersioning(Encore.isProduction())
     .enableSourceMaps(!Encore.isProduction())
-
-    // disabled as ""webpack-notifier": "^1.13"" id currently only compatible with rosetta
-    //.enableBuildNotifications()
-
-    .enableSassLoader(function(sassOptions) {}, {
-        resolveUrlLoader: false
-    })
+    .enableSassLoader((options) => {})
 
     .configureCssMinimizerPlugin((options) => {
         options.minimizerOptions = {
@@ -58,8 +61,6 @@ Encore
             */
         }
     })
-
-    .enableEslintPlugin()
 ;
 
 module.exports = Encore.getWebpackConfig();

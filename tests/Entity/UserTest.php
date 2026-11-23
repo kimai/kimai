@@ -19,13 +19,14 @@ use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use App\Tests\Security\TestUserEntity;
 use App\WorkingTime\Mode\WorkingTimeModeDay;
 use Doctrine\Common\Collections\ArrayCollection;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
+use Scheb\TwoFactorBundle\Model\Totp\TotpConfiguration;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * @covers \App\Entity\User
- */
+#[CoversClass(User::class)]
 class UserTest extends TestCase
 {
     public function testDefaultValues(): void
@@ -33,7 +34,8 @@ class UserTest extends TestCase
         $user = new User();
         self::assertInstanceOf(EquatableInterface::class, $user);
         self::assertInstanceOf(UserInterface::class, $user);
-        $this->assertInstanceOf(ArrayCollection::class, $user->getPreferences());
+        self::assertInstanceOf(ArrayCollection::class, $user->getPreferences());
+        self::assertEquals([], $user->getVisiblePreferences());
         self::assertNull($user->getTitle());
         self::assertNull($user->getAvatar());
         self::assertNull($user->getAlias());
@@ -41,7 +43,6 @@ class UserTest extends TestCase
         self::assertNull($user->getAccountNumber());
         self::assertNull($user->getApiToken());
         self::assertNull($user->getPlainApiToken());
-        self::assertNull($user->getPasswordRequestedAt());
         self::assertFalse($user->hasTotpSecret());
         self::assertNull($user->getTotpSecret());
         self::assertEquals(User::DEFAULT_LANGUAGE, $user->getLanguage());
@@ -50,9 +51,14 @@ class UserTest extends TestCase
         self::assertFalse($user->canSeeAllData());
         self::assertFalse($user->isExportDecimal());
         self::assertFalse($user->isSystemAccount());
+        self::assertFalse($user->isPasswordRequestNonExpired(-1));
+        self::assertFalse($user->isPasswordRequestNonExpired(0));
+        self::assertFalse($user->isPasswordRequestNonExpired(3599));
+        self::assertFalse($user->isPasswordRequestNonExpired(PHP_INT_MAX));
 
         $user->setUserIdentifier('foo');
         self::assertEquals('foo', $user->getUserIdentifier());
+        self::assertEquals('foo', $user->getIdentifier());
         self::assertEquals('foo', $user->getDisplayName());
         $user->setAlias('BAR');
         self::assertEquals('BAR', $user->getDisplayName());
@@ -84,11 +90,12 @@ class UserTest extends TestCase
 
     /**
      * @deprecated
-     * @group legacy
      */
+    #[Group('legacy')]
     public function testWorkContract(): void
     {
         $user = new User();
+        self::assertFalse($user->hasContractSettings());
 
         self::assertEquals(0, $user->getWorkHoursMonday());
         self::assertEquals(0, $user->getWorkHoursTuesday());
@@ -127,6 +134,7 @@ class UserTest extends TestCase
         $user->setWorkHoursSunday(7800);
         $user->setHolidaysPerYear(10.7);
         self::assertTrue($user->hasWorkHourConfiguration());
+        self::assertTrue($user->hasContractSettings());
 
         self::assertEquals(7200, $user->getWorkHoursMonday());
         self::assertEquals(7300, $user->getWorkHoursTuesday());
@@ -158,6 +166,16 @@ class UserTest extends TestCase
 
         $user->setPublicHolidayGroup('DE-NRW');
         self::assertEquals('DE-NRW', $user->getPublicHolidayGroup());
+
+        self::assertNull($user->getWorkStartingDay());
+        $workStart = new \DateTimeImmutable('2018-07-23');
+        $user->setWorkStartingDay($workStart);
+        self::assertEquals($workStart, $user->getWorkStartingDay());
+
+        self::assertNull($user->getLastWorkingDay());
+        $workStart = new \DateTimeImmutable('2021-02-13');
+        $user->setLastWorkingDay($workStart);
+        self::assertEquals($workStart, $user->getLastWorkingDay());
     }
 
     public function testColor(): void
@@ -170,9 +188,13 @@ class UserTest extends TestCase
         self::assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
 
+        $sut->setUsername('foo test 123');
+        self::assertEquals('#a972c9', $sut->getColorSafe());
+
         $sut->setColor('#000000');
         self::assertEquals('#000000', $sut->getColor());
         self::assertTrue($sut->hasColor());
+        self::assertEquals('#000000', $sut->getColorSafe());
     }
 
     public function testWizards(): void
@@ -219,26 +241,35 @@ class UserTest extends TestCase
         self::assertTrue($user->isInternalUser());
     }
 
+    public function testSwitchToInternalAuth(): void
+    {
+        $user = new User();
+        $user->setPassword('foo-bar');
+        $user->switchToInternalAuth();
+        self::assertTrue($user->isInternalUser());
+        self::assertEquals('foo-bar', $user->getPassword());
+
+        $user->setAuth(User::AUTH_LDAP);
+        $user->setPreferenceValue('ldap_dn', 'uid=foo,ou=users,dc=kimai,dc=org');
+        $user->switchToInternalAuth();
+        self::assertTrue($user->isInternalUser());
+        self::assertEquals(User::AUTH_INTERNAL, $user->getAuth());
+        self::assertEquals('', $user->getPassword());
+        self::assertNull($user->getPreferenceValue('ldap_dn'));
+
+        $user->setPassword('foo-bar');
+        $user->setAuth(User::AUTH_SAML);
+        $user->switchToInternalAuth();
+        self::assertTrue($user->isInternalUser());
+        self::assertEquals('', $user->getPassword());
+    }
+
     public function testDatetime(): void
     {
         $date = new \DateTime('+1 day');
         $user = new User();
         $user->setRegisteredAt($date);
         self::assertEquals($date, $user->getRegisteredAt());
-    }
-
-    public function testPasswordRequestedAt(): void
-    {
-        $date = new \DateTimeImmutable('-60 minutes');
-        $sut = new User();
-        self::assertFalse($sut->isPasswordRequestNonExpired(3599));
-
-        self::assertNull($sut->getPasswordRequestedAt());
-        $sut->setPasswordRequestedAt($date);
-        self::assertEquals($date, $sut->getPasswordRequestedAt());
-        self::assertFalse($sut->isPasswordRequestNonExpired(3599));
-        // 10 seconds just to make sure it doesn't expire by accident
-        self::assertTrue($sut->isPasswordRequestNonExpired(3610));
     }
 
     public function testPreferences(): void
@@ -262,6 +293,31 @@ class UserTest extends TestCase
 
         $user->setPreferenceValue('export_decimal', true);
         self::assertTrue($user->isExportDecimal());
+
+        $prefs = $user->getPreferences();
+        self::assertCount(3, $prefs);
+
+        $preference1 = new UserPreference('_aaaaa', 'bbbbb');
+        $user->addPreference($preference1);
+
+        $preference2 = new UserPreference('AAAAAA', 'CCCCCC');
+        $user->addPreference($preference2);
+
+        $prefs = $user->getPreferences();
+        self::assertCount(5, $prefs);
+
+        $visiblePrefs = $user->getVisiblePreferences();
+        self::assertCount(3, $visiblePrefs); // export_decimal and _aaaaa is skipped
+        self::assertEquals([$user->getPreference('test'), $user->getPreference('test2'), $preference2], $visiblePrefs);
+
+        self::assertInstanceOf(UserPreference::class, $prefs[0]);
+        self::assertEquals('test', $prefs[0]->getName());
+
+        self::assertInstanceOf(UserPreference::class, $prefs[1]);
+        self::assertEquals('test2', $prefs[1]->getName());
+
+        self::assertInstanceOf(UserPreference::class, $prefs[2]);
+        self::assertEquals('export_decimal', $prefs[2]->getName());
     }
 
     public function testDisplayName(): void
@@ -346,6 +402,12 @@ class UserTest extends TestCase
         self::assertTrue($sut->isTeamleadOf($team2));
         self::assertTrue($sut->isInTeam($team2));
 
+        self::assertTrue($sut->isTeamleadOf($team2));
+        $user2 = new User();
+        self::assertFalse($sut->isTeamleadOfUser($user2));
+        $team2->addUser($user2);
+        self::assertTrue($sut->isTeamleadOfUser($user2));
+
         self::assertCount(2, $sut->getTeams());
         $sut->removeMembership(new TeamMember());
         self::assertCount(2, $sut->getTeams());
@@ -392,6 +454,98 @@ class UserTest extends TestCase
 
         $sut->setSuperAdmin(false);
         self::assertFalse($sut->isSuperAdmin());
+    }
+
+    public function testIsAdminRespectsRoleHierarchy(): void
+    {
+        $sut = new User();
+
+        // a regular user is neither an explicit nor an implicit admin
+        self::assertFalse($sut->isAdmin());
+        self::assertFalse($sut->isAdmin(true));
+        self::assertFalse($sut->isAdmin(false));
+
+        // an explicit admin matches both modes
+        $sut->addRole(User::ROLE_ADMIN);
+        self::assertTrue($sut->isAdmin());
+        self::assertTrue($sut->isAdmin(true));
+        self::assertTrue($sut->isAdmin(false));
+
+        // a super admin is implicitly an admin, but not an explicit one
+        $sut->removeRole(User::ROLE_ADMIN);
+        $sut->addRole(User::ROLE_SUPER_ADMIN);
+        self::assertFalse($sut->isAdmin());
+        self::assertFalse($sut->isAdmin(true));
+        self::assertTrue($sut->isAdmin(false));
+    }
+
+    public function testHasTeamleadRoleRespectsRoleHierarchy(): void
+    {
+        $sut = new User();
+
+        // a regular user has no teamlead role in either mode
+        self::assertFalse($sut->hasTeamleadRole());
+        self::assertFalse($sut->hasTeamleadRole(true));
+        self::assertFalse($sut->hasTeamleadRole(false));
+
+        // an explicit teamlead matches both modes
+        $sut->addRole(User::ROLE_TEAMLEAD);
+        self::assertTrue($sut->hasTeamleadRole());
+        self::assertTrue($sut->hasTeamleadRole(true));
+        self::assertTrue($sut->hasTeamleadRole(false));
+
+        // an admin is implicitly a teamlead, but not an explicit one
+        $sut->removeRole(User::ROLE_TEAMLEAD);
+        $sut->addRole(User::ROLE_ADMIN);
+        self::assertFalse($sut->hasTeamleadRole());
+        self::assertFalse($sut->hasTeamleadRole(true));
+        self::assertTrue($sut->hasTeamleadRole(false));
+
+        // a super admin is implicitly a teamlead as well
+        $sut->removeRole(User::ROLE_ADMIN);
+        $sut->addRole(User::ROLE_SUPER_ADMIN);
+        self::assertFalse($sut->hasTeamleadRole());
+        self::assertFalse($sut->hasTeamleadRole(true));
+        self::assertTrue($sut->hasTeamleadRole(false));
+    }
+
+    public function testCanAssignRole(): void
+    {
+        $superAdmin = new User();
+        $superAdmin->addRole(User::ROLE_SUPER_ADMIN);
+        // a super admin may assign every role
+        self::assertTrue($superAdmin->canAssignRole(User::ROLE_SUPER_ADMIN));
+        self::assertTrue($superAdmin->canAssignRole(User::ROLE_ADMIN));
+        self::assertTrue($superAdmin->canAssignRole(User::ROLE_TEAMLEAD));
+        self::assertTrue($superAdmin->canAssignRole(User::ROLE_USER));
+
+        $admin = new User();
+        $admin->addRole(User::ROLE_ADMIN);
+        // an admin may assign admin and below, but not super admin
+        self::assertFalse($admin->canAssignRole(User::ROLE_SUPER_ADMIN));
+        self::assertTrue($admin->canAssignRole(User::ROLE_ADMIN));
+        self::assertTrue($admin->canAssignRole(User::ROLE_TEAMLEAD));
+        self::assertTrue($admin->canAssignRole(User::ROLE_USER));
+
+        $teamlead = new User();
+        $teamlead->addRole(User::ROLE_TEAMLEAD);
+        // a teamlead may assign teamlead and below, but not admin or super admin
+        self::assertFalse($teamlead->canAssignRole(User::ROLE_SUPER_ADMIN));
+        self::assertFalse($teamlead->canAssignRole(User::ROLE_ADMIN));
+        self::assertTrue($teamlead->canAssignRole(User::ROLE_TEAMLEAD));
+        self::assertTrue($teamlead->canAssignRole(User::ROLE_USER));
+
+        $user = new User();
+        // a regular user may not assign any of the privileged roles
+        self::assertFalse($user->canAssignRole(User::ROLE_SUPER_ADMIN));
+        self::assertFalse($user->canAssignRole(User::ROLE_ADMIN));
+        self::assertFalse($user->canAssignRole(User::ROLE_TEAMLEAD));
+        self::assertTrue($user->canAssignRole(User::ROLE_USER));
+
+        // custom roles can be assigned by anyone, and the check is case-insensitive
+        self::assertTrue($user->canAssignRole('ROLE_CUSTOM'));
+        self::assertTrue($admin->canAssignRole('role_teamlead'));
+        self::assertFalse($teamlead->canAssignRole('role_admin'));
     }
 
     /**
@@ -441,6 +595,74 @@ class UserTest extends TestCase
         self::assertTrue($sut->initCanSeeAllData(true));
         self::assertTrue($sut->canSeeAllData());
         self::assertFalse($sut->initCanSeeAllData(true));
+    }
+
+    public function testIsRegularUserOnly(): void
+    {
+        $sut = new User();
+        self::assertTrue($sut->isRegularUserOnly());
+
+        $sut->setRoles([User::ROLE_USER]);
+        self::assertTrue($sut->isRegularUserOnly());
+
+        $sut->addRole(User::ROLE_TEAMLEAD);
+        self::assertFalse($sut->isRegularUserOnly());
+
+        $sut->removeRole(User::ROLE_TEAMLEAD);
+        self::assertTrue($sut->isRegularUserOnly());
+    }
+
+    /**
+     * @deprecated
+     */
+    #[Group('legacy')]
+    public function testCanSeeUserGrantsAccessForTeamleadToRegularUserWithoutTeam(): void
+    {
+        $requester = new User();
+        $requester->setRoles([User::ROLE_TEAMLEAD]);
+
+        $subject = self::userWithId(1);
+        $subject->setEnabled(true);
+
+        self::assertTrue($subject->isRegularUserOnly());
+        self::assertSame([], $subject->getTeams());
+        self::assertTrue($requester->canSeeUser($subject));
+    }
+
+    /**
+     * @deprecated
+     */
+    #[Group('legacy')]
+    public function testCanSeeUserDeniesTeamleadFallbackForRegularUserWithTeam(): void
+    {
+        $requester = new User();
+        $requester->setRoles([User::ROLE_TEAMLEAD]);
+
+        $subject = self::userWithId(1);
+        $subject->setEnabled(true);
+        (new Team('Support'))->addUser($subject);
+
+        self::assertTrue($subject->isRegularUserOnly());
+        self::assertNotSame([], $subject->getTeams());
+        self::assertFalse($requester->canSeeUser($subject));
+    }
+
+    /**
+     * @deprecated
+     */
+    #[Group('legacy')]
+    public function testCanSeeUserDeniesTeamleadFallbackForNonRegularUserWithoutTeam(): void
+    {
+        $requester = new User();
+        $requester->setRoles([User::ROLE_TEAMLEAD]);
+
+        $subject = self::userWithId(1);
+        $subject->setEnabled(true);
+        $subject->addRole(User::ROLE_ADMIN);
+
+        self::assertFalse($subject->isRegularUserOnly());
+        self::assertSame([], $subject->getTeams());
+        self::assertFalse($requester->canSeeUser($subject));
     }
 
     public function testSystemAccount(): void
@@ -528,6 +750,14 @@ class UserTest extends TestCase
         $sut2->setEnabled(true);
         self::assertTrue($sut->isEqualTo($sut2));
         self::assertTrue($sut2->isEqualTo($sut));
+
+        // a reset security signature invalidates existing sessions
+        $sut->resetSecuritySignature();
+        self::assertFalse($sut->isEqualTo($sut2));
+        self::assertFalse($sut2->isEqualTo($sut));
+        $sut2 = clone $sut;
+        self::assertTrue($sut->isEqualTo($sut2));
+        self::assertTrue($sut2->isEqualTo($sut));
     }
 
     public function testSerialize(): void
@@ -537,6 +767,7 @@ class UserTest extends TestCase
         $sut->setUserIdentifier('foo-BAR');
         $sut->setEmail('hello@world.com');
         $sut->setEnabled(false);
+        $sut->resetSecuritySignature();
 
         $data = serialize($sut);
 
@@ -545,6 +776,7 @@ class UserTest extends TestCase
             false,
             null,
             'hello@world.com',
+            $sut->getSignatureDate(),
         ];
 
         /** @var User $unserialized */
@@ -555,9 +787,28 @@ class UserTest extends TestCase
             $unserialized->isEnabled(),
             $unserialized->getId(),
             $unserialized->getEmail(),
+            $unserialized->getSignatureDate(),
         ];
 
         self::assertEquals($expected, $actual);
+        self::assertTrue($sut->isEqualTo($unserialized));
+    }
+
+    /**
+     * Sessions created before the signature date was serialized must stay valid.
+     */
+    public function testUnserializeWithoutSignatureDate(): void
+    {
+        $sut = new User();
+        $sut->__unserialize([
+            'id' => 1,
+            'username' => 'foo-BAR',
+            'enabled' => true,
+            'email' => 'hello@world.com',
+            'password' => 'ABC-1234567890',
+        ]);
+
+        self::assertEquals('', $sut->getSignatureDate());
     }
 
     public function testTeamMemberships(): void
@@ -637,5 +888,140 @@ class UserTest extends TestCase
         self::assertTrue($user->hasSupervisor());
         self::assertNotNull($user->getSupervisor());
         self::assertSame($supervisor, $user->getSupervisor());
+    }
+
+    #[Group('legacy')]
+    public function testLastLogin(): void
+    {
+        $dateTime = new \DateTime('now', new \DateTimeZone('UTC'));
+
+        $user = new User();
+        $user->setTimezone('Europe/Berlin');
+
+        $lastLogin = $user->getLastLogin();
+        self::assertNull($lastLogin);
+        $user->setLastLogin($dateTime); // @phpstan-ignore method.deprecated
+
+        $lastLogin = $user->getLastLogin();
+        self::assertNotNull($lastLogin);
+        self::assertInstanceOf(\DateTime::class, $lastLogin);
+        self::assertEquals('Europe/Berlin', $lastLogin->getTimezone()->getName());
+    }
+
+    public function testPasswordResetLink(): void
+    {
+        $sut = new User();
+        self::assertFalse($sut->isPasswordResetLink('abc'));
+
+        $sut->markPasswordResetLink('/en/auth/link/check?user=foo&expires=1234&hash=abc');
+        self::assertTrue($sut->isPasswordResetLink('abc'));
+        self::assertFalse($sut->isPasswordResetLink('abd'));
+        self::assertFalse($sut->isPasswordResetLink(''));
+        // the hash is not stored in plain text
+        self::assertNotEquals('abc', $sut->getPreferenceValue(User::PREFERENCE_PASSWORD_RESET_LINK));
+
+        // the link is used up when the reset is required (link consumed or admin) ...
+        $sut->setRequiresPasswordReset(true);
+        self::assertFalse($sut->isPasswordResetLink('abc'));
+
+        // ... and when the password was changed
+        $sut->markPasswordResetLink('http://localhost/en/auth/link/check?user=foo&expires=1234&hash=abc');
+        self::assertTrue($sut->isPasswordResetLink('abc'));
+        $sut->setRequiresPasswordReset(false);
+        self::assertFalse($sut->isPasswordResetLink('abc'));
+    }
+
+    public function testMarkPasswordResetLinkWithoutHash(): void
+    {
+        $sut = new User();
+        $this->expectException(\RuntimeException::class);
+        $sut->markPasswordResetLink('/en/auth/link/check?user=foo&expires=1234');
+    }
+
+    public function testIsPasswordRequestNonExpiredIsTimezoneIndependent(): void
+    {
+        $user = new User();
+        $user->setTimezone('Europe/Vienna');
+        $user->markPasswordRequested();
+
+        self::assertTrue($user->isPasswordRequestNonExpired(3600));
+        self::assertTrue($user->isPasswordRequestNonExpired(7200));
+
+        $user->setTimezone('America/Los_Angeles');
+
+        self::assertTrue($user->isPasswordRequestNonExpired(3600));
+        self::assertTrue($user->isPasswordRequestNonExpired(7200));
+    }
+
+    public function testTotpAuthentication(): void
+    {
+        $user = new User();
+        $user->setUserIdentifier('foo');
+        self::assertFalse($user->isTotpAuthenticationEnabled());
+        self::assertSame('foo', $user->getTotpAuthenticationUsername());
+
+        $user->setTotpSecret('JBSWY3DPEHPK3PXP');
+        $user->enableTotpAuthentication();
+        self::assertTrue($user->isTotpAuthenticationEnabled());
+        self::assertTrue($user->hasTotpSecret());
+
+        $config = $user->getTotpAuthenticationConfiguration();
+        self::assertSame('JBSWY3DPEHPK3PXP', $config->getSecret());
+        self::assertSame(TotpConfiguration::ALGORITHM_SHA1, $config->getAlgorithm());
+        self::assertSame(30, $config->getPeriod());
+        self::assertSame(6, $config->getDigits());
+
+        // deactivation removes the secret, so a re-activation requires a new one
+        $user->disableTotpAuthentication();
+        self::assertFalse($user->isTotpAuthenticationEnabled());
+        self::assertFalse($user->hasTotpSecret());
+        self::assertNull($user->getTotpSecret());
+    }
+
+    public function testCreateTotpAuthenticationConfiguration(): void
+    {
+        $user = new User();
+        $user->setTotpSecret('JBSWY3DPEHPK3PXP');
+
+        $config = $user->createTotpAuthenticationConfiguration('KRSXG5CTMVRXEZLU');
+        self::assertSame('KRSXG5CTMVRXEZLU', $config->getSecret());
+        self::assertSame(TotpConfiguration::ALGORITHM_SHA1, $config->getAlgorithm());
+        self::assertSame(30, $config->getPeriod());
+        self::assertSame(6, $config->getDigits());
+
+        // the given secret must not be stored in the user
+        self::assertSame('JBSWY3DPEHPK3PXP', $user->getTotpSecret());
+        self::assertEquals($user->getTotpAuthenticationConfiguration(), $user->createTotpAuthenticationConfiguration('JBSWY3DPEHPK3PXP'));
+    }
+
+    public function testGetTotpAuthenticationConfigurationWithoutSecret(): void
+    {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('Cannot create TOTP configuration, user has no TOTP secret');
+
+        (new User())->getTotpAuthenticationConfiguration();
+    }
+
+    public function testSignatureDate(): void
+    {
+        $user = new User();
+
+        self::assertEquals('', $user->getSignatureDate());
+        $user->resetSecuritySignature();
+        // shortest possible result: 2026-05-31T01:18:19Z
+        self::assertGreaterThanOrEqual(20, \strlen($user->getSignatureDate()));
+        // always UTC, independent of the users timezone: the value must not change when loaded from the database
+        self::assertStringEndsWith('+00:00', $user->getSignatureDate());
+    }
+
+    private static function userWithId(int $id): User
+    {
+        $user = new User();
+        $reflection = new \ReflectionClass($user);
+        $property = $reflection->getProperty('id');
+        $property->setAccessible(true);
+        $property->setValue($user, $id);
+
+        return $user;
     }
 }

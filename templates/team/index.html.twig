@@ -16,7 +16,7 @@
             {{ widgets.user_avatar(user, tooltip, 'avatar-rounded', (member.teamlead ? 'info' : null)) }}
         {% endfor %}
     {% elseif column == 'amount' %}
-        {{ widgets.badge_counter(entry.members|length) }}
+        {{ widgets.badge_counted(entry.members|length) }}
     {% elseif column == 'actions' %}
         {% set event = actions(app.user, 'team', 'index', {'team': entry}) %}
         {{ widgets.table_actions(event.actions) }}

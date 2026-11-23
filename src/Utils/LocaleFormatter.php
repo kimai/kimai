@@ -18,10 +18,33 @@ use NumberFormatter;
 use Symfony\Component\Intl\Currencies;
 
 /**
- * Use this class to format values into locale specific representations.
+ * Use this class to format values into locale-specific representations.
  */
 final class LocaleFormatter
 {
+    /**
+     * Special locales to test:
+     *
+     * - el             h:mm a      9:41 π.μ.
+     * - fr_CA          HH 'h' mm   09 h 41
+     * - ko             h:mm a      10:18 오전
+     * - tr_CY          h:mm a      9:41 ÖÖ
+     * - pa             h:mm a      10:18 ਪੂ.ਦੁ.
+     * - pt_MO          h:mm a      9:41 da manhã
+     * - zh_Hant        Bh:mm       上午9:41
+     * - zh_Hant_TW     Bh:mm       上午9:41
+     */
+    // IntlDateFormatter::RELATIVE_* - not usable for times
+    // IntlDateFormatter::LONG - with seconds and timezone, and translation for h and min if locale supports it
+    // IntlDateFormatter::MEDIUM - with seconds, and translation for h and min if locale supports it
+    // IntlDateFormatter::SHORT - no seconds, no timezone - but translates e.g. am/pm to locale specific like zh_Hant
+    public const TIME_PATTERN = \IntlDateFormatter::SHORT;
+    // IntlDateFormatter::RELATIVE_* - translates words for "today" and "yesterday"
+    // IntlDateFormatter::LONG - translates the month name
+    // IntlDateFormatter::MEDIUM - date as we likely want to use it, but with translations if locale supports it, e.g. 2025年5月26日
+    // IntlDateFormatter::SHORT - date with dots, but year with two numbers in some locales causing conflicts e.g., in invoices
+    public const DATE_PATTERN = \IntlDateFormatter::SHORT;
+
     private ?Duration $durationFormatter = null;
     private ?IntlDateFormatter $dateFormatter = null;
     private ?IntlDateFormatter $dateTimeFormatter = null;
@@ -30,8 +53,9 @@ final class LocaleFormatter
     private ?NumberFormatter $decimalFormatter = null;
     private ?NumberFormatter $moneyFormatter = null;
     private ?NumberFormatter $moneyFormatterNoCurrency = null;
+    private int $moneyFormatterNoCurrencyFractionDigits = MoneyRounding::DEFAULT_FRACTION_DIGITS;
 
-    public function __construct(private LocaleService $localeService, private string $locale)
+    public function __construct(private readonly LocaleService $localeService, private readonly string $locale)
     {
     }
 
@@ -44,10 +68,7 @@ final class LocaleFormatter
             return $this->durationDecimal($duration);
         }
 
-        return $this->formatDuration(
-            $this->getSecondsForDuration($duration),
-            $this->localeService->getDurationFormat($this->locale)
-        );
+        return $this->formatDuration($this->getSecondsForDuration($duration));
     }
 
     /**
@@ -55,7 +76,7 @@ final class LocaleFormatter
      */
     public function durationDecimal(Timesheet|int|string|null $duration): string
     {
-        if (null === $this->numberFormatter) {
+        if (null === $this->decimalFormatter) {
             $this->decimalFormatter = new NumberFormatter($this->locale, NumberFormatter::DECIMAL);
             $this->decimalFormatter->setAttribute(NumberFormatter::FRACTION_DIGITS, 2);
         }
@@ -84,13 +105,13 @@ final class LocaleFormatter
         return (int) $duration;
     }
 
-    private function formatDuration(int $seconds, string $format): string
+    private function formatDuration(int $seconds): string
     {
         if ($this->durationFormatter === null) {
             $this->durationFormatter = new Duration();
         }
 
-        return $this->durationFormatter->format($seconds, $format);
+        return $this->durationFormatter->format($seconds);
     }
 
     /**
@@ -145,17 +166,27 @@ final class LocaleFormatter
         if (false === $withCurrency) {
             if (null === $this->moneyFormatterNoCurrency) {
                 $this->moneyFormatterNoCurrency = new NumberFormatter($this->locale, NumberFormatter::CURRENCY);
+                // commercial rounding, intl defaults to "half even" (see MoneyRounding)
+                $this->moneyFormatterNoCurrency->setAttribute(NumberFormatter::ROUNDING_MODE, NumberFormatter::ROUND_HALFUP);
                 $this->moneyFormatterNoCurrency->setTextAttribute(NumberFormatter::POSITIVE_PREFIX, '');
                 $this->moneyFormatterNoCurrency->setTextAttribute(NumberFormatter::POSITIVE_SUFFIX, '');
                 $this->moneyFormatterNoCurrency->setTextAttribute(NumberFormatter::NEGATIVE_PREFIX, '-');
                 $this->moneyFormatterNoCurrency->setTextAttribute(NumberFormatter::NEGATIVE_SUFFIX, '');
+                $this->moneyFormatterNoCurrencyFractionDigits = (int) $this->moneyFormatterNoCurrency->getAttribute(NumberFormatter::MAX_FRACTION_DIGITS);
             }
+
+            // without a currency symbol intl uses the decimals of the locales default currency,
+            // so they have to be set on every call (the formatter is cached and currencies can change)
+            $fractionDigits = $currency === null ? $this->moneyFormatterNoCurrencyFractionDigits : MoneyRounding::getFractionDigits($currency);
+            $this->moneyFormatterNoCurrency->setAttribute(NumberFormatter::FRACTION_DIGITS, $fractionDigits);
 
             return $this->moneyFormatterNoCurrency->format($amount, NumberFormatter::TYPE_DEFAULT);
         }
 
         if (null === $this->moneyFormatter) {
             $this->moneyFormatter = new NumberFormatter($this->locale, NumberFormatter::CURRENCY);
+            // commercial rounding, intl defaults to "half even" (see MoneyRounding)
+            $this->moneyFormatter->setAttribute(NumberFormatter::ROUNDING_MODE, NumberFormatter::ROUND_HALFUP);
         }
 
         return $this->moneyFormatter->formatCurrency($amount, $currency);
@@ -170,8 +201,8 @@ final class LocaleFormatter
         if (null === $this->dateFormatter) {
             $this->dateFormatter = new IntlDateFormatter(
                 $this->locale,
-                IntlDateFormatter::MEDIUM,
-                IntlDateFormatter::MEDIUM,
+                self::DATE_PATTERN,
+                IntlDateFormatter::NONE,
                 date_default_timezone_get(),
                 IntlDateFormatter::GREGORIAN,
                 $this->localeService->getDateFormat($this->locale)
@@ -192,7 +223,7 @@ final class LocaleFormatter
             return null;
         }
 
-        return (string) $formatted;
+        return $formatted;
     }
 
     public function dateTime(DateTimeInterface|string|null $date): ?string
@@ -204,8 +235,8 @@ final class LocaleFormatter
         if (null === $this->dateTimeFormatter) {
             $this->dateTimeFormatter = new IntlDateFormatter(
                 $this->locale,
-                IntlDateFormatter::MEDIUM,
-                IntlDateFormatter::MEDIUM,
+                self::DATE_PATTERN,
+                self::TIME_PATTERN,
                 date_default_timezone_get(),
                 IntlDateFormatter::GREGORIAN,
                 $this->localeService->getDateTimeFormat($this->locale)
@@ -226,7 +257,7 @@ final class LocaleFormatter
             return null;
         }
 
-        return (string) $formatted;
+        return $formatted;
     }
 
     public function dateFormat(\DateTimeInterface|string|null $date, string $format): ?string
@@ -255,8 +286,8 @@ final class LocaleFormatter
         if (null === $this->timeFormatter) {
             $this->timeFormatter = new IntlDateFormatter(
                 $this->locale,
-                IntlDateFormatter::MEDIUM,
-                IntlDateFormatter::MEDIUM,
+                IntlDateFormatter::NONE,
+                self::TIME_PATTERN,
                 date_default_timezone_get(),
                 IntlDateFormatter::GREGORIAN,
                 $this->localeService->getTimeFormat($this->locale)
@@ -267,7 +298,7 @@ final class LocaleFormatter
             try {
                 $date = new \DateTimeImmutable($date);
             } catch (Exception $ex) {
-                return $date;
+                return null;
             }
         }
 
@@ -277,7 +308,7 @@ final class LocaleFormatter
             return null;
         }
 
-        return (string) $formatted;
+        return $formatted;
     }
 
     /**
@@ -300,12 +331,17 @@ final class LocaleFormatter
             throw new \Exception('Invalid dateformat given for formatIntl()');
         }
 
-        return (string) $formatted;
+        return $formatted;
     }
 
     public function monthName(\DateTimeInterface $dateTime, bool $withYear = false): string
     {
         return $this->formatIntl($dateTime, ($withYear ? 'LLLL yyyy' : 'LLLL'));
+    }
+
+    public function quarterName(\DateTimeInterface $dateTime, bool $withYear = false): string
+    {
+        return $this->formatIntl($dateTime, ($withYear ? 'QQQ yyyy' : 'QQQ'));
     }
 
     public function dayName(\DateTimeInterface $dateTime, bool $short = false): string

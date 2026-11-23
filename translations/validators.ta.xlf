@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ta" datatype="plaintext" original="validators.en.xlf">
+    <body>
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team." xml:space="preserve" approved="yes">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target state="final">குறைந்தது ஒரு குழுத் தலைவராவது அணிக்கு நியமிக்கப்பட வேண்டும்.</target>
+      </trans-unit>
+      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match." xml:space="preserve" approved="yes">
+        <source>The entered passwords don't match.</source>
+        <target state="final">உள்ளிடப்பட்ட கடவுச்சொற்கள் பொருந்தவில்லை.</target>
+      </trans-unit>
+      <trans-unit id="6u6oCwB" resname="The email is already used." xml:space="preserve" approved="yes">
+        <source>This e-mail address is already in use.</source>
+        <target state="final">இந்த மின்னஞ்சல் முகவரி ஏற்கனவே பயன்பாட்டில் உள்ளது.</target>
+      </trans-unit>
+      <trans-unit id="S14XECA" resname="The username is already used." xml:space="preserve" approved="yes">
+        <source>The username is already used.</source>
+        <target state="final">பயனர்பெயர் ஏற்கனவே பயன்படுத்தப்படுகிறது.</target>
+      </trans-unit>
+      <trans-unit id="ekO5eXI" resname="An equal username is already used." xml:space="preserve" approved="yes">
+        <source>An equal username is already used.</source>
+        <target state="final">சம பயனர்பெயர் ஏற்கனவே பயன்படுத்தப்படுகிறது.</target>
+      </trans-unit>
+      <trans-unit id="INlaCgW" resname="An equal email is already used." xml:space="preserve" approved="yes">
+        <source>An equal e-mail address is already in use.</source>
+        <target state="final">சமமான மின்னஞ்சல் முகவரி ஏற்கனவே பயன்பாட்டில் உள்ளது.</target>
+      </trans-unit>
+      <trans-unit id="IkNxbBI" resname="This value is not a valid role." xml:space="preserve" approved="yes">
+        <source>This value is not a valid role.</source>
+        <target state="final">இந்த மதிப்பு சரியான பாத்திரம் அல்ல.</target>
+      </trans-unit>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve" approved="yes">
+        <source>The end date must not be earlier than the start date.</source>
+        <target state="final">இறுதி தேதி தொடக்க தேதியைவிட முந்தையதாக இருக்கக் கூடாது.</target>
+      </trans-unit>
+      <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future." xml:space="preserve" approved="yes">
+        <source>The begin date cannot be in the future.</source>
+        <target state="final">தொடக்க தேதி எதிர்காலத்தில் இருக்க முடியாது.</target>
+      </trans-unit>
+      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero." xml:space="preserve" approved="yes">
+        <source>Duration cannot be zero.</source>
+        <target state="final">வெற்று காலம் அனுமதிக்கப்படவில்லை.</target>
+      </trans-unit>
+      <trans-unit id="1V6BsD_" resname="You must select at least one user or team." xml:space="preserve" approved="yes">
+        <source>You must select at least one user or team.</source>
+        <target state="final">நீங்கள் குறைந்தது ஒரு பயனர் அல்லது குழுவையாவது தேர்ந்தெடுக்க வேண்டும்.</target>
+      </trans-unit>
+      <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again." xml:space="preserve" approved="yes">
+        <source>This invoice document cannot be used. Please rename the file and upload it again.</source>
+        <target state="final">இந்த விலைப்பட்டியல் ஆவணத்தைப் பயன்படுத்த முடியாது. கோப்பை மறுபெயரிட்டு மீண்டும் பதிவேற்றவும்.</target>
+      </trans-unit>
+      <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date." xml:space="preserve" approved="yes">
+        <source>This period is locked. Please choose a later date.</source>
+        <target state="final">இந்தக் காலம் பூட்டப்பட்டுள்ளது. பின்னர் தேதியைத் தேர்வுசெய்க.</target>
+      </trans-unit>
+      <trans-unit id="u2wjm2i" resname="You already have an entry for this time." xml:space="preserve" approved="yes">
+        <source>You already have an entry for this time.</source>
+        <target state="final">இந்த நேரத்தில் உங்களிடம் ஏற்கனவே ஒரு உள்ளடக்கம் உள்ளது.</target>
+      </trans-unit>
+      <trans-unit id="VJSZSD0" resname="The given value is not a valid time." xml:space="preserve" approved="yes">
+        <source>The given value is not a valid time.</source>
+        <target state="final">கொடுக்கப்பட்ட மதிப்பு சரியான நேரம் அல்ல.</target>
+      </trans-unit>
+      <trans-unit id="1oKCOa5" resname="The budget is completely used." xml:space="preserve" approved="yes">
+        <source>The budget is completely used.</source>
+        <target state="final">நிதித்திட்டம் பயன்படுத்தப்பட்டது. கிடைக்கக்கூடிய %budget%, %used% இதுவரை முன்பதிவு செய்யப்பட்டுள்ளது, %free%இன்னும் பயன்படுத்தப்படலாம்.</target>
+      </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up." xml:space="preserve" approved="yes">
+        <source>Sorry, the budget is used up.</source>
+        <target state="final">மன்னிக்கவும், நிதித்திட்டம் பயன்படுத்தப்பட்டது.</target>
+      </trans-unit>
+      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded." xml:space="preserve" approved="yes">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target state="final">அதிகபட்சம் {{ value }} மணிநேரம் அனுமதிக்கப்படுகிறது.</target>
+      </trans-unit>
+      <trans-unit id="to1Q85W" resname="An activity needs to be selected." xml:space="preserve" approved="yes">
+        <source>An activity needs to be selected.</source>
+        <target state="final">ஒரு செயல்பாட்டைத் தேர்ந்தெடுக்க வேண்டும்.</target>
+      </trans-unit>
+      <trans-unit id="rHd9_aA" resname="A project needs to be selected." xml:space="preserve" approved="yes">
+        <source>A project needs to be selected.</source>
+        <target state="final">ஒரு திட்டத்தைத் தேர்ந்தெடுக்க வேண்டும்.</target>
+      </trans-unit>
+      <trans-unit id="mjlH0la" resname="This timesheet is already exported." xml:space="preserve" approved="yes">
+        <source>This timesheet is already exported.</source>
+        <target state="final">இந்த நேரத்தாள் ஏற்கனவே ஏற்றுமதி செய்யப்பட்டுள்ளது.</target>
+      </trans-unit>
+      <trans-unit id="gSAwscA" resname="Validation Failed" xml:space="preserve" approved="yes">
+        <source>Validation Failed</source>
+        <target state="final">சேமிப்பதில் சிக்கல் இருந்தது.</target>
+      </trans-unit>
+      <trans-unit id="7HYTefs" resname="Cannot stop running timesheet" xml:space="preserve" approved="yes">
+        <source>Cannot stop running timesheet</source>
+        <target state="final">உங்களிடம் செயலில் நேர பதிவு உள்ளது, இது தானாக நிறுத்த முடியாது.</target>
+      </trans-unit>
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token." xml:space="preserve" approved="yes">
+        <source>The given code is not the correct TOTP token.</source>
+        <target state="final">கொடுக்கப்பட்ட குறியீடு சரியான இஒமுக கிள்ளாக்கு அல்ல.</target>
+      </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name." xml:space="preserve" approved="yes">
+        <source>This value is not a valid role name.</source>
+        <target state="final">இது பயனர் பாத்திரத்திற்கான சரியான பெயர் அல்ல.</target>
+      </trans-unit>
+      <trans-unit id="ZObikpA" resname="This absence type is not known." xml:space="preserve" approved="yes">
+        <source>This absence type is not known.</source>
+        <target state="final">இந்த இல்லாத வகை தெரியவில்லை.</target>
+      </trans-unit>
+      <trans-unit id="0ULsHQA" resname="The chosen date is not a working day." xml:space="preserve" approved="yes">
+        <source>The chosen date is not a working day.</source>
+        <target state="final">தேர்ந்தெடுக்கப்பட்ட தேதி ஒரு வேலை நாள் அல்ல.</target>
+      </trans-unit>
+      <trans-unit id="N21br.P" resname="The chosen date is already locked." xml:space="preserve" approved="yes">
+        <source>The chosen date is already locked.</source>
+        <target state="final">தேர்ந்தெடுக்கப்பட்ட தேதி ஏற்கனவே பூட்டப்பட்டுள்ளது.</target>
+      </trans-unit>
+      <trans-unit id="6H84TMs" resname="An absence must be assigned to a user." xml:space="preserve" approved="yes">
+        <source>An absence must be assigned to a user.</source>
+        <target state="final">இல்லாதது ஒரு பயனருக்கு ஒதுக்கப்பட வேண்டும்.</target>
+      </trans-unit>
+      <trans-unit id="nLcihCc" resname="An absence must have a date." xml:space="preserve" approved="yes">
+        <source>An absence must have a date.</source>
+        <target state="final">இல்லாத நிலையில் ஒரு தேதி இருக்க வேண்டும்.</target>
+      </trans-unit>
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve" approved="yes">
+        <source>An absence cannot be booked before your first working day.</source>
+        <target state="final">முதல் வேலை நாளுக்கு முன்பு இல்லாததை முன்பதிவு செய்ய முடியாது.</target>
+      </trans-unit>
+      <trans-unit id="IN37g5N" resname="Not enough holidays left." xml:space="preserve" approved="yes">
+        <source>Not enough holidays left.</source>
+        <target state="final">போதுமான விடுமுறைகள் எஞ்சியிருக்கவில்லை.</target>
+      </trans-unit>
+      <trans-unit id="ByeEMxW" resname="You do not have enough overtime, remaining are {{ value }}." xml:space="preserve" approved="yes">
+        <source>You do not have enough overtime, remaining are {{ value }}.</source>
+        <target state="final">உங்களிடம் போதுமான கூடுதல் நேரம் இல்லை, மீதமுள்ளவை {{ value }}.</target>
+      </trans-unit>
+      <trans-unit id="DiaaRa1" resname="You cannot have two absences of this type at one day." xml:space="preserve" approved="yes">
+        <source>You cannot have two absences of this type at one day.</source>
+        <target state="final">ஒரே நாளில் இந்த வகையின் இரண்டு இல்லாதவை உங்களுக்கு இருக்க முடியாது.</target>
+      </trans-unit>
+      <trans-unit id="kSBiyaF" resname="This is a public holiday, booking not allowed." xml:space="preserve" approved="yes">
+        <source>This is a public holiday, booking not allowed.</source>
+        <target state="final">இது ஒரு பொது விடுமுறை, முன்பதிவு அனுமதிக்கப்படவில்லை.</target>
+      </trans-unit>
+      <trans-unit id="c2B6.lW" resname="You can book a maximum of {{ value }} days at once." xml:space="preserve" approved="yes">
+        <source>You can book a maximum of {{ value }} days at once.</source>
+        <target state="final">நீங்கள் அதிகபட்சம் {{ value }} நாட்களை ஒரே நேரத்தில் முன்பதிவு செய்யலாம், தற்போது {{ selected }} ஐத் தேர்ந்தெடுத்துள்ளீர்கள்.</target>
+      </trans-unit>
+      <trans-unit id="BztgSSP" resname="The period of absence must not extend beyond the turn of the year." xml:space="preserve" approved="yes">
+        <source>The period of absence must not extend beyond the turn of the year.</source>
+        <target state="final">இல்லாத காலம் ஆண்டின் தொடக்கத்திற்கு அப்பால் நீட்டிக்கக் கூடாது.</target>
+      </trans-unit>
+      <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve" approved="yes">
+        <source>The CSRF token is invalid. Please try to resubmit the form.</source>
+        <target state="final">படிவத்தை மீண்டும் சமர்ப்பிக்க முயற்சிக்கவும். சிக்கல் தொடர்ந்தால், உங்கள் உலாவியைப் புதுப்பிக்கவும்.</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve" approved="yes">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target state="final">கடைசி வேலை நாளுக்குப் பிறகு இல்லாததை முன்பதிவு செய்ய முடியாது.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

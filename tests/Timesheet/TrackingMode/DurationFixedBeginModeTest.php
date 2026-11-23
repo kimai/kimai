@@ -14,20 +14,24 @@ use App\Entity\User;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\TrackingMode\DurationFixedBeginMode;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-/**
- * @covers \App\Timesheet\TrackingMode\DurationFixedBeginMode
- */
+#[CoversClass(DurationFixedBeginMode::class)]
 class DurationFixedBeginModeTest extends TestCase
 {
-    protected function createSut($default = '13:47')
+    private function createSut(string $default = '13:47', bool $allowApiTimes = false): DurationFixedBeginMode
     {
         $loader = new TestConfigLoader([]);
         $configuration = SystemConfigurationFactory::create($loader, ['timesheet' => ['default_begin' => $default]]);
 
-        return new DurationFixedBeginMode($configuration);
+        $auth = $this->createMock(AuthorizationCheckerInterface::class);
+        $auth->method('isGranted')->willReturn($allowApiTimes);
+
+        return new DurationFixedBeginMode($configuration, $auth);
     }
 
     public function testDefaultValues(): void
@@ -42,6 +46,18 @@ class DurationFixedBeginModeTest extends TestCase
         self::assertEquals('duration_fixed_begin', $sut->getId());
     }
 
+    public function testValuesForAdmin(): void
+    {
+        $sut = $this->createSut('now', true);
+
+        self::assertFalse($sut->canEditBegin());
+        self::assertFalse($sut->canEditEnd());
+        self::assertTrue($sut->canEditDuration());
+        self::assertTrue($sut->canUpdateTimesWithAPI());
+        self::assertFalse($sut->canSeeBeginAndEndTimes());
+        self::assertEquals('duration_fixed_begin', $sut->getId());
+    }
+
     public function testNow(): void
     {
         $seconds = (new \DateTime())->getTimestamp();
@@ -52,6 +68,33 @@ class DurationFixedBeginModeTest extends TestCase
         $diff = $timesheet->getBegin()->getTimestamp() - $seconds;
         // amount of seconds doesn't really matter, it must only be near "now"
         self::assertLessThanOrEqual(2, $diff);
+    }
+
+    /**
+     * @return array<int, array{0: array<string>, 1: bool}>
+     */
+    public static function getApiTimesPermissionData(): array
+    {
+        return [
+            [[], false],
+            [['view_other_timesheet'], false],
+            [['edit_other_timesheet'], true],
+            [['view_other_timesheet', 'edit_other_timesheet'], true],
+        ];
+    }
+
+    /**
+     * @param array<string> $permissions
+     */
+    #[DataProvider('getApiTimesPermissionData')]
+    public function testCanUpdateTimesWithAPIRequiresEditOtherTimesheet(array $permissions, bool $expected): void
+    {
+        $auth = $this->createMock(AuthorizationCheckerInterface::class);
+        $auth->method('isGranted')->willReturnCallback(fn (string $attribute): bool => \in_array($attribute, $permissions, true));
+
+        $sut = new DurationFixedBeginMode(SystemConfigurationFactory::create(new TestConfigLoader([]), []), $auth);
+
+        self::assertSame($expected, $sut->canUpdateTimesWithAPI());
     }
 
     public function testCreate(): void

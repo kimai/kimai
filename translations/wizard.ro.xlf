@@ -30,6 +30,14 @@
         <source>wizard.done.description</source>
         <target state="translated">Cele mai importante setări sunt acum finalizate. Există multe altele pe care le puteți personaliza ulterior în profilul dumneavoastră de utilizator.</target>
       </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title" xml:space="preserve">
+        <source>wizard.password.title</source>
+        <target state="translated">Parola ta</target>
+      </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description" xml:space="preserve">
+        <source>wizard.password.description</source>
+        <target state="translated">Va rog introduceti noua parola, care va fi folosita de a va inregistra de acum inainte.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

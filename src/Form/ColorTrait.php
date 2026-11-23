@@ -27,7 +27,7 @@ trait ColorTrait
         // this code exists only for backward compatibility
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($required) {
+            function (FormEvent $event) use ($required): void {
                 if (!$event->getForm()->getConfig()->hasOption('choices')) {
                     return;
                 }

@@ -17,18 +17,43 @@ fieldset.form-fieldset > legend {
     --tblr-dropdown-divider-margin-y: .5rem;
 }
 
-/*
-fixes translucent scroll border, e.g. in timesheet modal duration dropdown
-https://github.com/tabler/tabler/issues/1606
-*/
-.dropdown-menu {
-    background-clip: border-box;
+:host,:root,[data-bs-theme=light] {
+    /* remove the shadow from all form element groups */
+    --tblr-box-shadow-input: none;
 }
 
-/*
-hide empty fieldset
-https://github.com/tabler/tabler/issues/1650
-*/
-fieldset:empty {
-    display: none;
+.navbar[data-bs-theme=dark] {
+    /* give navigation elements slightly higher contrast */
+    --tblr-navbar-color: hsla(0,0%,100%,.8);
+}
+
+/* this is not a bugfix, but it adds a border for better visual segregation */
+.nav-pills .nav-link.active {
+    border-width: 1px;
+    border-style: solid;
+}
+
+/* fixes contrast of batch-update checkboxes - https://github.com/kimai/kimai/issues/5146 */
+.multiupdater[type=checkbox] {
+    --tblr-border-color-translucent: rgba(4, 32, 69, .2);
+}
+
+/* fixes height for long tags https://github.com/kimai/kimai/issues/5169 */
+.tag {
+    --tblr-tag-height: unset;
+}
+
+/* Page title (e.g. Dashboard) does not work properly in navbar, just outside */
+.navbar {
+    .page-title {
+        color: var(--tblr-body-color);
+    }
+}
+
+/* Highlighted text is not visible - https://github.com/tabler/tabler/issues/2603 */
+[data-bs-theme=dark] {
+    ::selection,
+    .text-selected {
+        background-color: var(--#{$prefix}primary);
+    }
 }

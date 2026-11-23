@@ -19,6 +19,7 @@
         {% block form_body %}
         {{ form_start(form) }}
         <div class="card-body {% block form_body_class %}{% endblock %}">
+            {{ form_errors(form) }}
             {% block form_pre_content %}{% endblock %}
             {% block form_content %}
                 {{ form_widget(form) }}

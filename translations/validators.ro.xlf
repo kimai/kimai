@@ -6,9 +6,9 @@
         <source>This value is not a valid role.</source>
         <target>Această valoare nu este un rol valid.</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
-        <source>End date must not be earlier then start date.</source>
-        <target>Data de încheiere nu trebuie să fie anterioară datei de început.</target>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
+        <source>The end date must not be earlier than the start date.</source>
+        <target state="needs-translation">Data de încheiere nu trebuie să fie anterioară datei de început.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
@@ -101,6 +101,22 @@
       <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
         <source>The given code is not the correct TOTP token.</source>
         <target state="translated">Codul dat nu este token-ul TOTP corect.</target>
+      </trans-unit>
+      <trans-unit id="0ULsHQA" resname="The chosen date is not a working day." xml:space="preserve">
+        <source>The chosen date is not a working day.</source>
+        <target state="translated">Data aleasa nu este o zi de lucru.</target>
+      </trans-unit>
+      <trans-unit id="N21br.P" resname="The chosen date is already locked." xml:space="preserve">
+        <source>The chosen date is already locked.</source>
+        <target state="translated">Data aleasa este deja blocata.</target>
+      </trans-unit>
+      <trans-unit id="IN37g5N" resname="Not enough holidays left." xml:space="preserve">
+        <source>Not enough holidays left.</source>
+        <target state="translated">Insuficiente zile libere ramase.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">Durata nu poate fi negativa.</target>
       </trans-unit>
     </body>
   </file>

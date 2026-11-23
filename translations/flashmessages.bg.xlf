@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="bg" datatype="plaintext" original="flashmessages.en.xlf">
+    <body>
+      <trans-unit id="S9k1S7Z" resname="warning" xml:space="preserve">
+        <source>warning</source>
+        <target state="translated">Предупреждение</target>
+      </trans-unit>
+      <trans-unit id="WmrEP_5" resname="timesheet.stop.success" xml:space="preserve">
+        <source>timesheet.stop.success</source>
+        <target state="translated">Записването на времето беше спряно</target>
+      </trans-unit>
+      <trans-unit id="NPBnpK_" resname="timesheet.stop.error" xml:space="preserve">
+        <source>timesheet.stop.error</source>
+        <target state="translated">Записването на времето не можа да бъде спряно</target>
+      </trans-unit>
+      <trans-unit id="CCUoZga" resname="timesheet.start.success" xml:space="preserve">
+        <source>timesheet.start.success</source>
+        <target state="translated">Записването на времето е започнато</target>
+      </trans-unit>
+      <trans-unit id="3w9tuox" resname="timesheet.start.error" xml:space="preserve">
+        <source>timesheet.start.error</source>
+        <target state="translated">Записването на времето не можа да започне</target>
+      </trans-unit>
+      <trans-unit id="kPINWEK" resname="timesheet.locked.warning" xml:space="preserve">
+        <source>timesheet.locked.warning</source>
+        <target state="translated">Редактирате експортиран запис</target>
+      </trans-unit>
+      <trans-unit id="72Ih8zO" resname="action.update.success" xml:space="preserve">
+        <source>action.update.success</source>
+        <target state="translated">Запазени промени</target>
+      </trans-unit>
+      <trans-unit id="xeu1LSy" resname="action.update.error" xml:space="preserve">
+        <source>action.update.error</source>
+        <target state="translated">Промените не можаха да бъдат запазени: %reason%</target>
+      </trans-unit>
+      <trans-unit id="YV50HDB" resname="action.delete.success" xml:space="preserve">
+        <source>action.delete.success</source>
+        <target state="translated">Записът беше изтрит</target>
+      </trans-unit>
+      <trans-unit id="mW91Tmb" resname="action.delete.error" xml:space="preserve">
+        <source>action.delete.error</source>
+        <target state="translated">Записът не можа да бъде изтрит: %reason%</target>
+      </trans-unit>
+      <trans-unit id="B_cz49z" resname="invoice.first_template" xml:space="preserve">
+        <source>invoice.first_template</source>
+        <target state="translated">Моля, първо създайте шаблон за фактура</target>
+      </trans-unit>
+      <trans-unit id="wejAEcR" resname="action.upload.error" xml:space="preserve">
+        <source>action.upload.error</source>
+        <target state="translated">Файлът не можа да бъде качен или запазен: %reason%</target>
+      </trans-unit>
+      <trans-unit resname="action.csrf.error" id="bOE_q5R" xml:space="preserve">
+        <source>action.csrf.error</source>
+        <target state="translated">Действието не можа да бъде изпълнено: невалиден токен за сигурност.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -12,11 +12,10 @@ namespace App\Tests\Model;
 use App\Entity\User;
 use App\Model\QuickEntryModel;
 use App\Model\QuickEntryWeek;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Model\QuickEntryWeek
- */
+#[CoversClass(QuickEntryWeek::class)]
 class QuickEntryWeekTest extends TestCase
 {
     public function testModel(): void

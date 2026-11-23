@@ -10,40 +10,48 @@
 namespace App\Tests\Utils;
 
 use App\Utils\Duration;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Utils\Duration
- */
+#[CoversClass(Duration::class)]
 class DurationTest extends TestCase
 {
     public function testFormat(): void
     {
         $sut = new Duration();
 
-        $this->assertNull($sut->format(null));
-        $this->assertEquals('2:38', $sut->format(9494));
+        self::assertNull($sut->format(null));
+        self::assertEquals('2:38', $sut->format(9494));
     }
 
-    /**
-     * @dataProvider getParseDurationTestData
-     */
+    public function testDecimalFormatRoundTrip(): void
+    {
+        $sut = new Duration();
+
+        // a duration that is a multiple of three minutes can be expressed exactly with two
+        // decimal places, so formatting and re-parsing it must return the original seconds
+        for ($seconds = 180; $seconds <= 86400; $seconds += 180) {
+            $decimal = (string) $sut->formatDecimal($seconds);
+            self::assertSame($seconds, $sut->parseDuration($decimal, Duration::FORMAT_DECIMAL), 'Failed parsing "' . $decimal . '"');
+        }
+    }
+
+    #[DataProvider('getParseDurationTestData')]
     public function testParseDurationString($expected, $duration, $mode): void
     {
         $sut = new Duration();
-        $this->assertEquals($expected, $sut->parseDurationString($duration));
+        self::assertEquals($expected, $sut->parseDurationString($duration));
     }
 
-    /**
-     * @dataProvider getParseDurationTestData
-     */
+    #[DataProvider('getParseDurationTestData')]
     public function testParseDuration($expected, $duration, $mode): void
     {
         $sut = new Duration();
-        $this->assertEquals($expected, $sut->parseDuration($duration, $mode));
+        self::assertEquals($expected, $sut->parseDuration($duration, $mode));
     }
 
-    public function getParseDurationTestData()
+    public static function getParseDurationTestData()
     {
         return [
             [3600, 1, Duration::FORMAT_DECIMAL],
@@ -53,6 +61,20 @@ class DurationTest extends TestCase
             [5400, '1,5', Duration::FORMAT_DECIMAL],
             [-5400, '-1.5', Duration::FORMAT_DECIMAL],
             [-5400, '-1,5', Duration::FORMAT_DECIMAL],
+
+            // decimal hours whose float representation is slightly below the exact value:
+            // they must not be truncated down to the previous second, which would also
+            // shift the displayed time by a full minute (e.g. 8.20 => 8:11 instead of 8:12)
+            [7380, '2.05', Duration::FORMAT_DECIMAL],
+            [14760, '4.10', Duration::FORMAT_DECIMAL],
+            [15660, '4.35', Duration::FORMAT_DECIMAL],
+            [29520, '8.20', Duration::FORMAT_DECIMAL],
+            [29520, '8,20', Duration::FORMAT_DECIMAL],
+            [-29520, '-8.20', Duration::FORMAT_DECIMAL],
+            [30420, '8.45', Duration::FORMAT_DECIMAL],
+            [31320, '8.70', Duration::FORMAT_DECIMAL],
+            [32220, '8.95', Duration::FORMAT_DECIMAL],
+            [58140, '16.15', Duration::FORMAT_DECIMAL],
 
             [0, '', Duration::FORMAT_NATURAL],
             [0, 0, Duration::FORMAT_NATURAL],
@@ -80,7 +102,7 @@ class DurationTest extends TestCase
         ];
     }
 
-    public function getParseDurationInvalidData()
+    public static function getParseDurationInvalidData()
     {
         return [
             // invalid input
@@ -102,9 +124,7 @@ class DurationTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getParseDurationInvalidData
-     */
+    #[DataProvider('getParseDurationInvalidData')]
     public function testParseDurationThrowsInvalidArgumentException($duration, $mode): void
     {
         $this->expectException(\InvalidArgumentException::class);

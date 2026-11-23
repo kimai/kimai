@@ -18,7 +18,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class SkinType extends AbstractType
 {
-    public const THEMES = [
+    public const CHOICES = [
+        'automatic' => 'auto',
         'skin.light' => 'default',
         'skin.dark' => 'dark',
     ];
@@ -29,7 +30,7 @@ final class SkinType extends AbstractType
             'label' => 'skin',
             'search' => false,
             'required' => true,
-            'choices' => self::THEMES,
+            'choices' => self::CHOICES,
         ]);
     }
 

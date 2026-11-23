@@ -10,21 +10,39 @@
 namespace App\Tests\Controller\Reporting;
 
 use App\Entity\User;
-use App\Tests\Controller\ControllerBaseTest;
+use App\Tests\Controller\AbstractControllerBaseTestCase;
 use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-/**
- * @group integration
- */
-class ProjectViewControllerTest extends ControllerBaseTest
+#[Group('integration')]
+class ProjectViewControllerTest extends AbstractControllerBaseTestCase
 {
     public function testReportIsSecure(): void
     {
         $this->assertUrlIsSecured('/reporting/project_view');
+    }
+
+    public function testReportExportIsSecure(): void
+    {
+        $this->assertUrlIsSecured('/reporting/project_view/export');
+    }
+
+    /**
+     * The export route shares its dataset with the report and must therefore be
+     * protected by the same permissions, see GHSA-pvc4-crg3-gj44.
+     */
+    public function testReportExportIsSecureForRole(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/reporting/project_view/export');
+    }
+
+    public function testReportIsSecureForRole(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/reporting/project_view');
     }
 
     public function testReport(): void
@@ -87,7 +105,7 @@ class ProjectViewControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/reporting/project_view/export');
         $response = $client->getResponse();
-        $this->assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());
         self::assertInstanceOf(BinaryFileResponse::class, $response);
         self::assertNotNull($response->headers->get('Content-Type'));
         self::assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));

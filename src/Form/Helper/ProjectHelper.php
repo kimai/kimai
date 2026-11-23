@@ -19,7 +19,7 @@ final class ProjectHelper
     public const PATTERN_NAME = '{name}';
     public const PATTERN_NUMBER = '{number}';
     public const PATTERN_COMMENT = '{comment}';
-    public const PATTERN_ORDERNUMBER = '{ordernumber}';
+    public const PATTERN_ORDERNUMBER = '{orderNumber}';
     public const PATTERN_DATERANGE = '{daterange}';
     public const PATTERN_START = '{start}';
     public const PATTERN_END = '{end}';
@@ -74,6 +74,7 @@ final class ProjectHelper
         $name = str_replace(self::PATTERN_NUMBER, $project->getNumber() ?? '', $name);
         $name = str_replace(self::PATTERN_COMMENT, $project->getComment() ?? '', $name);
         $name = str_replace(self::PATTERN_CUSTOMER, $project->getCustomer()?->getName() ?? '', $name);
+        $name = str_replace('{ordernumber}', self::PATTERN_ORDERNUMBER, $name); // this was a typo before Kimai 2.38, can be removed in the future
         $name = str_replace(self::PATTERN_ORDERNUMBER, $project->getOrderNumber() ?? '', $name);
 
         if ($this->dateFormatter === null) {
@@ -107,17 +108,19 @@ final class ProjectHelper
         }
 
         while (str_starts_with($name, self::SPACER)) {
-            $name = substr($name, \strlen(self::SPACER));
+            $name = mb_substr($name, \strlen(self::SPACER));
         }
 
         while (str_ends_with($name, self::SPACER)) {
-            $name = substr($name, 0, -\strlen(self::SPACER));
+            $name = mb_substr($name, 0, -\strlen(self::SPACER));
         }
 
         if ($name === '' || $name === self::SPACER) {
             $name = $project->getName() ?? '';
         }
 
-        return substr($name, 0, 110);
+        // this is a rather arbitrary length limitation, which was original introduced with 110 in 2022
+        // in 2026 it was bumped to 180, to allow the 150 char name plus addons like the number
+        return mb_substr($name, 0, 180);
     }
 }

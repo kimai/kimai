@@ -38,7 +38,6 @@ final class TagFixtures extends Fixture
         for ($i = 0; $i < $amount; $i++) {
             $tag = new Tag();
 
-            $tagName = null;
             if ($i % 18 === 0) {
                 $tagName = $faker->firstName();
             } elseif ($i % 7 === 0) {

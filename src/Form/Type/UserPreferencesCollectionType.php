@@ -29,12 +29,11 @@ final class UserPreferencesCollectionType extends AbstractType
     {
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
-                /** @var ArrayCollection<UserPreference> $collection */
+            function (FormEvent $event): void {
+                /** @var ArrayCollection<int, UserPreference> $collection */
                 $collection = $event->getData();
+                $preferences = new ArrayCollection();
                 foreach ($collection as $collectionItem) {
-                    $collection->removeElement($collectionItem);
-
                     if (!($collectionItem instanceof UserPreference)) {
                         continue;
                     }
@@ -44,8 +43,13 @@ final class UserPreferencesCollectionType extends AbstractType
                         continue;
                     }
 
-                    $collection->set($collectionItem->getName(), $collectionItem);
+                    if (null === $collectionItem->getName()) {
+                        continue;
+                    }
+
+                    $preferences->set($collectionItem->getName(), clone $collectionItem);
                 }
+                $event->setData($preferences);
             },
             // must be a higher priority then the listener in UserPreferenceType
             100

@@ -1,24 +1,26 @@
-# some hosters require a htaccess to change the PHP version
-/public/.htaccess
 /.env-*
 /.idea/
 .DS_Store
-/phpstan.sh
-
+/var/templates/
+/nbproject/*
+/.dockerhub.secrets
 # custom apache rules e.g. to deactivate ioncube loader
 /public/.user.ini
-
 # for symfony local webserver
 /php.ini
 /.php-version
-
-# YARN 2
-/.yarnrc.yml
-/.yarn
-
-# for keeping empty directories
+# local rules
 /config/packages/local.yaml
 /config/bundles-local.php
+
+# frontend
+/.yarnrc.yml
+/.yarn
+/.pnp.*
+/.pnpm-store
+
+# for keeping empty directories
+/var/dev/*
 /var/data/*
 /var/cache/*
 /var/invoices*
@@ -27,14 +29,13 @@
 /var/sessions/*
 /var/packages/*
 /var/plugins*
-/var/plugins/*/*.disabled
 
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
-.env
+/.env
 /public/bundles/
 /vendor/
 ###< symfony/framework-bundle ###
@@ -59,6 +60,3 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
-/nbproject/*
-
-.dockerhub.secrets

@@ -15,11 +15,9 @@ class More extends AbstractWidgetType
 {
     private mixed $data = null;
 
-    public function setData(mixed $data): self
+    public function setData(mixed $data): void
     {
         $this->data = $data;
-
-        return $this;
     }
 
     /**

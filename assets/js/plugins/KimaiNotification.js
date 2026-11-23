@@ -43,7 +43,7 @@ export default class KimaiNotification extends KimaiPlugin {
                     callback(false);
                 }
             });
-        } catch (e) {
+        } catch (e) { // eslint-disable-line no-unused-vars
             Notification.requestPermission((permission) => {
                 if (permission === "granted") {
                     callback(true);

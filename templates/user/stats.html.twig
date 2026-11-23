@@ -32,12 +32,6 @@
             'stats.durationTotal' : stats.durationTotal|duration,
             'stats.durationMonth' : stats.durationThisMonth|duration
         }) %}
-        {#% if seeOwnRate %}
-            {% set datagrid = datagrid|merge({
-                'stats.amountMonth' : stats.rateThisMonthBillable|money,
-                'stats.amountTotal' : stats.rateTotalBillable|money
-            }) %}
-        {% endif %#}
     {% endif %}
     {% if not seeOwnRate and is_granted('hourly-rate', user) and user.preferenceValue('hourly_rate') is not null %}
         {% set datagrid = datagrid|merge({

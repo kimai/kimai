@@ -13,8 +13,10 @@ use App\Constants;
 use App\Utils\PageSetup;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/about')]
+#[IsGranted('IS_AUTHENTICATED')]
 final class AboutController extends AbstractController
 {
     public function __construct(private string $projectDirectory)

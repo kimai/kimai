@@ -9,10 +9,14 @@
 
 namespace App\Entity;
 
+use App\Doctrine\Behavior\CreatedAt;
+use App\Doctrine\Behavior\CreatedTrait;
 use App\Export\Annotation as Exporter;
+use App\Repository\ActivityRepository;
 use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use OpenApi\Attributes as OA;
@@ -22,7 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Index(columns: ['visible', 'project_id'])]
 #[ORM\Index(columns: ['visible', 'project_id', 'name'])]
 #[ORM\Index(columns: ['visible', 'name'])]
-#[ORM\Entity(repositoryClass: 'App\Repository\ActivityRepository')]
+#[ORM\Entity(repositoryClass: ActivityRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[Serializer\ExclusionPolicy('all')]
 #[Serializer\VirtualProperty('ProjectName', exp: 'object.getProject() === null ? null : object.getProject().getName()', options: [new Serializer\SerializedName('parentTitle'), new Serializer\Type(name: 'string'), new Serializer\Groups(['Activity'])])]
@@ -30,15 +34,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Exporter\Order(['id', 'name', 'project', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable', 'number'])]
 #[Exporter\Expose(name: 'project', label: 'project', exp: 'object.getProject() === null ? null : object.getProject().getName()')]
 #[Constraints\Activity]
-class Activity implements EntityWithMetaFields, EntityWithBudget
+class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
 {
     use BudgetTrait;
     use ColorTrait;
+    use CreatedTrait;
 
     /**
      * Unique activity ID
      */
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[Serializer\Expose]
@@ -48,13 +53,14 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     #[ORM\ManyToOne(targetEntity: Project::class)]
     #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Subresource', 'Expanded'])]
+    #[Serializer\Groups(['Expanded'])]
     #[OA\Property(ref: '#/components/schemas/ProjectExpanded')]
     private ?Project $project = null;
     /**
      * Name of this activity
      */
-    #[ORM\Column(name: 'name', type: 'string', length: 150, nullable: false)]
+    #[ORM\Column(name: 'name', type: Types::STRING, length: 150, nullable: false)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 150)]
     #[Serializer\Expose]
@@ -64,7 +70,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     /**
      * Description of this activity
      */
-    #[ORM\Column(name: 'comment', type: 'text', nullable: true)]
+    #[ORM\Column(name: 'comment', type: Types::TEXT, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'comment')]
@@ -72,13 +78,13 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     /**
      * Whether this activity is visible and can be selected
      */
-    #[ORM\Column(name: 'visible', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[ORM\Column(name: 'visible', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'visible', type: 'boolean')]
     private bool $visible = true;
-    #[ORM\Column(name: 'billable', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[ORM\Column(name: 'billable', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -87,11 +93,11 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     /**
      * Meta fields registered with the activity
      *
-     * @var Collection<ActivityMeta>
+     * @var Collection<int, ActivityMeta>
      */
     #[ORM\OneToMany(mappedBy: 'activity', targetEntity: ActivityMeta::class, cascade: ['persist'])]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Activity'])]
+    #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'array<App\Entity\ActivityMeta>')]
     #[Serializer\SerializedName('metaFields')]
     #[Serializer\Accessor(getter: 'getVisibleMetaFields')]
@@ -99,7 +105,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     /**
      * Teams with access to the activity
      *
-     * @var Collection<Team>
+     * @var Collection<int, Team>
      */
     #[ORM\JoinTable(name: 'kimai2_activities_teams')]
     #[ORM\JoinColumn(name: 'activity_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
@@ -109,9 +115,10 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     #[Serializer\Groups(['Activity'])]
     #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Team'))]
     private Collection $teams;
-    #[ORM\Column(name: 'invoice_text', type: 'text', nullable: true)]
+    #[ORM\Column(name: 'invoice_text', type: Types::TEXT, nullable: true)]
     private ?string $invoiceText = null;
-    #[ORM\Column(name: 'number', type: 'string', length: 10, nullable: true)]
+    #[ORM\Column(name: 'number', type: Types::STRING, length: 10, nullable: true)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\Length(max: 10)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -122,11 +129,17 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     {
         $this->meta = new ArrayCollection();
         $this->teams = new ArrayCollection();
+        $this->setCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function isNew(): bool
+    {
+        return $this->id === null;
     }
 
     public function getProject(): ?Project
@@ -229,6 +242,11 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
     {
         if (null === ($current = $this->getMetaField($meta->getName()))) {
+            if (!($meta instanceof ActivityMeta)) {
+                throw new \InvalidArgumentException(
+                    \sprintf('Expected instanceof ActivityMeta, received "%s"', \get_class($meta))
+                );
+            }
             $meta->setEntity($this);
             $this->meta->add($meta);
 
@@ -260,7 +278,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     }
 
     /**
-     * @return Collection<Team>
+     * @return Collection<int, Team>
      */
     public function getTeams(): Collection
     {
@@ -298,6 +316,8 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
             $this->id = null;
         }
 
+        $this->setCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
+
         $currentTeams = $this->teams;
         $this->teams = new ArrayCollection();
         /** @var Team $team */
@@ -305,6 +325,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
             $this->addTeam($team);
         }
 
+        $this->number = null;
         $currentMeta = $this->meta;
         $this->meta = new ArrayCollection();
         /** @var ActivityMeta $meta */

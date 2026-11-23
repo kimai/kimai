@@ -46,6 +46,10 @@
         <source>report_customer_monthly_projects</source>
         <target state="translated">پروژه ها بر اساس ماه، فعالیت و کاربر</target>
       </trans-unit>
+      <trans-unit id="Yz_lySk" resname="report_customer_view" xml:space="preserve">
+        <source>report_customer_view</source>
+        <target state="translated">شما ارسال کرده اید</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

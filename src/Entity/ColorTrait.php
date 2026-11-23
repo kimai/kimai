@@ -11,7 +11,9 @@ namespace App\Entity;
 
 use App\Constants;
 use App\Export\Annotation as Exporter;
+use App\Utils\Color;
 use App\Validator\Constraints as Constraints;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 
@@ -20,7 +22,7 @@ trait ColorTrait
     /**
      * The assigned color in HTML hex format, e.g. #dd1d00
      */
-    #[ORM\Column(name: 'color', type: 'string', length: 7, nullable: true)]
+    #[ORM\Column(name: 'color', type: Types::STRING, length: 7, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'color')]
@@ -44,5 +46,18 @@ trait ColorTrait
     public function setColor(?string $color = null): void
     {
         $this->color = $color;
+    }
+
+    abstract public function getName(): ?string;
+
+    /**
+     * Color will never be empty and is generated from the entity tag name if not set explicit.
+     */
+    #[Serializer\VirtualProperty]
+    #[Serializer\SerializedName('color-safe')]
+    #[Serializer\Groups(['Default'])]
+    public function getColorSafe(): string
+    {
+        return $this->getColor() ?? (new Color())->getRandom($this->getName());
     }
 }

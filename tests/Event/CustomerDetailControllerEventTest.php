@@ -12,12 +12,11 @@ namespace App\Tests\Event;
 use App\Entity\Customer;
 use App\Event\AbstractCustomerEvent;
 use App\Event\CustomerDetailControllerEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Event\AbstractCustomerEvent
- * @covers \App\Event\CustomerDetailControllerEvent
- */
-class CustomerDetailControllerEventTest extends AbstractCustomerEventTest
+#[CoversClass(AbstractCustomerEvent::class)]
+#[CoversClass(CustomerDetailControllerEvent::class)]
+class CustomerDetailControllerEventTest extends AbstractCustomerEventTestCase
 {
     protected function createCustomerEvent(Customer $customer): AbstractCustomerEvent
     {
@@ -29,6 +28,6 @@ class CustomerDetailControllerEventTest extends AbstractCustomerEventTest
         /** @var CustomerDetailControllerEvent $event */
         $event = $this->createCustomerEvent(new Customer('foo'));
         $event->addController('Foo\\Bar::helloWorld');
-        $this->assertEquals(['Foo\\Bar::helloWorld'], $event->getController());
+        self::assertEquals(['Foo\\Bar::helloWorld'], $event->getController());
     }
 }

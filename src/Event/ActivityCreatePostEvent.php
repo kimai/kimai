@@ -9,9 +9,9 @@
 
 namespace App\Event;
 
-/**
- * Triggered for activity instances, which were just saved.
- */
+use App\Webhook\Attribute\AsWebhook;
+
+#[AsWebhook(name: 'activity.created', description: 'Triggered after a new activity was created', payload: 'object.getActivity()')]
 final class ActivityCreatePostEvent extends AbstractActivityEvent
 {
 }

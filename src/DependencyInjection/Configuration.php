@@ -50,7 +50,6 @@ final class Configuration implements ConfigurationInterface
                 ->append($this->getExportNode())
                 ->append($this->getCalendarNode())
                 ->append($this->getThemeNode())
-                ->append($this->getCompanyNode())
                 ->append($this->getDefaultsNode())
                 ->append($this->getPermissionsNode())
                 ->append($this->getLdapNode())
@@ -331,6 +330,9 @@ final class Configuration implements ConfigurationInterface
                         ->booleanNode('require_activity')
                             ->defaultTrue()
                         ->end()
+                        ->booleanNode('break_time_active')
+                            ->defaultFalse()
+                        ->end()
                     ->end()
                 ->end()
             ->end()
@@ -366,6 +368,10 @@ final class Configuration implements ConfigurationInterface
                 ->booleanNode('upload_twig')
                     ->defaultFalse()
                 ->end()
+                ->enumNode('rounding_mode')
+                    ->values(['decimal', 'classic'])
+                    ->defaultValue('classic')
+                ->end()
             ->end()
         ;
 
@@ -393,6 +399,10 @@ final class Configuration implements ConfigurationInterface
                     ->scalarPrototype()->end()
                     ->defaultValue([])
                 ->end()
+                ->integerNode('timeout')
+                    ->defaultValue(60)
+                ->end()
+
             ->end()
         ;
 
@@ -517,22 +527,6 @@ final class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    private function getCompanyNode(): ArrayNodeDefinition
-    {
-        $builder = new TreeBuilder('company');
-        /** @var ArrayNodeDefinition $node */
-        $node = $builder->getRootNode();
-
-        $node
-            ->addDefaultsIfNotSet()
-            ->children()
-                ->scalarNode('financial_year')->defaultNull()->end()
-            ->end()
-        ;
-
-        return $node;
-    }
-
     private function getUserNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('user');
@@ -545,17 +539,38 @@ final class Configuration implements ConfigurationInterface
                 ->booleanNode('login')
                     ->defaultTrue()
                 ->end()
+                ->scalarNode('theme')
+                    ->defaultValue('auto')
+                    ->validate()
+                        ->ifTrue(static function ($v) {
+                            return (!\in_array($v, ['auto', 'default', 'dark']));
+                        })
+                        ->thenInvalid('The theme must be one of: "auto", "default", "dark"')
+                    ->end()
+                ->end()
                 ->booleanNode('registration')
                     ->defaultFalse()
+                ->end()
+                ->booleanNode('wizard')
+                    ->defaultTrue()
                 ->end()
                 ->booleanNode('password_reset')
                     ->defaultTrue()
                 ->end()
                 ->integerNode('password_reset_retry_ttl')
-                    ->defaultValue(7200)
+                    ->defaultValue(3600)
                 ->end()
                 ->integerNode('password_reset_token_ttl')
-                    ->defaultValue(86400)
+                    ->defaultValue(1800)
+                ->end()
+                ->integerNode('password_strength')
+                    ->info('Minimum password strength: 0 = disabled, 1 = weak, 2 = medium, 3 = strong, 4 = very strong')
+                    ->defaultValue(0)
+                    ->min(0)
+                    ->max(4)
+                ->end()
+                ->booleanNode('auth_change')
+                    ->defaultFalse()
                 ->end()
             ->end()
         ;
@@ -572,6 +587,11 @@ final class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
+                ->scalarNode('timezone')->end()
+                ->scalarNode('country')->end()
+                ->scalarNode('language')
+                    ->defaultValue(Customer::DEFAULT_LANGUAGE)
+                ->end()
                 ->scalarNode('choice_pattern')
                     ->defaultValue(CustomerHelper::PATTERN_NAME)
                 ->end()
@@ -614,8 +634,16 @@ final class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('timezone')->defaultNull()->end()
                         ->scalarNode('language')->defaultValue(User::DEFAULT_LANGUAGE)->end()
-                        ->scalarNode('theme')->defaultValue('default')->end()
-                        ->scalarNode('currency')->defaultValue(Customer::DEFAULT_CURRENCY)->end()
+                        ->scalarNode('locale')->defaultNull()->end()
+                        ->scalarNode('theme')
+                            ->defaultValue('auto')
+                            ->validate()
+                                ->ifTrue(static function ($v) {
+                                    return (!\in_array($v, ['auto', 'default', 'dark']));
+                                })
+                                ->thenInvalid('The theme must be one of: "auto", "default", "dark"')
+
+                        ->end()
                     ->end()
                 ->end()
             ->end()
@@ -817,6 +845,9 @@ final class Configuration implements ConfigurationInterface
                     // adjust their config between 1.x and 2.0
                     ->defaultValue('default')
                 ->end()
+                ->scalarNode('usernameAttribute')
+                    ->defaultNull()
+                ->end()
                 ->arrayNode('roles')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -842,7 +873,16 @@ final class Configuration implements ConfigurationInterface
                     ->arrayPrototype()
                         ->children()
                             ->scalarNode('saml')->isRequired()->cannotBeEmpty()->end()
-                            ->scalarNode('kimai')->isRequired()->cannotBeEmpty()->end()
+                            ->scalarNode('kimai')
+                                ->isRequired()
+                                ->cannotBeEmpty()
+                                ->validate()
+                                    ->ifTrue(function ($v) {
+                                        return \in_array(strtolower($v), ['username', 'useridentifier'], true);
+                                    })
+                                    ->thenInvalid('You cannot configure "username" and "userIdentifier" for SAML attribute mapping.')
+                                ->end()
+                            ->end()
                         ->end()
                     ->end()
                 ->end()
@@ -852,6 +892,9 @@ final class Configuration implements ConfigurationInterface
                         ->scalarNode('baseurl')->end()
                         ->booleanNode('strict')->end()
                         ->booleanNode('debug')->end()
+                        ->booleanNode('cleanupLongRelayState')
+                            ->defaultFalse()
+                        ->end()
                         ->arrayNode('idp')
                             ->children()
                                 ->scalarNode('entityId')->end()

@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-CN" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
-        <source>button_copy_url_to_browser</source>
-        <target>如果该按钮无效，请复制 &amp; 以下URL并粘贴到浏览器中: %url%</target>
-      </trans-unit>
       <trans-unit id="pjr3FDv" resname="registration.subject">
         <source>registration.subject</source>
         <target state="translated">激活您的账户</target>
@@ -14,13 +10,13 @@
         <source>registration.title</source>
         <target>欢迎 %username%</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target>重置您的密码</target>
+        <target state="translated">登录 Kimai</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">…您忘记了密码吗？别担心：Kimai将帮助您创建一个新的：</target>
+        <target state="translated">此链接仅在接下来的15分钟内有效。</target>
       </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
@@ -32,11 +28,11 @@
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">这可能发生…</target>
+        <target state="translated">登录您的账号</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="translated">重置您的密码</target>
+        <target state="translated">登录</target>
       </trans-unit>
       <trans-unit id="IkjnHoP" resname="registration.intro">
         <source>registration.intro</source>
@@ -44,23 +40,53 @@
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
         <source>absence_created_supervisor_subject</source>
-        <target state="translated">新缺席 | %absence_user% | %absence_type%</target>
+        <target state="translated">新缺席 | %user% | %type%</target>
       </trans-unit>
       <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
-        <source>A new absence was created for %absence_user%.
+        <source>A new absence was created for %user%.
 
-%absence_type% - %absence_comment%
+%list%
 
-%absence_list%
+Please review them at: %url%</source>
+        <target state="translated">已为 %user% 创建了新的缺勤。
 
-Please review them at: %approval_url%</source>
-        <target state="translated">已为 %absence_user% 创建了新的缺勤。
+%list%
 
-%absence_type% - %absence_comment%
-
-%absence_list%
-
-请在以下位置查看：%approval_url%</target>
+请在以下位置查看：%url%</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="needs-translation">请求审批%用户%user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="needs-translation">已请求对%user%的批准。
+待审批请求：
+%list%
+- 项目提案
+- 费用报告
+请在%url%
+处查看它们。</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="needs-translation">你的请求被拒绝了</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="needs-translation">您的授权请求已被拒绝
+%created_by%.
+%list%
+请再次查看您的请求
+%url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="needs-translation">你的请求已被批准</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="needs-translation">%created_by%已批准您的请求。%list%您可以在%url%下找到您的所有查询</target>
       </trans-unit>
     </body>
   </file>

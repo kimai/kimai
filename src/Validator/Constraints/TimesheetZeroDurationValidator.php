@@ -44,7 +44,7 @@ final class TimesheetZeroDurationValidator extends ConstraintValidator
             $duration = $value->getCalculatedDuration();
         }
 
-        if ($duration <= 0) {
+        if ($duration === 0) {
             $this->context->buildViolation($constraint->message)
                 ->atPath('duration')
                 ->setTranslationDomain('validators')

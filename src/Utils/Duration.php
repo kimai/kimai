@@ -19,12 +19,21 @@ final class Duration
     public const FORMAT_DECIMAL = 'decimal';
     public const FORMAT_DEFAULT = '%h:%m';
 
+    public function formatDecimal(?int $seconds): float
+    {
+        if ($seconds === null || $seconds === 0) {
+            return 0.0;
+        }
+
+        return (float) number_format($seconds / 3600, 2, '.', '');
+    }
+
     /**
      * Transforms seconds into a duration string.
      *
-     * @param int|null $seconds
-     * @param string $format
-     * @return string|null
+     * @param int|null $seconds the duration in seconds, or null to return null
+     * @param string $format the output format
+     * @return ($seconds is null ? null : string)
      */
     public function format(?int $seconds, string $format = self::FORMAT_DEFAULT): ?string
     {
@@ -108,7 +117,10 @@ final class Duration
         $duration = (float) $duration;
         $duration = $duration * 3600;
 
-        return (int) $duration;
+        // most decimal fractions cannot be represented exactly as float, so the multiplication
+        // above returns values like 29519.999999999996 for "8.20" hours. Casting that to int
+        // truncates and the result would be one second (and one displayed minute) short: 8:11.
+        return (int) round($duration);
     }
 
     private function parseColonFormat(string $duration): int

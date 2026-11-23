@@ -1,4 +1,4 @@
-{% extends '@theme/layout/default-layout.html.twig' %}
+{% extends tabler_bundle.isBoxedLayout() ? '@Tabler/layout_horizontal.html.twig' : '@Tabler/layout_vertical.html.twig' %}
 
 {% block body_start %}
     data-title="{{- get_title()|e('html_attr') -}}"
@@ -25,22 +25,23 @@
     <div id="toast-container" class="toast-container position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 11"></div>
 {% endblock %}
 
-{% block page_content_class %}{{ parent() }} {% block page_class %}{% endblock %}{% endblock %}
-
 {% block page_content_start %}
-    {% if app.session and app.session.started and app.session.flashbag.peekAll|length > 0 %}
+    {% set flashes = app.flashes %}
+    {% if flashes|length > 0 %}
         {% set domain = 'flashmessages' %}
         <script type="text/javascript">
             document.addEventListener('kimai.initialized', function(options) {
                 const ALERT = options.detail.kimai.getPlugin('alert');
-                {% for type, messages in app.session.flashbag.all %}
+                {% for type, messages in flashes %}
                     {% for message in messages %}
                         {% if type == 'error' %}
                             ALERT.error('{{ message|trans({}, domain)|e('js') }}');
                         {% elseif type == 'warning' %}
                             ALERT.warning('{{ message|trans({}, domain)|e('js') }}');
                         {% elseif type == 'success' %}
-                            ALERT.success('{{ message|trans({}, domain)|e('js') }}');
+                            {# success is expected so we do not need to show messages like "saved successfully" #}
+                            {# THE NEXT LINE NEEDS TO BE KEPT FOR NOW; OTHERWISE THE FLASH MESSAGE WOULD FILL UP THE SESSION #}
+                            // ALERT.success('{{ message|trans({}, domain)|e('js') }}');
                         {% else %}
                             ALERT.info('{{ message|trans({}, domain)|e('js') }}');
                         {% endif %}
@@ -57,18 +58,18 @@
     <div class="d-print-none hidden-no-space">
         {% block main_before %}{% endblock %}
     </div>
+    <section class="content {% block page_class %}{% endblock %}">
 {% endblock %}
 
 {% block page_content_after %}
-    {% block main_after %}{% endblock %}
+    </section>
     {% set event = trigger(constant('App\\Event\\ThemeEvent::CONTENT_AFTER')) %}
     {{ event.content|raw }}
     {% if page_setup is defined and page_setup.help is not null %}
-        <div class="float-help">
-            <a href="{% if '://' in page_setup.help %}{{ page_setup.help }}{% else %}{{ page_setup.help|docu_link }}{% endif %}" target="_blank" accesskey="h" title="{{ 'help'|trans }}">
-                <i class="fas fa-question"></i>
-            </a>
-        </div>
+        <a class="float-help btn btn-primary" href="{% if '://' in page_setup.help %}{{ page_setup.help }}{% else %}{{ page_setup.help|docu_link('float-help') }}{% endif %}" target="_blank" rel="noopener" accesskey="h">
+            <i class="fas fa-question"></i>
+            <span class="float-help-label"><span>{{ 'help'|trans }}: {{ page_setup.title|trans({}, page_setup.translationDomain) }}</span></span>
+        </a>
         <div class="mb-4"></div>
     {% endif %}
 {% endblock %}
@@ -142,7 +143,7 @@
     {% set mylogo %}{{ parent() }}{% endset %}
     {# only for mobile view #}
     <div class="d-flex justify-content-start flex-fill d-lg-none">
-        <h2 class="page-title d-lg-none ps-2 text-white">
+        <h2 class="page-title d-lg-none ps-2">
             {{- block('page_title') -}}
         </h2>
         {{ mylogo }}
@@ -198,4 +199,12 @@
     {%- else -%}
         {{ parent() }}
     {%- endif -%}
+{% endblock %}
+
+{% block navbar_menu_start %}
+    {{ theme_event('\\App\\Event\\ThemeEventMenuStart') }}
+{% endblock %}
+
+{% block navbar_menu_end %}
+    {{ theme_event('\\App\\Event\\ThemeEventMenuEnd') }}
 {% endblock %}

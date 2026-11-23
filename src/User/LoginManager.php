@@ -22,15 +22,15 @@ use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterfa
 final class LoginManager
 {
     public function __construct(
-        private TokenStorageInterface $tokenStorage,
-        private UserChecker $userChecker,
-        private SessionAuthenticationStrategyInterface $sessionStrategy,
-        private RequestStack $requestStack,
-        private EventDispatcherInterface $eventDispatcher,
+        private readonly TokenStorageInterface $tokenStorage,
+        private readonly UserChecker $userChecker,
+        private readonly SessionAuthenticationStrategyInterface $sessionStrategy,
+        private readonly RequestStack $requestStack,
+        private readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }
 
-    public function logInUser(User $user, Response $response = null)
+    public function logInUser(User $user, ?Response $response = null): void
     {
         $this->userChecker->checkPreAuth($user);
 

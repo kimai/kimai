@@ -31,6 +31,7 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
         FORMS.activateForm('div.page-wrapper form');
 
         this._registerModalAutofocus('#remote_form_modal');
+        this._registerDropdownScrollToActive();
 
         this.overlay = null;
 
@@ -42,13 +43,13 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
             }
 
             // at which element we append the loading screen
-            let container = 'body';
+            let container = 'div.page-wrapper';
             if (event.detail !== undefined && event.detail !== null) {
                 container = event.detail;
             }
 
             const temp = document.createElement('div');
-            temp.innerHTML = '<div class="overlay"><div class="fas fa-sync fa-spin"></div></div>';
+            temp.innerHTML = '<div class="overlay"><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div>';
             this.overlay = temp.firstElementChild;
             document.querySelector(container).append(this.overlay);
         });
@@ -59,6 +60,27 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
                 this.overlay.remove();
                 this.overlay = null;
             }
+        });
+    }
+
+    /**
+     * Scrolls the active item of long dropdown lists into view, when the dropdown is opened.
+     * Opt-in via: <ul class="dropdown-menu" data-scroll-to-active>
+     */
+    _registerDropdownScrollToActive() {
+        document.addEventListener('shown.bs.dropdown', (event) => {
+            const menu = event.target.parentNode.querySelector('.dropdown-menu[data-scroll-to-active]');
+            if (menu === null) {
+                return;
+            }
+
+            const active = menu.querySelector('.dropdown-item.active');
+            if (active === null) {
+                return;
+            }
+
+            // do not use scrollIntoView(), as it would scroll the entire page as well
+            menu.scrollTop = active.offsetTop - (menu.clientHeight / 2) + (active.offsetHeight / 2);
         });
     }
 

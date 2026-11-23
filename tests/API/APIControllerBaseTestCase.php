@@ -1,0 +1,938 @@
+<?php
+
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace App\Tests\API;
+
+use App\DataFixtures\UserFixtures;
+use App\Entity\User;
+use App\Tests\Controller\AbstractControllerBaseTestCase;
+use PHPUnit\Framework\Constraint\IsType;
+use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
+
+/**
+ * Adds some useful functions for writing API integration tests.
+ */
+abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
+{
+    /**
+     * @return array<string, string>
+     */
+    private function getAuthHeader(string $username, string $password): array
+    {
+        return [
+            'HTTP_AUTHORIZATION' => 'Bearer ' . $password,
+        ];
+    }
+
+    protected function getClientForAuthenticatedUser(string $role = User::ROLE_USER): HttpKernelBrowser
+    {
+        return match ($role) {
+            User::ROLE_SUPER_ADMIN => self::createClient([], $this->getAuthHeader(UserFixtures::USERNAME_SUPER_ADMIN, UserFixtures::DEFAULT_API_TOKEN . '_super')),
+            User::ROLE_ADMIN => self::createClient([], $this->getAuthHeader(UserFixtures::USERNAME_ADMIN, UserFixtures::DEFAULT_API_TOKEN . '_admin')),
+            User::ROLE_TEAMLEAD => self::createClient([], $this->getAuthHeader(UserFixtures::USERNAME_TEAMLEAD, UserFixtures::DEFAULT_API_TOKEN . '_teamlead')),
+            User::ROLE_USER => self::createClient([], $this->getAuthHeader(UserFixtures::USERNAME_USER, UserFixtures::DEFAULT_API_TOKEN . '_user')),
+            default => throw new \Exception(\sprintf('Unknown role "%s"', $role)),
+        };
+    }
+
+    protected function getAuthenticatedUserId(string $role = User::ROLE_USER): int
+    {
+        return match ($role) {
+            User::ROLE_SUPER_ADMIN => 6,
+            User::ROLE_ADMIN => 5,
+            User::ROLE_TEAMLEAD => 4,
+            User::ROLE_USER => 2,
+            default => throw new \Exception(\sprintf('Unknown role "%s"', $role)),
+        };
+    }
+
+    protected function createUrl(string $url): string
+    {
+        return '/' . ltrim($url, '/');
+    }
+
+    protected function assertPagination(Response $response, int $page, int $pageSize, int $totalPages, int $totalResults): void
+    {
+        self::assertTrue($response->headers->has('X-Page'), 'Missing "X-Page" header');
+        self::assertTrue($response->headers->has('X-Total-Count'), 'Missing "X-Total-Count" header');
+        self::assertTrue($response->headers->has('X-Total-Pages'), 'Missing "X-Total-Pages" header');
+        self::assertTrue($response->headers->has('X-Per-Page'), 'Missing "X-Per-Page" header');
+
+        self::assertEquals($page, $response->headers->get('X-Page'));
+        self::assertEquals($totalResults, $response->headers->get('X-Total-Count'));
+        self::assertEquals($totalPages, $response->headers->get('X-Total-Pages'));
+        self::assertEquals($pageSize, $response->headers->get('X-Per-Page'));
+    }
+
+    protected function assertRequestIsSecured(HttpKernelBrowser $client, string $url, string $method = 'GET'): void
+    {
+        $this->request($client, $url, $method);
+        $response = $client->getResponse();
+
+        $data = [
+            'message' => 'Unauthorized',
+            'code' => Response::HTTP_UNAUTHORIZED
+        ];
+
+        self::assertEquals(
+            $data,
+            json_decode($response->getContent(), true),
+            \sprintf('The secure URL %s is not protected.', $url)
+        );
+
+        self::assertEquals(
+            Response::HTTP_UNAUTHORIZED,
+            $response->getStatusCode(),
+            \sprintf('The secure URL %s has the wrong status code %s.', $url, $response->getStatusCode())
+        );
+    }
+
+    protected function assertUrlIsSecuredForRole(string $role, string $url, string $method = 'GET'): void
+    {
+        $client = $this->getClientForAuthenticatedUser($role);
+        $client->request($method, $this->createUrl($url));
+
+        self::assertFalse(
+            $client->getResponse()->isSuccessful(),
+            \sprintf('The secure URL %s is not protected for role %s', $url, $role)
+        );
+
+        $this->assertApiException($client->getResponse(), [
+            'code' => Response::HTTP_FORBIDDEN,
+            'message' => 'Forbidden'
+        ]);
+    }
+
+    public function request(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = [], ?string $content = null): Crawler
+    {
+        $server = ['HTTP_CONTENT_TYPE' => 'application/json', 'CONTENT_TYPE' => 'application/json'];
+
+        return $client->request($method, $this->createUrl($url), $parameters, [], $server, $content);
+    }
+
+    protected function assertEntityNotFound(string $role, string $url): void
+    {
+        $client = $this->getClientForAuthenticatedUser($role);
+        $this->request($client, $url);
+        $this->assertApiException($client->getResponse(), [
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found'
+        ]);
+    }
+
+    protected function assertNotFoundForDelete(HttpKernelBrowser $client, string $url): void
+    {
+        $this->assertExceptionForMethod($client, $url, 'DELETE', [], [
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found'
+        ]);
+    }
+
+    protected function assertEntityNotFoundForPatch(HttpKernelBrowser|string $role, string $url, array $data): void
+    {
+        $this->assertExceptionForPatchAction($role, $url, $data, [
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found',
+        ]);
+    }
+
+    protected function assertEntityNotFoundForPost(HttpKernelBrowser $client, string $url, array $data = []): void
+    {
+        $this->assertExceptionForMethod($client, $url, 'POST', $data, [
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found',
+        ]);
+    }
+
+    protected function assertExceptionForDeleteAction(HttpKernelBrowser|string $role, string $url, array $data, array $expectedErrors): void
+    {
+        $this->assertExceptionForRole($role, $url, 'DELETE', $data, $expectedErrors);
+    }
+
+    protected function assertExceptionForPatchAction(HttpKernelBrowser|string $role, string $url, array $data, array $expectedErrors): void
+    {
+        $this->assertExceptionForRole($role, $url, 'PATCH', $data, $expectedErrors);
+    }
+
+    protected function assertExceptionForPostAction(HttpKernelBrowser|string $role, string $url, array $data, array $expectedErrors): void
+    {
+        $this->assertExceptionForRole($role, $url, 'POST', $data, $expectedErrors);
+    }
+
+    protected function assertExceptionForMethod(HttpKernelBrowser $client, string $url, string $method, array $data, array $expectedErrors): void
+    {
+        $this->request($client, $url, $method, [], json_encode($data));
+        $this->assertApiException($client->getResponse(), $expectedErrors);
+    }
+
+    protected function assertApiException(Response $response, array $expectedErrors): void
+    {
+        self::assertFalse($response->isSuccessful());
+        self::assertEquals($expectedErrors['code'], $response->getStatusCode());
+        self::assertEquals($expectedErrors, json_decode($response->getContent(), true));
+    }
+
+    protected function assertExceptionForRole(HttpKernelBrowser|string $role, string $url, string $method, array $data, array $expectedErrors): void
+    {
+        $client = ($role instanceof HttpKernelBrowser) ? $role : $this->getClientForAuthenticatedUser($role);
+        $this->assertExceptionForMethod($client, $url, $method, $data, $expectedErrors);
+    }
+
+    protected function assertApi500Exception(Response $response, string $message): void
+    {
+        $this->assertApiException($response, ['code' => Response::HTTP_INTERNAL_SERVER_ERROR, 'message' => $message]);
+    }
+
+    protected function assertBadRequest(HttpKernelBrowser $client, string $url, string $method): void
+    {
+        $this->assertExceptionForMethod($client, $url, $method, [], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
+    protected function assertBadRequestResponse(Response $response): void
+    {
+        $this->assertApiException($response, [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
+    protected function assertApiAccessDenied(HttpKernelBrowser $client, string $url, string $message = 'Forbidden'): void
+    {
+        $this->request($client, $url);
+        $this->assertApiResponseAccessDenied($client->getResponse(), $message);
+    }
+
+    protected function assertApiResponseAccessDenied(Response $response, string $message = 'Forbidden'): void
+    {
+        // APP_DEBUG = 1 means "real exception messages" - it is always overwritten
+        $message = 'Forbidden';
+
+        $this->assertApiException($response, [
+            'code' => Response::HTTP_FORBIDDEN,
+            'message' => $message
+        ]);
+    }
+
+    /**
+     * @param Response $response
+     * @param array<int, string>|array<string, string> $failedFields
+     * @param bool $extraFields test for the error "This form should not contain extra fields"
+     * @param array<int, string>|array<string, mixed> $globalError
+     */
+    protected function assertApiCallValidationError(Response $response, array $failedFields, bool $extraFields = false, array $globalError = [], array $expectedFields = [], array $missingFields = []): void
+    {
+        self::assertFalse($response->isSuccessful());
+        $result = json_decode($response->getContent(), true);
+        self::assertIsArray($result, 'JSON result is not array: ' . get_debug_type($result));
+        self::assertArrayHasKey('errors', $result, 'Missing errors key in JSON result with keys: ' . implode(',', array_keys($result)));
+
+        if ($extraFields) {
+            self::assertArrayHasKey('errors', $result['errors']);
+            self::assertEquals('This form should not contain extra fields.', $result['errors']['errors'][0]);
+        }
+
+        if (\count($globalError) > 0) {
+            self::assertArrayHasKey('errors', $result['errors']);
+            foreach ($globalError as $err) {
+                self::assertTrue(\in_array($err, $result['errors']['errors']), 'Missing global validation error: ' . $err); // @phpstan-ignore binaryOp.invalid
+            }
+        }
+
+        self::assertArrayHasKey('children', $result['errors']);
+        $data = $result['errors']['children'];
+
+        if (\count($expectedFields) > 0) {
+            foreach ($expectedFields as $expectedField) {
+                self::assertArrayHasKey($expectedField, $data, 'Expected field is missing: ' . $expectedField);
+            }
+        }
+
+        if (\count($missingFields) > 0) {
+            foreach ($missingFields as $missingField) {
+                $this->assertArrayNotHasKey($missingField, $data, 'Expected missing field is available: ' . $missingField);
+            }
+        }
+
+        $foundErrors = [];
+
+        foreach ($failedFields as $key => $value) {
+            $messages = [];
+            $fieldName = $value;
+            if (\is_string($key)) {
+                $fieldName = $key;
+                $messages = $value;
+                if (!\is_array($messages)) {
+                    $messages = [$value];
+                }
+            }
+
+            while (stripos($fieldName, '.') !== false) {
+                $parts = explode('.', $fieldName);
+                $tmp = array_shift($parts);
+                self::assertArrayHasKey($tmp, $data, \sprintf('Could not find field "%s" in result', $tmp));
+                $data = $data[$tmp];
+                if (\count($data) === 1 && \array_key_exists('children', $data)) {
+                    $data = $data['children'];
+                }
+                $fieldName = implode('.', $parts);
+            }
+
+            self::assertIsString($fieldName);
+            self::assertArrayHasKey($fieldName, $data, \sprintf('Could not find validation error for field "%s" in list: %s', $fieldName, implode(', ', $failedFields)));
+            self::assertArrayHasKey('errors', $data[$fieldName], \sprintf('Field %s has no validation problem', $fieldName));
+            foreach ($messages as $i => $message) {
+                self::assertEquals($message, $data[$fieldName]['errors'][$i]);
+            }
+            if (\array_key_exists('errors', (array) $data[$fieldName]) && \count($data[$fieldName]['errors']) > 0) {
+                $foundErrors[$fieldName] = \count($data[$fieldName]['errors']);
+            }
+        }
+
+        self::assertEquals(\count($failedFields), \count($foundErrors), 'Expected and actual validation error amount differs');
+    }
+
+    protected static function getExpectedResponseStructure(string $type): array
+    {
+        switch ($type) {
+            case 'Invoice':
+            case 'InvoiceCollection':
+                return [
+                    'id' => 'int',
+                    'comment' => '@string',
+                    'createdAt' => 'datetime',
+                    'currency' => 'string',
+                    'customer' => ['result' => 'object', 'type' => '@Customer'],
+                    'user' => ['result' => 'object', 'type' => '@User'],
+                    'dueDays' => 'int',
+                    'invoiceNumber' => 'string',
+                    'invoiceFilename' => 'string',
+                    'paymentDate' => '@date',
+                    'status' => 'string',
+                    'tax' => 'float',
+                    'total' => 'float',
+                    'vat' => 'float',
+                    'overdue' => 'bool',
+                    'metaFields' => ['result' => 'array', 'type' => 'InvoiceMeta'],
+                ];
+
+            case 'Comment':
+                return [
+                    'id' => 'int',
+                    'message' => 'string',
+                    'createdBy' => ['result' => 'object', 'type' => '@User'],
+                    'createdAt' => '@datetime',
+                    'pinned' => 'bool',
+                ];
+
+            case 'PageActionItem':
+                return [
+                    'id' => 'string',
+                    'title' => '@string',
+                    'url' => '@string',
+                    'class' => '@string',
+                    'attr' => 'array',
+                    'divider' => 'bool'
+                ];
+
+            case 'TagEntity':
+                return [
+                    'id' => 'int',
+                    'name' => 'string',
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'visible' => 'bool',
+                ];
+
+                // embedded meta data
+            case 'UserPreference':
+                return [
+                    'name' => 'string',
+                    'value' => '@string',
+                ];
+
+            case 'InvoiceMeta':
+            case 'CustomerMeta':
+            case 'ProjectMeta':
+            case 'ActivityMeta':
+            case 'TimesheetMeta':
+                return [
+                    'name' => 'string',
+                    'value' => 'string',
+                ];
+
+                // if a user is embedded in other objects
+            case 'User':
+                // if a list of users is loaded
+            case 'UserCollection':
+                return [
+                    'id' => 'int',
+                    'username' => 'string',
+                    'email' => 'string',
+                    'enabled' => 'bool',
+                    'apiToken' => 'bool',
+                    'systemAccount' => 'bool',
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'avatar' => '@string',
+                    'alias' => '@string',
+                    'accountNumber' => '@string',
+                    'initials' => '@string',
+                    'title' => '@string',
+                    'language' => 'string',
+                    'locale' => 'string',
+                    'timezone' => 'string',
+                ];
+
+                // if a user is loaded explicitly
+            case 'UserEntity':
+                return [
+                    'id' => 'int',
+                    'username' => 'string',
+                    'email' => 'string',
+                    'enabled' => 'bool',
+                    'apiToken' => 'bool',
+                    'systemAccount' => 'bool',
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'avatar' => '@string',
+                    'alias' => '@string',
+                    'accountNumber' => '@string',
+                    'initials' => 'string',
+                    'title' => '@string',
+                    'language' => 'string',
+                    'locale' => 'string',
+                    'timezone' => 'string',
+                    // TODO more info in entity than in collection
+                    'supervisor' => ['result' => 'object', 'type' => '@UserEntity'],
+                    'teams' => ['result' => 'array', 'type' => 'Team'],
+                    'roles' => ['result' => 'array', 'type' => 'string'],
+                    'memberships' => ['result' => 'array', 'type' => 'TeamMembership'],
+                    'preferences' => ['result' => 'array', 'type' => 'UserPreference'],
+                ];
+
+                // if a team is embedded
+            case 'Team':
+                // if a collection of teams is requested
+            case 'TeamCollection':
+                return [
+                    'id' => 'int',
+                    'name' => 'string',
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                ];
+
+                // explicitly requested team
+            case 'TeamEntity':
+                return [
+                    'id' => 'int',
+                    'name' => 'string',
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'members' => ['result' => 'array', 'type' => 'TeamMember'],
+                    // TODO more info in entity than in collection
+                    'customers' => ['result' => 'array', 'type' => '@Customer'],
+                    'projects' => ['result' => 'array', 'type' => '@Project'],
+                    'activities' => ['result' => 'array', 'type' => '@Activity'],
+                ];
+
+                // if the team is used inside the team context
+            case 'TeamMember':
+                return [
+                    'user' => ['result' => 'object', 'type' => 'User'],
+                    'teamlead' => 'bool',
+                ];
+
+                // if the team is used inside the user context
+            case 'TeamMembership':
+                return [
+                    'team' => ['result' => 'object', 'type' => 'Team'],
+                    'teamlead' => 'bool',
+                ];
+
+                // if a customer is embedded in other objects
+            case 'Customer':
+                return [
+                    'id' => 'int',
+                    'name' => 'string',
+                    'visible' => 'bool',
+                    'billable' => 'bool',
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'number' => '@string',
+                    'comment' => '@string',
+                    'language' => 'string',
+                    'currency' => 'string',
+                    'country' => 'string',
+                    'company' => '@string',
+                    'homepage' => '@string',
+                    'timezone' => 'string',
+                    'fax' => '@string',
+                    'mobile' => '@string',
+                    'phone' => '@string',
+                    'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'], // since 2.45
+                ];
+
+                // if a list of customers is loaded
+            case 'CustomerCollection':
+                return [
+                    'id' => 'int',
+                    'name' => 'string',
+                    'visible' => 'boolean',
+                    'billable' => 'bool',
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'number' => '@string',
+                    'comment' => '@string',
+                    'currency' => 'string',
+                    'country' => 'string',
+                    'language' => 'string',
+                    'company' => '@string',
+                    'homepage' => '@string',
+                    'timezone' => 'string',
+                    'fax' => '@string',
+                    'mobile' => '@string',
+                    'phone' => '@string',
+                    'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
+                    'teams' => ['result' => 'array', 'type' => 'Team'],
+                    // only visible with the budget/time permission
+                    'budget' => 'float',
+                    'timeBudget' => 'int',
+                    'budgetType' => '@string',
+                ];
+
+                // if a list of customers is loaded
+            case 'CustomerCollectionFull':
+                return [
+                    'id' => 'int',
+                    'name' => 'string',
+                    'visible' => 'boolean',
+                    'billable' => 'bool',
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'number' => '@string',
+                    'comment' => '@string',
+                    'language' => 'string',
+                    'currency' => 'string',
+                    'country' => 'string',
+                    'company' => '@string',
+                    'homepage' => '@string',
+                    'timezone' => 'string',
+                    'fax' => '@string',
+                    'mobile' => '@string',
+                    'phone' => '@string',
+                    'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
+                    'teams' => ['result' => 'array', 'type' => 'Team'],
+                    'vatId' => '@string',
+                    'addressLine1' => '@string',
+                    'addressLine2' => '@string',
+                    'addressLine3' => '@string',
+                    'city' => '@string',
+                    'postCode' => '@string',
+                    // only visible with the budget/time permission
+                    'budget' => 'float',
+                    'timeBudget' => 'int',
+                    'budgetType' => '@string',
+                ];
+
+                // if a customer is loaded explicitly
+            case 'CustomerEntity':
+                return [
+                    'id' => 'int',
+                    'name' => 'string',
+                    'visible' => 'bool',
+                    'billable' => 'bool',
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'number' => '@string',
+                    'comment' => '@string',
+                    'currency' => 'string',
+                    'country' => 'string',
+                    'language' => 'string',
+                    'company' => '@string',
+                    'homepage' => '@string',
+                    'timezone' => 'string',
+                    'fax' => '@string',
+                    'mobile' => '@string',
+                    'phone' => '@string',
+                    'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
+                    'teams' => ['result' => 'array', 'type' => 'Team'],
+                    // TODO more info in entity than in collection
+                    'contact' => '@string',
+                    'email' => '@string',
+                    'vatId' => '@string',
+                    'addressLine1' => '@string',
+                    'addressLine2' => '@string',
+                    'addressLine3' => '@string',
+                    'city' => '@string',
+                    'postCode' => '@string',
+                    'invoiceEmail' => '@string',
+                    'buyerReference' => '@string',
+                    'address' => '@string', // deprecated, do not expose in collection
+                    // only visible with the budget/time permission
+                    'budget' => 'float',
+                    'timeBudget' => 'int',
+                    'budgetType' => '@string',
+                ];
+
+                // if a project is embedded
+            case 'Project':
+                return [
+                    'id' => 'int',
+                    'name' => 'string',
+                    'visible' => 'bool',
+                    'billable' => 'bool',
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'customer' => 'int',
+                    'number' => '@string',
+                    'orderNumber' => '@string',
+                    'orderDate' => '@date',
+                    'globalActivities' => 'bool',
+                    'comment' => '@string',
+                    'start' => '@datetime',
+                    'end' => '@datetime',
+                    'lockedUntil' => '@datetime',
+                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
+                ];
+
+                // if a project is embedded in an expanded collection (here timesheet)
+            case 'ProjectExpanded':
+                return [
+                    'id' => 'int',
+                    'name' => 'string',
+                    'visible' => 'bool',
+                    'billable' => 'bool',
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'customer' => ['result' => 'object', 'type' => 'Customer'],
+                    'number' => '@string',
+                    'orderNumber' => '@string',
+                    'orderDate' => '@date',
+                    'globalActivities' => 'bool',
+                    'comment' => '@string',
+                    'start' => '@datetime',
+                    'end' => '@datetime',
+                    'lockedUntil' => '@datetime',
+                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
+                ];
+
+                // if a collection of projects is loaded
+            case 'ProjectCollection':
+                return [
+                    'id' => 'int',
+                    'name' => 'string',
+                    'visible' => 'bool',
+                    'billable' => 'bool',
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'customer' => 'int',
+                    'number' => '@string',
+                    'orderNumber' => '@string',
+                    'orderDate' => '@date',
+                    'globalActivities' => 'bool',
+                    'comment' => '@string',
+                    'start' => '@datetime',
+                    'end' => '@datetime',
+                    'lockedUntil' => '@datetime',
+                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
+                    'teams' => ['result' => 'array', 'type' => 'Team'],
+                    'parentTitle' => 'string',
+                    // only visible with the budget/time permission
+                    'budget' => 'float',
+                    'timeBudget' => 'int',
+                    'budgetType' => '@string',
+                ];
+
+                // if a project is explicitly loaded
+            case 'ProjectEntity':
+                return [
+                    'id' => 'int',
+                    'name' => 'string',
+                    'visible' => 'bool',
+                    'billable' => 'bool',
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'customer' => 'int',
+                    'number' => '@string',
+                    'orderNumber' => '@string',
+                    'orderDate' => '@date',
+                    'globalActivities' => 'bool',
+                    'comment' => '@string',
+                    'start' => '@date',
+                    'end' => '@date',
+                    'lockedUntil' => '@date',
+                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
+                    'teams' => ['result' => 'array', 'type' => 'Team'],
+                    'parentTitle' => 'string',
+                    // only visible with the budget/time permission
+                    'budget' => 'float',
+                    'timeBudget' => 'int',
+                    'budgetType' => '@string',
+                ];
+
+                // embedded activities
+            case 'Activity':
+                return [
+                    'id' => 'int',
+                    'name' => 'string',
+                    'visible' => 'bool',
+                    'billable' => 'bool',
+                    'project' => '@int',
+                    'number' => '@string',
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'metaFields' => ['result' => 'array', 'type' => 'ActivityMeta'], // since 2.45
+                    'comment' => '@string',
+                ];
+
+            case 'ActivityExpanded':
+                return [
+                    'id' => 'int',
+                    'name' => 'string',
+                    'visible' => 'bool',
+                    'billable' => 'bool',
+                    'project' => ['result' => 'object', 'type' => '@ProjectExpanded'],
+                    'number' => '@string',
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'metaFields' => ['result' => 'array', 'type' => 'ActivityMeta'], // since 2.45
+                    'comment' => '@string',
+                ];
+
+                // collection of activities
+            case 'ActivityCollection':
+                return [
+                    'id' => 'int',
+                    'name' => 'string',
+                    'visible' => 'bool',
+                    'billable' => 'bool',
+                    'project' => '@int',
+                    'number' => '@string',
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'metaFields' => ['result' => 'array', 'type' => 'ActivityMeta'],
+                    'comment' => '@string',
+                    'parentTitle' => '@string',
+                    'teams' => ['result' => 'array', 'type' => 'Team'],
+                    // only visible with the budget/time permission
+                    'budget' => 'float',
+                    'timeBudget' => 'int',
+                    'budgetType' => '@string',
+                ];
+
+                // if a activity is explicitly loaded
+            case 'ActivityEntity':
+                return [
+                    'id' => 'int',
+                    'name' => 'string',
+                    'visible' => 'bool',
+                    'billable' => 'bool',
+                    'project' => '@int',
+                    'number' => '@string',
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'metaFields' => ['result' => 'array', 'type' => 'ActivityMeta'],
+                    'comment' => '@string',
+                    'parentTitle' => '@string',
+                    'teams' => ['result' => 'array', 'type' => 'Team'],
+                    // only visible with the budget/time permission
+                    'budget' => 'float',
+                    'timeBudget' => 'int',
+                    'budgetType' => '@string',
+                ];
+
+            case 'TimesheetEntity':
+                return [
+                    'id' => 'int',
+                    'begin' => 'DateTime',
+                    'end' => '@DateTime',
+                    'duration' => '@int',
+                    'description' => '@string',
+                    'rate' => 'float',
+                    'activity' => 'int',
+                    'project' => 'int',
+                    'tags' => ['result' => 'array', 'type' => 'string'],
+                    'user' => 'int',
+                    'metaFields' => ['result' => 'array', 'type' => 'TimesheetMeta'],
+                    'internalRate' => 'float',
+                    'exported' => 'bool',
+                    'billable' => 'bool',
+                    'fixedRate' => '@float',
+                    'hourlyRate' => '@float',
+                    'break' => 'int',
+                ];
+
+            case 'TimesheetExpanded':
+                return [
+                    'id' => 'int',
+                    'begin' => 'DateTime',
+                    'end' => '@DateTime',
+                    'duration' => '@int',
+                    'description' => '@string',
+                    'rate' => 'float',
+                    'activity' => ['result' => 'object', 'type' => 'ActivityExpanded'],
+                    'project' => ['result' => 'object', 'type' => 'ProjectExpanded'],
+                    'tags' => ['result' => 'array', 'type' => 'string'],
+                    'user' => ['result' => 'object', 'type' => 'User'],
+                    'metaFields' => ['result' => 'array', 'type' => 'TimesheetMeta'],
+                    'internalRate' => 'float',
+                    'exported' => 'bool',
+                    'billable' => 'bool',
+                    'fixedRate' => '@float',
+                    'hourlyRate' => '@float',
+                    'break' => 'int',
+                ];
+
+            case 'TimesheetCollection':
+                return [
+                    'id' => 'int',
+                    'begin' => 'DateTime',
+                    'end' => '@DateTime',
+                    'duration' => '@int',
+                    'description' => '@string',
+                    'rate' => 'float',
+                    'activity' => 'int',
+                    'project' => 'int',
+                    'tags' => ['result' => 'array', 'type' => 'string'],
+                    'user' => 'int',
+                    'metaFields' => ['result' => 'array', 'type' => 'TimesheetMeta'],
+                    'internalRate' => 'float',
+                    'exported' => 'bool',
+                    'billable' => 'bool',
+                    'break' => 'int',
+                ];
+
+            case 'TimesheetCollectionFull':
+                return [
+                    'id' => 'int',
+                    'begin' => 'DateTime',
+                    'end' => '@DateTime',
+                    'duration' => '@int',
+                    'description' => '@string',
+                    'rate' => 'float',
+                    'activity' => ['result' => 'object', 'type' => 'Activity'],
+                    'project' => ['result' => 'object', 'type' => 'ProjectExpanded'],
+                    'tags' => ['result' => 'array', 'type' => 'string'],
+                    'user' => ['result' => 'object', 'type' => 'User'],
+                    'metaFields' => ['result' => 'array', 'type' => 'TimesheetMeta'],
+                    'internalRate' => 'float',
+                    'exported' => 'bool',
+                    'billable' => 'bool',
+                    'break' => 'int',
+                ];
+
+            default:
+                throw new \Exception(\sprintf('Unknown API response type: %s', $type));
+        }
+    }
+
+    /**
+     * The $type is either one of the types configured in config/packages/nelmio_api_doc.yaml or the class name.
+     *
+     * @param string $type
+     * @param array $result
+     * @param array<string> $removeFields fields which are not part of the response, eg. because a permission is missing
+     * @throws \Exception
+     */
+    protected static function assertApiResponseTypeStructure(string $type, array $result, array $removeFields = []): void
+    {
+        $expected = self::getExpectedResponseStructure($type);
+
+        foreach ($removeFields as $field) {
+            unset($expected[$field]);
+        }
+
+        $expectedKeys = array_keys($expected);
+
+        $actual = array_keys($result);
+        sort($actual);
+        sort($expectedKeys);
+
+        self::assertEquals($expectedKeys, $actual, \sprintf('Structure for API response type "%s" does not match', $type));
+
+        self::assertEquals(
+            \count($actual),
+            \count($expectedKeys),
+            \sprintf('Mismatch between expected and result keys for API response type "%s". Expected %s keys but found %s.', $type, \count($expected), \count($actual))
+        );
+
+        foreach ($expected as $key => $value) {
+            if (\is_array($value)) {
+                switch ($value['result']) {
+                    case 'array':
+                        foreach ($result[$key] as $subResult) {
+                            if ($value['type'] === 'string') {
+                                self::assertIsString($subResult);
+                            } else {
+                                self::assertIsArray($subResult);
+                                self::assertIsString($value['type']);
+
+                                if ($value['type'][0] === '@') {
+                                    if (empty($result[$key])) {
+                                        continue;
+                                    }
+                                    $value['type'] = substr($value['type'], 1);
+                                }
+
+                                self::assertApiResponseTypeStructure($value['type'], $subResult);
+                            }
+                        }
+                        break;
+
+                    case 'object':
+                        self::assertIsString($value['type']);
+                        if ($value['type'][0] === '@') {
+                            if (empty($result[$key])) {
+                                break;
+                            }
+                            $value['type'] = substr($value['type'], 1);
+                        }
+
+                        self::assertIsArray($result[$key], \sprintf('Key "%s" in type "%s" is not an array', $key, $type));
+
+                        self::assertApiResponseTypeStructure($value['type'], $result[$key]);
+                        break;
+
+                    default:
+                        throw new \Exception(\sprintf('Invalid result type "%s" for subresource given', $value['result']));
+                }
+
+                continue;
+            }
+
+            if ($value[0] === '@') {
+                if (\is_null($result[$key])) {
+                    continue;
+                }
+                $value = substr($value, 1);
+            }
+
+            if (strtolower($value) === 'datetime') {
+                $date = \DateTime::createFromFormat('Y-m-d\TH:i:sO', $result[$key]);
+                self::assertInstanceOf(\DateTime::class, $date, \sprintf('Field "%s" was expected to be a Date with the format "Y-m-dTH:i:sO", but found: %s', $key, $result[$key]));
+                $value = 'string';
+            } elseif (strtolower($value) === 'date') {
+                $date = \DateTime::createFromFormat('Y-m-d', $result[$key]);
+                self::assertInstanceOf(\DateTime::class, $date, \sprintf('Field "%s" was expected to be a Date with the format "Y-m-d", but found: %s', $key, $result[$key]));
+                $value = 'string';
+            }
+
+            static::assertThat(
+                $result[$key],
+                new IsType($value),
+                \sprintf('Found type mismatch in structure for API response type %s. Expected type "%s" for key "%s".', $type, $value, $key)
+            );
+        }
+    }
+}

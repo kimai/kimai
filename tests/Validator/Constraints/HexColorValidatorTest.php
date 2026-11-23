@@ -11,15 +11,17 @@ namespace App\Tests\Validator\Constraints;
 
 use App\Validator\Constraints\HexColor;
 use App\Validator\Constraints\HexColorValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\HexColor
- * @covers \App\Validator\Constraints\HexColorValidator
  * @extends ConstraintValidatorTestCase<HexColorValidator>
  */
+#[CoversClass(HexColor::class)]
+#[CoversClass(HexColorValidator::class)]
 class HexColorValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): HexColorValidator
@@ -27,7 +29,7 @@ class HexColorValidatorTest extends ConstraintValidatorTestCase
         return new HexColorValidator();
     }
 
-    public function getValidColors()
+    public static function getValidColors(): iterable
     {
         yield ['#000'];
         yield ['#aaa'];
@@ -46,18 +48,15 @@ class HexColorValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate('#000', new NotBlank());
     }
 
-    /**
-     * @dataProvider getValidColors
-     * @param string $color
-     */
-    public function testConstraintWithValidColor($color): void
+    #[DataProvider('getValidColors')]
+    public function testConstraintWithValidColor(?string $color): void
     {
         $constraint = new HexColor();
         $this->validator->validate($color, $constraint);
         $this->assertNoViolation();
     }
 
-    public function getInvalidColors()
+    public static function getInvalidColors(): iterable
     {
         yield ['string'];
         yield ['000'];
@@ -75,20 +74,17 @@ class HexColorValidatorTest extends ConstraintValidatorTestCase
         yield [[], 'array'];
     }
 
-    /**
-     * @dataProvider getInvalidColors
-     * @param mixed $color
-     */
-    public function testValidationError($color, $parameterType = null): void
+    #[DataProvider('getInvalidColors')]
+    public function testValidationError(mixed $color, ?string $parameterType = null): void
     {
         $constraint = new HexColor();
 
         $this->validator->validate($color, $constraint);
 
-        if ($parameterType !== null) {
-            $expectedFormat = $parameterType;
+        if (\is_string($color)) {
+            $expectedFormat = '"' . $color . '"';
         } else {
-            $expectedFormat = \is_string($color) ? '"' . $color . '"' : $color;
+            $expectedFormat = $parameterType ?? '';
         }
 
         $this->buildViolation('The given value is not a valid hexadecimal color.')

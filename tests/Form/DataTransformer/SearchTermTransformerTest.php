@@ -11,21 +11,20 @@ namespace App\Tests\Form\DataTransformer;
 
 use App\Form\DataTransformer\SearchTermTransformer;
 use App\Utils\SearchTerm;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Form\DataTransformer\SearchTermTransformer
- */
+#[CoversClass(SearchTermTransformer::class)]
 class SearchTermTransformerTest extends TestCase
 {
     public function testTransform(): void
     {
         $sut = new SearchTermTransformer();
 
-        /* @phpstan-ignore-next-line */
+        /* @phpstan-ignore argument.type */
         self::assertEquals('', $sut->transform(''));
         self::assertEquals('', $sut->transform(null));
-        /* @phpstan-ignore-next-line */
+        /* @phpstan-ignore argument.type */
         self::assertEquals('', $sut->transform(new \stdClass()));
 
         self::assertEquals(
@@ -47,7 +46,18 @@ class SearchTermTransformerTest extends TestCase
         self::assertEquals('hello world:xxxxx foo bar test:1234', $term->getOriginalSearch());
         self::assertEquals('hello foo bar', $term->getSearchTerm());
         self::assertEquals(['world' => 'xxxxx', 'test' => '1234'], $term->getSearchFields());
-        self::assertEquals('xxxxx', $term->getSearchField('world'));
-        self::assertEquals('1234', $term->getSearchField('test'));
+        $expectedParts = [
+            ['hello', null],
+            ['xxxxx', 'world'],
+            ['foo', null],
+            ['bar', null],
+            ['1234', 'test'],
+        ];
+        $i = 0;
+        foreach ($term->getParts() as $part) {
+            $expected = $expectedParts[$i++];
+            self::assertEquals($expected[0], $part->getTerm());
+            self::assertEquals($expected[1], $part->getField());
+        }
     }
 }

@@ -19,7 +19,7 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<InvoiceTemplate>
+ * @extends EntityRepository<InvoiceTemplate>
  */
 class InvoiceTemplateRepository extends EntityRepository
 {
@@ -39,7 +39,7 @@ class InvoiceTemplateRepository extends EntityRepository
         return $qb;
     }
 
-    private function getQueryBuilderForQuery(BaseQuery $query): QueryBuilder
+    private function getQueryBuilderForQuery(BaseQuery $query): QueryBuilder // @phpstan-ignore method.unusedParameter
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -62,6 +62,9 @@ class InvoiceTemplateRepository extends EntityRepository
         return new QueryPaginator($query, $counter);
     }
 
+    /**
+     * @return Pagination<InvoiceTemplate>
+     */
     public function getPagerfantaForQuery(BaseQuery $query): Pagination
     {
         return new Pagination($this->getPaginatorForQuery($query), $query);

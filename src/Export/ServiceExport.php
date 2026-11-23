@@ -10,11 +10,16 @@
 namespace App\Export;
 
 use App\Entity\ExportableItem;
+use App\Entity\ExportTemplate;
 use App\Event\ExportItemsQueryEvent;
+use App\Export\Renderer\CsvRendererFactory;
 use App\Export\Renderer\HtmlRendererFactory;
 use App\Export\Renderer\PdfRendererFactory;
+use App\Export\Renderer\XlsxRendererFactory;
+use App\Repository\ExportTemplateRepository;
 use App\Repository\Query\ExportQuery;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\Log\LoggerInterface;
 
 final class ServiceExport
 {
@@ -27,7 +32,7 @@ final class ServiceExport
      */
     private array $renderer = [];
     /**
-     * @var TimesheetExportInterface[]
+     * @var ExportRendererInterface[]
      */
     private array $timesheetExporter = [];
     /**
@@ -36,9 +41,13 @@ final class ServiceExport
     private array $repositories = [];
 
     public function __construct(
-        private EventDispatcherInterface $eventDispatcher,
-        private HtmlRendererFactory $htmlRendererFactory,
-        private PdfRendererFactory $pdfRendererFactory
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly HtmlRendererFactory $htmlRendererFactory,
+        private readonly PdfRendererFactory $pdfRendererFactory,
+        private readonly CsvRendererFactory $csvRendererFactory,
+        private readonly XlsxRendererFactory $xlsxRendererFactory,
+        private readonly ExportTemplateRepository $exportTemplateRepository,
+        private readonly LoggerInterface $logger,
     )
     {
     }
@@ -66,12 +75,34 @@ final class ServiceExport
         $this->renderer[] = $renderer;
     }
 
+    private function filenameToTitle(string $title): string
+    {
+        if (str_contains($title, '.')) {
+            $title = explode('.', $title)[0];
+        }
+
+        return str_replace(['-', '_'], ' ', $title);
+    }
+
     /**
      * @return ExportRendererInterface[]
      */
     public function getRenderer(): array
     {
-        $renderer = [];
+        $renderer = [
+            $this->csvRendererFactory->createDefault(),
+            $this->xlsxRendererFactory->createDefault(),
+            $this->pdfRendererFactory->create('pdf', 'export/pdf-layout.html.twig', 'pdf'),
+            $this->htmlRendererFactory->create('print', 'export/print.html.twig'),
+        ];
+
+        foreach ($this->exportTemplateRepository->findAll() as $template) {
+            try {
+                $renderer[] = $this->createTemplateFromExportTemplate($template);
+            } catch (\Exception $exception) {
+                $this->logger->error('Unknown export template type: ' . $template->getRenderer());
+            }
+        }
 
         foreach ($this->documentDirs as $exportPath) {
             if (!is_dir($exportPath)) {
@@ -86,7 +117,7 @@ final class ServiceExport
                         continue;
                     }
 
-                    $renderer[] = $this->htmlRendererFactory->create($tplName, $tplName);
+                    $renderer[] = $this->htmlRendererFactory->create($tplName, '@export/' . $tplName, $this->filenameToTitle($tplName));
                 }
             }
 
@@ -98,12 +129,34 @@ final class ServiceExport
                         continue;
                     }
 
-                    $renderer[] = $this->pdfRendererFactory->create($tplName, $tplName);
+                    $renderer[] = $this->pdfRendererFactory->create($tplName, '@export/' . $tplName, $this->filenameToTitle($tplName));
                 }
             }
         }
 
         return array_merge($this->renderer, $renderer);
+    }
+
+    private function createTemplateFromExportTemplate(ExportTemplate $template): ExportRendererInterface
+    {
+        $tpl = new Template((string) $template->getId(), $template->getTitle()); // @phpstan-ignore argument.type
+        $tpl->setColumns($template->getColumns());
+        $tpl->setLocale($template->getLanguage());
+        $tpl->setOptions($template->getOptions());
+
+        switch ($template->getRenderer()) {
+            case 'csv':
+                return $this->csvRendererFactory->create($tpl);
+
+            case 'xlsx':
+                return $this->xlsxRendererFactory->create($tpl);
+
+            case 'pdf':
+                return $this->pdfRendererFactory->createFromTemplate($tpl);
+
+            default:
+                throw new \Exception('Unknown export template type: ' . $template->getRenderer());
+        }
     }
 
     public function getRendererById(string $id): ?ExportRendererInterface
@@ -117,22 +170,41 @@ final class ServiceExport
         return null;
     }
 
-    public function addTimesheetExporter(TimesheetExportInterface $exporter): void
+    public function addTimesheetExporter(ExportRendererInterface $exporter): void
     {
         $this->timesheetExporter[] = $exporter;
     }
 
     /**
-     * @return TimesheetExportInterface[]
+     * @return ExportRendererInterface[]
      */
     public function getTimesheetExporter(): array
     {
-        return $this->timesheetExporter;
+        // TODO 3.0 cache the result, as this is one extra database query on the timesheet pages
+        $exporter = [
+            $this->pdfRendererFactory->create('pdf', '@export/timesheet.pdf.twig'),
+            $this->xlsxRendererFactory->createDefault(),
+            $this->csvRendererFactory->createDefault(),
+            $this->htmlRendererFactory->create('print', 'timesheet/export.html.twig'),
+        ];
+
+        foreach ($this->exportTemplateRepository->findAll() as $template) {
+            if (!$template->isAvailableForAll()) {
+                continue;
+            }
+            try {
+                $exporter[] = $this->createTemplateFromExportTemplate($template);
+            } catch (\Exception $exception) {
+                $this->logger->error('Unknown export template type: ' . $template->getRenderer());
+            }
+        }
+
+        return array_merge($this->timesheetExporter, $exporter);
     }
 
-    public function getTimesheetExporterById(string $id): ?TimesheetExportInterface
+    public function getTimesheetExporterById(string $id): ?ExportRendererInterface
     {
-        foreach ($this->timesheetExporter as $exporter) {
+        foreach ($this->getTimesheetExporter() as $exporter) {
             if ($exporter->getId() === $id) {
                 return $exporter;
             }
@@ -147,7 +219,6 @@ final class ServiceExport
     }
 
     /**
-     * @param ExportQuery $query
      * @return ExportableItem[]
      * @throws TooManyItemsExportException
      */
@@ -156,17 +227,52 @@ final class ServiceExport
         $items = [];
 
         $max = $this->getMaximumResults($query);
+        if ($max !== null) {
+            $query->setMaxResults($max + 1);
+        }
+        $count = 0;
 
         foreach ($this->repositories as $repository) {
-            $items = array_merge($items, $repository->getExportItemsForQuery($query));
-            if ($max !== null && \count($items) > $max) {
+            $repoItems = $repository->getExportItemsForQuery($query);
+            if ($max !== null && ($count += \count($repoItems)) > $max) {  // @phpstan-ignore argument.type
                 throw new TooManyItemsExportException(
-                    \sprintf('Limit reached! Expected max. %s items but got %s', $max, \count($items))
+                    \sprintf('Limit reached! Found more than the allowed maximum of %s items for export.', $max)
                 );
             }
+
+            $items = array_merge($items, $repoItems);
         }
 
         return $items;
+    }
+
+    /**
+     * @param non-negative-int $maxItems
+     */
+    public function getExportPreview(ExportQuery $query, int $maxItems): ExportableResultInterface
+    {
+        /** @var array<ExportableResultInterface> $results */
+        $results = [];
+
+        foreach ($this->repositories as $repository) {
+            $maxItems = max(0, $maxItems);
+            if ($repository instanceof ExportableRepositoryInterface) {
+                $result = $repository->getPreview($query, $maxItems);
+                $count = \count($result->getExportItems());
+            } else {
+                @trigger_error(\sprintf('Export repository "%s" is deprecated, implement ExportableRepositoryInterface', $repository->getType()), E_USER_DEPRECATED);
+                $repoItems = $repository->getExportItemsForQuery($query);
+                $statistic = (new ExportableArrayResult($repoItems))->getStatistic(); // @phpstan-ignore argument.type
+                $repoItems = \array_slice($repoItems, 0, $maxItems); // @phpstan-ignore argument.type
+                $count = \count($repoItems);
+                $result = new ExportablePreviewResult($repoItems, $statistic);
+            }
+
+            $results[] = $result;
+            $maxItems = $maxItems - $count;
+        }
+
+        return new ExportableResult($results);
     }
 
     public function setExported(array $items): void
@@ -176,6 +282,9 @@ final class ServiceExport
         }
     }
 
+    /**
+     * @return non-negative-int|null
+     */
     public function getMaximumResults(ExportQuery $query): ?int
     {
         $event = new ExportItemsQueryEvent($query);

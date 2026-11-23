@@ -13,9 +13,14 @@ import KimaiPlugin from '../KimaiPlugin';
 
 export default class KimaiMultiUpdateTable extends KimaiPlugin {
 
+    getId()
+    {
+        return 'datatable-batch-action';
+    }
+
     init()
     {
-        if (document.getElementById('multi_update_all') === null) {
+        if (document.getElementsByClassName('multi_update_all').length === 0) {
             return;
         }
 
@@ -23,64 +28,101 @@ export default class KimaiMultiUpdateTable extends KimaiPlugin {
         // via KimaiDatable and everything inside will be removed, including event listeners
         const element = document.querySelector('div.page-body');
         element.addEventListener('change', (event) => {
-            if (event.target.matches('#multi_update_all')) {
-                // the "check all" checkbox in the upper start corner of the table
-                const checked = event.target.checked;
-                for (const element of document.querySelectorAll('.multi_update_single')) {
-                    element.checked = checked;
-                }
-                this._toggleForm();
+            if (event.target.matches('.multi_update_all')) {
+                this.toggle(event.target.checked, event.target.closest('table'));
                 event.stopPropagation();
             } else if (event.target.matches('.multi_update_single')) {
                 // single checkboxes in front of each row
-                this._toggleForm();
+                this._toggleDatatable(event.target.closest('table'));
                 event.stopPropagation();
             }
         });
 
         element.addEventListener('click', (event) => {
             if (event.target.matches('.multi_update_table_action')) {
-                const selectedItem = event.target;
-                const ids = this._getSelectedIds();
-                const form = document.getElementById('multi_update_form');
-                const question = form.dataset['question'].replace(/%action%/, selectedItem.textContent).replace(/%count%/, ids.length.toString());
+                const selectedButton = event.target;
+                const form = selectedButton.form;
+                const ids = form.querySelector('.multi_update_ids').value.split(',');
+                const question = form.dataset['question'].replace(/%action%/, selectedButton.textContent).replace(/%count%/, ids.length.toString());
 
                 /** @type {KimaiAlert} ALERT */
                 const ALERT = this.getPlugin('alert');
                 ALERT.question(question, function(value) {
                     if (value) {
-                        const form = document.getElementById('multi_update_form');
-                        form.action = selectedItem.dataset['href'];
+                        form.action = selectedButton.dataset['href'];
                         form.submit();
                     }
                 });
             }
         });
     }
-    
-    _getSelectedIds()
+
+    /**
+     * @param {boolean} checked
+     * @param {HTMLTableElement} table
+     */
+    toggle(checked, table)
     {
+        for (const element of table.querySelectorAll('.multi_update_single')) {
+            element.checked = checked;
+        }
+        this._toggleDatatable(table);
+    }
+
+    /**
+     * @param {boolean} checked
+     */
+    toggleAll(checked)
+    {
+        for (const element of document.querySelectorAll('.multi_update_all')) {
+            this._toggleAll(checked, element);
+        }
+    }
+
+    /**
+     * @param {boolean} checked
+     * @param {string} name
+     */
+    toggleByName(checked, name)
+    {
+        for (const element of document.querySelectorAll('#multi_update_all_' + name)) {
+            this._toggleAll(checked, element);
+        }
+    }
+
+    /**
+     * @param {boolean} checked
+     * @param {Element} name
+     */
+    _toggleAll(checked, element)
+    {
+        element.checked = checked;
+        this.toggle(checked, element.closest('table'));
+    }
+
+    /**
+     * @param {HTMLTableElement} table
+     * @private
+     */
+    _toggleDatatable(table)
+    {
+        const card = table.closest('div.card.data_table');
+
         let ids = [];
-        for (const box of document.querySelectorAll('input.multi_update_single:checked')) {
+        for (const box of table.querySelectorAll('input.multi_update_single:checked')) {
             ids.push(box.value);
         }
 
-        return ids;
-    }
-    
-    _toggleForm()
-    {
-        const ids = this._getSelectedIds();
-        document.getElementById('multi_update_table_entities').value = ids.join(',');
+        card.querySelector('.multi_update_ids').value = ids.join(',');
 
         if (ids.length > 0) {
-            for (const element of document.getElementsByClassName('multi_update_form_hide')) {
+            for (const element of card.querySelectorAll('.multi_update_form_hide')) {
                 element.style.setProperty('display', 'none', 'important');
             }
-            document.getElementById('multi_update_form').style.display = null;//'block';
+            card.querySelector('form.multi_update_form').style.display = null;//'block';
         } else {
-            document.getElementById('multi_update_form').style.setProperty('display', 'none', 'important');
-            for (const element of document.getElementsByClassName('multi_update_form_hide')) {
+            card.querySelector('form.multi_update_form').style.setProperty('display', 'none', 'important');
+            for (const element of card.querySelectorAll('.multi_update_form_hide')) {
                 element.style.display = null;
             }
         }

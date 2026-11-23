@@ -4,7 +4,7 @@
 {% block main %}
     {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
     {% set formOptions = {
-        'title': (access_token.id is null ? 'create'|trans : 'edit'|trans({}, 'actions')),
+        'title': (access_token.id is null ? 'create'|trans : 'edit'|trans),
         'form': form,
         'back': path('user_profile_access_token', {'username': user.userIdentifier})
     } %}

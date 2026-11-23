@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="gkQA1YG" resname="daterangepicker.yesterday">
         <source>daterangepicker.yesterday</source>
-        <target>Zítra</target>
+        <target state="translated">Včera</target>
       </trans-unit>
       <trans-unit id="CAvVEbc" resname="daterangepicker.lastWeek">
         <source>daterangepicker.lastWeek</source>
@@ -17,14 +17,6 @@
       <trans-unit id="HfcD1_y" resname="daterangepicker.thisWeek">
         <source>daterangepicker.thisWeek</source>
         <target>Tento týden</target>
-      </trans-unit>
-      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth">
-        <source>daterangepicker.lastMonth</source>
-        <target>Minulý měsíc</target>
-      </trans-unit>
-      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth">
-        <source>daterangepicker.thisMonth</source>
-        <target>Tento měsíc</target>
       </trans-unit>
       <trans-unit id="_9rEFED" resname="daterangepicker.lastYear">
         <source>daterangepicker.lastYear</source>
@@ -41,6 +33,14 @@
       <trans-unit id="m0lJOke" resname="daterangepicker.allTime">
         <source>daterangepicker.allTime</source>
         <target state="translated">Celkové období</target>
+      </trans-unit>
+      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" xml:space="preserve">
+        <source>daterangepicker.lastMonth</source>
+        <target state="translated">Minulý měsíc</target>
+      </trans-unit>
+      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth" xml:space="preserve">
+        <source>daterangepicker.thisMonth</source>
+        <target state="translated">Tento měsíc</target>
       </trans-unit>
     </body>
   </file>

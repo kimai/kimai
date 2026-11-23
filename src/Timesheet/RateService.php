@@ -13,13 +13,18 @@ use App\Entity\RateInterface;
 use App\Entity\Timesheet;
 use App\Entity\UserPreference;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\RateCalculator\RateCalculatorMode;
 
 /**
  * Implementation to calculate the rate for a timesheet record.
  */
 final class RateService implements RateServiceInterface
 {
-    public function __construct(private array $rates, private TimesheetRepository $repository)
+    public function __construct(
+        private readonly array $rates,
+        private readonly TimesheetRepository $repository,
+        private readonly RateCalculatorMode $calculatorMode
+    )
     {
     }
 
@@ -29,6 +34,7 @@ final class RateService implements RateServiceInterface
             return new Rate(0.00, 0.00);
         }
 
+        $currency = $record->getProject()?->getCustomer()?->getCurrency();
         $fixedRate = $record->getFixedRate();
         $hourlyRate = $record->getHourlyRate();
         $fixedInternalRate = null;
@@ -52,7 +58,14 @@ final class RateService implements RateServiceInterface
 
         if (null !== $fixedRate) {
             if (null === $fixedInternalRate) {
-                $fixedInternalRate = (float) $record->getUser()->getPreferenceValue(UserPreference::INTERNAL_RATE, $fixedRate, false);
+                $internalHourlyRate = $record->getUser()->getPreferenceValue(UserPreference::INTERNAL_RATE);
+                if (null === $internalHourlyRate) {
+                    // no internal rate is configured, so the fixed rate is used as fallback
+                    $fixedInternalRate = $fixedRate;
+                } else {
+                    // the user's internal rate is an hourly rate, so the total internal rate is calculated from the duration - see #4801
+                    $fixedInternalRate = $this->calculatorMode->calculateRate((float) $internalHourlyRate, $record->getDuration() ?? 0, $currency);
+                }
             }
 
             return new Rate($fixedRate, $fixedInternalRate, null, $fixedRate);
@@ -79,8 +92,8 @@ final class RateService implements RateServiceInterface
         $totalInternalRate = 0;
 
         if (null !== $record->getDuration()) {
-            $totalRate = Util::calculateRate($factoredHourlyRate, $record->getDuration());
-            $totalInternalRate = Util::calculateRate($factoredInternalRate, $record->getDuration());
+            $totalRate = $this->calculatorMode->calculateRate($factoredHourlyRate, $record->getDuration(), $currency);
+            $totalInternalRate = $this->calculatorMode->calculateRate($factoredInternalRate, $record->getDuration(), $currency);
         }
 
         return new Rate($totalRate, $totalInternalRate, $factoredHourlyRate, null);

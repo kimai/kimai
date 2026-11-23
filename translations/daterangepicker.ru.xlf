@@ -18,14 +18,6 @@
         <source>daterangepicker.thisWeek</source>
         <target>Эта неделя</target>
       </trans-unit>
-      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth">
-        <source>daterangepicker.lastMonth</source>
-        <target>Прошлый месяц</target>
-      </trans-unit>
-      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth">
-        <source>daterangepicker.thisMonth</source>
-        <target>Этот месяц</target>
-      </trans-unit>
       <trans-unit id="_9rEFED" resname="daterangepicker.lastYear">
         <source>daterangepicker.lastYear</source>
         <target>Прошлый год</target>
@@ -41,6 +33,14 @@
       <trans-unit id="m0lJOke" resname="daterangepicker.allTime">
         <source>daterangepicker.allTime</source>
         <target state="translated">Общий период</target>
+      </trans-unit>
+      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth" xml:space="preserve">
+        <source>daterangepicker.thisMonth</source>
+        <target state="translated">Этот месяц</target>
+      </trans-unit>
+      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" xml:space="preserve">
+        <source>daterangepicker.lastMonth</source>
+        <target state="translated">Последний месяц</target>
       </trans-unit>
     </body>
   </file>

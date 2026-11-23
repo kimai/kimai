@@ -10,11 +10,10 @@
 namespace App\Tests\Model;
 
 use App\Model\Year;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Model\Year
- */
+#[CoversClass(Year::class)]
 class YearTest extends TestCase
 {
     public function testDefaults(): void

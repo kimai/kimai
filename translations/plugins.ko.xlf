@@ -6,6 +6,22 @@
         <source>plugin.none_installed</source>
         <target state="translated">아직 설치된 플러그인이 없습니다.</target>
       </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace" xml:space="preserve">
+        <source>Available plugins</source>
+        <target state="translated">사용 가능한 플러그인</target>
+      </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy" xml:space="preserve">
+        <source>Buy now</source>
+        <target state="translated">구매하기</target>
+      </trans-unit>
+      <trans-unit id="jZAB0yx" resname="shop" xml:space="preserve">
+        <source>Plugin Shop</source>
+        <target state="translated">더 많은 확장기능</target>
+      </trans-unit>
+      <trans-unit id="aNvGEaj" resname="update_available" xml:space="preserve">
+        <source>Update available</source>
+        <target state="translated">업데이트가 가능합니다: %version%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

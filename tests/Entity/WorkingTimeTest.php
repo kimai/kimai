@@ -11,11 +11,10 @@ namespace App\Tests\Entity;
 
 use App\Entity\User;
 use App\Entity\WorkingTime;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Entity\WorkingTime
- */
+#[CoversClass(WorkingTime::class)]
 class WorkingTimeTest extends TestCase
 {
     public function testDefaultValues(): void
@@ -50,5 +49,24 @@ class WorkingTimeTest extends TestCase
         self::assertSame($approvedAt, $sut->getApprovedAt());
         self::assertSame($approvedBy, $sut->getApprovedBy());
         self::assertTrue($sut->isApproved());
+    }
+
+    public function testExpectedTime(): void
+    {
+        $user = new User();
+        $user->setUsername('bar');
+        $date = new \DateTimeImmutable();
+        $sut = new WorkingTime($user, $date);
+        $sut->setExpectedTime(222222);
+
+        self::assertEquals(222222, $sut->getExpectedTime());
+        self::assertEquals(222222, $sut->getOriginalExpectedTime());
+        $reducedBy = $sut->halveExpectedTime();
+        self::assertEquals(111111, $reducedBy);
+        self::assertEquals(111111, $sut->getExpectedTime());
+        self::assertEquals(222222, $sut->getOriginalExpectedTime());
+        $sut->emptyExpectedTime();
+        self::assertEquals(0, $sut->getExpectedTime());
+        self::assertEquals(222222, $sut->getOriginalExpectedTime());
     }
 }

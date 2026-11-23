@@ -1,24 +1,18 @@
 {% embed 'reporting/user_list_period_data.html.twig' with {'avatar': false, 'showAccountNumber': true, 'stats': stats, 'dataType': dataType, 'period_attribute': period_attribute} only %}
-    {% set dataTypeFormat = '' %}
-    {% if dataType == 'rate' or dataType == 'internalRate' %}
-        {% set dataTypeFormat = ' data-format="' ~ constant('App\\Export\\Base\\AbstractSpreadsheetRenderer::RATE_FORMAT_NO_CURRENCY') ~ '"' %}
-    {% elseif dataType == 'duration' %}
-        {% set dataTypeFormat = ' data-format="' ~ constant('App\\Export\\Base\\AbstractSpreadsheetRenderer::DURATION_DECIMAL') ~ '"' %}
-    {% endif %}
     {% block user_column %}
         {{ userPeriod.user.displayName|sanitize_dde }}
     {% endblock %}
     {% block duration -%}
-        {{ period.totalDuration / 3600 }}
+        {{ period.totalDuration|duration(true) }}
     {%- endblock %}
     {% block total_duration -%}
-        {{ absoluteDuration / 3600 }}
+        {{ absoluteDuration|duration(true) }}
     {%- endblock %}
     {% block total_duration_user -%}
-        {{ usersTotalDuration / 3600 }}
+        {{ usersTotalDuration|duration(true) }}
     {%- endblock %}
     {% block total_duration_period -%}
-        {{ total / 3600 }}
+        {{ total|duration(true) }}
     {%- endblock %}
     {% block rate %}
         {{ period.totalRate }}
@@ -49,11 +43,4 @@
             {{ column|date_short }}
         </th>
     {% endblock %}
-    {% block user_column_cell_attribute %} data-format="@"{% endblock %}
-    {% block period_cell_attribute %}{{ dataTypeFormat|raw }}{% endblock %}
-    {% block user_total_cell_attribute %}{{ dataTypeFormat|raw }}{% endblock %}
-    {% block total_period_cell_attribute %}{{ dataTypeFormat|raw }}{% endblock %}
-    {% block total_rate_period_cell_attribute %}{{ dataTypeFormat|raw }}{% endblock %}
-    {% block total_internal_rate_period_cell_attribute %}{{ dataTypeFormat|raw }}{% endblock %}
-    {% block total_duration_period_cell_attribute %}{{ dataTypeFormat|raw }}{% endblock %}
 {% endembed %}

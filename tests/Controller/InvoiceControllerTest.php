@@ -11,16 +11,25 @@ namespace App\Tests\Controller;
 
 use App\Entity\Invoice;
 use App\Entity\InvoiceTemplate;
+use App\Entity\Role;
+use App\Entity\RolePermission;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Event\InvoiceStatusChangedEvent;
+use App\Event\InvoiceUpdatePostEvent;
+use App\Event\InvoiceUpdatePreEvent;
+use App\Tests\DataFixtures\InvoiceFixtures;
 use App\Tests\DataFixtures\InvoiceTemplateFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use App\User\PermissionService;
+use PHPUnit\Framework\Attributes\Group;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @group integration
- */
-class InvoiceControllerTest extends ControllerBaseTest
+#[Group('integration')]
+class InvoiceControllerTest extends AbstractControllerBaseTestCase
 {
     protected function setUp(): void
     {
@@ -40,6 +49,9 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         if (is_dir($path)) {
             $files = glob($path . '*');
+            if ($files === false) {
+                return;
+            }
             foreach ($files as $file) {
                 unlink($file);
             }
@@ -73,9 +85,26 @@ class InvoiceControllerTest extends ControllerBaseTest
         $id = $templates[0]->getId();
 
         $this->request($client, '/invoice/?customers[]=1&template=' . $id);
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasNoEntriesWithFilter($client);
+    }
+
+    public function testIndexActionHasSearchAsDefaultSubmitButton(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $fixture = new InvoiceTemplateFixtures();
+        $this->importFixture($fixture);
+
+        $this->request($client, '/invoice/');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        // pressing enter in a filter field submits the form with its first submit button,
+        // which has to run the search and must not save the filter as default
+        $buttons = $client->getCrawler()->filter('form#invoice-print-form button[type="submit"]');
+        self::assertGreaterThan(1, $buttons->count());
+        self::assertEquals('performSearch', $buttons->first()->attr('name'));
     }
 
     public function testListTemplateAction(): void
@@ -87,7 +116,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $this->request($client, '/invoice/template');
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasDataTable($client);
     }
 
@@ -95,14 +124,14 @@ class InvoiceControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/invoice/template/create');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=invoice_template_form]')->form();
         $client->submit($form, [
             'invoice_template_form' => [
-                'name' => 'Test',
+                'name' => 'FooBar Template',
                 'title' => 'Test invoice template',
-                'company' => 'Company name',
+                'customer' => 1,
                 'renderer' => 'default',
                 'calculator' => 'default',
                 'vat' => '27,937',
@@ -111,13 +140,13 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/invoice/template'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSuccess($client);
 
         $template = $this->getEntityManager()->getRepository(InvoiceTemplate::class)->findAll()[0];
-        self::assertEquals('Test', $template->getName());
+        self::assertEquals('FooBar Template', $template->getName());
         self::assertEquals('Test invoice template', $template->getTitle());
-        self::assertEquals('Company name', $template->getCompany());
+        self::assertEquals('Test', $template->getCompany());
         self::assertEquals('default', $template->getRenderer());
         self::assertEquals('default', $template->getCalculator());
         self::assertEquals('27.937', $template->getVat());
@@ -133,19 +162,17 @@ class InvoiceControllerTest extends ControllerBaseTest
         $template = $templates[0];
 
         $this->request($client, '/invoice/template/create/' . $template->getId());
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=invoice_template_form]')->form();
         $values = $form->getPhpValues()['invoice_template_form'];
-        $this->assertEquals($template->getName() . ' (1)', $values['name']);
-        $this->assertEquals($template->getTitle(), $values['title']);
-        $this->assertEquals($template->getDueDays(), $values['dueDays']);
-        $this->assertEquals($template->getCalculator(), $values['calculator']);
-        $this->assertEquals($template->getVat(), $values['vat']);
-        $this->assertEquals($template->getRenderer(), $values['renderer']);
-        $this->assertEquals($template->getCompany(), $values['company']);
-        $this->assertEquals($template->getAddress(), $values['address']);
-        $this->assertEquals($template->getPaymentTerms(), $values['paymentTerms']);
+        self::assertEquals($template->getName() . ' (1)', $values['name']);
+        self::assertEquals($template->getTitle(), $values['title']);
+        self::assertEquals($template->getDueDays(), $values['dueDays']);
+        self::assertEquals($template->getCalculator(), $values['calculator']);
+        self::assertEquals($template->getVat(), $values['vat']);
+        self::assertEquals($template->getRenderer(), $values['renderer']);
+        self::assertEquals($template->getPaymentTerms(), $values['paymentTerms']);
     }
 
     public function testCreateAction(): void
@@ -167,11 +194,11 @@ class InvoiceControllerTest extends ControllerBaseTest
         ;
         $timesheets = $this->importFixture($fixture);
         foreach ($timesheets as $timesheet) {
-            $this->assertFalse($timesheet->isExported());
+            self::assertFalse($timesheet->isExported());
         }
 
         $this->request($client, '/invoice/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $dateRange = $this->formatDateRange($begin, $end);
 
@@ -185,11 +212,11 @@ class InvoiceControllerTest extends ControllerBaseTest
             'customers' => [1],
         ]);
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         // no warning should be displayed
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
-        $this->assertEquals(0, $node->count());
+        self::assertEquals(0, $node->count());
         // but the datatable with all timesheets
         $this->assertDataTableRowCount($client, 'datatable_invoice_create', 20);
 
@@ -200,21 +227,23 @@ class InvoiceControllerTest extends ControllerBaseTest
         ];
 
         $token = $client->getCrawler()->filter('div#create-token')->attr('data-value');
+        self::assertIsString($token);
 
-        $action = '/invoice/save-invoice/1/' . $token . '?' . http_build_query($urlParams);
-        $this->request($client, $action);
+        $urlParams['_token'] = $token;
+
+        $client->request('POST', $this->createUrl('/invoice/save-invoice/1'), $urlParams);
         $this->assertIsRedirect($client, '/invoice/show?id=', false);
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertDataTableRowCount($client, 'datatable_invoices', 1);
 
         $em = $this->getEntityManager();
         $em->clear();
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertCount(20, $timesheets);
+        self::assertCount(20, $timesheets);
         /** @var Timesheet $timesheet */
         foreach ($timesheets as $timesheet) {
-            $this->assertTrue($timesheet->isExported());
+            self::assertTrue($timesheet->isExported());
         }
     }
 
@@ -237,7 +266,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->request($client, '/invoice/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $dateRange = $this->formatDateRange($begin, $end);
 
@@ -251,7 +280,7 @@ class InvoiceControllerTest extends ControllerBaseTest
             'customers' => [1],
         ]);
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $params = [
             'daterange' => $dateRange,
@@ -264,13 +293,13 @@ class InvoiceControllerTest extends ControllerBaseTest
         $action = '/invoice/preview/1/' . $token . '?' . http_build_query($params);
 
         $this->request($client, $action);
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $node = $client->getCrawler()->filter('body');
-        $this->assertEquals(1, $node->count());
+        self::assertEquals(1, $node->count());
 
         /** @var \DOMElement $element */
         $element = $node->getIterator()[0];
-        $this->assertEquals('invoice_print', $element->getAttribute('class'));
+        self::assertEquals('invoice_print', $element->getAttribute('class'));
     }
 
     public function testCreateActionAsAdminWithDownloadAndStatusChange(): void
@@ -292,7 +321,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->request($client, '/invoice/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $dateRange = $this->formatDateRange($begin, $end);
 
@@ -306,29 +335,31 @@ class InvoiceControllerTest extends ControllerBaseTest
             'customers' => [1],
         ]);
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         // no warning should be displayed
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
-        $this->assertEquals(0, $node->count());
+        self::assertEquals(0, $node->count());
         // but the datatable with all timesheets
         $this->assertDataTableRowCount($client, 'datatable_invoice_create', 20);
 
         $token = $client->getCrawler()->filter('div#create-token')->attr('data-value');
+        self::assertIsString($token);
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/invoice/save-invoice/1/' . $token));
-        $node->setAttribute('method', 'GET');
+        $node->setAttribute('action', $this->createUrl('/invoice/save-invoice/1'));
+        $node->setAttribute('method', 'POST');
         $client->submit($form, [
             'template' => $template->getId(),
             'daterange' => $dateRange,
             'projects' => [1],
+            '_token' => $token,
         ]);
 
         $this->assertIsRedirect($client, '/invoice/show?id=', false);
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $invoices = $this->getEntityManager()->getRepository(Invoice::class)->findAll();
         self::assertCount(1, $invoices);
@@ -342,23 +373,29 @@ class InvoiceControllerTest extends ControllerBaseTest
         // make sure the invoice is saved
         $this->request($client, '/invoice/download/' . $id);
         $response = $client->getResponse();
-        $this->assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());
         self::assertInstanceOf(BinaryFileResponse::class, $response);
         self::assertFileExists($response->getFile());
 
         $this->request($client, '/invoice/show');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $link = $client->getCrawler()->selectLink('Waiting for payment');
+        $statusUrl = $link->attr('data-href');
+        self::assertIsString($statusUrl);
+        // the status change is a POST and the token is never part of the URL
+        self::assertEquals('#', $link->attr('href'));
 
-        $this->request($client, $link->attr('href'));
+        $statusToken = $client->getCrawler()->filter('div#status-token')->attr('data-value');
+        self::assertIsString($statusToken);
+        $client->request('POST', $statusUrl, ['_token' => $statusToken]);
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $link = $client->getCrawler()->selectLink('Invoice paid');
         $url = $link->attr('href');
         $this->request($client, $url);
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasValidationError(
             $client,
@@ -372,7 +409,7 @@ class InvoiceControllerTest extends ControllerBaseTest
             ['#invoice_edit_form_paymentDate']
         );
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=invoice_edit_form]')->form();
         $client->submit($form, [
@@ -383,13 +420,305 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
-        $token = $this->getCsrfToken($client, 'invoice.status');
-        $this->request($client, '/invoice/change-status/' . $id . '/new/' . $token->getValue());
+        $statusToken = $client->getCrawler()->filter('div#status-token')->attr('data-value');
+        self::assertIsString($statusToken);
+        $client->request('POST', $this->createUrl('/invoice/change-status/' . $id . '/new'), ['_token' => $statusToken]);
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
+    }
+
+    /**
+     * Regression tests for GHSA-4xmp-xqv9-pcrf.
+     *
+     * Creating an invoice is a state-changing operation: it must not be reachable via
+     * GET and the CSRF token must be sent in the request body, never in the URL.
+     */
+    public function testCreateInvoiceIsNotReachableWithGet(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $this->request($client, '/invoice/save-invoice/1');
+        self::assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $client->getResponse()->getStatusCode());
+    }
+
+    public function testCreateInvoiceRequiresValidToken(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $client->request('POST', $this->createUrl('/invoice/save-invoice/1'), ['_token' => 'not-a-valid-token']);
+
+        $this->assertIsRedirect($client, '/invoice/');
+        $client->followRedirect();
+        $this->assertHasFlashError($client);
+
+        self::assertCount(0, $this->getEntityManager()->getRepository(Invoice::class)->findAll());
+    }
+
+    public function testChangeStatusIsNotReachableWithGet(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $fixture = new InvoiceFixtures();
+        $fixture->setAmount(1);
+        $invoice = $this->importFixture($fixture)[0];
+
+        $this->request($client, '/invoice/change-status/' . $invoice->getId() . '/canceled');
+        self::assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $client->getResponse()->getStatusCode());
+    }
+
+    public function testChangeStatusRequiresValidToken(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $fixture = new InvoiceFixtures();
+        $fixture->setAmount(1);
+        $fixture->setStatus([Invoice::STATUS_NEW]);
+        $invoice = $this->importFixture($fixture)[0];
+        $invoiceId = $invoice->getId();
+        self::assertIsInt($invoiceId);
+
+        $client->request('POST', $this->createUrl('/invoice/change-status/' . $invoiceId . '/canceled'), ['_token' => 'not-a-valid-token']);
+
+        $this->assertIsRedirect($client, '/invoice/show');
+        $client->followRedirect();
+        $this->assertHasFlashError($client);
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        $reloaded = $em->getRepository(Invoice::class)->find($invoiceId);
+        self::assertInstanceOf(Invoice::class, $reloaded);
+        self::assertEquals(Invoice::STATUS_NEW, $reloaded->getStatus());
+    }
+
+    /**
+     * @return \ArrayObject<int, object>
+     */
+    private function recordInvoiceEvents(): \ArrayObject
+    {
+        /** @var \ArrayObject<int, object> $events */
+        $events = new \ArrayObject();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = self::getContainer()->get('event_dispatcher');
+        foreach ([InvoiceUpdatePreEvent::class, InvoiceUpdatePostEvent::class, InvoiceStatusChangedEvent::class] as $eventName) {
+            $dispatcher->addListener($eventName, function (object $event) use ($events): void {
+                $events[] = $event;
+            });
+        }
+
+        return $events;
+    }
+
+    public function testChangeStatusDispatchesEvents(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        // the event listeners have to survive the second request
+        self::assertInstanceOf(KernelBrowser::class, $client);
+        $client->disableReboot();
+
+        $fixture = new InvoiceFixtures();
+        $fixture->setAmount(1);
+        $fixture->setStatus([Invoice::STATUS_NEW]);
+        $invoiceId = $this->importFixture($fixture)[0]->getId();
+        self::assertIsInt($invoiceId);
+
+        $this->request($client, '/invoice/show');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $statusToken = $client->getCrawler()->filter('div#status-token')->attr('data-value');
+        self::assertIsString($statusToken);
+
+        $events = $this->recordInvoiceEvents();
+
+        $client->request('POST', $this->createUrl('/invoice/change-status/' . $invoiceId . '/pending'), ['_token' => $statusToken]);
+        $this->assertIsRedirect($client, '/invoice/show');
+
+        self::assertCount(3, $events);
+        self::assertInstanceOf(InvoiceUpdatePreEvent::class, $events[0]);
+        self::assertInstanceOf(InvoiceUpdatePostEvent::class, $events[1]);
+        $event = $events[2];
+        self::assertInstanceOf(InvoiceStatusChangedEvent::class, $event);
+        self::assertEquals($invoiceId, $event->getInvoice()->getId());
+        self::assertEquals(Invoice::STATUS_NEW, $event->getStatusBefore());
+        self::assertEquals(Invoice::STATUS_PENDING, $event->getInvoice()->getStatus());
+    }
+
+    public function testChangeStatusWithInvalidTokenDoesNotDispatchEvents(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $fixture = new InvoiceFixtures();
+        $fixture->setAmount(1);
+        $fixture->setStatus([Invoice::STATUS_NEW]);
+        $invoiceId = $this->importFixture($fixture)[0]->getId();
+
+        $events = $this->recordInvoiceEvents();
+
+        $client->request('POST', $this->createUrl('/invoice/change-status/' . $invoiceId . '/pending'), ['_token' => 'not-a-valid-token']);
+        $this->assertIsRedirect($client, '/invoice/show');
+
+        self::assertCount(0, $events);
+    }
+
+    /**
+     * The API uses the same form with disabled CSRF protection (see InvoiceApiEditForm),
+     * which must not affect the frontend form.
+     */
+    public function testEditActionRequiresValidToken(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $fixture = new InvoiceFixtures();
+        $fixture->setAmount(1);
+        $fixture->setStatus([Invoice::STATUS_PENDING]);
+        $invoiceId = $this->importFixture($fixture)[0]->getId();
+        self::assertIsInt($invoiceId);
+
+        $client->request('POST', $this->createUrl('/invoice/edit/' . $invoiceId), [
+            'invoice_edit_form' => [
+                'status' => Invoice::STATUS_CANCELED,
+                'comment' => 'foo',
+                '_token' => 'not-a-valid-token',
+            ]
+        ]);
+        self::assertFalse($client->getResponse()->isRedirection());
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        $reloaded = $em->getRepository(Invoice::class)->find($invoiceId);
+        self::assertInstanceOf(Invoice::class, $reloaded);
+        self::assertEquals(Invoice::STATUS_PENDING, $reloaded->getStatus());
+        self::assertNotEquals('foo', $reloaded->getComment());
+    }
+
+    public function testEditActionDispatchesStatusChangedEvent(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        // the event listeners have to survive the second request
+        self::assertInstanceOf(KernelBrowser::class, $client);
+        $client->disableReboot();
+
+        $fixture = new InvoiceFixtures();
+        $fixture->setAmount(1);
+        $fixture->setStatus([Invoice::STATUS_PENDING]);
+        $invoiceId = $this->importFixture($fixture)[0]->getId();
+        self::assertIsInt($invoiceId);
+
+        $this->request($client, '/invoice/edit/' . $invoiceId);
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $events = $this->recordInvoiceEvents();
+
+        $form = $client->getCrawler()->filter('form[name=invoice_edit_form]')->form();
+        $client->submit($form, [
+            'invoice_edit_form' => [
+                'status' => Invoice::STATUS_PAID,
+                'paymentDate' => (new \DateTime())->format(self::DEFAULT_DATE_FORMAT),
+            ]
+        ]);
+        $this->assertIsRedirect($client, '/invoice/show');
+
+        self::assertCount(3, $events);
+        self::assertInstanceOf(InvoiceUpdatePreEvent::class, $events[0]);
+        self::assertInstanceOf(InvoiceUpdatePostEvent::class, $events[1]);
+        $event = $events[2];
+        self::assertInstanceOf(InvoiceStatusChangedEvent::class, $event);
+        self::assertEquals($invoiceId, $event->getInvoice()->getId());
+        self::assertEquals(Invoice::STATUS_PENDING, $event->getStatusBefore());
+        self::assertEquals(Invoice::STATUS_PAID, $event->getInvoice()->getStatus());
+    }
+
+    public function testEditActionWithoutStatusChangeDoesNotDispatchStatusChangedEvent(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        // the event listeners have to survive the second request
+        self::assertInstanceOf(KernelBrowser::class, $client);
+        $client->disableReboot();
+
+        $fixture = new InvoiceFixtures();
+        $fixture->setAmount(1);
+        $fixture->setStatus([Invoice::STATUS_PENDING]);
+        $invoiceId = $this->importFixture($fixture)[0]->getId();
+
+        $this->request($client, '/invoice/edit/' . $invoiceId);
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $events = $this->recordInvoiceEvents();
+
+        $form = $client->getCrawler()->filter('form[name=invoice_edit_form]')->form();
+        $client->submit($form, [
+            'invoice_edit_form' => [
+                'comment' => 'foo bar',
+            ]
+        ]);
+        $this->assertIsRedirect($client, '/invoice/show');
+
+        self::assertCount(2, $events);
+        self::assertInstanceOf(InvoiceUpdatePreEvent::class, $events[0]);
+        self::assertInstanceOf(InvoiceUpdatePostEvent::class, $events[1]);
+    }
+
+    /**
+     * The invoice listing must not render the status token into any URL, as URLs end up
+     * in access logs, proxy logs, the browser history and referrer headers.
+     */
+    public function testInvoiceActionUrlsDoNotContainTheStatusToken(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $em = $this->getEntityManager();
+        $role = (new Role())->setName(User::ROLE_SUPER_ADMIN);
+        $em->persist($role);
+        $em->flush();
+
+        $permissionService = self::getContainer()->get(PermissionService::class);
+        self::assertInstanceOf(PermissionService::class, $permissionService);
+        $permissionService->saveRolePermission(
+            (new RolePermission())->setRole($role)->setPermission('delete_invoice')->setAllowed(true)
+        );
+
+        $fixture = new InvoiceFixtures();
+        $fixture->setAmount(1);
+        $fixture->setStatus([Invoice::STATUS_NEW]);
+        $invoice = $this->importFixture($fixture)[0];
+
+        $this->request($client, '/invoice/show');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $token = $client->getCrawler()->filter('div#status-token')->attr('data-value');
+        self::assertIsString($token);
+        self::assertNotEmpty($token);
+
+        $urls = $client->getCrawler()->filter('a')->each(fn ($node) => $node->attr('href'));
+        foreach ($urls as $url) {
+            if ($url === null) {
+                continue;
+            }
+            self::assertStringNotContainsString($token, $url);
+            self::assertStringNotContainsString('/change-status/', $url);
+        }
+
+        // deleting goes through the API, which does not need a CSRF token at all
+        $delete = $client->getCrawler()->filter('a.api-link[data-method=DELETE]');
+        self::assertEquals(1, $delete->count());
+        self::assertEquals('/api/invoices/' . $invoice->getId(), $delete->attr('href'));
+    }
+
+    /**
+     * The "mark as paid" action only renders the edit form, so it may stay a GET route.
+     */
+    public function testMarkPaidActionRendersForm(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $fixture = new InvoiceFixtures();
+        $fixture->setAmount(1);
+        $fixture->setStatus([Invoice::STATUS_PENDING]);
+        $invoice = $this->importFixture($fixture)[0];
+
+        $this->request($client, '/invoice/mark-paid/' . $invoice->getId());
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $node = $client->getCrawler()->filter('form[name=invoice_edit_form]');
+        self::assertEquals(1, $node->count());
     }
 
     public function testEditTemplateAction(): void
@@ -406,7 +735,7 @@ class InvoiceControllerTest extends ControllerBaseTest
             'invoice_template_form' => [
                 'name' => 'Test 2!',
                 'title' => 'Test invoice template',
-                'company' => 'Company name',
+                'customer' => 1,
                 'renderer' => 'default',
                 'calculator' => 'default',
             ]
@@ -414,11 +743,14 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/invoice/template'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasFlashSuccess($client);
     }
 
+    /**
+     * Deleting a template is an API call, the listing only renders the target URL.
+     */
     public function testDeleteTemplateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -428,17 +760,16 @@ class InvoiceControllerTest extends ControllerBaseTest
         $id = $template[0]->getId();
 
         $this->request($client, '/invoice/template');
-        $url = $this->createUrl('/invoice/template/' . $id . '/delete/');
-        $links = $client->getCrawler()->filterXPath("//a[starts-with(@href, '" . $url . "')]");
+        $url = '/api/invoices/templates/' . $id;
+        $links = $client->getCrawler()->filterXPath("//a[@href='" . $url . "']");
+        self::assertEquals(1, $links->count(), 'Could not find the delete link');
+        self::assertEquals('DELETE', $links->attr('data-method'));
 
-        $this->requestPure($client, $links->attr('href'));
-        $this->assertIsRedirect($client, '/invoice/template');
-        $client->followRedirect();
+        $client->request('DELETE', $url);
+        self::assertEquals(204, $client->getResponse()->getStatusCode());
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertHasFlashSuccess($client);
-
-        $this->assertEquals(0, $this->getEntityManager()->getRepository(InvoiceTemplate::class)->count([]));
+        $this->getEntityManager()->clear();
+        self::assertEquals(0, $this->getEntityManager()->getRepository(InvoiceTemplate::class)->count([]));
     }
 
     public function testUploadDocumentAction(): void
@@ -449,7 +780,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->request($client, '/invoice/document_upload');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $node = $client->getCrawler()->filter('form[name=invoice_document_upload_form]');
         self::assertEquals(1, $node->count(), 'Could not find upload form');

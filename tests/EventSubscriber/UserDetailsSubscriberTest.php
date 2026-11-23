@@ -11,18 +11,18 @@ namespace App\Tests\EventSubscriber;
 
 use App\EventSubscriber\UserDetailsSubscriber;
 use KevinPapst\TablerBundle\Event\UserDetailsEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\EventSubscriber\UserDetailsSubscriber
- */
+#[CoversClass(UserDetailsSubscriber::class)]
 class UserDetailsSubscriberTest extends TestCase
 {
     public function testGetSubscribedEvents(): void
     {
         $events = UserDetailsSubscriber::getSubscribedEvents();
-        $this->assertArrayHasKey(UserDetailsEvent::class, $events);
+        self::assertArrayHasKey(UserDetailsEvent::class, $events);
         $methodName = $events[UserDetailsEvent::class][0];
-        $this->assertTrue(method_exists(UserDetailsSubscriber::class, $methodName));
+        self::assertIsString($methodName);
+        self::assertTrue(method_exists(UserDetailsSubscriber::class, $methodName));
     }
 }

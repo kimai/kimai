@@ -13,11 +13,10 @@ use App\Entity\User;
 use App\Event\PageActionsEvent;
 use App\EventSubscriber\Actions\InvoiceDocumentSubscriber;
 use App\Model\InvoiceDocument;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\EventSubscriber\Actions\InvoiceDocumentSubscriber
- */
-class InvoiceDocumentSubscriberTest extends AbstractActionsSubscriberTest
+#[CoversClass(InvoiceDocumentSubscriber::class)]
+class InvoiceDocumentSubscriberTest extends AbstractActionsSubscriberTestCase
 {
     public function testEventName(): void
     {
@@ -34,6 +33,6 @@ class InvoiceDocumentSubscriberTest extends AbstractActionsSubscriberTest
         $actions = $event->getActions();
         self::assertGreaterThanOrEqual(1, \count($actions));
         self::assertArrayHasKey('trash', $actions);
-        self::assertEquals('invoice_document_delete', $actions['trash']['url']);
+        self::assertEquals('delete_invoice_document', $actions['trash']['url']);
     }
 }

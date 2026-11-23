@@ -16,15 +16,16 @@ use App\Entity\User;
 use App\Model\QuickEntryModel as QuickEntryModelEntity;
 use App\Validator\Constraints\QuickEntryModel;
 use App\Validator\Constraints\QuickEntryModelValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\QuickEntryModel
- * @covers \App\Validator\Constraints\QuickEntryModelValidator
  * @extends ConstraintValidatorTestCase<QuickEntryModelValidator>
  */
+#[CoversClass(\App\Validator\Constraints\QuickEntryModel::class)]
+#[CoversClass(QuickEntryModelValidator::class)]
 class QuickEntryModelValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): QuickEntryModelValidator

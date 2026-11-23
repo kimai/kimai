@@ -18,9 +18,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
-/**
- * @internal
- */
 final class TimesheetResult
 {
     private ?TimesheetResultStatistic $statisticCache = null;
@@ -45,23 +42,18 @@ final class TimesheetResult
     public function getStatistic(): TimesheetResultStatistic
     {
         if ($this->statisticCache === null) {
-            $withDuration = $this->timesheetQuery->countFilter() > 0;
             $qb = clone $this->statisticQb;
             $qb
                 ->resetDQLPart('select')
                 ->resetDQLPart('orderBy')
                 ->select('COUNT(t.id) as counter')
+                ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
             ;
-
-            if ($withDuration) {
-                $qb->addSelect('COALESCE(SUM(t.duration), 0) as duration');
-            }
 
             /** @var array{'duration': int<0, max>, 'counter': int<0, max>} $result */
             $result = $qb->getQuery()->getArrayResult()[0];
-            $duration = $withDuration ? $result['duration'] : 0;
 
-            $this->statisticCache = new TimesheetResultStatistic($result['counter'], $duration);
+            $this->statisticCache = new TimesheetResultStatistic($result['counter'], $result['duration']);
         }
 
         return $this->statisticCache;
@@ -84,7 +76,7 @@ final class TimesheetResult
             /** @var array<Timesheet> $results */
             $results = $this->query->getResult();
 
-            $loader = new TimesheetLoader($this->entityManager, true);
+            $loader = new TimesheetLoader($this->entityManager, $this->timesheetQuery);
             $loader->loadResults($results);
 
             $this->resultCache = $results;
@@ -93,9 +85,12 @@ final class TimesheetResult
         return $this->resultCache;
     }
 
+    /**
+     * @return Pagination<Timesheet>
+     */
     public function getPagerfanta(): Pagination
     {
-        $loader = new LoaderQueryPaginator(new TimesheetLoader($this->entityManager), $this->query, $this->getStatistic()->getCount());
+        $loader = new LoaderQueryPaginator(new TimesheetLoader($this->entityManager, $this->timesheetQuery), $this->query, $this->getStatistic()->getCount());
 
         $paginator = new Pagination($loader);
         $paginator->setMaxPerPage($this->timesheetQuery->getPageSize());

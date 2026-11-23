@@ -12,11 +12,10 @@ namespace App\Tests\Calendar;
 use App\Calendar\RecentActivitiesSource;
 use App\Calendar\TimesheetEntry;
 use App\Entity\Timesheet;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Calendar\RecentActivitiesSource
- */
+#[CoversClass(RecentActivitiesSource::class)]
 class RecentActivitiesSourceTest extends TestCase
 {
     public function testConstruct(): void
@@ -25,12 +24,12 @@ class RecentActivitiesSourceTest extends TestCase
 
         $sut = new RecentActivitiesSource($entries);
 
-        $this->assertEquals('calendar/drag-drop.html.twig', $sut->getBlockInclude());
-        $this->assertSame($entries, $sut->getEntries());
-        $this->assertEquals('POST', $sut->getMethod());
-        $this->assertEquals('post_timesheet', $sut->getRoute());
-        $this->assertEquals(['full' => 'true'], $sut->getRouteParams());
-        $this->assertEquals([], $sut->getRouteReplacer());
-        $this->assertEquals('recent.activities', $sut->getTitle());
+        self::assertEquals('calendar/drag-drop.html.twig', $sut->getBlockInclude());
+        self::assertSame($entries, $sut->getEntries());
+        self::assertEquals('POST', $sut->getMethod());
+        self::assertEquals('post_timesheet', $sut->getRoute());
+        self::assertEquals(['full' => 'true'], $sut->getRouteParams());
+        self::assertEquals([], $sut->getRouteReplacer());
+        self::assertEquals('recent.activities', $sut->getTitle());
     }
 }

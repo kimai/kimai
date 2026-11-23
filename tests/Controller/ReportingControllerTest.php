@@ -10,11 +10,10 @@
 namespace App\Tests\Controller;
 
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
-class ReportingControllerTest extends ControllerBaseTest
+#[Group('integration')]
+class ReportingControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {
@@ -26,7 +25,7 @@ class ReportingControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/reporting/');
         $nodes = $client->getCrawler()->filter('section.content div.row-cards a.card-link');
-        $this->assertCount(11, $nodes);
+        self::assertCount(11, $nodes);
     }
 
     public function testAllReports(): void
@@ -34,7 +33,7 @@ class ReportingControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->request($client, '/reporting/');
         $nodes = $client->getCrawler()->filter('section.content div.row-cards a.card-link');
-        $this->assertCount(11, $nodes);
+        self::assertCount(11, $nodes);
         foreach ($nodes as $node) {
             self::assertNotNull($node->attributes);
             $link = $node->attributes->getNamedItem('href');
@@ -52,6 +51,6 @@ class ReportingControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->request($client, '/reporting/');
         $nodes = $client->getCrawler()->filter('section.content div.row-cards a.card-link');
-        $this->assertCount(3, $nodes);
+        self::assertCount(3, $nodes);
     }
 }

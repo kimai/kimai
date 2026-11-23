@@ -20,7 +20,7 @@ final class Plugin
     public function getMetadata(): PluginMetadata
     {
         if ($this->metadata === null) {
-            $this->metadata = new PluginMetadata($this->getPath());
+            $this->metadata = PluginMetadata::createFromPath($this->getPath());
         }
 
         return $this->metadata;
@@ -33,12 +33,7 @@ final class Plugin
 
     public function getName(): string
     {
-        $meta = $this->getMetadata();
-        if ($meta->getName() !== null) {
-            return $meta->getName();
-        }
-
-        return $this->getId();
+        return $this->getMetadata()->getName();
     }
 
     public function getId(): string

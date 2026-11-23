@@ -26,7 +26,7 @@ abstract class AbstractUserCommand extends Command
 
         $passwordQuestion = new Question('Please enter the password: ');
         $passwordQuestion->setHidden(true);
-        $passwordQuestion->setHiddenFallback(false);
+        $passwordQuestion->setHiddenFallback(true);
         $passwordQuestion->setValidator(function (?string $value) {
             $password = trim($value);
             if (empty($password)) {

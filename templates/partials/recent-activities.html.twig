@@ -1,7 +1,19 @@
 {% if is_granted('start_own_timesheet') %}
     <div class="nav-item d-flex me-1 recent-activities">
-        <a href="{{ path('favorites_timesheets') }}" class="btn btn-icon px-0 remote-modal-load recent-activities-btn" data-modal-title="{{ 'recent.activities'|trans }}" tabindex="-1" title="{{ 'recent.activities'|trans }}">
+        <a href="{{ path('favorites_timesheets') }}" class="btn btn-icon px-0 remote-modal-load recent-activities-btn" data-modal-class="p-0" data-modal-title="{{ 'recent.activities'|trans }}" tabindex="-1" title="{{ 'recent.activities'|trans }}">
             {{ icon('repeat', true) }}
         </a>
     </div>
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            // the favorite buttons live inside the modal and change the list they are rendered in,
+            // so the modal content is re-fetched after the API call succeeded
+            document.addEventListener('kimai.favoriteUpdate', function() {
+                const button = document.querySelector('a.recent-activities-btn');
+                if (button !== null) {
+                    button.click();
+                }
+            });
+        });
+    </script>
 {% endif %}

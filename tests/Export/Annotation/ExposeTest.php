@@ -10,11 +10,10 @@
 namespace App\Tests\Export\Annotation;
 
 use App\Export\Annotation\Expose;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Export\Annotation\Expose
- */
+#[CoversClass(Expose::class)]
 class ExposeTest extends TestCase
 {
     public function testConstruct(): void

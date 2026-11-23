@@ -18,6 +18,10 @@
         <source>Available plugins</source>
         <target state="translated">תוספים זמינים</target>
       </trans-unit>
+      <trans-unit id="aNvGEaj" resname="update_available" xml:space="preserve" approved="yes">
+        <source>Update available</source>
+        <target state="final">יש עדכון: %version%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

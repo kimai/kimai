@@ -33,6 +33,7 @@ final class ActivityVoter extends Voter
         'time',
         'delete',
         'permissions',
+        'access',
     ];
 
     public function __construct(private readonly RolePermissionManager $permissionManager)
@@ -62,6 +63,12 @@ final class ActivityVoter extends Voter
             return false;
         }
 
+        // this is a virtual permission, only meant to be used by developer
+        // it checks if access to the given activity is potentially possible
+        if ($attribute === 'access') {
+            return $this->permissionManager->checkTeamAccessActivity($subject, $user);
+        }
+
         if ($this->permissionManager->hasRolePermission($user, $attribute . '_activity')) {
             return true;
         }
@@ -75,6 +82,12 @@ final class ActivityVoter extends Voter
         $hasTeamPermission = $this->permissionManager->hasRolePermission($user, $attribute . '_team_activity');
 
         if (!$hasTeamleadPermission && !$hasTeamPermission) {
+            return false;
+        }
+
+        // a team assignment on any level (customer, project or activity) must be
+        // fulfilled, before a team based permission can be granted
+        if (!$this->permissionManager->checkTeamAccessActivity($subject, $user)) {
             return false;
         }
 

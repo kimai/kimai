@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ta" datatype="plaintext" original="wizard.en.xlf">
+    <body>
+      <trans-unit id="9XidDHG" resname="wizard.intro.title" xml:space="preserve" approved="yes">
+        <source>wizard.intro.title</source>
+        <target state="final">கிமாய்க்கு வருக</target>
+      </trans-unit>
+      <trans-unit id="X0ws5mu" resname="wizard.intro.description" xml:space="preserve" approved="yes">
+        <source>wizard.intro.description</source>
+        <target state="final">உங்கள் தேவைகளுக்குக் கிமாயைத் தனிப்பயனாக்க இந்த வழிகாட்டி உதவும்.</target>
+      </trans-unit>
+      <trans-unit id="FCMK0ph" resname="wizard.separator" xml:space="preserve" approved="yes">
+        <source>wizard.separator</source>
+        <target state="final">உங்கள் அமைப்புகள்</target>
+      </trans-unit>
+      <trans-unit id="8_e6ApF" resname="wizard.profile.title" xml:space="preserve" approved="yes">
+        <source>wizard.profile.title</source>
+        <target state="final">தன் விவரக்குறிப்பு</target>
+      </trans-unit>
+      <trans-unit id="Mo1506M" resname="wizard.profile.description" xml:space="preserve" approved="yes">
+        <source>wizard.profile.description</source>
+        <target state="final">கிமாயுடன் உங்கள் வேலையை எளிதாக்க சில அடிப்படை அமைப்புகள்.</target>
+      </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title" xml:space="preserve" approved="yes">
+        <source>wizard.password.title</source>
+        <target state="final">உங்கள் கடவுச்சொல்</target>
+      </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description" xml:space="preserve" approved="yes">
+        <source>wizard.password.description</source>
+        <target state="final">தயவுசெய்து உங்கள் புதிய கடவுச்சொல்லை உள்ளிடவும், இது இனிமேல் உள்நுழைய பயன்படுத்தப்படும்.</target>
+      </trans-unit>
+      <trans-unit id="8p.2pXa" resname="wizard.done.title" xml:space="preserve" approved="yes">
+        <source>wizard.done.title</source>
+        <target state="final">வாழ்த்துகள்</target>
+      </trans-unit>
+      <trans-unit id="k1SzMuI" resname="wizard.done.description" xml:space="preserve" approved="yes">
+        <source>wizard.done.description</source>
+        <target state="final">மிக முக்கியமான அமைப்புகள் இப்போது முடிந்தது. உங்கள் பயனர் தன்விவரக்குறிப்பில் பின்னர் தனிப்பயனாக்க இன்னும் பல உள்ளன.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

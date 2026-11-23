@@ -22,6 +22,10 @@
         <source>help.upload</source>
         <target>Atentu: ekzistantaj dosieroj estos anstataŭigitaj. Permesitaj tipoj de dosieroj estas: %extensions%.</target>
       </trans-unit>
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve" approved="no">
+        <source>Invoice</source>
+        <target state="translated">Fakturo</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

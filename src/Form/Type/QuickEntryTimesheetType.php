@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class QuickEntryTimesheetType extends AbstractType
 {
-    public function __construct(private Security $security)
+    public function __construct(private readonly Security $security)
     {
     }
 
@@ -33,6 +33,7 @@ final class QuickEntryTimesheetType extends AbstractType
                 'placeholder' => '0:00',
             ],
             'icon' => null,
+            'parse_mode' => DurationType::PARSE_MODE_INTEGER_MINUTES,
         ];
 
         $duration = $options['duration_minutes'];
@@ -53,15 +54,50 @@ final class QuickEntryTimesheetType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
-            function (FormEvent $event) use ($durationOptions) {
+            function (FormEvent $event) use ($durationOptions): void {
                 /** @var Timesheet|null $data */
                 $data = $event->getData();
                 if (null === $data || $data->isRunning()) {
                     $event->getForm()->get('duration')->setData(null);
                 }
 
-                if (null !== $data && !$this->security->isGranted('edit', $data)) {
+                $isNew = true;
+                $disable = false;
+
+                // let's disable certain fields, to prevent validation issues
+                if ($data instanceof Timesheet) {
+                    // do not allow editing of certain fields
+                    if (!$this->security->isGranted('edit', $data)) {
+                        $disable = true;
+                    }
+                    // prevent adding values to empty cells, if the user cannot create timesheets
+                    if ($data->getId() === null && !$this->security->isGranted('create', $data)) {
+                        $disable = true;
+                    }
+
+                    $isNew = $data->getId() === null;
+                }
+
+                if ($disable) {
+                    // do not call $event->getForm()->remove() this would change the field order
                     $event->getForm()->add('duration', DurationType::class, array_merge(['disabled' => true], $durationOptions));
+
+                    $mainForm = $event->getForm()->getParent()?->getParent();
+                    if ($mainForm === null) {
+                        return;
+                    }
+
+                    foreach($mainForm->all() as $key => $child) {
+                        if ($key === 'timesheets') {
+                            continue;
+                        }
+                        if ($child->isDisabled() || $isNew) {
+                            continue;
+                        }
+                        $type = \get_class($child->getConfig()->getType()->getInnerType());
+                        // do not call $mainForm->remove() this would change the field order
+                        $mainForm->add($key, $type, array_merge($child->getConfig()->getOptions(), ['disabled' => true]));
+                    }
                 }
             }
         );
@@ -69,12 +105,13 @@ final class QuickEntryTimesheetType extends AbstractType
         // make sure that duration is mapped back to end field
         $builder->addEventListener(
             FormEvents::SUBMIT,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 /** @var Timesheet $data */
                 $data = $event->getData();
                 $duration = $data->getDuration(false);
                 try {
                     if (null !== $duration) {
+                        $duration += $data->getBreak();
                         $end = clone $data->getBegin();
                         $end->modify('+ ' . abs($duration) . ' seconds');
                         $data->setEnd($end);

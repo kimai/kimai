@@ -10,11 +10,10 @@
 namespace App\Tests\Controller;
 
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
-class WidgetControllerTest extends ControllerBaseTest
+#[Group('integration')]
+class WidgetControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {

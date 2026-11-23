@@ -14,7 +14,7 @@ use App\User\UserService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'kimai:user:demote')]
+#[AsCommand(name: 'kimai:user:demote', description: 'Demote a user by removing a role')]
 final class DemoteUserCommand extends AbstractRoleCommand
 {
     protected function configure(): void
@@ -22,7 +22,6 @@ final class DemoteUserCommand extends AbstractRoleCommand
         parent::configure();
 
         $this
-            ->setDescription('Demote a user by removing a role')
             ->setHelp(
                 <<<'EOT'
                     The <info>kimai:user:demote</info> command demotes a user by removing a role

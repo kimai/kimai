@@ -4,7 +4,7 @@
 {% block main %}
     {% set can_edit = is_granted('edit', customer) %}
 
-    {% embed '@theme/embeds/card.html.twig' %}
+    {% embed '@theme/embeds/card.html.twig' with {fullsize: true}  %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_attributes %}id="customer_details_box"{% endblock %}
         {% block box_title %}
@@ -13,10 +13,9 @@
         {% endblock %}
         {% block box_tools %}
             {% if can_edit %}
-                {{ widgets.card_tool_button('edit', {'class': 'modal-ajax-form open-edit', 'title': 'action.edit', 'url': path('admin_customer_edit', {'id': customer.id})}) }}
+                {{ widgets.card_tool_button('edit', {'class': 'modal-ajax-form open-edit', 'title': 'edit', 'url': path('admin_customer_edit', {'id': customer.id})}) }}
             {% endif %}
         {% endblock %}
-        {% block box_body_class %}p-0{% endblock %}
         {% block box_body %}
             {% if customer.comment is not empty %}
                 <div class="comment p-3">
@@ -38,10 +37,31 @@
                         </td>
                     </tr>
                 {% endif %}
+                {% if customer.addressLine1 is not empty %}
+                    <tr>
+                        <th>{{ 'address'|trans }}</th>
+                        <td>
+                            {{ customer.addressLine1 }}<br>
+                            {% if customer.addressLine2 is not empty %}
+                                {{ customer.addressLine2 }}<br>
+                            {% endif %}
+                            {% if customer.addressLine3 is not empty %}
+                                {{ customer.addressLine3 }}<br>
+                            {% endif %}
+                            {{ customer.postCode }} {{ customer.city }}
+                        </td>
+                    </tr>
+                {% endif %}
                 {% if customer.address is not empty %}
                     <tr>
                         <th>{{ 'address'|trans }}</th>
-                        <td>{{ customer.address|nl2br }}</td>
+                        <td>
+                            {{ widgets.alert('info', 'address_deprecated'|trans) }}
+                            <br>
+                            <i>
+                            {{ customer.address|nl2br }}
+                            </i>
+                        </td>
                     </tr>
                 {% endif %}
                 {% if customer.country is not empty %}
@@ -92,6 +112,12 @@
                         <td>{{ customer_now|date_time }} ({{ customer.timezone }})</td>
                     </tr>
                 {% endif %}
+                {% if customer.language is not empty %}
+                    <tr>
+                        <th>{{ 'language'|trans }}</th>
+                        <td>{{ customer.language|locale_name }}</td>
+                    </tr>
+                {% endif %}
                 {% if customer.currency is not empty %}
                     <tr>
                         <th>{{ 'currency'|trans }}</th>
@@ -109,6 +135,12 @@
                         <tr>
                             <th>{{ 'vat_id'|trans }}</th>
                             <td>{{ customer.vatId }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if customer.invoiceEmail is not empty %}
+                        <tr>
+                            <th>{{ 'invoice_email'|trans }}</th>
+                            <td><a href="mailto:{{ customer.invoiceEmail }}">{{ customer.invoiceEmail }}</a></td>
                         </tr>
                     {% endif %}
                 {% endif %}
@@ -137,9 +169,12 @@
     {% endfor %}
 
     {% if teams is not null %}
-        {% set options = {'teams': teams, 'team': team} %}
+        {% set options = {'teams': teams} %}
         {% if is_granted('permissions', customer) %}
-            {% set options = options|merge({'route_create': path('customer_team_create', {'id': customer.id}), 'route_edit': path('admin_customer_permissions', {'id': customer.id})}) %}
+            {% if is_granted('create_team') %}
+                {% set options = options|merge({'route_create': path('customer_team_create', {'id': customer.id})}) %}
+            {% endif %}
+            {% set options = options|merge({'route_edit': path('admin_customer_permissions', {'id': customer.id})}) %}
         {% endif %}
         {{ include('embeds/teams.html.twig', options) }}
     {% endif %}
@@ -147,7 +182,7 @@
     {% if comments is not null %}
         {% set options = {'form': commentForm, 'comments': comments} %}
         {% if can_edit %}
-            {% set options = options|merge({'route_pin': 'customer_comment_pin', 'route_delete': 'customer_comment_delete'}) %}
+            {% set options = options|merge({'route_pin': 'toggle_customer_comment_pin', 'route_api_options': {'id': customer.id}, 'route_delete': 'delete_customer_comment'}) %}
         {% endif %}
         {{ include('embeds/comments.html.twig', options) }}
     {% endif %}
@@ -158,7 +193,7 @@
     {{ parent() }}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function() {
-            KimaiReloadPageWidget.create('kimai.customerTeamUpdate kimai.customerUpdate kimai.teamUpdate kimai.projectTeamUpdate kimai.rateUpdate');
+            KimaiReloadPageWidget.create('kimai.commentUpdate kimai.customerTeamUpdate kimai.customerUpdate kimai.teamUpdate kimai.projectTeamUpdate kimai.rateUpdate');
         });
     </script>
 {% endblock %}

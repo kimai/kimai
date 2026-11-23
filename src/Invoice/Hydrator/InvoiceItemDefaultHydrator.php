@@ -15,7 +15,7 @@ use App\Invoice\InvoiceModel;
 
 final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
 {
-    private const DATE_PROCESS_FORMAT = 'Y-m-d h:i:s';
+    private const DATE_PROCESS_FORMAT = 'Y-m-d H:i:s';
 
     private InvoiceModel $model;
 
@@ -29,7 +29,7 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
         $formatter = $this->model->getFormatter();
 
         $rate = $item->getRate();
-        $internalRate = $item->getInternalRate();
+        $internalRate = $item->getInternalRate(); // @phpstan-ignore method.deprecated
         $appliedRate = $item->getHourlyRate();
         $amount = $formatter->getFormattedDecimalDuration($item->getDuration());
         $description = $item->getDescription();
@@ -63,9 +63,10 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
             'entry.rate' => $formatter->getFormattedMoney($appliedRate, $currency),
             'entry.rate_nc' => $formatter->getFormattedMoney($appliedRate, $currency, false),
             'entry.rate_plain' => $appliedRate,
-            'entry.rate_internal' => $formatter->getFormattedMoney($internalRate, $currency),
-            'entry.rate_internal_nc' => $formatter->getFormattedMoney($internalRate, $currency, false),
-            'entry.rate_internal_plain' => $internalRate,
+            'entry.rate_internal' => $formatter->getFormattedMoney($internalRate, $currency), // @deprecated since 2.41
+            'entry.rate_internal_nc' => $formatter->getFormattedMoney($internalRate, $currency, false),  // @deprecated since 2.41
+            'entry.rate_internal_plain' => $internalRate,  // @deprecated since 2.41
+            'entry.rate_fixed' => ($item->isFixedRate() ? $item->getFixedRate() : null),
             'entry.total' => $formatter->getFormattedMoney($rate, $currency),
             'entry.total_nc' => $formatter->getFormattedMoney($rate, $currency, false),
             'entry.total_plain' => $rate,
@@ -74,6 +75,8 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
             'entry.duration_format' => $formatter->getFormattedDuration($item->getDuration()),
             'entry.duration_decimal' => $formatter->getFormattedDecimalDuration($item->getDuration()),
             'entry.duration_minutes' => (int) ($item->getDuration() / 60),
+            // prepare optional field with empty string
+            'entry.activity' => '',
         ];
 
         if ($begin !== null) {
@@ -99,6 +102,7 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
                 'entry.user_title' => $user->getTitle() ?? '',
                 'entry.user_alias' => $user->getAlias() ?? '',
                 'entry.user_display' => $user->getDisplayName(),
+                'entry.user_account' => $user->getAccountNumber() ?? '',
             ]);
 
             foreach ($user->getVisiblePreferences() as $pref) {
@@ -132,6 +136,7 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
             }
         }
 
+        // @deprecated since 2.59.0 - invoices have one global customer - removed from the docs 2026-05-27
         if (null !== $customer) {
             $values = array_merge($values, [
                 'entry.customer' => $customer->getName(),

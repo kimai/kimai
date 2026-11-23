@@ -9,9 +9,9 @@
 
 namespace App\Event;
 
-/**
- * Triggered for user instances which were just deleted.
- */
+use App\Webhook\Attribute\AsWebhook;
+
+#[AsWebhook(name: 'user.deleted', description: 'Triggered after a user was deleted', payload: 'object.getUser()')]
 final class UserDeletePostEvent extends UserDeleteEvent
 {
 }

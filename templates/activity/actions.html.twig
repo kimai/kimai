@@ -1,4 +1,4 @@
-{% macro activity(activity, view, isTable) %}
+{% macro activity(activity, view, isTable = null) %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% set event = actions(app.user, 'activity', view, {'activity': activity}) %}
     {% if view == 'index' or view == 'custom' or isTable is not null %}

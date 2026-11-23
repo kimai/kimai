@@ -62,11 +62,7 @@ final class UserVoter extends Voter
     {
         $user = $token->getUser();
 
-        if (!($user instanceof User)) {
-            return false;
-        }
-
-        if (!($subject instanceof User)) {
+        if (!($user instanceof User) || !($subject instanceof User)) {
             return false;
         }
 
@@ -75,7 +71,7 @@ final class UserVoter extends Voter
         }
 
         if ($attribute === 'access_user') {
-            return $user->canSeeUser($subject);
+            return $this->permissionManager->checkUserAccess($subject, $user);
         }
 
         if ($attribute === 'view_team_member') {
@@ -109,17 +105,39 @@ final class UserVoter extends Voter
             return $user->isSuperAdmin();
         }
 
-        $permission = $attribute;
-
-        // extend me for "team" support later on
-        if ($subject->getId() === $user->getId()) {
-            $permission .= '_own';
-        } else {
-            $permission .= '_other';
+        // a user must not edit the roles of someone who holds a role they are not allowed to assign
+        // themselves - otherwise a lower-privileged user could strip a higher role from the subject
+        if ($attribute === 'roles' && !$this->canManageAllRolesOf($subject, $user)) {
+            return false;
         }
 
-        $permission .= '_profile';
+        $permission = $attribute;
 
-        return $this->permissionManager->hasRolePermission($user, $permission);
+        if ($subject->getId() === $user->getId()) {
+            return $this->permissionManager->hasRolePermission($user, $permission . '_own_profile');
+        }
+
+        if (!$this->permissionManager->hasRolePermission($user, $permission . '_other_profile')) {
+            return false;
+        }
+
+        return $this->permissionManager->checkUserAccess($subject, $user, false);
+    }
+
+    /**
+     * Whether $user is allowed to assign every role the $subject currently holds.
+     *
+     * Uses the same role hierarchy as the assignable roles offered by
+     * {@see \App\Form\Type\UserRoleType} via {@see User::canAssignRole()}.
+     */
+    private function canManageAllRolesOf(User $subject, User $user): bool
+    {
+        foreach ($subject->getRoles() as $role) {
+            if (!$user->canAssignRole($role)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

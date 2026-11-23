@@ -130,9 +130,9 @@
         <source>confirm</source>
         <target state="translated">ਪੁਸ਼ਟੀ ਕਰੋ</target>
       </trans-unit>
-      <trans-unit id="JBkykGe" resname="search">
+      <trans-unit id="JBkykGe" resname="search" xml:space="preserve">
         <source>search</source>
-        <target state="translated">ਲੱਭਣਾ</target>
+        <target state="translated">ਲੱਭੋ</target>
       </trans-unit>
       <trans-unit id="ACcM9j_" resname="logout">
         <source>logout</source>
@@ -161,10 +161,6 @@
       <trans-unit id="O5w1jzb" resname="file">
         <source>file</source>
         <target state="translated">ਫਾਈਲ</target>
-      </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile">
-        <source>my.profile</source>
-        <target state="translated">ਮੇਰੀ ਪ੍ਰੋਫਾਈਲ</target>
       </trans-unit>
       <trans-unit id="xEuy.VF" resname="comment">
         <source>comment</source>
@@ -210,9 +206,9 @@
         <source>tags</source>
         <target state="translated">ਟੈਗ</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="translated">ਸਮਾਂ ਬਜਟ</target>
+        <target state="needs-translation">ਸਮਾਂ ਬਜਟ</target>
       </trans-unit>
       <trans-unit id="E_bHhGR" resname="hourlyRate">
         <source>hourlyRate</source>
@@ -297,6 +293,18 @@
       <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
         <source>invoice_number_generator.date</source>
         <target state="translated">ਤਾਰੀਖ਼</target>
+      </trans-unit>
+      <trans-unit id="DYHuW58" resname="confirm.delete" xml:space="preserve">
+        <source>confirm.delete</source>
+        <target state="translated">ਕੀ ਤੁਸੀਂ ਸੱਚਮੁੱਚ ਇਸ ਨੂੰ ਮਿਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</target>
+      </trans-unit>
+      <trans-unit id="CiA4s9E" resname="set_as_default" xml:space="preserve">
+        <source>set_as_default</source>
+        <target state="translated">ਸੈਟਿੰਗ ਨੂੰ ਖੋਜ ਪਸੰਦੀਦਾ ਵਜੋਂ ਸੁਰੱਖਿਅਤ ਕਰੋ</target>
+      </trans-unit>
+      <trans-unit id="XP5zkiN" resname="modal.dirty" xml:space="preserve">
+        <source>modal.dirty</source>
+        <target state="translated">ਫਾਰਮ ਬਦਲ ਗਿਆ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਬਦਲਾਵਾਂ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰਨ ਲਈ "ਸੇਵ" 'ਤੇ ਕਲਿੱਕ ਕਰੋ ਜਾਂ ਰੱਦ ਕਰਨ ਲਈ "ਬੰਦ ਕਰੋ" 'ਤੇ ਕਲਿੱਕ ਕਰੋ।</target>
       </trans-unit>
     </body>
   </file>

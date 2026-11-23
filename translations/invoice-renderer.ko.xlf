@@ -34,6 +34,10 @@
         <source>default</source>
         <target>청구서</target>
       </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer" xml:space="preserve">
+        <source>download_invoice_renderer</source>
+        <target state="translated">추가 탬플릿을 이곳에서 다운로드 가능합니다</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

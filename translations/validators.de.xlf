@@ -2,13 +2,13 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="validators.en.xlf">
     <body>
-      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team." xml:space="preserve" approved="yes">
         <source>At least one team leader must be assigned to the team.</source>
-        <target>Dem Team muss mindestens ein Teamleiter zugeordnet werden.</target>
+        <target state="final">Dem Team muss mindestens ein Teamleiter zugeordnet werden.</target>
       </trans-unit>
-      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match.">
+      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match." xml:space="preserve" approved="yes">
         <source>The entered passwords don't match.</source>
-        <target>Die Passwörter stimmen nicht überein.</target>
+        <target state="final">Die Passwörter stimmen nicht überein.</target>
       </trans-unit>
       <trans-unit id="6u6oCwB" resname="The email is already used.">
         <source>The email is already used.</source>
@@ -18,9 +18,9 @@
         <source>The username is already used.</source>
         <target>Dieser Benutzername wird bereits verwendet.</target>
       </trans-unit>
-      <trans-unit id="ekO5eXI" resname="An equal username is already used.">
+      <trans-unit id="ekO5eXI" resname="An equal username is already used." approved="yes">
         <source>An equal username is already used.</source>
-        <target>Eine gleichlautender Benutzername wird bereits verwendet.</target>
+        <target state="final">Ein gleichlautender Benutzername wird bereits verwendet.</target>
       </trans-unit>
       <trans-unit id="INlaCgW" resname="An equal email is already used.">
         <source>An equal email is already used.</source>
@@ -30,8 +30,8 @@
         <source>This value is not a valid role.</source>
         <target>Dieser Wert ist keine gültige Rolle.</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." approved="yes">
-        <source>End date must not be earlier then start date.</source>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." approved="yes" xml:space="preserve">
+        <source>The end date must not be earlier than the start date.</source>
         <target state="final">Das Enddatum darf nicht vor dem Startdatum liegen.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
@@ -53,6 +53,14 @@
       <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date.">
         <source>This period is locked, please choose a later date.</source>
         <target>Dieser Zeitraum ist gesperrt, bitte wählen Sie ein späteres Datum.</target>
+      </trans-unit>
+      <trans-unit id="5vkuQs2" resname="The project is locked until %date%, please choose a later date.">
+        <source>The project is locked until %date%, please choose a later date.</source>
+        <target>Das Projekt ist bis zum %date% gesperrt, bitte wählen Sie ein späteres Datum.</target>
+      </trans-unit>
+      <trans-unit id="vgsD_Cw" resname="The project is locked for the selected times.">
+        <source>The project is locked for the selected times.</source>
+        <target>Das Projekt ist für die ausgewählten Zeiten gesperrt.</target>
       </trans-unit>
       <trans-unit id="u2wjm2i" resname="You already have an entry for this time.">
         <source>You already have an entry for this time.</source>
@@ -94,9 +102,9 @@
         <source>Cannot stop running timesheet</source>
         <target>Sie haben eine aktive Zeitmessung, die nicht automatisch beendet werden kann.</target>
       </trans-unit>
-      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token." xml:space="preserve">
         <source>The given code is not the correct TOTP token.</source>
-        <target>Der übermittelte Code ist nicht der korrekte TOTP Token.</target>
+        <target state="translated">Der übermittelte Code ist nicht der korrekte TOTP-Token.</target>
       </trans-unit>
       <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
         <source>This value is not a valid role name.</source>
@@ -122,9 +130,9 @@
         <source>An absence must have a date.</source>
         <target>Eine Abwesenheit muss ein Datum haben.</target>
       </trans-unit>
-      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day.">
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve" approved="yes">
         <source>An absence cannot be booked before your first working day.</source>
-        <target>Eine Abwesenheit kann nicht vor dem ersten Arbeitstag gebucht werden.</target>
+        <target state="final">Eine Abwesenheit kann nicht vor dem ersten Arbeitstag gebucht werden.</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left.">
         <source>Not enough holidays left.</source>
@@ -150,9 +158,41 @@
         <source>The period of absence must not extend beyond the turn of the year.</source>
         <target>Der Zeitraum der Abwesenheit darf nicht über einen Jahreswechsel hinweg gehen.</target>
       </trans-unit>
-      <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form.">
+      <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve">
         <source>The CSRF token is invalid. Please try to resubmit the form.</source>
-        <target>Bitte senden Sie das Formular erneut ab. Sollte das Problem weiterhin bestehen, laden Sie die bitte die Seite neu.</target>
+        <target state="translated">Bitte senden Sie das Formular erneut ab. Sollte das Problem weiterhin bestehen, laden Sie bitte die Seite neu.</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day.">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target>Eine Abwesenheit kann nicht nach dem letzten Arbeitstag gebucht werden.</target>
+      </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending.">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target>Ausgewählter Zeitraum kann nicht gesperrt werden: unbestätigte Abwesenheitsanträge stehen an.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">Die Dauer darf nicht negativ sein.</target>
+      </trans-unit>
+      <trans-unit id="EDEDQtZ" resname="These characters are not allowed: {{ chars }}">
+        <source>These characters are not allowed: {{ chars }}</source>
+        <target>Die folgenden Zeichen sind nicht erlaubt: {{ chars }}</target>
+      </trans-unit>
+      <trans-unit id="Dp2KT8W" resname="The field {{ field }} is required, please select a value" xml:space="preserve" approved="yes">
+        <source>Please select a value for {{ field }}</source>
+        <target state="final">Bitten wählen Sie einen Wert für {{ field }} aus</target>
+      </trans-unit>
+      <trans-unit id="7hNS8l3" resname="A maximum duration of {{ value }} is allowed." xml:space="preserve" approved="yes">
+        <source>A maximum duration of {{ value }} is allowed.</source>
+        <target state="final">Eine maximale Dauer von {{ value }} ist erlaubt.</target>
+      </trans-unit>
+      <trans-unit id="5Yso.63" resname="The new password must be different from the current password.">
+        <source>The new password must be different from the current password.</source>
+        <target>Das neue Passwort muss sich vom aktuellen Passwort unterscheiden.</target>
+      </trans-unit>
+      <trans-unit id="Y38WSIo" resname="Half days cannot be combined with filling up to the expected working time.">
+        <source>Half days cannot be combined with filling up to the expected working time.</source>
+        <target>Halbe Tage können nicht mit dem Auffüllen auf die Sollstunden kombiniert werden.</target>
       </trans-unit>
     </body>
   </file>

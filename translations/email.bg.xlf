@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="bg" datatype="plaintext" original="email.en.xlf">
+    <body>
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" xml:space="preserve">
+        <source>automated_email_dont_answer</source>
+        <target state="translated">Това е автоматично генериран имейл. Моля, не отговаряйте, адресът няма да бъде прочетен.</target>
+      </trans-unit>
+      <trans-unit id="pjr3FDv" resname="registration.subject" xml:space="preserve">
+        <source>registration.subject</source>
+        <target state="translated">Активирайте акаунта си</target>
+      </trans-unit>
+      <trans-unit id="QtcznHC" resname="registration.title" xml:space="preserve">
+        <source>registration.title</source>
+        <target state="translated">Добре дошъл, %username%</target>
+      </trans-unit>
+      <trans-unit id="YMLel3P" resname="registration.button" xml:space="preserve">
+        <source>registration.button</source>
+        <target state="translated">Активирайте акаунта си</target>
+      </trans-unit>
+      <trans-unit id="IkjnHoP" resname="registration.intro" xml:space="preserve">
+        <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
+        <target state="translated">Регистрирахте се във времето за проследяване на Kimai с имейл адрес %email%. Моля, активирайте акаунта си през следващите няколко часа, преди линкът да изтече.</target>
+      </trans-unit>
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
+        <source>reset.subject</source>
+        <target state="translated">Влезте в Kimai</target>
+      </trans-unit>
+      <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve" approved="no">
+        <source>Forgot your password?</source>
+        <target state="translated">Влезте в профила си</target>
+      </trans-unit>
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
+        <source>reset.button</source>
+        <target state="translated">Вход</target>
+      </trans-unit>
+      <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve" approved="no">
+        <source>Don't worry, Kimai will help you create a new one!</source>
+        <target state="translated">Този линк ще бъде валиден само през следващите 15 минути.</target>
+      </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">Ново отсъствие: %user% (%type%)</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>A new absence was created for %user%.
+
+%list%
+
+Please review them at: %url%</source>
+        <target state="translated">Създадено е ново отсъствие за %user%.
+
+%list%
+
+Моля, прегледайте ги на: %url%</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">Заявено одобрение: %user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">Беше поискано одобрение за %user%.
+
+%list%
+
+Моля, прегледайте ги на: %url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Вашата заявка е отхвърлена</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Вашата заявка за оторизация е отхвърлена от %created_by%.
+
+%list%
+
+Моля, прегледайте заявките си на: %url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Вашата заявка е одобрена</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">Вашата заявка е одобрена от %created_by%.
+
+%list%
+
+Можете да намерите всички ваши запитвания на: %url%</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

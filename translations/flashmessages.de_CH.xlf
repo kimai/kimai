@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="72Ih8zO" resname="action.update.success">
         <source>action.update.success</source>
-        <target state="translated">Gespeicherte Änderungen</target>
+        <target state="translated">Änderungen gespeichert</target>
       </trans-unit>
       <trans-unit id="xeu1LSy" resname="action.update.error">
         <source>action.update.error</source>

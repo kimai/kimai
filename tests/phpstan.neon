@@ -8,146 +8,147 @@ includes:
     - %rootDir%/../phpstan-deprecation-rules/rules.neon
 
 parameters:
+    phpVersion: 80233
     level: 9
     paths:
         - .
     tmpDir: %rootDir%/../../../var/cache/phpstan
+    resultCachePath: %tmpDir%/phpstan-tests.php
     excludePaths:
         - %rootDir%/../../../tests/Ldap/LdapDriverTest.php
     inferPrivatePropertyTypeFromConstructor: true
+    treatPhpDocTypesAsCertain: false
     doctrine:
         objectManagerLoader: %rootDir%/../../../tests/phpstan-doctrine.php
     ignoreErrors:
         - identifier: missingType.iterableValue
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertApiException\\(\\) has parameter \\$expectedErrors with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
+        - message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) with '(.*)' and (.*) will always evaluate to true\\.$#"
+        - message: "#^PHPDoc tag @var with type App\\\\(.*) is not subtype of native type PHPUnit\\\\Framework\\\\MockObject\\\\MockObject\\.$#"
+        - message: '#^Call to deprecated method getApiToken\(\) of class App\\Entity\\User#'
+        - message: '#^Call to deprecated method setApiToken\(\) of class App\\Entity\\User#'
+        - message: '#^Call to deprecated method getPlainApiToken\(\) of class App\\Entity\\User#'
+        - message: '#^Call to deprecated method setPlainApiToken\(\) of class App\\Entity\\User#'
+        - message: '#^Call to deprecated method enableSandbox\(\) of class Twig\\Extension\\SandboxExtension#'
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertApiResponseTypeStructure\\(\\) has parameter \\$result with no value type specified in iterable type array\\.$#"
+            identifier: classConstant.deprecatedClass
             count: 1
-            path: API/APIControllerBaseTest.php
+            path: API/Authentication/TokenAuthenticatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertEntityNotFoundForPatch\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+            identifier: new.deprecatedClass
             count: 1
-            path: API/APIControllerBaseTest.php
+            path: API/Authentication/TokenAuthenticatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertEntityNotFoundForPost\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+            identifier: return.deprecatedClass
             count: 1
-            path: API/APIControllerBaseTest.php
+            path: API/Authentication/TokenAuthenticatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertExceptionForDeleteAction\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
+            identifier: method.deprecatedClass
+            count: 8
+            path: API/Authentication/TokenAuthenticatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertExceptionForDeleteAction\\(\\) has parameter \\$expectedErrors with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:assertApiException\\(\\) has parameter \\$expectedErrors with no value type specified in iterable type array\\.$#"
             count: 1
-            path: API/APIControllerBaseTest.php
+            path: API/APIControllerBaseTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertExceptionForMethod\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:assertApiResponseTypeStructure\\(\\) has parameter \\$result with no value type specified in iterable type array\\.$#"
             count: 1
-            path: API/APIControllerBaseTest.php
+            path: API/APIControllerBaseTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertExceptionForMethod\\(\\) has parameter \\$expectedErrors with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:assertEntityNotFoundForPatch\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
             count: 1
-            path: API/APIControllerBaseTest.php
+            path: API/APIControllerBaseTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertExceptionForPatchAction\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:assertEntityNotFoundForPost\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
             count: 1
-            path: API/APIControllerBaseTest.php
+            path: API/APIControllerBaseTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertExceptionForPatchAction\\(\\) has parameter \\$expectedErrors with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:assertExceptionForDeleteAction\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
             count: 1
-            path: API/APIControllerBaseTest.php
+            path: API/APIControllerBaseTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertExceptionForPostAction\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:assertExceptionForDeleteAction\\(\\) has parameter \\$expectedErrors with no value type specified in iterable type array\\.$#"
             count: 1
-            path: API/APIControllerBaseTest.php
+            path: API/APIControllerBaseTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertExceptionForPostAction\\(\\) has parameter \\$expectedErrors with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:assertExceptionForMethod\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
             count: 1
-            path: API/APIControllerBaseTest.php
+            path: API/APIControllerBaseTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertExceptionForRole\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:assertExceptionForMethod\\(\\) has parameter \\$expectedErrors with no value type specified in iterable type array\\.$#"
             count: 1
-            path: API/APIControllerBaseTest.php
+            path: API/APIControllerBaseTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertExceptionForRole\\(\\) has parameter \\$expectedErrors with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:assertExceptionForPatchAction\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
             count: 1
-            path: API/APIControllerBaseTest.php
+            path: API/APIControllerBaseTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:getExpectedResponseStructure\\(\\) return type has no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:assertExceptionForPatchAction\\(\\) has parameter \\$expectedErrors with no value type specified in iterable type array\\.$#"
             count: 1
-            path: API/APIControllerBaseTest.php
+            path: API/APIControllerBaseTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:request\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:assertExceptionForPostAction\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
             count: 1
-            path: API/APIControllerBaseTest.php
+            path: API/APIControllerBaseTestCase.php
 
         -
-            message: "#^Parameter \\#1 \\$haystack of function stripos expects string, mixed given\\.$#"
+            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:assertExceptionForPostAction\\(\\) has parameter \\$expectedErrors with no value type specified in iterable type array\\.$#"
             count: 1
-            path: API/APIControllerBaseTest.php
+            path: API/APIControllerBaseTestCase.php
+
+        -
+            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:assertExceptionForRole\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+            count: 1
+            path: API/APIControllerBaseTestCase.php
+
+        -
+            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:assertExceptionForRole\\(\\) has parameter \\$expectedErrors with no value type specified in iterable type array\\.$#"
+            count: 1
+            path: API/APIControllerBaseTestCase.php
+
+        -
+            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:getExpectedResponseStructure\\(\\) return type has no value type specified in iterable type array\\.$#"
+            count: 1
+            path: API/APIControllerBaseTestCase.php
+
+        -
+            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:request\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
+            count: 1
+            path: API/APIControllerBaseTestCase.php
 
         -
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
             count: 3
-            path: API/APIControllerBaseTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$key of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertArrayHasKey\\(\\) expects int\\|string, mixed given\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$array of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertArrayHasKey\\(\\) expects array\\|ArrayAccess, mixed given\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
+            path: API/APIControllerBaseTestCase.php
 
         -
             message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
-            count: 2
-            path: API/APIControllerBaseTest.php
+            count: 1
+            path: API/APIControllerBaseTestCase.php
 
         -
-            message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
+            message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
             count: 1
-            path: API/APIControllerBaseTest.php
+            path: API/APIControllerBaseTestCase.php
 
         -
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
             count: 4
             path: API/ActionsControllerTest.php
-
-        -
-            message: "#^Cannot call method addSubscriber\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: API/ActivityControllerTest.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Activity\\|null\\.$#"
-            count: 2
-            path: API/ActivityControllerTest.php
 
         -
             message: "#^Cannot call method getValue\\(\\) on App\\\\Entity\\\\MetaTableTypeInterface\\|null\\.$#"
@@ -165,22 +166,7 @@ parameters:
             path: API/ActivityControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\ActivityControllerTest\\:\\:getRateUrl\\(\\) has parameter \\$id with no type specified\\.$#"
-            count: 1
-            path: API/ActivityControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\ActivityControllerTest\\:\\:getRateUrl\\(\\) has parameter \\$rateId with no type specified\\.$#"
-            count: 1
-            path: API/ActivityControllerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\API\\\\ActivityControllerTest\\:\\:importTestRates\\(\\) has parameter \\$id with no type specified\\.$#"
-            count: 1
-            path: API/ActivityControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\ActivityControllerTest\\:\\:importTestRates\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: API/ActivityControllerTest.php
 
@@ -205,54 +191,9 @@ parameters:
             path: API/ActivityControllerTest.php
 
         -
-            message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
+            message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
             count: 13
             path: API/ActivityControllerTest.php
-
-        -
-            message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
-            count: 3
-            path: API/ApiDocControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'paths' on mixed\\.$#"
-            count: 1
-            path: API/ApiDocControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'spec' on mixed\\.$#"
-            count: 1
-            path: API/ApiDocControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'tags' on mixed\\.$#"
-            count: 1
-            path: API/ApiDocControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-            count: 2
-            path: API/ApiDocControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$array of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertArrayHasKey\\(\\) expects array\\|ArrayAccess, mixed given\\.$#"
-            count: 1
-            path: API/ApiDocControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
-            count: 1
-            path: API/ApiDocControllerTest.php
-
-        -
-            message: "#^Cannot call method addSubscriber\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: API/CustomerControllerTest.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 2
-            path: API/CustomerControllerTest.php
 
         -
             message: "#^Cannot call method getValue\\(\\) on App\\\\Entity\\\\MetaTableTypeInterface\\|null\\.$#"
@@ -270,39 +211,14 @@ parameters:
             path: API/CustomerControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\CustomerControllerTest\\:\\:getRateUrl\\(\\) has parameter \\$id with no type specified\\.$#"
-            count: 1
-            path: API/CustomerControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\CustomerControllerTest\\:\\:getRateUrl\\(\\) has parameter \\$rateId with no type specified\\.$#"
-            count: 1
-            path: API/CustomerControllerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\API\\\\CustomerControllerTest\\:\\:importTestRates\\(\\) has parameter \\$id with no type specified\\.$#"
             count: 1
             path: API/CustomerControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\CustomerControllerTest\\:\\:importTestRates\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: API/CustomerControllerTest.php
-
-        -
-            message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
+            message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
             count: 13
             path: API/CustomerControllerTest.php
-
-        -
-            message: "#^Cannot call method addSubscriber\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 2
-            path: API/ProjectControllerTest.php
 
         -
             message: "#^Cannot call method getValue\\(\\) on App\\\\Entity\\\\MetaTableTypeInterface\\|null\\.$#"
@@ -320,57 +236,12 @@ parameters:
             path: API/ProjectControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:getRateUrl\\(\\) has parameter \\$id with no type specified\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:getRateUrl\\(\\) has parameter \\$rateId with no type specified\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:importTestRates\\(\\) has parameter \\$id with no type specified\\.$#"
             count: 1
             path: API/ProjectControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:importTestRates\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:loadProjectTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:testGetCollectionWithParams\\(\\) has parameter \\$customer with no type specified\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:testGetCollectionWithParams\\(\\) has parameter \\$expected with no type specified\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:testGetCollectionWithParams\\(\\) has parameter \\$parameters with no type specified\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:testGetCollectionWithParams\\(\\) has parameter \\$url with no type specified\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$customer of method App\\\\Entity\\\\Team\\:\\:addCustomer\\(\\) expects App\\\\Entity\\\\Customer, App\\\\Entity\\\\Customer\\|null given\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
+            message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
             count: 15
             path: API/ProjectControllerTest.php
 
@@ -385,48 +256,17 @@ parameters:
             path: API/TagControllerTest.php
 
         -
-            message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
+            message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
             count: 3
             path: API/TagControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'activities' on mixed\\.$#"
-            count: 4
-            path: API/TeamControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'customers' on mixed\\.$#"
-            count: 4
-            path: API/TeamControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'id' on mixed\\.$#"
-            count: 35
-            path: API/TeamControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'members' on mixed\\.$#"
-            count: 2
-            path: API/TeamControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'projects' on mixed\\.$#"
-            count: 4
-            path: API/TeamControllerTest.php
-
         -
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-            count: 38
+            count: 40
             path: API/TeamControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertCount\\(\\) expects Countable\\|iterable, mixed given\\.$#"
-            count: 14
-            path: API/TeamControllerTest.php
-
-        -
-            message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
-            count: 23
+            message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
+            count: 25
             path: API/TeamControllerTest.php
 
         -
@@ -435,32 +275,7 @@ parameters:
             path: API/TimesheetControllerTest.php
 
         -
-            message: "#^Cannot access offset 'description' on mixed\\.$#"
-            count: 3
-            path: API/TimesheetControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'id' on mixed\\.$#"
-            count: 3
-            path: API/TimesheetControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'metaFields' on mixed\\.$#"
-            count: 2
-            path: API/TimesheetControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'tags' on mixed\\.$#"
-            count: 3
-            path: API/TimesheetControllerTest.php
-
-        -
             message: "#^Cannot access offset 0 on mixed\\.$#"
-            count: 1
-            path: API/TimesheetControllerTest.php
-
-        -
-            message: "#^Cannot call method addSubscriber\\(\\) on object\\|null\\.$#"
             count: 1
             path: API/TimesheetControllerTest.php
 
@@ -495,59 +310,9 @@ parameters:
             path: API/TimesheetControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$result of method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertApiResponseTypeStructure\\(\\) expects array, mixed given\\.$#"
-            count: 6
-            path: API/TimesheetControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'enabled' on mixed\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'id' on mixed\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
-            count: 8
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Cannot call method getRepository\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Command/ActivateUserCommandTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$userService of class App\\\\Command\\\\ActivateUserCommand constructor expects App\\\\User\\\\UserService, object\\|null given\\.$#"
-            count: 1
-            path: Command/ActivateUserCommandTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$command of method Symfony\\\\Bundle\\\\FrameworkBundle\\\\Console\\\\Application\\:\\:add\\(\\) expects Symfony\\\\Component\\\\Console\\\\Command\\\\Command, object given\\.$#"
-            count: 1
-            path: Command/BundleInstallerCommandTest.php
-
-        -
-            message: "#^Cannot call method getRepository\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Command/ChangePasswordCommandTest.php
-
-        -
             message: "#^Parameter \\#1 \\$hashedPassword of method Symfony\\\\Component\\\\PasswordHasher\\\\PasswordHasherInterface\\:\\:verify\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: Command/ChangePasswordCommandTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$userService of class App\\\\Command\\\\ChangePasswordCommand constructor expects App\\\\User\\\\UserService, object\\|null given\\.$#"
-            count: 1
-            path: Command/ChangePasswordCommandTest.php
-
-        -
-            message: "#^Cannot call method getRepository\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Command/CreateUserCommandTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Command\\\\CreateUserCommandTest\\:\\:createUser\\(\\) has parameter \\$email with no type specified\\.$#"
@@ -570,36 +335,6 @@ parameters:
             path: Command/CreateUserCommandTest.php
 
         -
-            message: "#^Parameter \\#1 \\$userService of class App\\\\Command\\\\CreateUserCommand constructor expects App\\\\User\\\\UserService, object\\|null given\\.$#"
-            count: 1
-            path: Command/CreateUserCommandTest.php
-
-        -
-            message: "#^Cannot call method getRepository\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Command/DeactivateUserCommandTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$userService of class App\\\\Command\\\\DeactivateUserCommand constructor expects App\\\\User\\\\UserService, object\\|null given\\.$#"
-            count: 1
-            path: Command/DeactivateUserCommandTest.php
-
-        -
-            message: "#^Cannot call method getRepository\\(\\) on object\\|null\\.$#"
-            count: 2
-            path: Command/DemoteUserCommandTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$userService of class App\\\\Command\\\\DemoteUserCommand constructor expects App\\\\User\\\\UserService, object\\|null given\\.$#"
-            count: 1
-            path: Command/DemoteUserCommandTest.php
-
-        -
-            message: "#^Argument of an invalid type array\\<int, string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:assertCommandErrors\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: Command/ExportCreateCommandTest.php
@@ -620,92 +355,12 @@ parameters:
             path: Command/ExportCreateCommandTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:importFixture\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$serviceExport of class App\\\\Command\\\\ExportCreateCommand constructor expects App\\\\Export\\\\ServiceExport, object\\|null given\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$customerRepository of class App\\\\Command\\\\ExportCreateCommand constructor expects App\\\\Repository\\\\CustomerRepository, object\\|null given\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#3 \\$projectRepository of class App\\\\Command\\\\ExportCreateCommand constructor expects App\\\\Repository\\\\ProjectRepository, object\\|null given\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#4 \\$teamRepository of class App\\\\Command\\\\ExportCreateCommand constructor expects App\\\\Repository\\\\TeamRepository, object\\|null given\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#5 \\$userRepository of class App\\\\Command\\\\ExportCreateCommand constructor expects App\\\\Repository\\\\UserRepository, object\\|null given\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#6 \\$translator of class App\\\\Command\\\\ExportCreateCommand constructor expects Symfony\\\\Contracts\\\\Translation\\\\TranslatorInterface, object\\|null given\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Cannot call method getConnection\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Command/InstallCommandTest.php
-
-        -
-            message: "#^Argument of an invalid type array\\<int, string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:assertCommandErrors\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: Command/InvoiceCreateCommandTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:createInvoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:importFixture\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$serviceInvoice of class App\\\\Command\\\\InvoiceCreateCommand constructor expects App\\\\Invoice\\\\ServiceInvoice, object\\|null given\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$customerRepository of class App\\\\Command\\\\InvoiceCreateCommand constructor expects App\\\\Repository\\\\CustomerRepository, object\\|null given\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#3 \\$projectRepository of class App\\\\Command\\\\InvoiceCreateCommand constructor expects App\\\\Repository\\\\ProjectRepository, object\\|null given\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#4 \\$invoiceTemplateRepository of class App\\\\Command\\\\InvoiceCreateCommand constructor expects App\\\\Repository\\\\InvoiceTemplateRepository, object\\|null given\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#5 \\$userRepository of class App\\\\Command\\\\InvoiceCreateCommand constructor expects App\\\\Repository\\\\UserRepository, object\\|null given\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#6 \\$eventDispatcher of class App\\\\Command\\\\InvoiceCreateCommand constructor expects Psr\\\\EventDispatcher\\\\EventDispatcherInterface, object\\|null given\\.$#"
             count: 1
             path: Command/InvoiceCreateCommandTest.php
 
@@ -718,21 +373,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Command\\\\PluginCommandTest\\:\\:getCommandTester\\(\\) has parameter \\$plugins with no value type specified in iterable type array\\.$#"
             count: 1
             path: Command/PluginCommandTest.php
-
-        -
-            message: "#^Cannot call method getRepository\\(\\) on object\\|null\\.$#"
-            count: 2
-            path: Command/PromoteUserCommandTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$userService of class App\\\\Command\\\\PromoteUserCommand constructor expects App\\\\User\\\\UserService, object\\|null given\\.$#"
-            count: 1
-            path: Command/PromoteUserCommandTest.php
-
-        -
-            message: "#^Cannot call method getConnection\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Command/UpdateCommandTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Command\\\\VersionCommandTest\\:\\:getCommandTester\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
@@ -785,28 +425,13 @@ parameters:
             path: Configuration/SamlConfigurationTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\SystemConfigurationTest\\:\\:getSut\\(\\) has parameter \\$loaderSettings with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Configuration/SystemConfigurationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\SystemConfigurationTest\\:\\:getSut\\(\\) has parameter \\$settings with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Configuration/SystemConfigurationTest.php
-
-        -
-            message: "#^Cannot call method addSubscriber\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Controller/ActivityControllerTest.php
-
-        -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Activity\\|null\\.$#"
             count: 4
             path: Controller/ActivityControllerTest.php
 
         -
             message: "#^Cannot call method getValue\\(\\) on array\\<array\\<Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\>\\|Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\>\\|Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\.$#"
-            count: 5
+            count: 6
             path: Controller/ActivityControllerTest.php
 
         -
@@ -840,11 +465,6 @@ parameters:
             path: Controller/Auth/SamlControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\Auth\\\\SamlControllerTest\\:\\:getDefaultSettings\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/Auth/SamlControllerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Controller\\\\Auth\\\\SamlControllerTest\\:\\:getSystemConfigurationMock\\(\\) has parameter \\$loaderSettings with no value type specified in iterable type array\\.$#"
             count: 1
             path: Controller/Auth/SamlControllerTest.php
@@ -865,84 +485,54 @@ parameters:
             path: Controller/CalendarControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
+            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 4
             path: Controller/CalendarControllerTest.php
 
         -
-            message: "#^Cannot call method getRepository\\(\\) on object\\|null\\.$#"
+            message: "#^Method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:assertAccessIsGranted\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
             count: 1
-            path: Controller/ControllerBaseTest.php
+            path: Controller/AbstractControllerBaseTestCase.php
 
         -
-            message: "#^Cannot call method getToken\\(\\) on object\\|null\\.$#"
+            message: "#^Method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:assertFormHasValidationError\\(\\) has parameter \\$fieldNames with no value type specified in iterable type array\\.$#"
             count: 1
-            path: Controller/ControllerBaseTest.php
+            path: Controller/AbstractControllerBaseTestCase.php
 
         -
-            message: "#^Cannot call method push\\(\\) on object\\|null\\.$#"
+            message: "#^Method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:assertFormHasValidationError\\(\\) has parameter \\$formData with no value type specified in iterable type array\\.$#"
             count: 1
-            path: Controller/ControllerBaseTest.php
+            path: Controller/AbstractControllerBaseTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertAccessIsGranted\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:assertHasValidationError\\(\\) has parameter \\$fieldNames with no value type specified in iterable type array\\.$#"
             count: 1
-            path: Controller/ControllerBaseTest.php
+            path: Controller/AbstractControllerBaseTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertFormHasValidationError\\(\\) has parameter \\$fieldNames with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:assertHasValidationError\\(\\) has parameter \\$formData with no value type specified in iterable type array\\.$#"
             count: 1
-            path: Controller/ControllerBaseTest.php
+            path: Controller/AbstractControllerBaseTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertFormHasValidationError\\(\\) has parameter \\$formData with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:request\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
             count: 1
-            path: Controller/ControllerBaseTest.php
+            path: Controller/AbstractControllerBaseTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertHasValidationError\\(\\) has parameter \\$fieldNames with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:requestPure\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
             count: 1
-            path: Controller/ControllerBaseTest.php
+            path: Controller/AbstractControllerBaseTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertHasValidationError\\(\\) has parameter \\$formData with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:setSystemConfiguration\\(\\) has parameter \\$value with no type specified\\.$#"
             count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertPageActions\\(\\) has parameter \\$buttons with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:importFixture\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:request\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:requestPure\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:setSystemConfiguration\\(\\) has parameter \\$value with no type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
+            path: Controller/AbstractControllerBaseTestCase.php
 
         -
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
-            count: 10
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Cannot call method addSubscriber\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Controller/CustomerControllerTest.php
+            count: 9
+            path: Controller/AbstractControllerBaseTestCase.php
 
         -
             message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
@@ -961,7 +551,7 @@ parameters:
 
         -
             message: "#^Cannot call method getValue\\(\\) on array\\<array\\<Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\>\\|Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\>\\|Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\.$#"
-            count: 3
+            count: 4
             path: Controller/CustomerControllerTest.php
 
         -
@@ -990,47 +580,27 @@ parameters:
             path: Controller/CustomerControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|null given\\.$#"
-            count: 2
-            path: Controller/CustomerControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$url of method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:request\\(\\) expects string, string\\|null given\\.$#"
-            count: 2
-            path: Controller/CustomerControllerTest.php
-
-        -
             message: "#^Parameter \\#1 \\$project of method App\\\\Entity\\\\Team\\:\\:addProject\\(\\) expects App\\\\Entity\\\\Project, App\\\\Entity\\\\Project\\|null given\\.$#"
             count: 1
             path: Controller/ExportControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
+            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 2
             path: Controller/ExportControllerTest.php
 
         -
-            message: "#^Argument of an invalid type array\\<int, string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
+            message: "#^Parameter \\#2 \\$url of method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:assertHasValidationError\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: Controller/InvoiceControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$url of method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertHasValidationError\\(\\) expects string, string\\|null given\\.$#"
+            message: "#^Parameter \\#2 \\$url of method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:request\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: Controller/InvoiceControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$url of method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:request\\(\\) expects string, string\\|null given\\.$#"
-            count: 2
-            path: Controller/InvoiceControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$url of method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:requestPure\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: Controller/InvoiceControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
+            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 11
             path: Controller/LayoutControllerTest.php
 
@@ -1061,11 +631,6 @@ parameters:
 
         -
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringNotContainsString\\(\\) expects string, string\\|false given\\.$#"
-            count: 1
-            path: Controller/PermissionControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$url of method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:request\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: Controller/PermissionControllerTest.php
 
@@ -1111,18 +676,13 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$hashedPassword of method Symfony\\\\Component\\\\PasswordHasher\\\\PasswordHasherInterface\\:\\:verify\\(\\) expects string, string\\|null given\\.$#"
-            count: 8
+            count: 4
             path: Controller/ProfileControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
+            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 6
             path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Cannot call method addSubscriber\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Controller/ProjectControllerTest.php
 
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Activity\\|null\\.$#"
@@ -1136,17 +696,17 @@ parameters:
 
         -
             message: "#^Cannot call method getValue\\(\\) on array\\<array\\<Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\>\\|Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\>\\|Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\.$#"
-            count: 2
+            count: 3
             path: Controller/ProjectControllerTest.php
 
         -
             message: "#^Cannot call method setEnd\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 2
+            count: 1
             path: Controller/ProjectControllerTest.php
 
         -
             message: "#^Cannot call method setMetaField\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 2
+            count: 1
             path: Controller/ProjectControllerTest.php
 
         -
@@ -1181,7 +741,7 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$entity of method Doctrine\\\\ORM\\\\EntityManager\\:\\:persist\\(\\) expects object, App\\\\Entity\\\\Project\\|null given\\.$#"
-            count: 2
+            count: 1
             path: Controller/ProjectControllerTest.php
 
         -
@@ -1200,52 +760,37 @@ parameters:
             path: Controller/ProjectControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|null given\\.$#"
-            count: 2
-            path: Controller/ProjectControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$url of method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:request\\(\\) expects string, string\\|null given\\.$#"
-            count: 2
-            path: Controller/ProjectControllerTest.php
-
-        -
             message: "#^Cannot access property \\$childNodes on DOMNode\\|null\\.$#"
             count: 2
             path: Controller/QuickEntryControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\Reporting\\\\AbstractUserPeriodControllerTest\\:\\:getTestData\\(\\) return type has no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\Controller\\\\Reporting\\\\AbstractUserPeriodControllerTestCase\\:\\:getTestData\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
-            path: Controller/Reporting/AbstractUserPeriodControllerTest.php
+            path: Controller/Reporting/AbstractUserPeriodControllerTestCase.php
 
         -
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 2
-            path: Controller/Reporting/AbstractUserPeriodControllerTest.php
+            path: Controller/Reporting/AbstractUserPeriodControllerTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\Reporting\\\\AbstractUsersPeriodControllerTest\\:\\:getTestData\\(\\) return type has no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\Controller\\\\Reporting\\\\AbstractUsersPeriodControllerTestCase\\:\\:getTestData\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
-            path: Controller/Reporting/AbstractUsersPeriodControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\Reporting\\\\AbstractUsersPeriodControllerTest\\:\\:importReportingFixture\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/Reporting/AbstractUsersPeriodControllerTest.php
+            path: Controller/Reporting/AbstractUsersPeriodControllerTestCase.php
 
         -
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 2
-            path: Controller/Reporting/AbstractUsersPeriodControllerTest.php
+            path: Controller/Reporting/AbstractUsersPeriodControllerTestCase.php
 
         -
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|null given\\.$#"
             count: 2
-            path: Controller/Reporting/AbstractUsersPeriodControllerTest.php
+            path: Controller/Reporting/AbstractUsersPeriodControllerTestCase.php
 
         -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|null given\\.$#"
+            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: Controller/Reporting/CustomerMonthlyProjectsControllerTest.php
 
@@ -1270,22 +815,12 @@ parameters:
             path: Controller/Reporting/ProjectViewControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\Security\\\\PasswordResetControllerTest\\:\\:testResetActionWithDeactivatedFeature\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/Security/PasswordResetControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
-            count: 6
-            path: Controller/Security/PasswordResetControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
+            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 6
             path: Controller/Security/SecurityControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringNotContainsString\\(\\) expects string, string\\|false given\\.$#"
+            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringNotContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 2
             path: Controller/Security/SecurityControllerTest.php
 
@@ -1305,19 +840,9 @@ parameters:
             path: Controller/Security/SelfRegistrationControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
+            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 17
             path: Controller/Security/SelfRegistrationControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\SystemConfigurationControllerTest\\:\\:getSystemConfiguration\\(\\) should return App\\\\Configuration\\\\SystemConfiguration but returns object\\|null\\.$#"
-            count: 1
-            path: Controller/SystemConfigurationControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\SystemConfigurationControllerTest\\:\\:getTestDataForms\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/SystemConfigurationControllerTest.php
 
         -
             message: "#^Cannot call method getValue\\(\\) on array\\<array\\<Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\>\\|Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\>\\|Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\.$#"
@@ -1330,24 +855,9 @@ parameters:
             path: Controller/TeamControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
+            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 2
             path: Controller/TeamControllerTest.php
-
-        -
-            message: "#^Cannot call method addSubscriber\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Cannot call method modify\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Cannot call method setTime\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
 
         -
             message: "#^Cannot clone DateTime\\|null\\.$#"
@@ -1385,12 +895,7 @@ parameters:
             path: Controller/TimesheetControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
+            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 1
             path: Controller/TimesheetControllerTest.php
 
@@ -1400,32 +905,12 @@ parameters:
             path: Controller/TimesheetTeamControllerTest.php
 
         -
-            message: "#^Cannot call method modify\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
-            message: "#^Cannot call method setTime\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
             message: "#^Cannot clone DateTime\\|null\\.$#"
             count: 2
             path: Controller/TimesheetTeamControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
-            count: 1
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$seconds of static method App\\\\Timesheet\\\\Util\\:\\:calculateRate\\(\\) expects int, int\\|null given\\.$#"
+            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 1
             path: Controller/TimesheetTeamControllerTest.php
 
@@ -1460,33 +945,8 @@ parameters:
             path: Controller/WidgetControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\DataFixtures\\\\TestFixture\\:\\:load\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: DataFixtures/TestFixture.php
-
-        -
             message: "#^Cannot access offset 'foo\\-bundle\\.bar' on array\\|bool\\|float\\|int\\|string\\|null\\.$#"
             count: 1
-            path: DependencyInjection/AppExtensionTest.php
-
-        -
-            message: "#^Cannot access offset 'ldap\\.connection…' on array\\|bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 6
-            path: DependencyInjection/AppExtensionTest.php
-
-        -
-            message: "#^Cannot access offset 'ldap\\.user\\.baseDn' on array\\|bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 3
-            path: DependencyInjection/AppExtensionTest.php
-
-        -
-            message: "#^Cannot access offset 'ldap\\.user\\.filter' on array\\|bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 3
-            path: DependencyInjection/AppExtensionTest.php
-
-        -
-            message: "#^Cannot access offset 'ldap\\.user…' on array\\|bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 3
             path: DependencyInjection/AppExtensionTest.php
 
         -
@@ -1580,11 +1040,6 @@ parameters:
             path: Entity/ProjectTest.php
 
         -
-            message: "#^Cannot call method getUser\\(\\) on mixed\\.$#"
-            count: 1
-            path: Entity/TeamTest.php
-
-        -
             message: "#^Cannot call method getValue\\(\\) on App\\\\Entity\\\\MetaTableTypeInterface\\|null\\.$#"
             count: 1
             path: Entity/TimesheetTest.php
@@ -1670,9 +1125,9 @@ parameters:
             path: Entity/UserValidationTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Event\\\\AbstractTimesheetMultipleEventTest\\:\\:createTimesheetMultipleEvent\\(\\) has parameter \\$timesheets with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\Event\\\\AbstractTimesheetMultipleEventTestCase\\:\\:createTimesheetMultipleEvent\\(\\) has parameter \\$timesheets with no value type specified in iterable type array\\.$#"
             count: 1
-            path: Event/AbstractTimesheetMultipleEventTest.php
+            path: Event/AbstractTimesheetMultipleEventTestCase.php
 
         -
             message: "#^Parameter \\#1 \\$array of function array_values expects array, array\\|null given\\.$#"
@@ -1695,34 +1150,14 @@ parameters:
             path: Event/TimesheetUpdateMultiplePreEventTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\EventSubscriber\\\\Actions\\\\AbstractActionsSubscriberTest\\:\\:createSubscriber\\(\\) has parameter \\$grants with no type specified\\.$#"
+            message: "#^Method App\\\\Tests\\\\EventSubscriber\\\\Actions\\\\AbstractActionsSubscriberTestCase\\:\\:createSubscriber\\(\\) has parameter \\$grants with no type specified\\.$#"
             count: 1
-            path: EventSubscriber/Actions/AbstractActionsSubscriberTest.php
+            path: EventSubscriber/Actions/AbstractActionsSubscriberTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\EventSubscriber\\\\Actions\\\\AbstractActionsSubscriberTest\\:\\:createSubscriber\\(\\) should return App\\\\EventSubscriber\\\\Actions\\\\AbstractActionsSubscriber but returns object\\.$#"
+            message: "#^Method App\\\\Tests\\\\EventSubscriber\\\\Actions\\\\AbstractActionsSubscriberTestCase\\:\\:createSubscriber\\(\\) should return App\\\\EventSubscriber\\\\Actions\\\\AbstractActionsSubscriber but returns object\\.$#"
             count: 1
-            path: EventSubscriber/Actions/AbstractActionsSubscriberTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$method of function method_exists expects string, array\\<int\\|string, int\\|string\\>\\|int\\|string given\\.$#"
-            count: 1
-            path: EventSubscriber/EmailSubscriberTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$method of function method_exists expects string, array\\<int\\|string, array\\<int\\|string, int\\|string\\>\\|int\\|string\\>\\|string given\\.$#"
-            count: 2
-            path: EventSubscriber/LastLoginSubscriberTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$method of function method_exists expects string, array\\<int\\|string, int\\|string\\>\\|int\\|string given\\.$#"
-            count: 1
-            path: EventSubscriber/MenuSubscriberTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$method of function method_exists expects string, array\\<int\\|string, int\\|string\\>\\|int\\|string given\\.$#"
-            count: 1
-            path: EventSubscriber/PagerfantaExceptionSubscriberTest.php
+            path: EventSubscriber/Actions/AbstractActionsSubscriberTestCase.php
 
         -
             message: "#^Method App\\\\Tests\\\\EventSubscriber\\\\ProfileSubscriberTest\\:\\:getInvalidCookies\\(\\) has no return type specified\\.$#"
@@ -1730,179 +1165,24 @@ parameters:
             path: EventSubscriber/ProfileSubscriberTest.php
 
         -
-            message: "#^Parameter \\#2 \\$method of function method_exists expects string, array\\<int\\|string, array\\<int\\|string, int\\|string\\>\\|int\\|string\\>\\|string given\\.$#"
-            count: 1
-            path: EventSubscriber/ProfileSubscriberTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$method of function method_exists expects string, array\\<int\\|string, int\\|string\\>\\|int\\|string given\\.$#"
-            count: 1
-            path: EventSubscriber/UserDetailsSubscriberTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$method of function method_exists expects string, array\\<int\\|string, int\\|string\\>\\|int\\|string given\\.$#"
-            count: 1
-            path: EventSubscriber/UserPreferenceSubscriberTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$method of function method_exists expects string, array\\<int\\|string, int\\|string\\>\\|int\\|string given\\.$#"
-            count: 1
-            path: EventSubscriber/WizardSubscriberTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\AbstractRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Export\\\\ExportRendererInterface\\|App\\\\Export\\\\TimesheetExportInterface but returns object\\.$#"
-            count: 1
-            path: Export/Renderer/AbstractRendererTest.php
-
-        -
-            message: "#^Call to an undefined method App\\\\Export\\\\ExportRendererInterface\\|App\\\\Export\\\\TimesheetExportInterface\\:\\:getIcon\\(\\)\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Call to an undefined method App\\\\Export\\\\ExportRendererInterface\\|App\\\\Export\\\\TimesheetExportInterface\\:\\:getTitle\\(\\)\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\CsvRendererTest\\:\\:getTestModel\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedDescriptions with no type specified\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedRate with no type specified\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedRows with no type specified\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedUser1 with no type specified\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedUser2 with no type specified\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedUser3 with no type specified\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$totalDuration with no type specified\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$totalRate with no type specified\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$haystack of function substr_count expects string, string\\|false given\\.$#"
-            count: 5
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$renderer of method App\\\\Tests\\\\Export\\\\Renderer\\\\AbstractRendererTest\\:\\:render\\(\\) expects App\\\\Export\\\\ExportRendererInterface, App\\\\Export\\\\ExportRendererInterface\\|App\\\\Export\\\\TimesheetExportInterface given\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function str_getcsv expects string, string\\|false given\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function str_getcsv expects string, string\\|null given\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Cannot call method push\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Export/Renderer/HtmlRendererTest.php
-
-        -
             message: "#^Parameter \\#1 \\$haystack of function substr_count expects string, string\\|false given\\.$#"
             count: 6
             path: Export/Renderer/HtmlRendererTest.php
 
         -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
+            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 7
             path: Export/Renderer/HtmlRendererTest.php
 
         -
-            message: "#^Call to an undefined method App\\\\Export\\\\ExportRendererInterface\\|App\\\\Export\\\\TimesheetExportInterface\\:\\:getIcon\\(\\)\\.$#"
+            message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\AbstractFormatterTestCase\\:\\:getActualValue\\(\\) has no return type specified\\.$#"
             count: 1
-            path: Export/Renderer/XlsxRendererTest.php
+            path: Export/Spreadsheet/CellFormatter/AbstractFormatterTestCase.php
 
         -
-            message: "#^Call to an undefined method App\\\\Export\\\\ExportRendererInterface\\|App\\\\Export\\\\TimesheetExportInterface\\:\\:getTitle\\(\\)\\.$#"
+            message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\AbstractFormatterTestCase\\:\\:getExpectedValue\\(\\) has no return type specified\\.$#"
             count: 1
-            path: Export/Renderer/XlsxRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$renderer of method App\\\\Tests\\\\Export\\\\Renderer\\\\AbstractRendererTest\\:\\:render\\(\\) expects App\\\\Export\\\\ExportRendererInterface, App\\\\Export\\\\ExportRendererInterface\\|App\\\\Export\\\\TimesheetExportInterface given\\.$#"
-            count: 1
-            path: Export/Renderer/XlsxRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\AbstractFormatterTest\\:\\:getActualValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Spreadsheet/CellFormatter/AbstractFormatterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\AbstractFormatterTest\\:\\:getExpectedValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Spreadsheet/CellFormatter/AbstractFormatterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\ArrayFormatterTest\\:\\:getActualValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Spreadsheet/CellFormatter/ArrayFormatterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\ArrayFormatterTest\\:\\:getExpectedValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Spreadsheet/CellFormatter/ArrayFormatterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\BooleanFormatterTest\\:\\:getActualValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Spreadsheet/CellFormatter/BooleanFormatterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\BooleanFormatterTest\\:\\:getExpectedValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Spreadsheet/CellFormatter/BooleanFormatterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\DateFormatterTest\\:\\:getActualValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Spreadsheet/CellFormatter/DateFormatterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\DateFormatterTest\\:\\:getExpectedValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Spreadsheet/CellFormatter/DateFormatterTest.php
+            path: Export/Spreadsheet/CellFormatter/AbstractFormatterTestCase.php
 
         -
             message: "#^Property App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\DateFormatterTest\\:\\:\\$date has no type specified\\.$#"
@@ -1923,16 +1203,6 @@ parameters:
             message: "#^Property App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\DateTimeFormatterTest\\:\\:\\$date has no type specified\\.$#"
             count: 1
             path: Export/Spreadsheet/CellFormatter/DateTimeFormatterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\DurationFormatterTest\\:\\:getActualValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Spreadsheet/CellFormatter/DurationFormatterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\DurationFormatterTest\\:\\:getExpectedValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Spreadsheet/CellFormatter/DurationFormatterTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\TimeFormatterTest\\:\\:getActualValue\\(\\) has no return type specified\\.$#"
@@ -1963,81 +1233,6 @@ parameters:
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: Export/Spreadsheet/Writer/BinaryFileResponseWriterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\AbstractRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Export\\\\TimesheetExportInterface but returns object\\.$#"
-            count: 1
-            path: Export/Timesheet/AbstractRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\CsvRendererTest\\:\\:getTestModel\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedDescriptions with no type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedRate with no type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedRows with no type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedUser1 with no type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedUser2 with no type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedUser3 with no type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$totalDuration with no type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$totalRate with no type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$haystack of function substr_count expects string, string\\|false given\\.$#"
-            count: 5
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function str_getcsv expects string, string\\|false given\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function str_getcsv expects string, string\\|null given\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
-            count: 1
-            path: Export/Timesheet/HtmlRendererTest.php
 
         -
             message: "#^Parameter \\#1 \\$items of method App\\\\Export\\\\TimesheetExportRepository\\:\\:setExported\\(\\) expects array\\<App\\\\Entity\\\\Timesheet\\>, array\\<int, App\\\\Entity\\\\Activity\\|App\\\\Entity\\\\Timesheet\\|stdClass\\|null\\> given\\.$#"
@@ -2105,39 +1300,19 @@ parameters:
             path: Form/Type/DurationTypeTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\QuickEntryTimesheetTypeTest\\:\\:getExtensions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Form/Type/QuickEntryTimesheetTypeTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\QuickEntryTimesheetTypeTest\\:\\:getTestData\\(\\) has no return type specified\\.$#"
             count: 1
             path: Form/Type/QuickEntryTimesheetTypeTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\QuickEntryTimesheetTypeTest\\:\\:testSubmitValidData\\(\\) has parameter \\$expectedDuration with no type specified\\.$#"
+            message: "#^Method App\\\\Tests\\\\Invoice\\\\Calculator\\\\AbstractCalculatorTestCase\\:\\:assertDescription\\(\\) has parameter \\$addActivity with no type specified\\.$#"
             count: 1
-            path: Form/Type/QuickEntryTimesheetTypeTest.php
+            path: Invoice/Calculator/AbstractCalculatorTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\QuickEntryTimesheetTypeTest\\:\\:testSubmitValidData\\(\\) has parameter \\$value with no type specified\\.$#"
+            message: "#^Method App\\\\Tests\\\\Invoice\\\\Calculator\\\\AbstractCalculatorTestCase\\:\\:assertDescription\\(\\) has parameter \\$addProject with no type specified\\.$#"
             count: 1
-            path: Form/Type/QuickEntryTimesheetTypeTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Calculator\\\\AbstractCalculatorTest\\:\\:assertDescription\\(\\) has parameter \\$addActivity with no type specified\\.$#"
-            count: 1
-            path: Invoice/Calculator/AbstractCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Calculator\\\\AbstractCalculatorTest\\:\\:assertDescription\\(\\) has parameter \\$addProject with no type specified\\.$#"
-            count: 1
-            path: Invoice/Calculator/AbstractCalculatorTest.php
-
-        -
-            message: "#^Cannot call method getEntries\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 1
-            path: Invoice/Hydrator/InvoiceItemDefaultHydratorTest.php
+            path: Invoice/Calculator/AbstractCalculatorTestCase.php
 
         -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceItemDefaultHydratorTest\\:\\:assertEntryStructure\\(\\) has parameter \\$metaFields with no value type specified in iterable type array\\.$#"
@@ -2150,17 +1325,7 @@ parameters:
             path: Invoice/Hydrator/InvoiceItemDefaultHydratorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceItemDefaultHydratorTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Hydrator/InvoiceItemDefaultHydratorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelActivityHydratorTest\\:\\:assertModelStructure\\(\\) has parameter \\$model with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Invoice/Hydrator/InvoiceModelActivityHydratorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelActivityHydratorTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
             count: 1
             path: Invoice/Hydrator/InvoiceModelActivityHydratorTest.php
 
@@ -2170,17 +1335,7 @@ parameters:
             path: Invoice/Hydrator/InvoiceModelCustomerHydratorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelCustomerHydratorTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Hydrator/InvoiceModelCustomerHydratorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelDefaultHydratorTest\\:\\:assertModelStructure\\(\\) has parameter \\$model with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Invoice/Hydrator/InvoiceModelDefaultHydratorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelDefaultHydratorTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
             count: 1
             path: Invoice/Hydrator/InvoiceModelDefaultHydratorTest.php
 
@@ -2190,17 +1345,7 @@ parameters:
             path: Invoice/Hydrator/InvoiceModelProjectHydratorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelProjectHydratorTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Hydrator/InvoiceModelProjectHydratorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelUserHydratorTest\\:\\:assertModelStructure\\(\\) has parameter \\$model with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Invoice/Hydrator/InvoiceModelUserHydratorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelUserHydratorTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
             count: 1
             path: Invoice/Hydrator/InvoiceModelUserHydratorTest.php
 
@@ -2223,41 +1368,6 @@ parameters:
             message: "#^Parameter \\#1 \\$content of class Symfony\\\\Component\\\\HttpFoundation\\\\Response constructor expects string\\|null, string\\|false given\\.$#"
             count: 1
             path: Invoice/Renderer/DebugRenderer.php
-
-        -
-            message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Cannot access offset 'entries' on mixed\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Cannot access offset 'invoice\\.first' on mixed\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Cannot access offset 'invoice\\.last' on mixed\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Cannot access offset 'model' on mixed\\.$#"
-            count: 5
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Cannot access offset 'query\\.begin_day' on mixed\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Cannot access offset 'query\\.begin_month…' on mixed\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
 
         -
             message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
@@ -2295,62 +1405,7 @@ parameters:
             path: Invoice/Renderer/DebugRendererTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DebugRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DebugRendererTest\\:\\:getTestModel\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DebugRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedDescriptions with no type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DebugRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedRate with no type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DebugRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedRows with no type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DebugRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedUser1 with no type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DebugRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedUser2 with no type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DebugRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedUser3 with no type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DebugRendererTest\\:\\:testRender\\(\\) has parameter \\$hasProject with no type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DebugRendererTest\\:\\:testRender\\(\\) has parameter \\$metaFields with no type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Method class@anonymous/Invoice/Renderer/DebugRendererTest\\.php\\:35\\:\\:hydrate\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Method class@anonymous/Invoice/Renderer/DebugRendererTest\\.php\\:47\\:\\:hydrate\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Invoice/Renderer/DebugRendererTest.php
 
@@ -2358,31 +1413,6 @@ parameters:
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
             count: 1
             path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$model of method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DebugRendererTest\\:\\:assertEntryStructure\\(\\) expects array, mixed given\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$model of method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DebugRendererTest\\:\\:assertModelStructure\\(\\) expects array, mixed given\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DocxRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Renderer/DocxRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\OdsRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Renderer/OdsRendererTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\OdsRendererTest\\:\\:getTestModel\\(\\) has no return type specified\\.$#"
@@ -2420,29 +1450,14 @@ parameters:
             path: Invoice/Renderer/OdsRendererTest.php
 
         -
-            message: "#^Cannot call method push\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Invoice/Renderer/PdfRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\PdfRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Renderer/PdfRendererTest.php
-
-        -
             message: "#^Parameter \\#2 \\$cacheDirectory of class App\\\\Pdf\\\\MPdfConverter constructor expects string, array\\|bool\\|float\\|int\\|string\\|null given\\.$#"
             count: 1
             path: Invoice/Renderer/PdfRendererTest.php
 
         -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|null given\\.$#"
+            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|null given\\.$#"
             count: 3
             path: Invoice/Renderer/PdfRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\TwigRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Renderer/TwigRendererTest.php
 
         -
             message: "#^Parameter \\#1 \\$haystack of function substr_count expects string, string\\|false given\\.$#"
@@ -2450,14 +1465,9 @@ parameters:
             path: Invoice/Renderer/TwigRendererTest.php
 
         -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
+            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 3
             path: Invoice/Renderer/TwigRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\XlsxRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Renderer/XlsxRendererTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\XlsxRendererTest\\:\\:getTestModel\\(\\) has no return type specified\\.$#"
@@ -2495,24 +1505,19 @@ parameters:
             path: Invoice/Renderer/XlsxRendererTest.php
 
         -
-            message: "#^Cannot call method getLanguage\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: Invoice/ServiceInvoiceTest.php
-
-        -
             message: "#^Cannot call method getTotal\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
             count: 4
-            path: Invoice/ServiceInvoiceTest.php
+            path: Invoice/InvoiceServiceTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\ServiceInvoiceTest\\:\\:getSut\\(\\) has parameter \\$paths with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\Invoice\\\\InvoiceServiceTest\\:\\:getSut\\(\\) has parameter \\$paths with no value type specified in iterable type array\\.$#"
             count: 1
-            path: Invoice/ServiceInvoiceTest.php
+            path: Invoice/InvoiceServiceTest.php
 
         -
             message: "#^Parameter \\#1 \\$dataDir of class App\\\\Utils\\\\FileHelper constructor expects string, string\\|false given\\.$#"
             count: 1
-            path: Invoice/ServiceInvoiceTest.php
+            path: Invoice/InvoiceServiceTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Ldap\\\\LdapManagerTest\\:\\:getLdapManager\\(\\) has no return type specified\\.$#"
@@ -2540,39 +1545,14 @@ parameters:
             path: Ldap/LdapManagerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Mocks\\\\AbstractMockFactory\\:\\:createMock\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Mocks/AbstractMockFactory.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Mocks\\\\AbstractMockFactory\\:\\:getMockBuilder\\(\\) return type with generic class PHPUnit\\\\Framework\\\\MockObject\\\\MockBuilder does not specify its types\\: TMockedClass$#"
             count: 1
             path: Mocks/AbstractMockFactory.php
 
         -
-            message: "#^Parameter \\#2 \\$type of class PHPUnit\\\\Framework\\\\MockObject\\\\MockBuilder constructor expects class\\-string\\<TMockedClass\\>, string given\\.$#"
-            count: 1
-            path: Mocks/AbstractMockFactory.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Mocks\\\\ActivityTestMetaFieldSubscriberMock\\:\\:loadMeta\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Mocks/ActivityTestMetaFieldSubscriberMock.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Mocks\\\\CustomerTestMetaFieldSubscriberMock\\:\\:loadMeta\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Mocks/CustomerTestMetaFieldSubscriberMock.php
-
-        -
             message: "#^Parameter \\#1 \\$dataDir of class App\\\\Utils\\\\FileHelper constructor expects string, string\\|false given\\.$#"
             count: 1
             path: Mocks/FileHelperFactory.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Mocks\\\\ProjectTestMetaFieldSubscriberMock\\:\\:loadMeta\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Mocks/ProjectTestMetaFieldSubscriberMock.php
 
         -
             message: "#^Method App\\\\Tests\\\\Mocks\\\\RoundingServiceFactory\\:\\:create\\(\\) has parameter \\$rules with no value type specified in iterable type array\\.$#"
@@ -2585,79 +1565,9 @@ parameters:
             path: Mocks/Saml/SamlAuthFactoryFactory.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Mocks\\\\TimesheetTestMetaFieldSubscriberMock\\:\\:loadMeta\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Mocks/TimesheetTestMetaFieldSubscriberMock.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Mocks\\\\TrackingModeServiceFactory\\:\\:create\\(\\) has parameter \\$modes with no value type specified in iterable type array\\.$#"
             count: 1
             path: Mocks/TrackingModeServiceFactory.php
-
-        -
-            message: "#^Cannot access offset 'amount' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'amount'\\|'amount_billable'\\|'amount_exported'\\|'duration'\\|'duration_billable'\\|'duration_billable…'\\|'duration_exported'\\|'rate'\\|'rate_billable'\\|'rate_exported'\\|'rate_internal' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'amount_billable' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'amount_exported' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'duration' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'duration_billable' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'duration_billable…' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'duration_exported' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'rate' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'rate_billable' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'rate_billable…' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'rate_internal' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$array of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertArrayHasKey\\(\\) expects array\\|ArrayAccess, mixed given\\.$#"
-            count: 2
-            path: Model/AbstractTimesheetCountedStatisticTest.php
 
         -
             message: "#^Cannot access offset 'color' on mixed\\.$#"
@@ -2715,34 +1625,14 @@ parameters:
             path: Model/Statistic/MonthTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Pdf\\\\MPdfConverterTest\\:\\:test\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Pdf/MPdfConverterTest.php
-
-        -
             message: "#^Parameter \\#2 \\$cacheDirectory of class App\\\\Pdf\\\\MPdfConverter constructor expects string, array\\|bool\\|float\\|int\\|string\\|null given\\.$#"
-            count: 1
+            count: 2
             path: Pdf/MPdfConverterTest.php
 
         -
             message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
             count: 2
             path: Reporting/ProjectDateRange/ProjectDateRangeQueryTest.php
-
-        -
-            message: "#^Cannot call method getManager\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Repository/AbstractRepositoryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\AbstractRepositoryTest\\:\\:getEntityManager\\(\\) should return Doctrine\\\\Persistence\\\\ObjectManager but returns Doctrine\\\\Persistence\\\\ObjectManager\\|null\\.$#"
-            count: 1
-            path: Repository/AbstractRepositoryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\AbstractRepositoryTest\\:\\:importFixture\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Repository/AbstractRepositoryTest.php
 
         -
             message: "#^Parameter \\#1 \\$directory of method App\\\\Repository\\\\InvoiceDocumentRepository\\:\\:addDirectory\\(\\) expects string, string\\|false given\\.$#"
@@ -2753,16 +1643,6 @@ parameters:
             message: "#^Parameter \\#3 \\$length of function substr expects int\\|null, int\\<0, max\\>\\|false given\\.$#"
             count: 3
             path: Repository/InvoiceDocumentRepositoryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Loader\\\\AbstractLoaderTest\\:\\:getEntityManagerMock\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Loader/AbstractLoaderTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Loader\\\\AbstractLoaderTest\\:\\:getEntityManagerMock\\(\\) has parameter \\$resultMock with no type specified\\.$#"
-            count: 1
-            path: Repository/Loader/AbstractLoaderTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertBaseQuery\\(\\) has parameter \\$order with no type specified\\.$#"
@@ -2805,64 +1685,9 @@ parameters:
             path: Repository/TimesheetInvoiceItemRepositoryTest.php
 
         -
-            message: "#^Cannot call method getId\\(\\) on mixed\\.$#"
-            count: 2
-            path: Repository/TimesheetRepositoryTest.php
-
-        -
-            message: "#^Cannot call method getName\\(\\) on mixed\\.$#"
-            count: 2
-            path: Repository/TimesheetRepositoryTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Saml\\\\SamlProviderTest\\:\\:getSamlProvider\\(\\) has parameter \\$mapping with no value type specified in iterable type array\\.$#"
             count: 1
             path: Saml/SamlProviderTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandlerTest\\:\\:getOption\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Saml/Security/SamlAuthenticationSuccessHandlerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandlerTest\\:\\:getOption\\(\\) has parameter \\$default with no type specified\\.$#"
-            count: 1
-            path: Saml/Security/SamlAuthenticationSuccessHandlerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandlerTest\\:\\:getOption\\(\\) has parameter \\$handler with no type specified\\.$#"
-            count: 1
-            path: Saml/Security/SamlAuthenticationSuccessHandlerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandlerTest\\:\\:getOption\\(\\) has parameter \\$name with no type specified\\.$#"
-            count: 1
-            path: Saml/Security/SamlAuthenticationSuccessHandlerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandlerTest\\:\\:getRequest\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Saml/Security/SamlAuthenticationSuccessHandlerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandlerTest\\:\\:getRequest\\(\\) has parameter \\$path with no type specified\\.$#"
-            count: 1
-            path: Saml/Security/SamlAuthenticationSuccessHandlerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandlerTest\\:\\:getRequest\\(\\) has parameter \\$relayState with no type specified\\.$#"
-            count: 1
-            path: Saml/Security/SamlAuthenticationSuccessHandlerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandlerTest\\:\\:getSamlToken\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Saml/Security/SamlAuthenticationSuccessHandlerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandlerTest\\:\\:getUrlGenerator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Saml/Security/SamlAuthenticationSuccessHandlerTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\BillableCalculatorTest\\:\\:getTestData\\(\\) has no return type specified\\.$#"
@@ -2895,137 +1720,12 @@ parameters:
             path: Timesheet/Calculator/DurationCalculatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:getRateRepositoryMock\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:getRateRepositoryMock\\(\\) has parameter \\$rates with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:getRateTestData\\(\\) has no return type specified\\.$#"
             count: 1
             path: Timesheet/Calculator/RateCalculatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:getRuleDefinitions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:getTestUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:getTestUser\\(\\) has parameter \\$internalRate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:getTestUser\\(\\) has parameter \\$rate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:testCalculateWithRulesByUsersHourlyRate\\(\\) has parameter \\$duration with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:testCalculateWithRulesByUsersHourlyRate\\(\\) has parameter \\$expectedRate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:testCalculateWithRulesByUsersHourlyRate\\(\\) has parameter \\$rules with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:testRates\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:testRates\\(\\) has parameter \\$activityInternal with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:testRates\\(\\) has parameter \\$activityIsFixed with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:testRates\\(\\) has parameter \\$activityRate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:testRates\\(\\) has parameter \\$customerInternal with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:testRates\\(\\) has parameter \\$customerIsFixed with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:testRates\\(\\) has parameter \\$customerRate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:testRates\\(\\) has parameter \\$duration with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:testRates\\(\\) has parameter \\$expectedInternalRate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:testRates\\(\\) has parameter \\$expectedRate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:testRates\\(\\) has parameter \\$projectInternal with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:testRates\\(\\) has parameter \\$projectIsFixed with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:testRates\\(\\) has parameter \\$projectRate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:testRates\\(\\) has parameter \\$timesheetFixed with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:testRates\\(\\) has parameter \\$timesheetHourly with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:testRates\\(\\) has parameter \\$userInternalRate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:testRates\\(\\) has parameter \\$userRate with no type specified\\.$#"
             count: 1
             path: Timesheet/Calculator/RateCalculatorTest.php
 
@@ -3050,137 +1750,7 @@ parameters:
             path: Timesheet/LockdownServiceTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:getRateRepositoryMock\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:getRateRepositoryMock\\(\\) has parameter \\$rates with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:getRateTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:getRuleDefinitions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:getTestUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:getTestUser\\(\\) has parameter \\$internalRate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:getTestUser\\(\\) has parameter \\$rate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testCalculateWithRulesByUsersHourlyRate\\(\\) has parameter \\$duration with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testCalculateWithRulesByUsersHourlyRate\\(\\) has parameter \\$expectedRate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testCalculateWithRulesByUsersHourlyRate\\(\\) has parameter \\$rules with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testRates\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testRates\\(\\) has parameter \\$activityInternal with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testRates\\(\\) has parameter \\$activityIsFixed with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testRates\\(\\) has parameter \\$activityRate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testRates\\(\\) has parameter \\$customerInternal with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testRates\\(\\) has parameter \\$customerIsFixed with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testRates\\(\\) has parameter \\$customerRate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testRates\\(\\) has parameter \\$duration with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testRates\\(\\) has parameter \\$expectedInternalRate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testRates\\(\\) has parameter \\$expectedRate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testRates\\(\\) has parameter \\$projectInternal with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testRates\\(\\) has parameter \\$projectIsFixed with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testRates\\(\\) has parameter \\$projectRate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testRates\\(\\) has parameter \\$timesheetFixed with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testRates\\(\\) has parameter \\$timesheetHourly with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testRates\\(\\) has parameter \\$userInternalRate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testRates\\(\\) has parameter \\$userRate with no type specified\\.$#"
             count: 1
             path: Timesheet/RateServiceTest.php
 
@@ -3352,7 +1922,7 @@ parameters:
         -
             message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
             count: 6
-            path: Timesheet/TrackingMode/AbstractTrackingModeTest.php
+            path: Timesheet/TrackingMode/AbstractTrackingModeTestCase.php
 
         -
             message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
@@ -3365,34 +1935,9 @@ parameters:
             path: Timesheet/TrackingMode/DurationFixedBeginModeTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\TrackingMode\\\\DurationFixedBeginModeTest\\:\\:createSut\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/TrackingMode/DurationFixedBeginModeTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\TrackingMode\\\\DurationFixedBeginModeTest\\:\\:createSut\\(\\) has parameter \\$default with no type specified\\.$#"
-            count: 1
-            path: Timesheet/TrackingMode/DurationFixedBeginModeTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\UtilTest\\:\\:getRateCalculationData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/UtilTest.php
-
-        -
-            message: "#^Argument of an invalid type array\\<int, string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
-            count: 4
-            path: TranslationsTest.php
-
-        -
             message: "#^Cannot access property \\$file on SimpleXMLElement\\|false\\.$#"
             count: 4
             path: TranslationsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\ContextTest\\:\\:getDefaultSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Twig/ContextTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Twig\\\\ContextTest\\:\\:getSut\\(\\) has parameter \\$headers with no value type specified in iterable type array\\.$#"
@@ -3477,11 +2022,6 @@ parameters:
         -
             message: "#^Parameter \\#1 \\$callback of function call_user_func expects callable\\(\\)\\: mixed, array\\{class\\-string, string\\}\\|\\(callable\\(\\)\\: mixed\\)\\|null given\\.$#"
             count: 5
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$timezoneId of function date_default_timezone_set expects string, string\\|null given\\.$#"
-            count: 1
             path: Twig/LocaleFormatExtensionsTest.php
 
         -
@@ -3620,36 +2160,6 @@ parameters:
             path: Utils/FormFormatConverterTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Utils\\\\JavascriptFormatConverterTest\\:\\:test\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Utils/JavascriptFormatConverterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Utils\\\\ProfileManagerTest\\:\\:getCookieProfiles\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Utils/ProfileManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Utils\\\\ProfileManagerTest\\:\\:getDatatableNames\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Utils/ProfileManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Utils\\\\ProfileManagerTest\\:\\:getInvalidProfiles\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Utils/ProfileManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Utils\\\\ProfileManagerTest\\:\\:getProfileNames\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Utils/ProfileManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Utils\\\\ProfileManagerTest\\:\\:getSessionProfiles\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Utils/ProfileManagerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Utils\\\\StringHelperTest\\:\\:getDdeAttackStrings\\(\\) has no return type specified\\.$#"
             count: 1
             path: Utils/StringHelperTest.php
@@ -3665,44 +2175,9 @@ parameters:
             path: Utils/StringHelperTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\ColorChoicesValidatorTest\\:\\:getInvalidColors\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/ColorChoicesValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\ColorChoicesValidatorTest\\:\\:getValidColors\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/ColorChoicesValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\DateTimeFormatValidatorTest\\:\\:getInvalidData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/DateTimeFormatValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\DateTimeFormatValidatorTest\\:\\:getValidData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/DateTimeFormatValidatorTest.php
-
-        -
             message: "#^Parameter \\#1 \\$string of function strtoupper expects string, int\\|string given\\.$#"
             count: 1
             path: Validator/Constraints/DurationValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\HexColorValidatorTest\\:\\:getInvalidColors\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/HexColorValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\HexColorValidatorTest\\:\\:getValidColors\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/HexColorValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\HexColorValidatorTest\\:\\:testValidationError\\(\\) has parameter \\$parameterType with no type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/HexColorValidatorTest.php
 
         -
             message: "#^Cannot cast mixed to string\\.$#"
@@ -3710,32 +2185,7 @@ parameters:
             path: Validator/Constraints/RoleValidatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\RoleValidatorTest\\:\\:getInvalidRoles\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/RoleValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\RoleValidatorTest\\:\\:getValidRoles\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/RoleValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimeFormatValidatorTest\\:\\:getInvalidTimes\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimeFormatValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimeFormatValidatorTest\\:\\:getValidTimes\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimeFormatValidatorTest.php
-
-        -
             message: "#^Cannot call method assertRaised\\(\\) on Symfony\\\\Component\\\\Validator\\\\Test\\\\ConstraintViolationAssertion\\|null\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetBasicValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetBasicValidatorTest\\:\\:getProjectStartEndTestData\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/TimesheetBasicValidatorTest.php
 
@@ -3745,44 +2195,14 @@ parameters:
             path: Validator/Constraints/TimesheetBasicValidatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidatorTest\\:\\:getViolationTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetBudgetUsedValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidatorTest\\:\\:testWithActivityTimeBudget\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetBudgetUsedValidatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidatorTest\\:\\:testWithActivityTimeBudget\\(\\) has parameter \\$rawData with no value type specified in iterable type array\\.$#"
             count: 1
             path: Validator/Constraints/TimesheetBudgetUsedValidatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetLockdownValidatorTest\\:\\:getConfigTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetLockdownValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetLockdownValidatorTest\\:\\:getTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetLockdownValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetRestartValidatorTest\\:\\:getTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetRestartValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetZeroDurationValidatorTest\\:\\:prepareTimesheet\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetZeroDurationValidatorTest.php
-
-        -
             message: "#^Parameter \\#1 \\$objectOrClass of class ReflectionClass constructor expects class\\-string\\<T of object\\>\\|T of object, string given\\.$#"
             count: 1
-            path: Voter/AbstractVoterTest.php
+            path: Voter/AbstractVoterTestCase.php
 
         -
             message: "#^Method App\\\\Tests\\\\Voter\\\\ActivityVoterTest\\:\\:assertVote\\(\\) has parameter \\$attribute with no type specified\\.$#"
@@ -3890,41 +2310,6 @@ parameters:
             path: Voter/RolePermissionVoterTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TeamVoterTest\\:\\:getTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Voter/TeamVoterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TeamVoterTest\\:\\:testVote\\(\\) has parameter \\$attribute with no type specified\\.$#"
-            count: 1
-            path: Voter/TeamVoterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TeamVoterTest\\:\\:testVote\\(\\) has parameter \\$result with no type specified\\.$#"
-            count: 1
-            path: Voter/TeamVoterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TeamVoterTest\\:\\:testVote\\(\\) has parameter \\$subject with no type specified\\.$#"
-            count: 1
-            path: Voter/TeamVoterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:assertVote\\(\\) has parameter \\$attribute with no type specified\\.$#"
-            count: 1
-            path: Voter/TimesheetVoterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:assertVote\\(\\) has parameter \\$result with no type specified\\.$#"
-            count: 1
-            path: Voter/TimesheetVoterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:assertVote\\(\\) has parameter \\$subject with no type specified\\.$#"
-            count: 1
-            path: Voter/TimesheetVoterTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:getLockDownTestData\\(\\) has no return type specified\\.$#"
             count: 1
             path: Voter/TimesheetVoterTest.php
@@ -3936,21 +2321,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:getTimesheet\\(\\) has parameter \\$user with no type specified\\.$#"
-            count: 1
-            path: Voter/TimesheetVoterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:testVote\\(\\) has parameter \\$attribute with no type specified\\.$#"
-            count: 1
-            path: Voter/TimesheetVoterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:testVote\\(\\) has parameter \\$result with no type specified\\.$#"
-            count: 1
-            path: Voter/TimesheetVoterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:testVote\\(\\) has parameter \\$subject with no type specified\\.$#"
             count: 1
             path: Voter/TimesheetVoterTest.php
 
@@ -3980,14 +2350,14 @@ parameters:
             path: Voter/UserVoterTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AbstractWidgetTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AbstractWidgetTestCase\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
-            path: Widget/Type/AbstractWidgetTest.php
+            path: Widget/Type/AbstractWidgetTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AbstractWidgetTypeTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AbstractWidgetTypeTestCase\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
-            path: Widget/Type/AbstractWidgetTypeTest.php
+            path: Widget/Type/AbstractWidgetTypeTestCase.php
 
         -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\ActiveUsersYearTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -4030,18 +2400,13 @@ parameters:
             path: Widget/Type/MoreTest.php
 
         -
-            message: "#^Cannot access offset 'financialBegin' on mixed\\.$#"
-            count: 2
-            path: Widget/Type/PaginatedWorkingTimeChartTest.php
-
-        -
             message: "#^Parameter \\#2 \\$array of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertArrayHasKey\\(\\) expects array\\|ArrayAccess, mixed given\\.$#"
-            count: 2
+            count: 1
             path: Widget/Type/PaginatedWorkingTimeChartTest.php
 
         -
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertCount\\(\\) expects Countable\\|iterable, mixed given\\.$#"
-            count: 2
+            count: 1
             path: Widget/Type/PaginatedWorkingTimeChartTest.php
 
         -
@@ -4093,3 +2458,29 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\UserDurationYearTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Widget/Type/UserDurationYearTest.php
+        -
+          message: '''
+                    #^Fetching class constant class of deprecated class App\\Timesheet\\Util\:
+                    use RateCalculatorMode instead$#
+                '''
+          identifier: classConstant.deprecatedClass
+          count: 1
+          path: Timesheet/UtilTest.php
+
+        -
+          message: '''
+                    #^Call to method calculateRate\(\) of deprecated class App\\Timesheet\\Util\:
+                    use RateCalculatorMode instead$#
+                '''
+          identifier: staticMethod.deprecatedClass
+          count: 2
+          path: Timesheet/UtilTest.php
+
+        -
+          message: '''
+                    #^Call to method decimalizeDuration\(\) of deprecated class App\\Timesheet\\Util\:
+                    use RateCalculatorMode instead$#
+                '''
+          identifier: staticMethod.deprecatedClass
+          count: 1
+          path: Timesheet/UtilTest.php

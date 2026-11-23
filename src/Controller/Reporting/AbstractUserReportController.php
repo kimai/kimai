@@ -16,6 +16,7 @@ use App\Model\DateStatisticInterface;
 use App\Model\Statistic\StatisticDate;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
+use App\Repository\Query\TimesheetStatisticQuery;
 use App\Timesheet\TimesheetStatisticService;
 use DateTimeInterface;
 
@@ -37,7 +38,7 @@ abstract class AbstractUserReportController extends AbstractController
 
     protected function getStatisticDataRaw(DateTimeInterface $begin, DateTimeInterface $end, User $user): array
     {
-        return $this->statisticService->getDailyStatisticsGrouped($begin, $end, [$user]);
+        return $this->statisticService->getDailyStatisticsGrouped(new TimesheetStatisticQuery($begin, $end, [$user]));
     }
 
     protected function createStatisticModel(DateTimeInterface $begin, DateTimeInterface $end, User $user): DateStatisticInterface

@@ -1,4 +1,4 @@
-{% macro customer(customer, view, options) %}
+{% macro customer(customer, view) %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% set event = actions(app.user, 'customer', view, {'customer': customer}) %}
     {% if view == 'index' or view == 'custom' %}

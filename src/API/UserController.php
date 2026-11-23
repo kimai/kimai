@@ -10,23 +10,29 @@
 namespace App\API;
 
 use App\Entity\AccessToken;
+use App\Entity\Role;
 use App\Entity\User;
+use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
 use App\Form\API\UserApiCreateForm;
 use App\Form\API\UserApiEditForm;
 use App\Repository\AccessTokenRepository;
 use App\Repository\Query\UserQuery;
+use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
 use App\User\UserService;
 use App\Utils\SearchTerm;
+use App\Validator\MetaFieldValidator;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -42,30 +48,28 @@ final class UserController extends BaseApiController
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
-        private readonly UserRepository $repository,
+        private readonly UserRepository $repository
     ) {
     }
 
     /**
-     * Returns the collection of users (which are visible to the user)
+     * Fetch users
      */
     #[IsGranted('view_user')]
-    #[OA\Response(response: 200, description: 'Returns the collection of users. Required permission: view_user', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/UserCollection')))]
+    #[OA\Response(response: 200, description: 'Returns a collection of users. Required permission: view_user', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/UserCollection')))]
     #[Route(methods: ['GET'], path: '', name: 'get_users')]
     #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', default: 1, strict: true, nullable: true, description: 'Visibility status to filter users: 1=visible, 2=hidden, 3=all')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|username|alias|email', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, username, alias, email (default: username)')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
-    #[Rest\QueryParam(name: 'term', description: 'Free search term')]
+    #[Rest\QueryParam(name: 'term', description: 'Free search term', nullable: true)]
     #[Rest\QueryParam(name: 'full', requirements: '0|1|true|false', strict: true, nullable: true, description: 'Allows to fetch full objects including subresources. Allowed values: 0|1|false|true (default: false)')]
-    #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display, renders a 404 if not found (default: 1)')]
-    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page (default: 50)')]
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         $query = new UserQuery();
-        $this->prepareQuery($query, $paramFetcher);
+        $query->setCurrentUser($this->getUser());
 
         $visible = $paramFetcher->get('visible');
-        if (\is_string($visible) && $visible !== '') {
+        if (is_numeric($visible)) {
             $query->setVisibility((int) $visible);
         }
 
@@ -84,8 +88,9 @@ final class UserController extends BaseApiController
             $query->setSearchTerm(new SearchTerm($term));
         }
 
-        $pagination = $this->repository->getPagerfantaForQuery($query);
-        $view = $this->createPaginatedView($pagination);
+        $query->setIsApiCall(true);
+        $data = $this->repository->getUsersForQuery($query);
+        $view = new View($data, 200);
 
         $full = $paramFetcher->get('full');
         if ($full === '1' || $full === 'true') {
@@ -98,7 +103,7 @@ final class UserController extends BaseApiController
     }
 
     /**
-     * Return one user entity
+     * Fetch user
      */
     #[IsGranted('view', 'profile')]
     #[OA\Response(response: 200, description: 'Return one user entity.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
@@ -117,7 +122,7 @@ final class UserController extends BaseApiController
     }
 
     /**
-     * Return the current user entity
+     * Fetch current user
      */
     #[OA\Response(response: 200, description: 'Return the current user entity.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
     #[Route(methods: ['GET'], path: '/me', name: 'me_user')]
@@ -130,12 +135,12 @@ final class UserController extends BaseApiController
     }
 
     /**
-     * Creates a new user
+     * Create user
      */
     #[IsGranted('create_user')]
-    #[OA\Post(description: 'Creates a new user and returns it afterwards')]
+    #[OA\Post(description: 'Creates a new user and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created user', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/UserCreateForm'))]
-    #[Route(methods: ['POST'], path: '', name: 'post_user')]
+    #[Route(path: '', name: 'post_user', methods: ['POST'])]
     public function postAction(Request $request, UserService $userService): Response
     {
         $user = $userService->createNewUser();
@@ -178,7 +183,7 @@ final class UserController extends BaseApiController
             'include_active_flag' => ($profile->getId() !== $this->getUser()->getId()),
             'include_preferences' => $this->isGranted('preferences', $profile),
             'include_supervisor' => $this->isGranted('supervisor', $profile),
-            'include_password_reset' => $this->isGranted('password', $profile),
+            'include_password_reset' => $this->isGranted('roles', $profile),
         ]);
 
         $form->setData($profile);
@@ -200,7 +205,34 @@ final class UserController extends BaseApiController
     }
 
     /**
-     * Delete an API token for the current user
+     * Delete a user role
+     */
+    #[IsGranted('role_permissions')]
+    #[OA\Delete(description: 'Deletes the role and removes it from every user owning it.', responses: [new OA\Response(response: 204, description: 'Empty')], x: ['internal' => true])]
+    #[OA\Parameter(name: 'id', description: 'The role ID to delete', in: 'path', required: true)]
+    #[Route(path: '/roles/{id}', name: 'delete_user_role', requirements: ['id' => '\d+'], methods: ['DELETE'])]
+    public function deleteRole(Role $role, RoleRepository $roleRepository): Response
+    {
+        $name = $role->getName();
+
+        // workaround, as roles is still a string array on users table
+        // until this is changed, the users must be manually updated
+        if ($name !== null) {
+            foreach ($this->repository->findUsersWithRole($name) as $user) {
+                $user->removeRole($name);
+                $this->repository->saveUser($user);
+            }
+        }
+
+        $roleRepository->deleteRole($role);
+
+        return $this->viewHandler->handle(new View(null, Response::HTTP_NO_CONTENT));
+    }
+
+    /**
+     * Delete API token
+     *
+     * This ONLY works if the given API token exists and belongs to the current user
      */
     #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Success if the token could be deleted.')])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The API token ID to remove', required: true)]
@@ -219,6 +251,69 @@ final class UserController extends BaseApiController
         $accessTokenRepository->deleteAccessToken($accessToken);
 
         $view = new View(null, Response::HTTP_OK);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Update user preferences
+     */
+    #[IsGranted('preferences', 'profile')]
+    #[OA\Response(response: 200, description: 'Sets the value of a configured preference. You cannot create unknown or update disabled preferences.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
+    #[OA\Parameter(name: 'id', description: 'User ID to set the custom-field value for', in: 'path', required: true)]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(type: 'array', items: new OA\Items(new Model(type: UserPreference::class))))]
+    #[Route(path: '/{id}/preferences', requirements: ['id' => '\d+'], methods: ['PATCH'])]
+    public function updateUserPreference(User $profile, Request $request, EventDispatcherInterface $dispatcher, UserService $userService, MetaFieldValidator $metaFieldValidator): Response
+    {
+        $event = new PrepareUserEvent($profile, false);
+        $dispatcher->dispatch($event);
+        $dirty = false;
+
+        foreach ($request->request->all() as $preference) {
+            // why is this not handled by FosRestBundle ?
+            if (!\is_array($preference)) {
+                throw new BadRequestHttpException('Invalid request, array expected');
+            }
+
+            if (!\array_key_exists('name', $preference) || !\array_key_exists('value', $preference)) {
+                throw new BadRequestHttpException('Missing required parameter "name" or "value"');
+            }
+
+            if (!\is_string($preference['name'])) {
+                throw new BadRequestHttpException('Invalid parameter "name", string expected');
+            }
+
+            $name = $preference['name'];
+            $value = $preference['value'];
+
+            if (null === ($meta = $profile->getPreference($name))) {
+                throw $this->createNotFoundException(\sprintf('Unknown custom-field "%s" requested', $name));
+            }
+
+            // the name is normalized and dots (.) are replaced with underscores (_)
+            // a string like ..pw_reset.. is normalized to __pw_reset__
+
+            if (str_starts_with($meta->getName(), '__')) {
+                throw $this->createAccessDeniedException('Cannot modify internal preference: ' . $name);
+            }
+
+            if (!$meta->isEnabled()) {
+                throw $this->createAccessDeniedException('User tried to update preference: ' . $name);
+            }
+
+            $metaFieldValidator->validateUserPreference($profile, $meta, $value);
+            // like the form layer: the JSON decoder converts null to an empty string, which is
+            // not the same as "not configured" for preferences with a fallback like internal_rate
+            $meta->setValue($value === '' ? null : $value);
+            $dirty = true;
+        }
+
+        if ($dirty) {
+            $userService->saveUser($profile);
+        }
+
+        $view = new View($profile, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);

@@ -12,11 +12,10 @@ namespace App\Tests\Event;
 use App\Event\SystemConfigurationEvent;
 use App\Form\Model\Configuration;
 use App\Form\Model\SystemConfiguration;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\SystemConfigurationEvent
- */
+#[CoversClass(SystemConfigurationEvent::class)]
 class SystemConfigurationEventTest extends TestCase
 {
     public function testDefaultValues(): void

@@ -11,17 +11,16 @@ namespace App\Tests\Event;
 
 use App\Entity\Activity;
 use App\Event\ActivityMetaDefinitionEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\ActivityMetaDefinitionEvent
- */
+#[CoversClass(ActivityMetaDefinitionEvent::class)]
 class ActivityMetaDefinitionEventTest extends TestCase
 {
     public function testGetterAndSetter(): void
     {
         $activity = new Activity();
         $sut = new ActivityMetaDefinitionEvent($activity);
-        $this->assertSame($activity, $sut->getEntity());
+        self::assertSame($activity, $sut->getEntity());
     }
 }

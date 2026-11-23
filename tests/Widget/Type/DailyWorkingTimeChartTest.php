@@ -11,15 +11,14 @@ namespace App\Tests\Widget\Type;
 
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
+use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\DailyWorkingTimeChart;
-use App\Widget\WidgetInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Widget\Type\DailyWorkingTimeChart
- * @covers \App\Widget\Type\AbstractWidgetType
- * @covers \App\Repository\TimesheetRepository
- */
+#[CoversClass(DailyWorkingTimeChart::class)]
+#[CoversClass(AbstractWidgetType::class)]
+#[CoversClass(TimesheetRepository::class)]
 class DailyWorkingTimeChartTest extends TestCase
 {
     public function createSut(): DailyWorkingTimeChart
@@ -35,7 +34,6 @@ class DailyWorkingTimeChartTest extends TestCase
     public function testDefaultValues(): void
     {
         $sut = $this->createSut();
-        self::assertInstanceOf(WidgetInterface::class, $sut);
         self::assertEquals('DailyWorkingTimeChart', $sut->getId());
         self::assertEquals('stats.yourWorkingHours', $sut->getTitle());
         $options = $sut->getOptions();

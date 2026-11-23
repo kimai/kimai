@@ -1,10 +1,6 @@
 {% set favorites = favorite_timesheets(app.user, 10) %}
 {% if favorites|length > 0 %}
     {% from 'macros/widgets.html.twig' import label_customer, label_project, label_activity %}
-    {% set class = "btn-outline-white" %}
-    {% if tabler_bundle.isDarkMode() or tabler_bundle.isNavbarOverlapping() %}
-        {% set class = "btn-dark" %}
-    {% endif %}
     <div class="list-group list-group-flush list-group-hoverable menu">
         {% set counter = 0 %}
         {% for favorite in favorites %}
@@ -14,11 +10,11 @@
                 <div class="list-group-item">
                     <div class="row align-items-center">
                         <div class="col text-truncate" >
-                            <a class="api-link text-decoration-none text-body d-block" href="{{ path('restart_timesheet', {'id': entry.id}) }}"
-                               data-event="kimai.timesheetStart kimai.timesheetUpdate kimai.closeRemoteModal" data-method="PATCH" data-msg-error="timesheet.start.error"
-                               data-msg-success="timesheet.start.success">
+                            <a class="api-link text-decoration-none text-body d-block" href="#" data-href="{{ path('restart_timesheet', {'id': entry.id}) }}"
+                               data-event="kimai.timesheetStart kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.start.error"
+                               data-msg-success="timesheet.start.success" data-bs-dismiss="modal">
                                 {{ label_activity(entry.activity) }}
-                                <div class="d-block text-truncate mt-n1">
+                                <div class="d-block text-truncate">
                                     {{ label_project(entry.project) }}
                                     {{ label_customer(entry.project.customer) }}
                                 </div>
@@ -26,11 +22,15 @@
                         </div>
                         <div class="col-auto">
                             {% if favorite.isFavorite() %}
-                            <a href="{{ path('favorites_timesheets_remove', {'id': favorite.timesheet.id}) }}" class="list-group-item-actions show remote-modal-reload">
+                            <a href="#" data-href="{{ path('delete_favorite_timesheet', {'id': favorite.timesheet.id}) }}"
+                               data-method="DELETE" data-event="kimai.favoriteUpdate" data-msg-error="action.delete.error"
+                               class="list-group-item-actions show api-link">
                                 <i class="text-yellow {{ 'bookmarked'|icon }}"></i>
                             </a>
                             {% else %}
-                            <a href="{{ path('favorites_timesheets_add', {'id': favorite.timesheet.id}) }}" class="list-group-item-actions remote-modal-reload">
+                            <a href="#" data-href="{{ path('post_favorite_timesheet', {'id': favorite.timesheet.id}) }}"
+                               data-method="POST" data-event="kimai.favoriteUpdate" data-msg-error="action.update.error"
+                               class="list-group-item-actions api-link">
                                 {{ icon('bookmark') }}
                             </a>
                             {% endif %}

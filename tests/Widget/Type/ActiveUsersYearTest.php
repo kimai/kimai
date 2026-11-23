@@ -11,17 +11,15 @@ namespace App\Tests\Widget\Type;
 
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
-use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Widget\Type\AbstractCounterYear;
 use App\Widget\Type\AbstractWidget;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\ActiveUsersYear;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Widget\Type\ActiveUsersYear
- * @covers \App\Widget\Type\AbstractCounterYear
- */
-class ActiveUsersYearTest extends AbstractWidgetTypeTest
+#[CoversClass(ActiveUsersYear::class)]
+#[CoversClass(AbstractCounterYear::class)]
+class ActiveUsersYearTest extends AbstractWidgetTypeTestCase
 {
     /**
      * @return AbstractCounterYear
@@ -29,9 +27,8 @@ class ActiveUsersYearTest extends AbstractWidgetTypeTest
     public function createSut(): AbstractWidgetType
     {
         $repository = $this->createMock(TimesheetRepository::class);
-        $configuration = SystemConfigurationFactory::createStub();
 
-        $sut = new ActiveUsersYear($repository, $configuration);
+        $sut = new ActiveUsersYear($repository);
         $sut->setUser(new User());
 
         return $sut;

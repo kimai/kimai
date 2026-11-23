@@ -1,0 +1,93 @@
+<?php
+
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace App\EventSubscriber;
+
+use App\Entity\User;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+
+class PasswordResetSubscriber implements EventSubscriberInterface
+{
+    public function __construct(
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly AuthorizationCheckerInterface $security,
+        private readonly TokenStorageInterface $storage,
+    ) {
+    }
+
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            // higher priority is executed earlier - need to be higher than wizard
+            KernelEvents::REQUEST => ['onKernelRequest', -20]
+        ];
+    }
+
+    public function onKernelRequest(RequestEvent $event): void
+    {
+        // ignore sub-requests
+        if (!$event->isMainRequest() || null === ($token = $this->storage->getToken())) {
+            return;
+        }
+
+        $request = $event->getRequest();
+
+        // never trigger password reset on API calls
+        if (str_starts_with($request->getPathInfo(), '/api/')) {
+            return;
+        }
+
+        // the matched route name is used on purpose: matching on the raw request URI
+        // would allow to bypass this check by adding e.g. "?foo=/wizard/" to any URL
+        $route = $request->attributes->get('_route');
+        if (\is_string($route) && self::isAllowedRoute($route)) {
+            return;
+        }
+
+        $user = $token->getUser();
+
+        if (!($user instanceof User)) {
+            return;
+        }
+
+        // remembered users must be redirected as well, otherwise closing the browser would skip the reset.
+        // users with a pending 2FA challenge are not granted this attribute and must finish the login first.
+        if (!$this->security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return;
+        }
+
+        if (!$user->requiresPasswordReset()) {
+            return;
+        }
+
+        $response = new RedirectResponse($this->urlGenerator->generate('wizard_password'));
+        $event->setResponse($response);
+    }
+
+    /**
+     * Routes that must be reachable while a password reset is pending.
+     */
+    public static function isAllowedRoute(string $route): bool
+    {
+        // TODO 3.0 remove registration routes
+        // remembered users are sent from the wizard (requires full authentication) to the login form to unlock their session
+        return $route === 'logout'
+            || $route === 'login'
+            || $route === 'security_check'
+            || $route === 'user_registration_check_email'
+            || str_starts_with($route, 'wizard_')
+            || str_starts_with($route, 'registration_');
+    }
+}

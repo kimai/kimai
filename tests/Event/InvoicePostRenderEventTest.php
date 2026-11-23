@@ -17,12 +17,11 @@ use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Invoice\Renderer\DebugRenderer;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @covers \App\Event\InvoicePostRenderEvent
- */
+#[CoversClass(InvoicePostRenderEvent::class)]
 class InvoicePostRenderEventTest extends TestCase
 {
     public function testDefaultValues(): void

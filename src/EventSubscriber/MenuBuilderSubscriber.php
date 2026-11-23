@@ -21,7 +21,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 final class MenuBuilderSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private MenuService $menuService)
+    public function __construct(private readonly MenuService $menuService)
     {
     }
 
@@ -53,7 +53,7 @@ final class MenuBuilderSubscriber implements EventSubscriberInterface
             $event->addItem($menuEvent->getSystemMenu());
         }
 
-        $route = $event->getRequest()->get('_route');
+        $route = $event->getRequest()->attributes->get('_route');
         if (!\is_string($route)) {
             return;
         }

@@ -12,12 +12,11 @@ namespace App\Tests\Event;
 use App\Entity\Timesheet;
 use App\Event\AbstractTimesheetEvent;
 use App\Event\TimesheetStopPreEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Event\AbstractTimesheetEvent
- * @covers \App\Event\TimesheetStopPreEvent
- */
-class TimesheetStopPreEventTest extends AbstractTimesheetEventTest
+#[CoversClass(AbstractTimesheetEvent::class)]
+#[CoversClass(TimesheetStopPreEvent::class)]
+class TimesheetStopPreEventTest extends AbstractTimesheetEventTestCase
 {
     protected function createTimesheetEvent(Timesheet $timesheet): AbstractTimesheetEvent
     {

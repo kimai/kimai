@@ -27,9 +27,9 @@ abstract class AbstractTrackingMode implements TrackingModeInterface
         $this->setFromToFromRequest($timesheet, $request);
     }
 
-    protected function setBeginEndFromRequest(Timesheet $entry, Request $request)
+    protected function setBeginEndFromRequest(Timesheet $entry, Request $request): void
     {
-        $start = $request->get('begin');
+        $start = $request->query->get('begin');
         if (null === $start) {
             return;
         }
@@ -42,7 +42,7 @@ abstract class AbstractTrackingMode implements TrackingModeInterface
         $entry->setBegin($start);
 
         // only check for an end date if a begin date was given
-        $end = $request->get('end');
+        $end = $request->query->get('end');
         if (null === $end) {
             return;
         }
@@ -59,33 +59,33 @@ abstract class AbstractTrackingMode implements TrackingModeInterface
         $entry->setDuration($end->getTimestamp() - $start->getTimestamp());
     }
 
-    protected function setFromToFromRequest(Timesheet $entry, Request $request)
+    protected function setFromToFromRequest(Timesheet $entry, Request $request): void
     {
-        $from = $request->get('from');
-        if (null === $from) {
+        $from = $request->query->get('from');
+        if (!\is_string($from)) {
             return;
         }
 
         try {
             $from = new DateTime($from, $this->getTimezone($entry));
+            $entry->setBegin($from);
         } catch (\Exception $ex) {
             return;
         }
 
-        $entry->setBegin($from);
-
-        $to = $request->get('to');
-        if (null === $to) {
+        // only check for an end date if a valid begin date was given
+        $to = $request->query->get('to');
+        if (!\is_string($to)) {
             return;
         }
 
         try {
             $to = new DateTime($to, $this->getTimezone($entry));
+            $entry->setEnd($to);
         } catch (\Exception $ex) {
             return;
         }
 
-        $entry->setEnd($to);
         $entry->setDuration($to->getTimestamp() - $from->getTimestamp());
     }
 }

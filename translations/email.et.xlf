@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="et" datatype="plaintext" original="email.en.xlf">
+    <body>
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" xml:space="preserve">
+        <source>automated_email_dont_answer</source>
+        <target state="translated">See on automaatselt genereeritud e-mail. Palume sellele mitte vastata, sest vastuseid ei toimetata edasi.</target>
+      </trans-unit>
+      <trans-unit id="QtcznHC" resname="registration.title" xml:space="preserve">
+        <source>registration.title</source>
+        <target state="translated">Tere tulemast, %username%</target>
+      </trans-unit>
+      <trans-unit id="pjr3FDv" resname="registration.subject" xml:space="preserve">
+        <source>registration.subject</source>
+        <target state="translated">Aktiveeri oma konto</target>
+      </trans-unit>
+      <trans-unit id="YMLel3P" resname="registration.button" xml:space="preserve">
+        <source>registration.button</source>
+        <target state="translated">Aktiveeri oma konto</target>
+      </trans-unit>
+      <trans-unit id="IkjnHoP" resname="registration.intro" xml:space="preserve">
+        <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
+        <target state="translated">Registreerusid Kimai ajaarvestuse kasutajaks e-posti aadressiga %email%. Palun aktiveeri oma konto järgmise paari tunni jooksul, enne kui link aegub.</target>
+      </trans-unit>
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
+        <source>reset.subject</source>
+        <target state="translated">Logi Kimai'sse sisse</target>
+      </trans-unit>
+      <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve" approved="no">
+        <source>Forgot your password?</source>
+        <target state="translated">Logi oma kontole sisse</target>
+      </trans-unit>
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
+        <source>reset.button</source>
+        <target state="translated">Logi sisse</target>
+      </trans-unit>
+      <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve" approved="no">
+        <source>Don't worry, Kimai will help you create a new one!</source>
+        <target state="translated">See link kehtib ainult järgmised 15 minutit.</target>
+      </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">Uus puudumine: %user% (%type%)</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>A new absence was created for %user%.
+
+%list%
+
+Please review them at: %url%</source>
+        <target state="translated">Kasutajale %user% lisati uus puudumine.
+
+%list%
+
+Palun vaata need üle aadressil: %url%</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">Kinnitusavaldus: %user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">Kasutajale %user% on esitatud kinnitusavaldus.
+
+%list%
+
+Palun vaata need üle aadressil: %url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Teie taotlus on tagasi lükatud</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Sinu kinnitusavaldus lükati kasutaja %created_by% poolt tagasi.
+
+%list%
+
+Palun vaata oma taotlused üle aadressil: %url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Teie taotlus on heaks kiidetud</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">Kasutaja %created_by% kiitis sinu taotluse heaks.
+
+%list%
+
+Leiad kõik oma taotlused aadressil: %url%</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

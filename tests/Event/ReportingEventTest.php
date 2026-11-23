@@ -12,11 +12,10 @@ namespace App\Tests\Event;
 use App\Entity\User;
 use App\Event\ReportingEvent;
 use App\Reporting\Report;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\ReportingEvent
- */
+#[CoversClass(ReportingEvent::class)]
 class ReportingEventTest extends TestCase
 {
     public function testGetterAndSetter(): void

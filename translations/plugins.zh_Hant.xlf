@@ -18,6 +18,10 @@
         <source>Buy now</source>
         <target state="final">購買</target>
       </trans-unit>
+      <trans-unit id="aNvGEaj" resname="update_available" xml:space="preserve">
+        <source>Update available</source>
+        <target state="translated">有可用的更新: %version%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

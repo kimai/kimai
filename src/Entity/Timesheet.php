@@ -9,12 +9,15 @@
 
 namespace App\Entity;
 
-use App\Doctrine\ModifiedAt;
+use App\Doctrine\Behavior\ModifiedAt;
+use App\Doctrine\Behavior\ModifiedTrait;
+use App\Repository\TimesheetRepository;
 use App\Validator\Constraints as Constraints;
 use DateTime;
 use DateTimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use OpenApi\Attributes as OA;
@@ -36,7 +39,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Index(columns: ['end_time', 'user', 'start_time'], name: 'IDX_TIMESHEET_TICKTAC')]
 #[ORM\Index(columns: ['user', 'project_id', 'activity_id'], name: 'IDX_TIMESHEET_RECENT_ACTIVITIES')]
 #[ORM\Index(columns: ['user', 'id', 'duration'], name: 'IDX_TIMESHEET_RESULT_STATS')]
-#[ORM\Entity(repositoryClass: 'App\Repository\TimesheetRepository')]
+#[ORM\Entity(repositoryClass: TimesheetRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[ORM\HasLifecycleCallbacks]
 #[Serializer\ExclusionPolicy('all')]
@@ -48,24 +51,26 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Constraints\TimesheetDeactivated]
 class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
 {
+    use ModifiedTrait;
+
     /**
-     * Category: Normal work-time (default category)
+     * @deprecated since 2.45
      */
     public const WORK = 'work';
     /**
-     * Category: Holiday
+     * @deprecated since 2.45
      */
     public const HOLIDAY = 'holiday';
     /**
-     * Category: Sickness
+     * @deprecated since 2.45
      */
     public const SICKNESS = 'sickness';
     /**
-     * Category: Parental leave
+     * @deprecated since 2.45
      */
     public const PARENTAL = 'parental';
     /**
-     * Category: Overtime reduction
+     * @deprecated since 2.45
      */
     public const OVERTIME = 'overtime';
 
@@ -77,7 +82,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     /**
      * Unique Timesheet ID
      */
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[Serializer\Expose]
@@ -87,7 +92,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
      * Reflects the date in the user timezone (not in UTC).
      * This value is automatically set through the begin column and ONLY used in statistic queries.
      */
-    #[ORM\Column(name: 'date_tz', type: 'date_immutable', nullable: false)]
+    #[ORM\Column(name: 'date_tz', type: Types::DATE_IMMUTABLE, nullable: false)]
     #[Assert\NotNull]
     private ?\DateTimeImmutable $date = null;
     /**
@@ -95,7 +100,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      */
-    #[ORM\Column(name: 'start_time', type: 'datetime', nullable: false)]
+    #[ORM\Column(name: 'start_time', type: Types::DATETIME_MUTABLE, nullable: false)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -107,7 +112,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      */
-    #[ORM\Column(name: 'end_time', type: 'datetime', nullable: true)]
+    #[ORM\Column(name: 'end_time', type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'DateTime')]
@@ -116,68 +121,103 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     /**
      * @internal for storing the timezone of "begin" and "end" date
      */
-    #[ORM\Column(name: 'timezone', type: 'string', length: 64, nullable: false)]
+    #[ORM\Column(name: 'timezone', type: Types::STRING, length: 64, nullable: false)]
     #[Assert\Timezone]
     private ?string $timezone = null;
     /**
      * @internal for storing the localized state of dates (see $timezone)
      */
     private bool $localized = false;
-    #[ORM\Column(name: 'duration', type: 'integer', nullable: true)]
+    #[ORM\Column(name: 'duration', type: Types::INTEGER, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?int $duration = 0;
+    /**
+     * Break duration for this record in seconds, can be null.
+     */
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[ORM\Column(name: 'break', type: Types::INTEGER, nullable: true)]
+    private ?int $break = 0;
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: '`user`', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Subresource', 'Expanded'])]
+    #[Serializer\Groups(['Expanded'])]
     #[OA\Property(ref: '#/components/schemas/User')]
     private ?User $user = null;
     #[ORM\ManyToOne(targetEntity: Activity::class)]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Subresource', 'Expanded'])]
+    #[Serializer\Groups(['Expanded'])]
     #[OA\Property(ref: '#/components/schemas/ActivityExpanded')]
     private ?Activity $activity = null;
     #[ORM\ManyToOne(targetEntity: Project::class)]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Subresource', 'Expanded'])]
+    #[Serializer\Groups(['Expanded'])]
     #[OA\Property(ref: '#/components/schemas/ProjectExpanded')]
     private ?Project $project = null;
-    #[ORM\Column(name: 'description', type: 'text', nullable: true)]
+    #[ORM\Column(name: 'description', type: Types::TEXT, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?string $description = null;
-    #[ORM\Column(name: 'rate', type: 'float', nullable: false)]
+    /**
+     * Total rate for this timesheet.
+     *
+     * Optional. Only included if the current user may see the rates of this record: `view_rate_own_timesheet` permission for own records, `view_rate_other_timesheet` for records of other users.
+     */
+    #[ORM\Column(name: 'rate', type: Types::FLOAT, nullable: false)]
     #[Assert\GreaterThanOrEqual(0)]
     #[Assert\NotNull]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Default'])]
+    #[Serializer\Groups(['Timesheet_Rate'])]
     private float $rate = 0.00;
-    #[ORM\Column(name: 'internal_rate', type: 'float', nullable: true)]
+    /**
+     * Total internal-rate for this timesheet.
+     *
+     * Optional. Only included if the current user may see the rates of this record: `view_rate_own_timesheet` permission for own records, `view_rate_other_timesheet` for records of other users.
+     */
+    #[ORM\Column(name: 'internal_rate', type: Types::FLOAT, nullable: true)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Default'])]
+    #[Serializer\Groups(['Timesheet_Rate'])]
     private ?float $internalRate = null;
-    #[ORM\Column(name: 'fixed_rate', type: 'float', nullable: true)]
+    /**
+     * If this timesheet has a fixed rate, this field is not `null`.
+     *
+     * Optional. Only included if the current user may see the rates of this record: `view_rate_own_timesheet` permission for own records, `view_rate_other_timesheet` for records of other users.
+     */
+    #[ORM\Column(name: 'fixed_rate', type: Types::FLOAT, nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Entity'])]
+    #[Serializer\Groups(['Timesheet_Entity_Rate'])]
     private ?float $fixedRate = null;
-    #[ORM\Column(name: 'hourly_rate', type: 'float', nullable: true)]
+    /**
+     * The hourly rate of this timesheet, `null` if the timesheet has a fixed rate.
+     *
+     * Optional. Only included if the current user may see the rates of this record: `view_rate_own_timesheet` permission for own records, `view_rate_other_timesheet` for records of other users.
+     */
+    #[ORM\Column(name: 'hourly_rate', type: Types::FLOAT, nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Entity'])]
+    #[Serializer\Groups(['Timesheet_Entity_Rate'])]
     private ?float $hourlyRate = null;
-    #[ORM\Column(name: 'exported', type: 'boolean', nullable: false, options: ['default' => false])]
+    /**
+     * Whether this timesheet was already exported.
+     *
+     * Exported timesheets cannot be edited any more by regular users.
+     */
+    #[ORM\Column(name: 'exported', type: Types::BOOLEAN, nullable: false, options: ['default' => false])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private bool $exported = false;
-    #[ORM\Column(name: 'billable', type: 'boolean', nullable: false, options: ['default' => true])]
+    /**
+     * Whether this timesheet is billable.
+     */
+    #[ORM\Column(name: 'billable', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -187,15 +227,13 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
      */
     #[Assert\NotNull]
     private ?string $billableMode = self::BILLABLE_DEFAULT;
-    #[ORM\Column(name: 'category', type: 'string', length: 10, nullable: false, options: ['default' => 'work'])]
+    #[ORM\Column(name: 'category', type: Types::STRING, length: 10, nullable: false, options: ['default' => 'work'])]
     #[Assert\NotNull]
-    private ?string $category = self::WORK;
-    #[ORM\Column(name: 'modified_at', type: 'datetime_immutable', nullable: true)]
-    private \DateTimeImmutable $modifiedAt;
+    private ?string $category = 'work';
     /**
      * Tags
      *
-     * @var Collection<Tag>
+     * @var Collection<int, Tag>
      */
     #[ORM\JoinTable(name: 'kimai2_timesheet_tags')]
     #[ORM\JoinColumn(name: 'timesheet_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
@@ -206,7 +244,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     /**
      * Meta fields registered with the timesheet
      *
-     * @var Collection<TimesheetMeta>
+     * @var Collection<int, TimesheetMeta>
      */
     #[ORM\OneToMany(mappedBy: 'timesheet', targetEntity: TimesheetMeta::class, cascade: ['persist'])]
     #[Serializer\Expose]
@@ -220,7 +258,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     {
         $this->tags = new ArrayCollection();
         $this->meta = new ArrayCollection();
-        $this->modifiedAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+        $this->markAsModified();
     }
 
     /**
@@ -318,10 +356,20 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     public function getCalculatedDuration(): ?int
     {
         if ($this->begin !== null && $this->end !== null) {
-            return $this->end->getTimestamp() - $this->begin->getTimestamp();
+            return $this->end->getTimestamp() - $this->begin->getTimestamp() - $this->getBreak();
         }
 
         return null;
+    }
+
+    public function getBreak(): int
+    {
+        return $this->break ?? 0;
+    }
+
+    public function setBreak(?int $break): void
+    {
+        $this->break = $break ?? 0;
     }
 
     public function setUser(?User $user): Timesheet
@@ -415,7 +463,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     }
 
     /**
-     * @return Collection<Tag>
+     * @return Collection<int, Tag>
      */
     public function getTags(): Collection
     {
@@ -488,11 +536,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
 
     public function setCategory(string $category): Timesheet
     {
-        $allowed = [self::WORK, self::HOLIDAY, self::SICKNESS, self::PARENTAL, self::OVERTIME];
-
-        if (!\in_array($category, $allowed)) {
-            throw new \InvalidArgumentException(\sprintf('Invalid timesheet category "%s" given, expected one of: %s', $category, implode(', ', $allowed)));
-        }
+        @trigger_error('Timesheet::setCategory() is deprecated.', E_USER_DEPRECATED);
 
         $this->category = $category;
 
@@ -550,16 +594,6 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
         return $this;
     }
 
-    public function getModifiedAt(): \DateTimeImmutable
-    {
-        return $this->modifiedAt;
-    }
-
-    public function setModifiedAt(\DateTimeImmutable $dateTime): void
-    {
-        $this->modifiedAt = $dateTime;
-    }
-
     /**
      * @return Collection|MetaTableTypeInterface[]
      */
@@ -607,9 +641,14 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     {
         // this needs to be done, otherwise doctrine will not see the item as changed
         // and the calculators will not run
-        $this->modifiedAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+        $this->markAsModified();
 
         if (null === ($current = $this->getMetaField($meta->getName()))) {
+            if (!($meta instanceof TimesheetMeta)) {
+                throw new \InvalidArgumentException(
+                    \sprintf('Expected instanceof TimesheetMeta, received "%s"', \get_class($meta))
+                );
+            }
             $meta->setEntity($this);
             $this->meta->add($meta);
 
@@ -621,11 +660,9 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
         return $this;
     }
 
-    public function createCopy(?Timesheet $timesheet = null): Timesheet
+    public function createCopy(): Timesheet
     {
-        if (null === $timesheet) {
-            $timesheet = new Timesheet();
-        }
+        $timesheet = new Timesheet();
 
         $values = get_object_vars($this);
         foreach ($values as $k => $v) {
@@ -636,7 +673,9 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
 
         /** @var TimesheetMeta $meta */
         foreach ($this->meta as $meta) {
-            $timesheet->setMetaField(clone $meta);
+            $tmp = clone $meta;
+            $tmp->setEntity($timesheet);
+            $timesheet->setMetaField($tmp);
         }
 
         $timesheet->tags = new ArrayCollection();
@@ -655,8 +694,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
             $this->id = null;
         }
 
-        // field will not be set, if it contains a value
-        $this->modifiedAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+        $this->markAsModified();
         $this->exported = false;
 
         $currentMeta = $this->meta;

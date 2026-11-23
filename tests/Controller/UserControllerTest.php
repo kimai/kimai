@@ -12,11 +12,11 @@ namespace App\Tests\Controller;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
-class UserControllerTest extends ControllerBaseTest
+#[Group('integration')]
+class UserControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {
@@ -48,7 +48,7 @@ class UserControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
         $this->request($client, '/admin/user/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
@@ -59,7 +59,7 @@ class UserControllerTest extends ControllerBaseTest
             'page' => 1,
         ]);
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_user_admin', 1);
     }
@@ -81,7 +81,7 @@ class UserControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
         $this->request($client, '/admin/user/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form.searchform')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/user/export'));
@@ -116,7 +116,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->requestPure($client, $location);
 
         $form = $client->getCrawler()->filter('form[name=user_edit]')->form();
-        $this->assertEquals($username, $form->get('user_edit[alias]')->getValue());
+        self::assertEquals($username, $form->get('user_edit[alias]')->getValue());
     }
 
     public function testDeleteAction(): void
@@ -124,10 +124,10 @@ class UserControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
         $this->request($client, '/admin/user/4/delete');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=form]')->form();
-        $this->assertStringEndsWith($this->createUrl('/admin/user/4/delete'), $form->getUri());
+        self::assertStringEndsWith($this->createUrl('/admin/user/4/delete'), $form->getUri());
         $client->submit($form);
 
         $client->followRedirect();
@@ -135,7 +135,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
 
         $this->request($client, '/admin/user/4/edit');
-        $this->assertFalse($client->getResponse()->isSuccessful());
+        self::assertFalse($client->getResponse()->isSuccessful());
     }
 
     public function testDeleteActionWithTimesheetEntries(): void
@@ -151,13 +151,13 @@ class UserControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, \count($timesheets));
+        self::assertEquals(10, \count($timesheets));
 
         $this->request($client, '/admin/user/' . $user->getId() . '/delete');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=form]')->form();
-        $this->assertStringEndsWith($this->createUrl('/admin/user/' . $user->getId() . '/delete'), $form->getUri());
+        self::assertStringEndsWith($this->createUrl('/admin/user/' . $user->getId() . '/delete'), $form->getUri());
         $client->submit($form);
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/user/'));
@@ -166,10 +166,10 @@ class UserControllerTest extends ControllerBaseTest
 
         $em->clear();
         $timesheets = $em->getRepository(Timesheet::class)->count([]);
-        $this->assertEquals(0, $timesheets);
+        self::assertEquals(0, $timesheets);
 
         $this->request($client, '/admin/user/' . $user->getId() . '/edit');
-        $this->assertFalse($client->getResponse()->isSuccessful());
+        self::assertFalse($client->getResponse()->isSuccessful());
     }
 
     public function testDeleteActionWithUserReplacementAndTimesheetEntries(): void
@@ -188,16 +188,16 @@ class UserControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, \count($timesheets));
+        self::assertEquals(10, \count($timesheets));
         foreach ($timesheets as $timesheet) {
-            $this->assertEquals($user->getId(), $timesheet->getUser()->getId());
+            self::assertEquals($user->getId(), $timesheet->getUser()->getId());
         }
 
         $this->request($client, '/admin/user/' . $user->getId() . '/delete');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=form]')->form();
-        $this->assertStringEndsWith($this->createUrl('/admin/user/' . $user->getId() . '/delete'), $form->getUri());
+        self::assertStringEndsWith($this->createUrl('/admin/user/' . $user->getId() . '/delete'), $form->getUri());
         $client->submit($form, [
             'form' => [
                 'user' => $userNew->getId()
@@ -210,18 +210,16 @@ class UserControllerTest extends ControllerBaseTest
 
         $em->clear();
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, \count($timesheets));
+        self::assertEquals(10, \count($timesheets));
         foreach ($timesheets as $timesheet) {
-            $this->assertEquals($userNew->getId(), $timesheet->getUser()->getId());
+            self::assertEquals($userNew->getId(), $timesheet->getUser()->getId());
         }
 
         $this->request($client, '/admin/user/' . $user->getId() . '/edit');
-        $this->assertFalse($client->getResponse()->isSuccessful());
+        self::assertFalse($client->getResponse()->isSuccessful());
     }
 
-    /**
-     * @dataProvider getValidationTestData
-     */
+    #[DataProvider('getValidationTestData')]
     public function testValidationForCreateAction(array $formData, array $validationFields): void
     {
         $this->assertFormHasValidationError(
@@ -233,18 +231,18 @@ class UserControllerTest extends ControllerBaseTest
         );
     }
 
-    public function getValidationTestData()
+    public static function getValidationTestData()
     {
         return [
             [
                 // invalid fields: username, password_second, email, enabled
                 [
                     'user_create' => [
-                        'username' => '',
-                        'plainPassword' => ['first' => 'sdfsdf123'],
+                        'username' => '', // empty
+                        'plainPassword' => ['first' => 'sdfsdf123'], // missing second
                         'alias' => 'ycvyxcb',
                         'title' => '34rtwrtewrt',
-                        'email' => '',
+                        'email' => '', // empty email
                     ]
                 ],
                 [
@@ -253,15 +251,15 @@ class UserControllerTest extends ControllerBaseTest
                     '#user_create_email',
                 ]
             ],
-            // invalid fields: username, password, email, enabled
+            // invalid fields: username, password, email
             [
                 [
                     'user_create' => [
-                        'username' => 'x',
-                        'plainPassword' => ['first' => 'sdfsdf123', 'second' => 'sdfxxxxxxx'],
-                        'alias' => 'ycvyxcb',
-                        'title' => '34rtwrtewrt',
-                        'email' => 'ydfbvsdfgs',
+                        'username' => 'x', // too short
+                        'plainPassword' => ['first' => 'sdfsdf123', 'second' => 'sdfxxxxxxx'], // do not match
+                        'alias' => 'Boo',
+                        'title' => 'Foo',
+                        'email' => 'ydfbvsdfgs', // invalid email
                     ]
                 ],
                 [
@@ -283,6 +281,22 @@ class UserControllerTest extends ControllerBaseTest
                 ],
                 [
                     '#user_create_plainPassword_first',
+                ]
+            ],
+            // invalid fields: alias (special chars), title (special chars, too long)
+            [
+                [
+                    'user_create' => [
+                        'username' => 'test1231',
+                        'plainPassword' => ['first' => 'A-Real-Password.1', 'second' => 'A-Real-Password.1'],
+                        'alias' => '""ycvyx<cb""',
+                        'title' => 'sdfgsdfgsd fgsdf "<34rtwrtewrt>" gsdfg sdfg sdfg sdfg sdfg sdfg sdfg sdfgsdfgsd fgsdf gsdfgsgsdfgsdfgsdfgsdfg sdfg sdfg sdfg sdfg sdfg sdfgsdfgsd fgsdf gsdfgsgsdfgsdfgsdfg', // special chars + too long
+                        'email' => 'ydfbvsdfgs@example.com',
+                    ]
+                ],
+                [
+                    '#user_create_alias',
+                    '#user_create_title',
                 ]
             ],
         ];

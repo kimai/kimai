@@ -15,15 +15,16 @@ use App\Repository\TimesheetRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\Constraints\TimesheetOverlapping;
 use App\Validator\Constraints\TimesheetOverlappingValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimesheetOverlapping
- * @covers \App\Validator\Constraints\TimesheetOverlappingValidator
  * @extends ConstraintValidatorTestCase<TimesheetOverlappingValidator>
  */
+#[CoversClass(TimesheetOverlapping::class)]
+#[CoversClass(TimesheetOverlappingValidator::class)]
 class TimesheetOverlappingValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): TimesheetOverlappingValidator

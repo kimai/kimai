@@ -8,6 +8,7 @@ file that was distributed with this source code.
 COMMENT;
 
 $fixer = new PhpCsFixer\Config();
+$fixer->setUnsupportedPhpVersionAllowed(true);
 $fixer
     ->setParallelConfig(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())
     ->setRiskyAllowed(true)
@@ -43,6 +44,7 @@ $fixer
         'single_line_after_imports' => true,
         'switch_case_semicolon_to_colon' => true,
         'switch_case_space' => true,
+        'php_unit_method_casing' => true,
         'array_syntax' => [
             'syntax' => 'short'
         ],
@@ -141,7 +143,7 @@ $fixer
         'whitespace_after_comma_in_array' => true,
         'yoda_style' => false,
         'ternary_to_null_coalescing' => true,
-        'visibility_required' => ['elements' => [
+        'modifier_keywords' => ['elements' => [
             'const',
             'method',
             'property',

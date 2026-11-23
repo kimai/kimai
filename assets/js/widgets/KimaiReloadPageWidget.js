@@ -9,6 +9,8 @@
  * [KIMAI] KimaiReloadPageWidget: a simple helper to reload the page on events
  */
 
+import { Tooltip } from 'bootstrap';
+
 export default class KimaiReloadPageWidget {
 
     constructor(events, fullReload) {
@@ -48,8 +50,14 @@ export default class KimaiReloadPageWidget {
                 response.text().then((text) => {
                     const temp = document.createElement('div');
                     temp.innerHTML = text;
+                    const oldContent = document.querySelector('section.content');
+                    // dispose all tooltips before replacing the content, otherwise an open tooltip
+                    // would remain visible in the upper left corner after its anchor element is gone
+                    oldContent.querySelectorAll('[data-toggle="tooltip"]').forEach((el) => {
+                        Tooltip.getInstance(el)?.dispose();
+                    });
                     const newContent = temp.querySelector('section.content');
-                    document.querySelector('section.content').replaceWith(newContent);
+                    oldContent.replaceWith(newContent);
                     document.dispatchEvent(new Event('kimai.reloadPage'));
                     this._hideOverlay();
                 });

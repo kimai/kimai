@@ -77,7 +77,7 @@
         {% if lastEntry is not null and entry.end is not null and entry.user is same as (lastEntry.user) %}
             {% if checkOverlappingDesc and entry.end.timestamp > lastEntry.begin.timestamp %}
                 {% set class = class ~ ' overlapping' %}
-            {% elseif checkOverlappingAsc and entry.begin.timestamp < lastEntry.end.timestamp %}
+            {% elseif checkOverlappingAsc and lastEntry.end is not null and entry.begin.timestamp < lastEntry.end.timestamp %}
                 {% set class = class ~ ' overlapping' %}
             {% endif %}
         {% endif %}
@@ -91,9 +91,9 @@
 {% block datatable_column %}
     <td class="{{ tables.class(dataTable, column) }}{% if column == 'description' %} timesheet-description{% endif %}">
     {% if column == 'id' %}
-            {% if is_granted('edit', entry) or is_granted('delete', entry) %}
-                {{ tables.datatable_multiupdate_row(entry.id) }}
-            {% endif %}
+        {% if is_granted('edit', entry) or is_granted('delete', entry) %}
+            {{ tables.datatable_multiupdate_row(entry.id) }}
+        {% endif %}
     {% elseif column == 'date' %}
         {{ entry.begin|date_short }}
     {% elseif column == 'starttime' %}
@@ -105,11 +105,9 @@
             &dash;
         {% endif %}
     {% elseif column == 'duration' %}
-        {% if entry.end %}
-            {{ entry.duration|duration }}
-        {% else %}
-            <i data-since="{{ entry.begin.format(constant('DATE_ISO8601')) }}">{{ entry|duration }}</i>
-        {% endif %}
+        {{ widgets.duration(entry) }}
+    {% elseif column == 'break' %}
+        {{ entry.break|duration }}
     {% elseif column == 'hourlyRate' %}
         {{ entryHourlyRate }}
     {% elseif column == 'rate' %}

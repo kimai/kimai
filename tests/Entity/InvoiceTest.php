@@ -28,12 +28,10 @@ use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Entity\Invoice
- */
-class InvoiceTest extends TestCase
+#[CoversClass(Invoice::class)]
+class InvoiceTest extends AbstractEntityTestCase
 {
     public function testDefaultValues(): void
     {
@@ -173,15 +171,13 @@ class InvoiceTest extends TestCase
         $user1->method('getUsername')->willReturn('foo-bar');
 
         $timesheet = new Timesheet();
-        $timesheet
-            ->setDuration(3600)
-            ->setRate(293.27)
-            ->setUser($user1)
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
-        ;
+        $timesheet->setDuration(3600);
+        $timesheet->setRate(293.27);
+        $timesheet->setUser($user1);
+        $timesheet->setActivity($activity);
+        $timesheet->setProject($project);
+        $timesheet->setBegin(new \DateTime());
+        $timesheet->setEnd(new \DateTime());
 
         $entries = [$timesheet];
 
@@ -222,6 +218,8 @@ class InvoiceTest extends TestCase
     public function testClone(): void
     {
         $sut = new Invoice();
+        $this->assertCloneResetsId($sut);
+
         $sut->setComment('foo kajsdhgf aksjdhfg');
         $sut->setFilename('1234567890');
 
@@ -269,5 +267,29 @@ class InvoiceTest extends TestCase
         $sut->setMetaField((new InvoiceMeta())->setName('blab')->setIsVisible(true));
         self::assertEquals(3, $sut->getMetaFields()->count());
         self::assertCount(2, $sut->getVisibleMetaFields());
+    }
+
+    public function testOverdue(): void
+    {
+        $sut = new Invoice();
+        self::assertFalse($sut->isOverdue());
+
+        $sut->setCreatedAt(new \DateTime('-10 days'));
+        self::assertFalse($sut->isOverdue());
+
+        $sut->setDueDays(9);
+        self::assertTrue($sut->isOverdue());
+
+        $sut->setDueDays(14);
+        self::assertFalse($sut->isOverdue());
+
+        $sut->setDueDays(8);
+        self::assertTrue($sut->isOverdue());
+
+        $sut->setIsNew();
+        self::assertTrue($sut->isOverdue());
+
+        $sut->setIsPaid();
+        self::assertFalse($sut->isOverdue());
     }
 }

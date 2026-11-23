@@ -11,11 +11,10 @@ namespace App\Tests\Widget;
 
 use App\Tests\Widget\Type\More;
 use App\Widget\WidgetService;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Widget\WidgetService
- */
+#[CoversClass(WidgetService::class)]
 class WidgetServiceTest extends TestCase
 {
     public function testConstruct(): void

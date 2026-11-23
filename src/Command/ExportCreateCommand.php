@@ -31,7 +31,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[AsCommand(name: 'kimai:export:create')]
+#[AsCommand(name: 'kimai:export:create', description: 'Create exports')]
 final class ExportCreateCommand extends Command
 {
     public function __construct(
@@ -49,7 +49,6 @@ final class ExportCreateCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Create exports')
             ->setHelp('Create exports by several different filters and sent them via email.')
             ->addOption('username', null, InputOption::VALUE_REQUIRED, 'The user to be used for generating the export (e.g. used for permissions and decimal setting)')
             ->addOption('start', null, InputOption::VALUE_OPTIONAL, 'Start date (format: 2020-01-01, default: start of the month)', null)

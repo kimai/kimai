@@ -14,7 +14,6 @@ use App\Entity\Activity;
 /**
  * Object used to unify the access to budget data in charts.
  *
- * @internal do not use in plugins, no BC promise given!
  * @method Activity getEntity()
  */
 class ActivityBudgetStatisticModel extends BudgetStatisticModel

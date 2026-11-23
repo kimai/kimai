@@ -9,17 +9,8 @@
 
 namespace App\Widget\Type;
 
-use App\Configuration\SystemConfiguration;
-use App\Timesheet\DateTimeFactory;
-
 abstract class AbstractCounterYear extends AbstractWidgetType
 {
-    private bool $isFinancialYear = false;
-
-    public function __construct(private SystemConfiguration $systemConfiguration)
-    {
-    }
-
     /**
      * @param array<string, string|bool|int|null|array<string, mixed>> $options
      */
@@ -27,13 +18,6 @@ abstract class AbstractCounterYear extends AbstractWidgetType
     {
         $begin = $this->createDate('01 january this year 00:00:00');
         $end = $this->createDate('31 december this year 23:59:59');
-
-        if (null !== ($financialYear = $this->systemConfiguration->getFinancialYearStart())) {
-            $factory = new DateTimeFactory($this->getTimezone());
-            $begin = $factory->createStartOfFinancialYear($financialYear);
-            $end = $factory->createEndOfFinancialYear($begin);
-            $this->isFinancialYear = true;
-        }
 
         return $this->getYearData($begin, $end, $options);
     }
@@ -43,14 +27,8 @@ abstract class AbstractCounterYear extends AbstractWidgetType
      */
     abstract protected function getYearData(\DateTimeInterface $begin, \DateTimeInterface $end, array $options = []): mixed;
 
-    abstract protected function getFinancialYearTitle(): string;
-
     public function getTitle(): string
     {
-        if ($this->isFinancialYear) {
-            return $this->getFinancialYearTitle();
-        }
-
         return 'stats.' . lcfirst($this->getId());
     }
 

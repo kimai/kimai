@@ -10,13 +10,12 @@
 namespace App\Tests\Security;
 
 use App\Security\AclDecisionManager;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 
-/**
- * @covers \App\Security\AclDecisionManager
- */
+#[CoversClass(AclDecisionManager::class)]
 class AclDecisionManagerTest extends TestCase
 {
     public function testFullyAuthenticated(): void

@@ -12,15 +12,16 @@ namespace App\Tests\Validator\Constraints;
 use App\Form\Model\MultiUserTimesheet;
 use App\Validator\Constraints\TimesheetMultiUser;
 use App\Validator\Constraints\TimesheetMultiUserValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimesheetMultiUser
- * @covers \App\Validator\Constraints\TimesheetMultiUserValidator
  * @extends ConstraintValidatorTestCase<TimesheetMultiUserValidator>
  */
+#[CoversClass(TimesheetMultiUser::class)]
+#[CoversClass(TimesheetMultiUserValidator::class)]
 class TimesheetMultiUserValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): TimesheetMultiUserValidator

@@ -11,17 +11,16 @@ namespace App\Tests\Doctrine;
 
 use App\Doctrine\TimesheetSubscriber;
 use Doctrine\ORM\Events;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Doctrine\TimesheetSubscriber
- */
+#[CoversClass(TimesheetSubscriber::class)]
 class TimesheetSubscriberTest extends TestCase
 {
     public function testGetSubscribedEvents(): void
     {
         $sut = new TimesheetSubscriber([]);
         $events = $sut->getSubscribedEvents();
-        $this->assertTrue(\in_array(Events::onFlush, $events));
+        self::assertTrue(\in_array(Events::onFlush, $events));
     }
 }

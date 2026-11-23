@@ -10,9 +10,8 @@
 namespace App\EventSubscriber;
 
 use App\Configuration\LocaleService;
-use App\Constants;
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
-use App\Entity\UserPreference;
 use KevinPapst\TablerBundle\Helper\ContextHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
@@ -27,7 +26,8 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
     public function __construct(
         private readonly TokenStorageInterface $storage,
         private readonly ContextHelper $helper,
-        private readonly LocaleService $localeService
+        private readonly LocaleService $localeService,
+        private readonly SystemConfiguration $systemConfiguration,
     )
     {
     }
@@ -46,26 +46,26 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $this->helper->setAssetVersion((string) Constants::VERSION_ID);
-
         if ($this->localeService->isRightToLeft($event->getRequest()->getLocale())) {
             $this->helper->setIsRightToLeft(true);
         }
 
-        // ignore events like the toolbar where we do not have a token
-        if (null === $this->storage->getToken()) {
-            return;
+        $skin = $this->systemConfiguration->getAuthenticationTheme();
+
+        $user = $this->storage->getToken()?->getUser();
+        if ($user instanceof User) {
+            $skin = $user->getSkin();
         }
 
-        $user = $this->storage->getToken()->getUser();
-
-        if (!($user instanceof User)) {
-            return;
-        }
-
-        $skin = $user->getPreferenceValue(UserPreference::SKIN);
         if ($skin === 'dark') {
             $this->helper->setIsDarkMode(true);
+            $this->helper->setThemeAuto(false);
+        } elseif ($skin === 'auto') {
+            $this->helper->setIsDarkMode(false);
+            $this->helper->setThemeAuto(true);
+        } else {
+            $this->helper->setIsDarkMode(false);
+            $this->helper->setThemeAuto(false);
         }
 
         // do not allow boxed layout, header is not compatible and other functions need the full size as well

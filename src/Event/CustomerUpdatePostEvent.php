@@ -9,9 +9,9 @@
 
 namespace App\Event;
 
-/**
- * Triggered for customer instances, which were just updated.
- */
+use App\Webhook\Attribute\AsWebhook;
+
+#[AsWebhook(name: 'customer.updated', description: 'Triggered after a customer was updated', payload: 'object.getCustomer()')]
 final class CustomerUpdatePostEvent extends AbstractCustomerEvent
 {
 }

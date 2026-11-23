@@ -56,7 +56,7 @@ export default class KimaiDateUtils extends KimaiPlugin {
      */
     format(format, dateTime)
     {
-        let newDate = null;
+        let newDate;
 
         if (dateTime === null || dateTime === undefined) {
             newDate = DateTime.now();
@@ -154,7 +154,7 @@ export default class KimaiDateUtils extends KimaiPlugin {
     addHumanDuration(date, duration)
     {
         /** @type {DateTime} newDate */
-        let newDate = null;
+        let newDate;
 
         if (date instanceof Date) {
             newDate = DateTime.fromJSDate(date);
@@ -177,7 +177,7 @@ export default class KimaiDateUtils extends KimaiPlugin {
      */
     formatDuration(since)
     {
-        let duration = null;
+        let duration;
 
         if (typeof since === 'string') {
             duration = DateTime.now().diff(DateTime.fromISO(since));
@@ -246,11 +246,12 @@ export default class KimaiDateUtils extends KimaiPlugin {
 
     /**
      * @param {string} duration
+     * @param {string} mode see parseDuration()
      * @returns {int}
      */
-    getSecondsFromDurationString(duration)
+    getSecondsFromDurationString(duration, mode = 'default')
     {
-        const luxonDuration = this.parseDuration(duration);
+        const luxonDuration = this.parseDuration(duration, mode);
 
         if (luxonDuration === null || !luxonDuration.isValid) {
             return 0;
@@ -260,10 +261,15 @@ export default class KimaiDateUtils extends KimaiPlugin {
     }
 
     /**
+     * Supported parsing modes (see DurationType::PARSE_MODE_*):
+     * - default: plain integers are hours
+     * - integer_minutes: plain integers below 10 are hours, all others are minutes
+     *
      * @param {string} duration
+     * @param {string} mode
      * @returns {Duration}
      */
-    parseDuration(duration)
+    parseDuration(duration, mode = 'default')
     {
         if (duration === undefined || duration === null || duration === '') {
             return new Duration({seconds: 0});
@@ -273,11 +279,14 @@ export default class KimaiDateUtils extends KimaiPlugin {
         let luxonDuration = null;
 
         if (duration.indexOf(':') !== -1) {
-            const [, hours, minutes, seconds] = duration.match(/(\d+):(\d+)(?::(\d+))*/);
+            const match = duration.match(/(?:(\d+):)?(\d+)(?::(\d+))?/);
+            const hours = parseInt(match?.[1] || 0, 10);
+            const minutes = parseInt(match?.[2] || 0, 10);
+            const seconds = parseInt(match?.[3] || 0, 10);
             luxonDuration = Duration.fromObject({hours: hours, minutes: minutes, seconds: seconds});
         } else if (duration.indexOf('.') !== -1 || duration.indexOf(',') !== -1) {
             duration = duration.replace(/,/, '.');
-            duration = (parseFloat(duration) * 3600).toString();
+            duration = Math.round(parseFloat(duration) * 3600).toString();
             luxonDuration = Duration.fromISO('PT' + duration + 'S');
         } else if (duration.indexOf('H') !== -1 || duration.indexOf('M') !== -1 || duration.indexOf('S') !== -1) {
             /* D for days does not work, because 'PT1H' but with days 'P1D' is used */
@@ -286,7 +295,11 @@ export default class KimaiDateUtils extends KimaiPlugin {
             let c = parseInt(duration);
             const d = parseInt(duration).toFixed();
             if (!isNaN(c) && duration === d) {
-                duration = (c * 3600).toString();
+                if (mode === 'integer_minutes' && Math.abs(c) >= 10) {
+                    duration = (c * 60).toString();
+                } else {
+                    duration = (c * 3600).toString();
+                }
                 luxonDuration = Duration.fromISO('PT' + duration + 'S');
             }
         }

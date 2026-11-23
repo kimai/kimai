@@ -22,9 +22,9 @@
         <source>timesheet.start.error</source>
         <target>לא ניתן להתחיל הקלטת זמן</target>
       </trans-unit>
-      <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
+      <trans-unit id="kPINWEK" resname="timesheet.locked.warning" xml:space="preserve" approved="yes">
         <source>timesheet.locked.warning</source>
-        <target>אתה עורך רשומה שכבר יוצאה</target>
+        <target state="final">בחרת לערוך רשומה שכבר יוצאה</target>
       </trans-unit>
       <trans-unit id="72Ih8zO" resname="action.update.success">
         <source>action.update.success</source>

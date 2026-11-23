@@ -199,7 +199,7 @@ class ProjectStatisticService
         $stats->setStatisticTotal($this->getProjectStatistics($project));
 
         $begin = null;
-        $end = $today;
+        $end = DateTimeImmutable::createFromInterface($today);
 
         if ($project->isMonthlyBudget()) {
             $dateFactory = new DateTimeFactory($today->getTimezone());
@@ -489,7 +489,7 @@ class ProjectStatisticService
                 }
             }
 
-            foreach ($users as $userId => $statistic) {
+            foreach ($users as $statistic) {
                 foreach ($model->getYears() as $year) {
                     $statYear = $model->getUserYear($year->getYear(), $statistic->getUser());
                     if ($statYear === null) {
@@ -588,7 +588,7 @@ class ProjectStatisticService
         }
 
         foreach ($yearActivities as $year => $yearlyActivities) {
-            foreach ($yearlyActivities as $activityId => $activityStatistic) {
+            foreach ($yearlyActivities as $activityStatistic) {
                 $model->addYearActivity($year, $activityStatistic);
             }
         }
@@ -721,6 +721,7 @@ class ProjectStatisticService
         $qb = clone $tplQb;
         $qb->addSelect('MAX(t.date) as lastRecord');
         $result = $qb->getQuery()->getScalarResult();
+        /** @var array{id: int, lastRecord: string, duration: int, rate: float} $row */
         foreach ($result as $row) {
             if ($row['lastRecord'] !== null) {
                 // might be the wrong timezone
@@ -736,6 +737,7 @@ class ProjectStatisticService
         ;
 
         $result = $qb->getQuery()->getScalarResult();
+        /** @var array{id: int, lastRecord: string, duration: int, rate: float} $row */
         foreach ($result as $row) {
             $projectViews[$row['id']]->setDurationDay($row['duration'] ?? 0);
         }
@@ -749,6 +751,7 @@ class ProjectStatisticService
         ;
 
         $result = $qb->getQuery()->getScalarResult();
+        /** @var array{id: int, lastRecord: string, duration: int, rate: float} $row */
         foreach ($result as $row) {
             $projectViews[$row['id']]->setDurationWeek($row['duration']);
         }
@@ -762,6 +765,7 @@ class ProjectStatisticService
         ;
 
         $result = $qb->getQuery()->getScalarResult();
+        /** @var array{id: int, lastRecord: string, duration: int, rate: float} $row */
         foreach ($result as $row) {
             $projectViews[$row['id']]->setDurationMonth($row['duration']);
         }

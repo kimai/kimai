@@ -15,19 +15,19 @@ use App\Entity\Invoice;
 use App\Entity\InvoiceTemplate;
 use App\Entity\MetaTableTypeInterface;
 use App\Event\InvoiceDocumentsEvent;
-use App\Event\InvoiceMetaDefinitionEvent;
 use App\Event\InvoiceMetaDisplayEvent;
+use App\Event\InvoiceTemplateMetaDefinitionEvent;
 use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;
 use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
 use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\InvoiceDocumentUploadForm;
 use App\Form\InvoiceEditForm;
 use App\Form\InvoiceTemplateForm;
-use App\Form\Toolbar\InvoiceArchiveForm;
+use App\Form\Toolbar\InvoiceArchiveToolbarForm;
 use App\Form\Toolbar\InvoiceToolbarForm;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\InvoiceTemplateType;
-use App\Invoice\ServiceInvoice;
+use App\Invoice\InvoiceService;
 use App\Repository\CustomerRepository;
 use App\Repository\InvoiceDocumentRepository;
 use App\Repository\InvoiceRepository;
@@ -39,7 +39,6 @@ use App\Utils\DataTable;
 use App\Utils\PageSetup;
 use Exception;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -60,18 +59,15 @@ use Twig\Environment;
 final class InvoiceController extends AbstractController
 {
     public function __construct(
-        private ServiceInvoice $service,
-        private InvoiceTemplateRepository $templateRepository,
-        private InvoiceRepository $invoiceRepository,
-        private EventDispatcherInterface $dispatcher
+        private readonly EventDispatcherInterface $dispatcher
     ) {
     }
 
     #[Route(path: '/', name: 'invoice', methods: ['GET', 'POST'])]
     #[IsGranted('create_invoice')]
-    public function indexAction(Request $request, CsrfTokenManagerInterface $csrfTokenManager): Response
+    public function indexAction(Request $request, InvoiceService $invoiceService, InvoiceTemplateRepository $templateRepository): Response
     {
-        if (!$this->templateRepository->hasTemplate()) {
+        if (!$templateRepository->hasTemplate()) {
             if ($this->isGranted('manage_invoice_template')) {
                 return $this->redirectToRoute('admin_invoice_template_create');
             }
@@ -94,7 +90,7 @@ final class InvoiceController extends AbstractController
 
         if ($form->isValid() && $query->getTemplate() !== null) {
             try {
-                $models = $this->service->createModels($query);
+                $models = $invoiceService->createModels($query);
                 $searched = true;
             } catch (Exception $ex) {
                 $this->flashUpdateException($ex);
@@ -138,12 +134,8 @@ final class InvoiceController extends AbstractController
     #[Route(path: '/preview/{customer}/{token}', name: 'invoice_preview', methods: ['GET'])]
     #[IsGranted('create_invoice')]
     #[IsGranted('access', 'customer')]
-    public function previewAction(Customer $customer, string $token, Request $request): Response
+    public function previewAction(Customer $customer, string $token, Request $request, InvoiceService $invoiceService): Response
     {
-        if (!$this->templateRepository->hasTemplate()) {
-            return $this->redirectToRoute('invoice');
-        }
-
         if (!$this->isCsrfTokenValid('invoice.preview', $token)) {
             $this->flashError('action.csrf.error');
 
@@ -163,9 +155,10 @@ final class InvoiceController extends AbstractController
         if ($form->isValid()) {
             try {
                 $query->setCustomers([$customer]);
-                $model = $this->service->createModel($query);
+                $model = $invoiceService->createModel($query);
+                $model->setPreview(true);
 
-                return $this->service->renderInvoice($model, $this->dispatcher, true);
+                return $invoiceService->renderInvoice($model, $this->dispatcher, true);
             } catch (Exception $ex) {
                 $this->flashUpdateException($ex);
             }
@@ -176,20 +169,19 @@ final class InvoiceController extends AbstractController
         return $this->redirectToRoute('invoice');
     }
 
-    #[Route(path: '/save-invoice/{customer}/{token}', name: 'invoice_create', methods: ['GET'])]
+    #[Route(path: '/save-invoice/{customer}', name: 'invoice_create', methods: ['POST'])]
     #[IsGranted('create_invoice')]
     #[IsGranted('access', 'customer')]
-    public function createInvoiceAction(Customer $customer, string $token, Request $request, CustomerRepository $customerRepository): Response
+    public function createInvoiceAction(Customer $customer, Request $request, CustomerRepository $customerRepository, InvoiceService $invoiceService): Response
     {
-        if (!$this->templateRepository->hasTemplate()) {
-            return $this->redirectToRoute('invoice');
-        }
-
-        if (!$this->isCsrfTokenValid('invoice.create', $token)) {
+        if (!$this->isCsrfTokenValid('invoice.create', $this->getRequestToken($request))) {
             $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('invoice');
         }
+
+        // prevent the token from becoming part of the search query
+        $request->request->remove('_token');
 
         $query = $this->getDefaultQuery();
         $query->setAllowTemplateOverwrite(false);
@@ -201,7 +193,7 @@ final class InvoiceController extends AbstractController
         if ($form->isValid()) {
             try {
                 $query->setCustomers([$customer]);
-                $model = $this->service->createModel($query);
+                $model = $invoiceService->createModel($query);
 
                 // save default template for customer if not yet set
                 if ($customer->getInvoiceTemplate() === null) {
@@ -209,7 +201,7 @@ final class InvoiceController extends AbstractController
                     $customerRepository->saveCustomer($customer);
                 }
 
-                $invoice = $this->service->createInvoice($model, $this->dispatcher);
+                $invoice = $invoiceService->createInvoice($model, $this->dispatcher);
 
                 $this->flashSuccess('action.update.success');
 
@@ -224,35 +216,40 @@ final class InvoiceController extends AbstractController
         return $this->redirectToRoute('invoice');
     }
 
-    #[Route(path: '/change-status/{id}/{status}/{token}', name: 'admin_invoice_status', methods: ['GET', 'POST'])]
-    #[IsGranted('create_invoice')]
-    #[IsGranted(new Expression("is_granted('access', subject.getCustomer())"), 'invoice')]
-    public function changeStatusAction(Invoice $invoice, string $status, string $token, Request $request, CsrfTokenManagerInterface $csrfTokenManager): Response
+    /**
+     * Renders the invoice form with a pre-filled payment date, the record itself is
+     * saved by the form (see admin_invoice_edit) and not by this route.
+     */
+    #[Route(path: '/mark-paid/{id}', name: 'admin_invoice_paid', methods: ['GET'])]
+    #[IsGranted('edit_invoice', 'invoice')]
+    public function markPaidAction(Invoice $invoice, InvoiceService $invoiceService): Response
     {
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.status', $token))) {
+        if (null === $invoice->getPaymentDate()) {
+            $invoice->setPaymentDate($this->getDateTimeFactory()->createDateTime());
+            $invoice->setIsPaid();
+        }
+
+        $form = $this->createInvoiceEditForm($invoice, $invoiceService);
+
+        return $this->render('invoice/invoice_edit.html.twig', [
+            'page_setup' => $this->createPageSetup(),
+            'invoice' => $invoice,
+            'form' => $form->createView()
+        ]);
+    }
+
+    #[Route(path: '/change-status/{id}/{status}', name: 'admin_invoice_status', methods: ['POST'])]
+    #[IsGranted('edit_invoice', 'invoice')]
+    public function changeStatusAction(Invoice $invoice, string $status, Request $request, CsrfTokenManagerInterface $csrfTokenManager, InvoiceService $invoiceService): Response
+    {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.status', $this->getRequestToken($request)))) {
             $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('admin_invoice_list');
         }
 
-        if ($status === Invoice::STATUS_PAID) {
-            if (null === $invoice->getPaymentDate()) {
-                $invoice->setPaymentDate($this->getDateTimeFactory()->createDateTime());
-                $invoice->setIsPaid();
-            }
-
-            $form = $this->createInvoiceEditForm($invoice);
-            $form->handleRequest($request);
-
-            return $this->render('invoice/invoice_edit.html.twig', [
-                'page_setup' => $this->createPageSetup(),
-                'invoice' => $invoice,
-                'form' => $form->createView()
-            ]);
-        }
-
         try {
-            $this->service->changeInvoiceStatus($invoice, $status);
+            $invoiceService->changeInvoiceStatus($invoice, $status);
             $this->flashSuccess('action.update.success');
         } catch (Exception $ex) {
             $this->flashUpdateException($ex);
@@ -262,16 +259,16 @@ final class InvoiceController extends AbstractController
     }
 
     #[Route(path: '/edit/{id}', name: 'admin_invoice_edit', methods: ['GET', 'POST'])]
-    #[IsGranted('create_invoice')]
-    #[IsGranted(new Expression("is_granted('access', subject.getCustomer())"), 'invoice')]
-    public function editAction(Invoice $invoice, Request $request): Response
+    #[IsGranted('edit_invoice', 'invoice')]
+    public function editAction(Invoice $invoice, Request $request, InvoiceService $invoiceService): Response
     {
-        $form = $this->createInvoiceEditForm($invoice);
+        $statusBefore = $invoice->getStatus();
+        $form = $this->createInvoiceEditForm($invoice, $invoiceService);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->invoiceRepository->saveInvoice($invoice);
+                $invoiceService->saveInvoice($invoice, $statusBefore);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('admin_invoice_list');
@@ -287,39 +284,15 @@ final class InvoiceController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/delete/{id}/{token}', name: 'admin_invoice_delete', methods: ['GET'])]
-    #[IsGranted('delete_invoice')]
-    #[IsGranted(new Expression("is_granted('access', subject.getCustomer())"), 'invoice')]
-    public function deleteInvoiceAction(Invoice $invoice, string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
-    {
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.status', $token))) {
-            $this->flashError('action.csrf.error');
-
-            return $this->redirectToRoute('admin_invoice_list');
-        }
-
-        $csrfTokenManager->refreshToken('invoice.status');
-
-        try {
-            $this->service->deleteInvoice($invoice, $this->dispatcher);
-            $this->flashSuccess('action.delete.success');
-        } catch (Exception $ex) {
-            $this->flashDeleteException($ex);
-        }
-
-        return $this->redirectToRoute('admin_invoice_list');
-    }
-
     #[Route(path: '/download/{id}', name: 'admin_invoice_download', methods: ['GET'])]
-    #[IsGranted('view_invoice')]
-    #[IsGranted(new Expression("is_granted('access', subject.getCustomer())"), 'invoice')]
-    public function downloadAction(Invoice $invoice): Response
+    #[IsGranted('view_invoice', 'invoice')]
+    public function downloadAction(Invoice $invoice, InvoiceService $invoiceService): Response
     {
-        $file = $this->service->getInvoiceFile($invoice);
+        $file = $invoiceService->getInvoiceFile($invoice);
 
         if (null === $file) {
             throw $this->createNotFoundException(
-                \sprintf('Invoice file "%s" could not be found for invoice ID "%s"', $invoice->getInvoiceFilename(), $invoice->getId())
+                \sprintf('Invoice file could not be found for invoice ID "%s"', $invoice->getId())
             );
         }
 
@@ -328,12 +301,15 @@ final class InvoiceController extends AbstractController
 
     #[Route(path: '/show/{page}', defaults: ['page' => 1], requirements: ['page' => '[1-9]\d*'], name: 'admin_invoice_list', methods: ['GET'])]
     #[IsGranted('view_invoice')]
-    public function showInvoicesAction(Request $request, int $page): Response
+    public function showInvoicesAction(Request $request, int $page, InvoiceRepository $invoiceRepository): Response
     {
         $invoice = null;
 
-        if (null !== ($id = $request->get('id'))) {
-            $invoice = $this->invoiceRepository->find($id);
+        if (null !== ($id = $request->query->get('id'))) {
+            $invoice = $invoiceRepository->find($id);
+            if ($invoice instanceof Invoice && !$this->isGranted('view_invoice', $invoice)) {
+                throw $this->createAccessDeniedException('User tried to download invoice: ' . $id);
+            }
         }
 
         $query = new InvoiceArchiveQuery();
@@ -345,7 +321,7 @@ final class InvoiceController extends AbstractController
             return $this->redirectToRoute('admin_invoice_list');
         }
 
-        $entries = $this->invoiceRepository->getPagerfantaForQuery($query);
+        $entries = $invoiceRepository->getPagerfantaForQuery($query);
         $metaColumns = $this->findMetaColumns($query);
 
         $table = new DataTable('invoices', $query);
@@ -387,7 +363,7 @@ final class InvoiceController extends AbstractController
 
     #[Route(path: '/export', name: 'invoice_export', methods: ['GET'])]
     #[IsGranted('view_invoice')]
-    public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter): Response
+    public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter, InvoiceRepository $invoiceRepository): Response
     {
         $query = new InvoiceArchiveQuery();
         $query->setCurrentUser($this->getUser());
@@ -396,7 +372,7 @@ final class InvoiceController extends AbstractController
         $form->setData($query);
         $form->submit($request->query->all(), false);
 
-        $entries = $this->invoiceRepository->getInvoicesForQuery($query);
+        $entries = $invoiceRepository->getInvoicesForQuery($query);
 
         $spreadsheet = $exporter->export(
             Invoice::class,
@@ -410,12 +386,12 @@ final class InvoiceController extends AbstractController
 
     #[Route(path: '/template/{page}', requirements: ['page' => '[1-9]\d*'], defaults: ['page' => 1], name: 'admin_invoice_template', methods: ['GET', 'POST'])]
     #[IsGranted('manage_invoice_template')]
-    public function listTemplateAction(int $page): Response
+    public function listTemplateAction(int $page, InvoiceTemplateRepository $templateRepository): Response
     {
         $query = new BaseQuery();
         $query->setPage($page);
 
-        $entries = $this->templateRepository->getPagerfantaForQuery($query);
+        $entries = $templateRepository->getPagerfantaForQuery($query);
 
         $table = new DataTable('invoice_template', $query);
         $table->setPagination($entries);
@@ -424,7 +400,7 @@ final class InvoiceController extends AbstractController
 
         $table->addColumn('name', ['class' => 'alwaysVisible', 'orderBy' => false]);
         $table->addColumn('title', ['class' => 'd-none text-nowrap', 'orderBy' => false]);
-        $table->addColumn('company', ['class' => 'd-none', 'orderBy' => false]);
+        $table->addColumn('company', ['class' => 'd-none', 'orderBy' => false, 'title' => 'sending_company']);
         $table->addColumn('vat_id', ['class' => 'd-none text-nowrap', 'orderBy' => false]);
         $table->addColumn('tax_rate', ['class' => 'd-none text-nowrap', 'orderBy' => false]);
         $table->addColumn('due_days', ['class' => 'd-none text-nowrap', 'orderBy' => false]);
@@ -435,7 +411,7 @@ final class InvoiceController extends AbstractController
         $table->addColumn('language', ['class' => 'd-none text-nowrap', 'orderBy' => false]);
         $table->addColumn('actions', ['class' => 'actions']);
 
-        $page = $this->createPageSetup('admin_invoice_template.title');
+        $page = $this->createPageSetupTemplates('admin_invoice_template.title');
         $page->setDataTable($table);
         $page->setActionName('invoice_templates');
 
@@ -447,16 +423,16 @@ final class InvoiceController extends AbstractController
 
     #[Route(path: '/template/{id}/edit', name: 'admin_invoice_template_edit', methods: ['GET', 'POST'])]
     #[IsGranted('manage_invoice_template')]
-    public function editTemplateAction(InvoiceTemplate $template, Request $request): Response
+    public function editTemplateAction(InvoiceTemplate $template, Request $request, InvoiceTemplateRepository $templateRepository): Response
     {
-        return $this->renderTemplateForm($template, $request);
+        return $this->renderTemplateForm($template, $request, $templateRepository);
     }
 
     #[Route(path: '/document_download/{document}', name: 'admin_invoice_document_download', methods: ['GET'])]
     #[IsGranted('upload_invoice_template')]
-    public function downloadDocument(string $document, Environment $twig): Response
+    public function downloadDocument(string $document, InvoiceService $invoiceService): Response
     {
-        $event = new InvoiceDocumentsEvent($this->service->getDocuments(true));
+        $event = new InvoiceDocumentsEvent($invoiceService->getDocuments(true));
         $this->dispatcher->dispatch($event);
 
         foreach ($event->getInvoiceDocuments() as $doc) {
@@ -470,7 +446,7 @@ final class InvoiceController extends AbstractController
 
     #[Route(path: '/document_upload', name: 'admin_invoice_document_upload', methods: ['GET', 'POST'])]
     #[IsGranted('upload_invoice_template')]
-    public function uploadDocumentAction(Request $request, string $projectDirectory, InvoiceDocumentRepository $documentRepository, Environment $twig, SystemConfiguration $systemConfiguration): Response
+    public function uploadDocumentAction(Request $request, string $projectDirectory, InvoiceDocumentRepository $documentRepository, Environment $twig, SystemConfiguration $systemConfiguration, InvoiceService $invoiceService, InvoiceTemplateRepository $templateRepository): Response
     {
         $dir = $documentRepository->getUploadDirectory();
         $invoiceDir = $dir;
@@ -482,11 +458,11 @@ final class InvoiceController extends AbstractController
         $invoiceDir = rtrim($invoiceDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         $used = [];
-        foreach ($this->templateRepository->findAll() as $template) {
+        foreach ($templateRepository->findAll() as $template) {
             $used[$template->getRenderer()] = $template;
         }
 
-        $event = new InvoiceDocumentsEvent($this->service->getDocuments(true));
+        $event = new InvoiceDocumentsEvent($invoiceService->getDocuments(true));
         $this->dispatcher->dispatch($event);
 
         $documents = [];
@@ -589,7 +565,7 @@ final class InvoiceController extends AbstractController
             }
         }
 
-        $page = $this->createPageSetup('admin_invoice_template.title');
+        $page = $this->createPageSetupTemplates('admin_invoice_template.title');
 
         return $this->render('invoice/document_upload.html.twig', [
             'page_setup' => $page,
@@ -602,64 +578,21 @@ final class InvoiceController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/document/{id}/delete/{token}', name: 'invoice_document_delete', methods: ['GET', 'POST'])]
-    #[IsGranted('manage_invoice_template')]
-    public function deleteDocument(string $id, string $token, CsrfTokenManagerInterface $csrfTokenManager, InvoiceDocumentRepository $documentRepository): Response
-    {
-        $document = $documentRepository->findByName($id);
-        if ($document === null) {
-            throw $this->createNotFoundException();
-        }
-
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.delete_document', $token))) {
-            $this->flashError('action.csrf.error');
-
-            return $this->redirectToRoute('admin_invoice_document_upload');
-        }
-
-        $csrfTokenManager->refreshToken('invoice.delete_document');
-
-        foreach ($documentRepository->findBuiltIn() as $doc) {
-            if ($doc->getId() === $id) {
-                $this->flashError('Document is built-in and cannot be deleted.');
-
-                return $this->redirectToRoute('admin_invoice_document_upload');
-            }
-        }
-
-        foreach ($this->templateRepository->findAll() as $template) {
-            if ($template->getRenderer() === $id) {
-                $this->flashError('Document is used and cannot be deleted.');
-
-                return $this->redirectToRoute('admin_invoice_document_upload');
-            }
-        }
-
-        try {
-            $documentRepository->remove($document);
-            $this->flashSuccess('action.delete.success');
-        } catch (Exception $ex) {
-            $this->flashDeleteException($ex);
-        }
-
-        return $this->redirectToRoute('admin_invoice_document_upload');
-    }
-
     #[Route(path: '/template/create/{id}', name: 'admin_invoice_template_copy', methods: ['GET', 'POST'])]
     #[IsGranted('manage_invoice_template')]
-    public function copyTemplateAction(Request $request, InvoiceTemplate $copyFrom): Response
+    public function copyTemplateAction(Request $request, InvoiceTemplate $copyFrom, InvoiceTemplateRepository $templateRepository): Response
     {
-        return $this->createTemplate($request, $copyFrom);
+        return $this->createTemplate($request, $templateRepository, $copyFrom);
     }
 
     #[Route(path: '/template/create', name: 'admin_invoice_template_create', methods: ['GET', 'POST'])]
     #[IsGranted('manage_invoice_template')]
-    public function createTemplateAction(Request $request): Response
+    public function createTemplateAction(Request $request, InvoiceTemplateRepository $templateRepository): Response
     {
-        return $this->createTemplate($request, null);
+        return $this->createTemplate($request, $templateRepository, null);
     }
 
-    private function createTemplate(Request $request, ?InvoiceTemplate $copyFrom = null): Response
+    private function createTemplate(Request $request, InvoiceTemplateRepository $templateRepository, ?InvoiceTemplate $copyFrom = null): Response
     {
         $template = new InvoiceTemplate();
         $template->setLanguage($request->getLocale());
@@ -669,29 +602,7 @@ final class InvoiceController extends AbstractController
             $template->setName($copyFrom->getName() . ' (1)');
         }
 
-        return $this->renderTemplateForm($template, $request);
-    }
-
-    #[Route(path: '/template/{id}/delete/{csrfToken}', name: 'admin_invoice_template_delete', methods: ['GET', 'POST'])]
-    #[IsGranted('manage_invoice_template')]
-    public function deleteTemplate(InvoiceTemplate $template, string $csrfToken, CsrfTokenManagerInterface $csrfTokenManager): Response
-    {
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.delete_template', $csrfToken))) {
-            $this->flashError('action.csrf.error');
-
-            return $this->redirectToRoute('admin_invoice_template');
-        }
-
-        $csrfTokenManager->refreshToken('invoice.delete_template');
-
-        try {
-            $this->templateRepository->removeTemplate($template);
-            $this->flashSuccess('action.delete.success');
-        } catch (Exception $ex) {
-            $this->flashDeleteException($ex);
-        }
-
-        return $this->redirectToRoute('admin_invoice_template');
+        return $this->renderTemplateForm($template, $request, $templateRepository);
     }
 
     private function getDefaultQuery(): InvoiceQuery
@@ -725,15 +636,18 @@ final class InvoiceController extends AbstractController
         $this->flashError('action.update.error', $err);
     }
 
-    private function renderTemplateForm(InvoiceTemplate $template, Request $request): Response
+    private function renderTemplateForm(InvoiceTemplate $template, Request $request, InvoiceTemplateRepository $templateRepository): Response
     {
+        $event = new InvoiceTemplateMetaDefinitionEvent($template);
+        $this->dispatcher->dispatch($event);
+
         $editForm = $this->createTemplateEditForm($template);
 
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->templateRepository->saveTemplate($template);
+                $templateRepository->saveTemplate($template);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('admin_invoice_template');
@@ -742,7 +656,7 @@ final class InvoiceController extends AbstractController
             }
         }
 
-        $page = $this->createPageSetup('admin_invoice_template.title');
+        $page = $this->createPageSetupTemplates('admin_invoice_template.title');
 
         return $this->render('invoice/template_edit.html.twig', [
             'page_setup' => $page,
@@ -765,7 +679,7 @@ final class InvoiceController extends AbstractController
 
     private function getArchiveToolbarForm(InvoiceArchiveQuery $query): FormInterface
     {
-        return $this->createSearchForm(InvoiceArchiveForm::class, $query, [
+        return $this->createSearchForm(InvoiceArchiveToolbarForm::class, $query, [
             'action' => $this->generateUrl('admin_invoice_list', []),
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'attr' => [
@@ -800,10 +714,19 @@ final class InvoiceController extends AbstractController
         return $event->getFields();
     }
 
-    private function createInvoiceEditForm(Invoice $invoice): FormInterface
+    /**
+     * CSRF tokens for state-changing routes are transported in the request body.
+     */
+    private function getRequestToken(Request $request): ?string
     {
-        $event = new InvoiceMetaDefinitionEvent($invoice);
-        $this->dispatcher->dispatch($event);
+        $token = $request->request->get('_token');
+
+        return \is_string($token) ? $token : null;
+    }
+
+    private function createInvoiceEditForm(Invoice $invoice, InvoiceService $invoiceService): FormInterface
+    {
+        $invoiceService->loadMetaFields($invoice);
 
         return $this->createForm(InvoiceEditForm::class, $invoice, [
             'action' => $this->generateUrl('admin_invoice_edit', ['id' => $invoice->getId()]),
@@ -812,7 +735,21 @@ final class InvoiceController extends AbstractController
         ]);
     }
 
+    /**
+     * @return PageSetup<Invoice>
+     */
     private function createPageSetup(string $title = 'invoices'): PageSetup
+    {
+        $page = new PageSetup($title);
+        $page->setHelp('invoices.html');
+
+        return $page;
+    }
+
+    /**
+     * @return PageSetup<InvoiceTemplate>
+     */
+    private function createPageSetupTemplates(string $title = 'invoices'): PageSetup
     {
         $page = new PageSetup($title);
         $page->setHelp('invoices.html');

@@ -18,7 +18,7 @@ final class HexColorValidator extends ConstraintValidator
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof HexColor) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\HexColor');
+            throw new UnexpectedTypeException($constraint, HexColor::class);
         }
 
         $color = $value;

@@ -14,8 +14,6 @@ use App\Model\Statistic\BudgetStatistic;
 
 /**
  * Object used to unify the access to budget data in charts.
- *
- * @internal do not use in plugins, no BC promise given!
  */
 class BudgetStatisticModel implements BudgetStatisticModelInterface
 {

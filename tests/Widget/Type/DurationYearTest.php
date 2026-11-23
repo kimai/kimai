@@ -11,17 +11,15 @@ namespace App\Tests\Widget\Type;
 
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
-use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Widget\Type\AbstractCounterYear;
 use App\Widget\Type\AbstractWidget;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\DurationYear;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Widget\Type\DurationYear
- * @covers \App\Widget\Type\AbstractCounterYear
- */
-class DurationYearTest extends AbstractWidgetTypeTest
+#[CoversClass(DurationYear::class)]
+#[CoversClass(AbstractCounterYear::class)]
+class DurationYearTest extends AbstractWidgetTypeTestCase
 {
     /**
      * @return AbstractCounterYear
@@ -29,9 +27,8 @@ class DurationYearTest extends AbstractWidgetTypeTest
     public function createSut(): AbstractWidgetType
     {
         $repository = $this->createMock(TimesheetRepository::class);
-        $configuration = SystemConfigurationFactory::createStub();
 
-        $sut = new DurationYear($repository, $configuration);
+        $sut = new DurationYear($repository);
         $sut->setUser(new User());
 
         return $sut;
@@ -56,5 +53,24 @@ class DurationYearTest extends AbstractWidgetTypeTest
 
         self::assertEquals('widget/widget-counter-duration.html.twig', $sut->getTemplateName());
         self::assertEquals('DurationYear', $sut->getId());
+    }
+
+    public function testUsesTheCalendarYear(): void
+    {
+        $repository = $this->createMock(TimesheetRepository::class);
+        $repository->expects($this->once())->method('getDurationForTimeRange')->willReturnCallback(
+            function (\DateTimeInterface $begin, \DateTimeInterface $end) {
+                self::assertEquals(date('Y') . '-01-01 00:00:00', $begin->format('Y-m-d H:i:s'));
+                self::assertEquals(date('Y') . '-12-31 23:59:59', $end->format('Y-m-d H:i:s'));
+
+                return 1234;
+            }
+        );
+
+        $sut = new DurationYear($repository);
+        $sut->setUser(new User());
+
+        self::assertEquals(1234, $sut->getData());
+        self::assertEquals('stats.durationYear', $sut->getTitle());
     }
 }

@@ -11,10 +11,10 @@ namespace App\Validator;
 
 final class ValidationException extends \RuntimeException
 {
-    public function __construct(string $message = null)
+    public function __construct(?string $message = null)
     {
         if ($message === null) {
-            $message = 'Validation failed';
+            $message = 'Validation Failed';
         }
         parent::__construct($message, 400);
     }

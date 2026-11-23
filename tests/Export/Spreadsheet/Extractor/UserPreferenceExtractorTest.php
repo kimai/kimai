@@ -15,13 +15,12 @@ use App\Event\UserPreferenceDisplayEvent;
 use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\ExtractorException;
 use App\Export\Spreadsheet\Extractor\UserPreferenceExtractor;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-/**
- * @covers \App\Export\Spreadsheet\Extractor\UserPreferenceExtractor
- * @covers \App\Export\Spreadsheet\Extractor\ExtractorException
- */
+#[CoversClass(UserPreferenceExtractor::class)]
+#[CoversClass(ExtractorException::class)]
 class UserPreferenceExtractorTest extends TestCase
 {
     public function testExtract(): void
@@ -62,7 +61,7 @@ class UserPreferenceExtractorTest extends TestCase
         $this->expectException(ExtractorException::class);
         $this->expectExceptionMessage('UserPreferenceExtractor needs a UserPreferenceDisplayEvent instance for work');
 
-        /* @phpstan-ignore-next-line */
+        /* @phpstan-ignore argument.type */
         $sut->extract(new \stdClass());
     }
 }

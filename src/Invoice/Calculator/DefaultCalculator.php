@@ -23,7 +23,7 @@ final class DefaultCalculator extends AbstractMergedCalculator implements Calcul
     /**
      * @return InvoiceItem[]
      */
-    public function getEntries(): array
+    protected function calculateEntries(): array
     {
         $entries = [];
 

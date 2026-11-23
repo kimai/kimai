@@ -11,6 +11,9 @@ namespace App\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
 
+/**
+ * @deprecated since 2.32 - use TranslatorInterface directly
+ */
 final class ThemeJavascriptTranslationsEvent extends Event
 {
     /**

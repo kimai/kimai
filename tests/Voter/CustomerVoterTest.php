@@ -13,13 +13,13 @@ use App\Entity\Customer;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Voter\CustomerVoter;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use Symfony\Component\Security\Core\User\InMemoryUser;
 
-/**
- * @covers \App\Voter\CustomerVoter
- */
-class CustomerVoterTest extends AbstractVoterTest
+#[CoversClass(CustomerVoter::class)]
+class CustomerVoterTest extends AbstractVoterTestCase
 {
     public function assertVote(User $user, $subject, $attribute, $result): void
     {
@@ -27,16 +27,16 @@ class CustomerVoterTest extends AbstractVoterTest
         $sut = $this->getVoter(CustomerVoter::class);
 
         $actual = $sut->vote($token, $subject, [$attribute]);
-        $this->assertEquals($result, $actual, \sprintf('Failed voting "%s" for User with roles %s.', $attribute, implode(', ', $user->getRoles())));
+        self::assertEquals($result, $actual, \sprintf('Failed voting "%s" for User with roles %s.', $attribute, implode(', ', $user->getRoles())));
     }
 
     public function testVote(): void
     {
-        $userNoRole = $this->getUser(0, 'foo');
-        $userStandard = $this->getUser(1, User::ROLE_USER);
-        $userTeamlead = $this->getUser(2, User::ROLE_TEAMLEAD);
-        $userAdmin = $this->getUser(3, User::ROLE_ADMIN);
-        $userSuperAdmin = $this->getUser(4, User::ROLE_SUPER_ADMIN);
+        $userNoRole = self::getUser(0, 'foo');
+        $userStandard = self::getUser(1, User::ROLE_USER);
+        $userTeamlead = self::getUser(2, User::ROLE_TEAMLEAD);
+        $userAdmin = self::getUser(3, User::ROLE_ADMIN);
+        $userSuperAdmin = self::getUser(4, User::ROLE_SUPER_ADMIN);
 
         $result = VoterInterface::ACCESS_GRANTED;
         foreach ([$userAdmin, $userSuperAdmin] as $user) {
@@ -55,7 +55,7 @@ class CustomerVoterTest extends AbstractVoterTest
             $team->removeCustomer($customer);
         }
 
-        $userTeamlead = $this->getUser(2, User::ROLE_TEAMLEAD);
+        $userTeamlead = self::getUser(2, User::ROLE_TEAMLEAD);
 
         $result = VoterInterface::ACCESS_DENIED;
         foreach ([$userNoRole, $userStandard] as $user) {
@@ -163,5 +163,53 @@ class CustomerVoterTest extends AbstractVoterTest
         $customer->addTeam(new Team('foo'));
 
         $this->assertVote($user, $customer, 'access', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testAccessGrantedForCanSeeAllDataDespiteRestrictiveTeams(): void
+    {
+        $customer = new Customer('foo');
+        $customer->addTeam(new Team('locked'));
+
+        $user = new User();
+        $user->initCanSeeAllData(true);
+
+        $this->assertVote($user, $customer, 'access', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testAccessGrantedWhenUserMatchesOneOfMultipleCustomerTeams(): void
+    {
+        $sharedTeam = new Team('shared');
+        $foreignTeam = new Team('foreign');
+
+        $customer = new Customer('foo');
+        $customer->addTeam($foreignTeam);
+        $customer->addTeam($sharedTeam);
+
+        $user = new User();
+        $sharedTeam->addUser($user);
+
+        $this->assertVote($user, $customer, 'access', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testAccessDeniedWhenUserOnlyInUnrelatedTeams(): void
+    {
+        $customer = new Customer('foo');
+        $customer->addTeam(new Team('customerTeam'));
+
+        $user = new User();
+        $unrelated = new Team('unrelated');
+        $unrelated->addUser($user);
+        $unrelated->addTeamlead($user);
+
+        $this->assertVote($user, $customer, 'access', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testAccessDeniedForNonUserToken(): void
+    {
+        $customer = new Customer('foo');
+        $token = new UsernamePasswordToken(new InMemoryUser('anon', null), 'bar', []);
+        $sut = $this->getVoter(CustomerVoter::class);
+
+        self::assertEquals(VoterInterface::ACCESS_DENIED, $sut->vote($token, $customer, ['access']));
     }
 }

@@ -11,18 +11,18 @@ namespace App\Tests\EventSubscriber;
 
 use App\Event\ConfigureMainMenuEvent;
 use App\EventSubscriber\MenuSubscriber;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\EventSubscriber\MenuSubscriber
- */
+#[CoversClass(MenuSubscriber::class)]
 class MenuSubscriberTest extends TestCase
 {
     public function testGetSubscribedEvents(): void
     {
         $events = MenuSubscriber::getSubscribedEvents();
-        $this->assertArrayHasKey(ConfigureMainMenuEvent::class, $events);
+        self::assertArrayHasKey(ConfigureMainMenuEvent::class, $events);
         $methodName = $events[ConfigureMainMenuEvent::class][0];
-        $this->assertTrue(method_exists(MenuSubscriber::class, $methodName));
+        self::assertIsString($methodName);
+        self::assertTrue(method_exists(MenuSubscriber::class, $methodName));
     }
 }

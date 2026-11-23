@@ -11,31 +11,31 @@ namespace App\Tests\Event;
 
 use App\Event\ConfigureMainMenuEvent;
 use App\Utils\MenuItemModel;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\ConfigureMainMenuEvent
- */
+#[CoversClass(ConfigureMainMenuEvent::class)]
 class ConfigureMainMenuEventTest extends TestCase
 {
     /**
      * @deprecated
-     * @group legacy
      */
+    #[Group('legacy')]
     public function testLegacy(): void
     {
         $sut = new ConfigureMainMenuEvent();
 
-        self::assertNotNull($sut->getAppsMenu());
+        self::assertEquals('apps', $sut->getAppsMenu()->getIdentifier());
     }
 
     public function testGetterAndSetter(): void
     {
         $sut = new ConfigureMainMenuEvent();
 
-        self::assertNotNull($sut->getMenu());
-        self::assertNotNull($sut->getAdminMenu());
-        self::assertNotNull($sut->getSystemMenu());
+        self::assertEquals('main', $sut->getMenu()->getIdentifier());
+        self::assertEquals('admin', $sut->getAdminMenu()->getIdentifier());
+        self::assertEquals('system', $sut->getSystemMenu()->getIdentifier());
 
         self::assertNull($sut->getTimesheetMenu());
         self::assertNull($sut->getInvoiceMenu());
@@ -62,7 +62,7 @@ class ConfigureMainMenuEventTest extends TestCase
         self::assertNotNull($sut->getReportingMenu());
         self::assertSame($reporting, $sut->getReportingMenu());
 
-        self::assertSame($reporting, $sut->findById('reporting'));
+        self::assertSame($reporting, $sut->findById('reporting')); // @phpstan-ignore argument.unresolvableType
         self::assertNotNull($sut->findById('foo'));
         self::assertNotNull($sut->findById('bar'));
     }

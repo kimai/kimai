@@ -12,41 +12,40 @@ namespace App\Tests\Timesheet\Calculator;
 use App\Entity\Timesheet;
 use App\Tests\Mocks\RoundingServiceFactory;
 use App\Timesheet\Calculator\DurationCalculator;
+use App\Timesheet\RoundingService;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Timesheet\Calculator\DurationCalculator
- * @covers \App\Timesheet\RoundingService
- */
+#[CoversClass(DurationCalculator::class)]
+#[CoversClass(RoundingService::class)]
 class DurationCalculatorTest extends TestCase
 {
     public function testCalculateWithEmptyEnd(): void
     {
         $record = new Timesheet();
         $record->setBegin(new \DateTime());
-        $this->assertEquals(0, $record->getDuration());
+        self::assertEquals(0, $record->getDuration());
 
         $sut = new DurationCalculator((new RoundingServiceFactory($this))->create());
         $sut->calculate($record, []);
-        $this->assertEquals(0, $record->getDuration());
+        self::assertEquals(0, $record->getDuration());
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testCalculate($rules, $start, $end, $expectedDuration): void
     {
         $record = new Timesheet();
         $record->setBegin($start);
         $record->setEnd($end);
-        $this->assertEquals(0, $record->getDuration());
+        self::assertEquals(0, $record->getDuration());
 
         $sut = new DurationCalculator((new RoundingServiceFactory($this))->create($rules));
         $sut->calculate($record, []);
-        $this->assertEquals($expectedDuration, $record->getDuration());
+        self::assertEquals($expectedDuration, $record->getDuration());
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
         $start = new \DateTime();
         $start->setTime(12, 0, 0);

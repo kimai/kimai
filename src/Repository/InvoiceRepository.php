@@ -17,6 +17,8 @@ use App\Entity\User;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Paginator\QueryPaginator;
 use App\Repository\Query\InvoiceArchiveQuery;
+use App\Repository\Search\SearchConfiguration;
+use App\Repository\Search\SearchHelper;
 use App\Utils\Pagination;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -24,12 +26,10 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<Invoice>
+ * @extends EntityRepository<Invoice>
  */
 class InvoiceRepository extends EntityRepository
 {
-    use RepositorySearchTrait;
-
     public function saveInvoice(Invoice $invoice): void
     {
         $entityManager = $this->getEntityManager();
@@ -207,6 +207,11 @@ class InvoiceRepository extends EntityRepository
             $qb->setParameter('status', $query->getStatus());
         }
 
+        if ($query->hasUsers()) {
+            $qb->andWhere($qb->expr()->in('i.user', ':users'));
+            $qb->setParameter('users', $query->getUsers());
+        }
+
         $orderBy = $query->getOrderBy();
         switch ($orderBy) {
             case 'date':
@@ -235,28 +240,17 @@ class InvoiceRepository extends EntityRepository
 
         if ($query->hasSearchTerm()) {
             $qb->leftJoin('i.customer', 'customer');
-            $this->addSearchTerm($qb, $query);
+
+            $configuration = new SearchConfiguration(
+                ['i.invoiceNumber', 'i.comment', 'customer.name', 'customer.company'],
+                InvoiceMeta::class,
+                'invoice'
+            );
+            $helper = new SearchHelper($configuration);
+            $helper->addSearchTerm($qb, $query);
         }
 
         return $qb;
-    }
-
-    private function getMetaFieldClass(): string
-    {
-        return InvoiceMeta::class;
-    }
-
-    private function getMetaFieldName(): string
-    {
-        return 'invoice';
-    }
-
-    /**
-     * @return array<string>
-     */
-    private function getSearchableFields(): array
-    {
-        return ['i.comment', 'customer.name', 'customer.company'];
     }
 
     /**
@@ -295,6 +289,9 @@ class InvoiceRepository extends EntityRepository
         return new QueryPaginator($query, $counter);
     }
 
+    /**
+     * @return Pagination<Invoice>
+     */
     public function getPagerfantaForQuery(InvoiceArchiveQuery $query): Pagination
     {
         return new Pagination($this->getPaginatorForQuery($query), $query);

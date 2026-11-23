@@ -12,6 +12,7 @@ namespace App\Form\Toolbar;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\User;
 use App\Form\Type\ActivityType;
 use App\Form\Type\BillableSearchType;
 use App\Form\Type\CustomerType;
@@ -45,6 +46,9 @@ use Symfony\Component\Form\FormEvents;
  */
 trait ToolbarFormTrait
 {
+    /**
+     * @param array<string, mixed> $options
+     */
     protected function addUsersChoice(FormBuilderInterface $builder, string $field = 'users', array $options = []): void
     {
         $builder->add($field, UserType::class, array_merge([
@@ -59,6 +63,9 @@ trait ToolbarFormTrait
         ], $options));
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     protected function addTeamsChoice(FormBuilderInterface $builder, string $field = 'teams', array $options = []): void
     {
         $builder->add($field, TeamType::class, array_merge([
@@ -73,11 +80,17 @@ trait ToolbarFormTrait
         ], $options));
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     protected function addCustomerMultiChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false): void
     {
         $this->addCustomerSelect($builder, $options, true, $multiProject);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     private function addCustomerSelect(FormBuilderInterface $builder, array $options, bool $multiCustomer, bool $multiProject): void
     {
         $name = 'customer';
@@ -98,7 +111,7 @@ trait ToolbarFormTrait
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($builder, $options, $name, $multiCustomer, $multiProject) {
+            function (FormEvent $event) use ($builder, $options, $name, $multiCustomer, $multiProject): void {
                 /** @var array<string, mixed> $data */
                 $data = $event->getData();
                 $event->getForm()->add($name, CustomerType::class, array_merge([
@@ -110,7 +123,10 @@ trait ToolbarFormTrait
                     'start_date_param' => '%daterange%',
                     'query_builder' => function (CustomerRepository $repo) use ($builder, $data, $name) {
                         $query = new CustomerFormTypeQuery();
-                        $query->setUser($builder->getOption('user'));
+                        $tu = $builder->getOption('user');
+                        if ($tu instanceof User) {
+                            $query->setUser($tu);
+                        }
 
                         if (\array_key_exists($name, $data) && $data[$name] !== null && $data[$name] !== '') {
                             $customers = \is_array($data[$name]) ? $data[$name] : [$data[$name]];
@@ -149,6 +165,9 @@ trait ToolbarFormTrait
         ]);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     protected function addDateRange(FormBuilderInterface $builder, array $options, bool $allowEmpty = true): void
     {
         $params = [
@@ -163,11 +182,17 @@ trait ToolbarFormTrait
         $builder->add('daterange', DateRangeType::class, $params);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     protected function addProjectMultiChoice(FormBuilderInterface $builder, array $options = [], bool $multiCustomer = false, bool $multiActivity = false): void
     {
         $this->addProjectSelect($builder, $options, true, $multiCustomer, $multiActivity);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     private function addProjectSelect(FormBuilderInterface $builder, array $options, bool $multiProject, bool $multiCustomer, bool $multiActivity): void
     {
         $name = 'project';
@@ -187,7 +212,7 @@ trait ToolbarFormTrait
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($builder, $options, $name, $multiCustomer, $multiProject, $multiActivity) {
+            function (FormEvent $event) use ($builder, $options, $name, $multiCustomer, $multiProject, $multiActivity): void {
                 /** @var array<string, mixed> $data */
                 $data = $event->getData();
                 $event->getForm()->add($name, ProjectType::class, array_merge([
@@ -197,7 +222,10 @@ trait ToolbarFormTrait
                     'activity_select' => $multiActivity ? 'activities' : 'activity',
                     'query_builder' => function (ProjectRepository $repo) use ($builder, $data, $options, $multiCustomer, $multiProject) {
                         $query = new ProjectFormTypeQuery();
-                        $query->setUser($builder->getOption('user'));
+                        $tu = $builder->getOption('user');
+                        if ($tu instanceof User) {
+                            $query->setUser($tu);
+                        }
 
                         $name = $multiCustomer ? 'customers' : 'customer';
                         if (\array_key_exists($name, $data) && $data[$name] !== null && $data[$name] !== '') {
@@ -234,11 +262,17 @@ trait ToolbarFormTrait
         );
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     protected function addActivityMultiChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false): void
     {
         $this->addActivitySelect($builder, $options, true, $multiProject);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     private function addActivitySelect(FormBuilderInterface $builder, array $options = [], bool $multiActivity = false, bool $multiProject = false, bool $autoFill = true): void
     {
         $name = $multiActivity ? 'activities' : 'activity';
@@ -266,7 +300,7 @@ trait ToolbarFormTrait
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($name, $multiProject, $activityOptions) {
+            function (FormEvent $event) use ($name, $multiProject, $activityOptions, $options): void {
                 /** @var array<string, mixed> $data */
                 $data = $event->getData();
                 $event->getForm()->add($name, ActivityType::class, array_merge($activityOptions, [
@@ -299,7 +333,7 @@ trait ToolbarFormTrait
 
                         return $repo->getQueryBuilderForFormType($query);
                     },
-                ]));
+                ], $options));
             }
         );
     }
@@ -330,6 +364,9 @@ trait ToolbarFormTrait
         ]);
     }
 
+    /**
+     * @param array<int|string, string> $allowedColumns
+     */
     protected function addOrderBy(FormBuilderInterface $builder, array $allowedColumns): void
     {
         $all = [];

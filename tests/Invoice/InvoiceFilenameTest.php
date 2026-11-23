@@ -18,11 +18,10 @@ use App\Invoice\NumberGeneratorInterface;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Invoice\InvoiceFilename
- */
+#[CoversClass(InvoiceFilename::class)]
 class InvoiceFilenameTest extends TestCase
 {
     public function testInvoiceFilename(): void

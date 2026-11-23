@@ -15,19 +15,42 @@ namespace App\Pdf;
  */
 final class PdfContext
 {
+    /**
+     * Keys that may be set from inside a (sandboxed) Twig template.
+     *
+     * Sinks that read the local filesystem inside mPDF (e.g. `associated_files`
+     * with a `path` entry, or `additional_xmp_rdf`) must NOT appear here. Those
+     * remain reachable via InvoiceModel::setOption() from PHP code.
+     */
+    private const ALLOWED_KEYS = [
+        'filename', 'mode', 'format', 'orientation', 'default_font', 'default_font_size', 'fonts',
+        'margin_left', 'margin_right', 'margin_top', 'margin_bottom', 'margin_header', 'margin_footer',
+        'setAutoTopMargin', 'setAutoBottomMargin', 'PDFA', 'PDFAauto', 'PDFAversion', 'useActiveForms',
+        // Adding watermarks to PDFs
+        'watermarkImgBehind', 'showWatermarkText', 'showWatermarkImage', 'watermarkText', 'watermarkAngle',
+        'watermarkImage', 'watermark_font', 'watermarkTextAlpha', 'watermarkImageAlpha',
+    ];
+
     private array $options = [];
 
-    public function setOption(string $key, string|array|null|bool $value): void
+    public function setOption(string $key, string|int|array|null|bool $value): void
     {
+        if (!\in_array($key, self::ALLOWED_KEYS, true)) {
+            return;
+        }
+
         $this->options[$key] = $value;
     }
 
+    /**
+     * @return array<string|int|array|null|bool>
+     */
     public function getOptions(): array
     {
         return $this->options;
     }
 
-    public function getOption(string $key): array|string|null
+    public function getOption(string $key): string|int|array|null|bool
     {
         if (\array_key_exists($key, $this->options)) {
             return $this->options[$key];

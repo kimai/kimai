@@ -1,7 +1,27 @@
-{%- macro search_filter(route, options) -%}
+{%- macro duration(timesheet, options = {}) -%}
+    <span
+    {%- if options.title is defined %} data-replacer="duration" data-title="true"{% endif -%}
+    {%- if not timesheet.end %} data-since="{{ timesheet.begin is null ? '' : timesheet.begin.format(constant('DATE_ISO8601')) }}"{% endif -%}
+    {# TODO calculate break and add as data-duration #}
+    class="duration {% if options.class is defined %} {{ options.class }}{% endif %}">
+    {{- timesheet.begin is null ? 0|duration : timesheet|duration -}}
+    </span>
+{% endmacro %}
+
+{%- macro duration_seconds(seconds, options = {}) -%}
+    <span
+    {%- if options.title is defined %} data-replacer="duration" data-title="true" {% endif -%}
+    {%- if options.active is defined and options.active %} data-since="{{ create_date('- '~seconds~' seconds').format(constant('DATE_ISO8601')) }}" {% endif -%}
+    {# TODO calculate break and add as data-duration #}
+    class="duration {% if options.class is defined %} {{ options.class }}{% endif %}">
+    {{- seconds|duration -}}
+    </span>
+{% endmacro %}
+
+{%- macro search_filter(route, options = {}) -%}
     {% set opts = {'performSearch': 1} %}
     {% if options.begin is defined and options.end is defined %}
-        {% set opts = opts|merge({'daterange': (options.begin|report_date ~ ' - ' ~ options.end|report_date)}) %}
+        {% set opts = opts|merge({'daterange': date_range(options.begin, options.end)}) %}
     {% endif %}
     {% if options.customer is defined %}
         {% set opts = opts|merge({'customers[]': options.customer}) %}
@@ -22,36 +42,18 @@
 {% endmacro %}
 
 {%- macro page_actions(actions) -%}
-    {% set btnClasses = 'btn-primary' %}
-    {% set helpClasses = '' %}
-    {% if tabler_bundle.isNavbarOverlapping() %}
-        {% set helpClasses = 'btn-dark' %}
-    {% elseif not tabler_bundle.isDarkMode() %}
-        {% set btnClasses = 'btn-white' %}
-    {% endif %}
-    {% set later = {} %}
-    {% set help = null %}
+    {% set btnClasses = '' %}
     <div class="page-actions">
         <div class="pa-desktop d-none d-sm-inline-flex btn-list">
         {{ _self.actions(actions, {large: true, button_class: btnClasses}) }}
-        {% if help is not null %}
-            {% set help = help|merge({class: helpClasses ~ ' action-help ' ~ (help.class|default(''))}) %}
-            {{ _self.action_button('help', help) }}
-        {% endif %}
         </div>
         <div class="pa-mobile d-inline-flex d-sm-none btn-list">
-            {% set btnClass = 'btn btn-icon ' %}
-            {% if tabler_bundle.isNavbarOverlapping() %}
-                {% set btnClass = 'btn btn-icon btn-dark' %}
-            {% elseif not tabler_bundle.isDarkMode() %}
-                {% set btnClass = 'btn btn-icon btn-white' %}
-            {% endif %}
-            {{ _self.table_actions(actions, btnClass) }}
+            {{ _self.table_actions(actions, 'btn btn-icon') }}
         </div>
     </div>
 {%- endmacro -%}
 
-{%- macro actions(actions, options) -%}
+{%- macro actions(actions, options = {}) -%}
     {% set large = options.large ?? true %}
     {% set btnClasses = options.button_class ?? 'btn-primary' %}
     {%- for icon, values in actions  %}
@@ -61,9 +63,9 @@
             {# what to do here ? #}
         {% else %}
             {% if values.children is defined and values.children|length > 0 %}
-                <div class="dropdown">
+                <div class="dropdown{% if values.class is defined %} {{ values.class }}{% endif %}">
                     <button type="button" class="btn {{ btnClasses }} dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ icon(icon, true) }}{% if large %} {{ values.title is defined ? values.title|trans : icon|trans({}, 'actions') }}{% endif %}
+                        {{ icon(icon, true) }}{% if large %} {{ values.title is defined ? values.title|trans : icon|trans }}{% endif %}
                     </button>
                     <div class="dropdown-menu">
                         {%- for icon, values in values.children %}
@@ -79,10 +81,6 @@
         {% endif %}
     {% endfor -%}
 {%- endmacro -%}
-
-{% macro page_header(title) %}
-    <h2 class="page-header">{{ title|trans }}</h2>
-{% endmacro %}
 
 {% macro label_boolean(visible) %}
     {% if visible %}
@@ -122,9 +120,9 @@
     {{ _self.label_color(team.name, team.color|colorize(team.name)) }}
 {% endmacro %}
 
-{% macro user_avatar(user, tooltip, class, badge) %}
+{% macro user_avatar(user, tooltip = false, class = '', badge = null) %}
     {% set avatar = null %}
-    {% if user.avatar is not empty and kimai_config.themeAllowAvatarUrls %}
+    {% if user.avatar is not empty and config('themeAllowAvatarUrls') %}
         {% set avatar = asset(user.avatar, 'avatars') %}
     {% endif %}
     {% if not user.enabled %}
@@ -142,7 +140,7 @@
     </span>
 {% endmacro %}
 
-{% macro avatar(initials, color, tooltip, class) %}
+{% macro avatar(initials, color = null, tooltip = null, class = null) %}
     {% set color = color|colorize(initials) %}
     <span class="avatar {{ class ?? '' }}" style="background-color: {{ color }}; color: {{ color|font_contrast }}"
     {%- if tooltip is not same as null %} data-toggle="tooltip" data-placement="top" title="{{ tooltip }}"{% endif -%}>{{ initials }}</span>
@@ -159,7 +157,7 @@
 {#
     options = {'inherit': true}
 #}
-{% macro label_activity(activity, options) %}
+{% macro label_activity(activity, options = {}) %}
     {% set inherit = options.inherit ?? true %}
     {% set isVisible = activity.visible %}
     {% set color = activity.color %}
@@ -181,7 +179,7 @@
 {#
     options = {'inherit': true}
 #}
-{% macro label_project(project, options) %}
+{% macro label_project(project, options = {}) %}
     {% set inherit = options.inherit ?? true %}
     {% set isVisible = false %}
     {% if project.visible and project.customer.visible %}
@@ -206,17 +204,17 @@
 {% endmacro %}
 
 {# Use for list views and the main column (if the entity has something like a name) #}
-{% macro label_name(label, color, isVisible) %}
+{% macro label_name(label, color, isVisible = true) %}
     {{ _self.label_color_dot('color', isVisible, label, null, color) }}
 {% endmacro %}
 
 {# Use in datatables to show linked entity names #}
-{% macro label_dot(label, color, isVisible) %}
+{% macro label_dot(label, color, isVisible = true) %}
     {{ _self.label_color_dot('color', isVisible, label, null, color|colorize(label)) }}
 {% endmacro %}
 
 {# for @internal use only #}
-{% macro label_color_dot(type, isVisible, name, url, color) %}
+{% macro label_color_dot(type, isVisible, name, url = null, color = null) %}
     {%- if url is not empty -%}<a href="{{ url }}">{% endif %}
     <span class="pe-1 label-{{ type }}{{ isVisible is same as (false) ? ' label-invisible' : '' }}">
         <span class="badge me-1" {% if color is not empty %} style="background-color:{{ color }}"{% endif %}></span>
@@ -226,23 +224,27 @@
 {% endmacro %}
 
 {% macro badge_team_access(teams) %}
-    {% if teams|length > 0 %}
-        {{ _self.badge_counter(teams|length) }}
+    {{ _self.badge_counted(teams|length) }}
+{% endmacro %}
+
+{% macro badge_counted(amount) %}
+    {% if amount > 0 %}
+        {{ _self.badge_counter(amount, null, 'primary') }}
     {% else %}
-        {{ _self.badge_counter(0, null, 'bg-gray') }}
+        {{ _self.badge_counter(0, null, 'secondary') }}
     {% endif %}
 {% endmacro %}
 
-{% macro badge_counter(count, url, type) %}
-    {% if url %}
-        <a href="{{ url }}"><span class="badge {{ type|default('bg-blue') }}">{{ count }}</span></a>
+{% macro badge_counter(count, url = null, type = null) %}
+    {% if url is not null %}
+        <a href="{{ url }}">{{ _self.badge_type(count, type|default('blue')) }}</a>
     {% else %}
-        <span class="badge {{ type|default('bg-blue') }}">{{ count }}</span>
+        {{ _self.badge_type(count, type|default('blue')) }}
     {% endif %}
 {% endmacro %}
 
-{% macro label(title, type, tooltip) %}
-    <span {% if tooltip %}data-toggle="tooltip" data-placement="top" title="{{ tooltip }}" {% endif %}class="badge bg-{{ type|default('success') }}">{{ title }}</span>
+{% macro label(title, type = null, tooltip = null) %}
+    <span {% if tooltip is not null %}data-toggle="tooltip" data-placement="top" title="{{ tooltip }}" {% endif %}class="badge bg-{{ type|default('success') }} text-{{ type|default('success') }}-fg">{{ title }}</span>
 {% endmacro %}
 
 {% macro label_color(title, color) %}
@@ -251,6 +253,11 @@
 
 {% macro badge(title, color) %}
     <span class="badge"{% if color is not null %} style="background-color:{{ color }}; color:{{ color|font_contrast }}"{% endif %}>{{ title }}</span>
+{% endmacro %}
+
+{% macro badge_type(title, type = null) %}
+    {% set class = (type is not empty ? 'bg-' ~ type ~ ' text-' ~ type ~ '-fg' : '') %}
+    <span class="badge {{ class }}">{{ title }}</span>
 {% endmacro %}
 
 {% macro form_errors(form) %}
@@ -268,17 +275,17 @@
     {% endif %}
 {% endmacro %}
 
-{% macro alert(type, description, title, icon, dismissible) %}
+{% macro alert(type, description, title = null, icon = null, dismissible = false) %}
     {% from '@theme/components/alert.html.twig' import alert %}
-    {{ alert({type: type, description: description|trans, title: title|trans, icon: icon, dismissible: dismissible, important: true}) }}
+    {{ alert({type: type, description: description|trans, title: (title is not null ? title|trans : null), icon: icon, dismissible: dismissible, important: true}) }}
 {% endmacro %}
 
-{% macro callout(type, description, title, icon) %}
+{% macro callout(type, description, title = null, icon = null, important = false) %}
     {% from '@theme/components/alert.html.twig' import alert %}
-    {{ alert({type: type|default('danger'), description: description|trans, title: title|trans, icon: icon, dismissible: false, important: true}) }}
+    {{ alert({type: type|default('danger'), description: description|trans, title: (title is not null ? title|trans : null), icon: icon, dismissible: false, important: important ?? true}) }}
 {% endmacro %}
 
-{% macro table_actions(actions, class) %}
+{% macro table_actions(actions, class = null) %}
     {% if actions|length >= 1 %}
         {% import '@theme/components/actions.html.twig' as macro %}
         {{ macro.actions(actions, {'class': class|default('btn-sm'), translationDomain: 'actions'}) }}
@@ -299,16 +306,21 @@
     {{ _self.card_tool_button('create', {'url': create_url, 'class': 'modal-ajax-form open-edit', 'title': 'create'|trans}) }}
 {% endmacro %}
 
-{% macro action_button(icon, values, type) %}
+{% macro action_button(icon, values = null, type = null) %}
     {% import '@theme/components/button.html.twig' as macro %}
     {% set values = (values ?? {})|merge({'tooltip_attr': 'data-toggle'}) %}
     {{ macro.button(icon, values, type) }}
 {% endmacro %}
 
 {% macro tag_list(taglist) %}
+    <div class="tags-list">
     {% for tag in taglist %}
-        {{ _self.badge(tag.name, tag.color|colorize(tag.name)) }}
+        <span class="tag">
+            <span class="legend" style="background-color: {{ tag.color|colorize(tag.name) }}"></span>
+            {{ tag.name }}
+        </span>
     {% endfor %}
+    </div>
 {% endmacro %}
 
 {% macro meta_field_value(entity, field) %}
@@ -322,13 +334,11 @@
 {% macro form_type_value(type, value, entity) %}
     {% if 'ColorPickerType' in type or 'ColorChoiceType' in type %}
         {% if value is not empty %}
-            <span class="label-color" data-toggle="tooltip" data-placement="top" title="{{ value }}">
-                <i class="dot {{ 'dot'|icon(true) }} fa-fw" style="color:{{ value }}"></i>
-            </span>
+            {{ _self.label_color_dot('color', true, value, null, value) }}
         {% endif %}
     {% elseif 'DurationType' in type %}
         {{ value|duration }}
-    {% elseif 'YesNoType' in type or 'CheckBoxType' in type %}
+    {% elseif 'YesNoType' in type or 'CheckboxType' in type %}
         {{ _self.label_boolean(value) }}
     {% elseif 'DatePickerType' in type %}
         {{ value|date_short }}
@@ -348,7 +358,7 @@
         {% endfor %}
     {% elseif 'MoneyType' in type %}
         {% set classname = class_name(entity) %}
-        {% if entity is null %}
+        {% if classname is null %}
             {{ value }}
         {% elseif classname == 'App\\Entity\\Timesheet' %}
             {{ value|money(entity.project.customer.currency) }}
@@ -366,7 +376,11 @@
     {% elseif 'EmailType' in type %}
         <a href="mailto:{{ value }}">{{ value }}</a>
     {% elseif 'UrlType' in type %}
-        <a href="{{ value }}" target="_blank">{{ value }}</a>
+        {% if value matches '{^https?://}i' %}
+            <a href="{{ value }}" target="_blank" rel="noopener noreferrer">{{ value }}</a>
+        {% else %}
+            {{ value }}
+        {% endif %}
     {% else %}
         {{ value }}
     {% endif %}
@@ -410,8 +424,8 @@
     </table>
 {% endmacro %}
 
-{% macro nothing_found(events) %}
-    {{ _self.callout('warning', 'error.no_entries_found') }}
+{% macro nothing_found(events = null) %}
+    {{ _self.callout('info', 'error.no_entries_found', null, 'info', false) }}
     {% if events is not empty %}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function() {
@@ -530,14 +544,6 @@
         </div>
         {% endfor %}
     </div>
-{% endmacro %}
-
-{% macro percent(maximum, current) %}
-    {% if maximum > 0 %}
-        {{ (current / (maximum / 100))|number_format(2) }} %
-    {% else %}
-        {{ 0|number_format(2) }} %
-    {% endif %}
 {% endmacro %}
 
 {% macro page_reloader(events, full_reload) %}

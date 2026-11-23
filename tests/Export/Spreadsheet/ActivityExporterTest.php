@@ -17,13 +17,13 @@ use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use App\Export\Spreadsheet\Extractor\MetaFieldExtractor;
 use App\Export\Spreadsheet\SpreadsheetExporter;
 use App\Repository\Query\ActivityQuery;
+use App\Tests\Mocks\AuthorizationCheckerFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Export\Spreadsheet\EntityWithMetaFieldsExporter
- */
+#[CoversClass(EntityWithMetaFieldsExporter::class)]
 class ActivityExporterTest extends TestCase
 {
     public function testExport(): void
@@ -37,7 +37,7 @@ class ActivityExporterTest extends TestCase
             return $event;
         });
 
-        $spreadsheetExporter = new SpreadsheetExporter($this->createMock(TranslatorInterface::class));
+        $spreadsheetExporter = new SpreadsheetExporter($this->createMock(TranslatorInterface::class), (new AuthorizationCheckerFactory($this))->create());
         $annotationExtractor = new AnnotationExtractor();
         $metaFieldExtractor = new MetaFieldExtractor($dispatcher);
 

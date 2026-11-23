@@ -3,11 +3,12 @@
 {% block main %}
     {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
     {% set formOptions = {
-        'title': (project.id is null ? 'create-project'|trans({}, 'actions') : 'edit'|trans({}, 'actions')),
+        'title': (project.id is null ? 'create-project'|trans : 'edit'|trans),
         'form': form,
         'back': path('admin_project')
     } %}
     {% embed formEditTemplate with formOptions %}
+        {% import "macros/form_helper.html.twig" as form_helper %}
         {% block form_body %}
             <div class="row">
                 <div class="col-md-9">
@@ -27,19 +28,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
-                    {{ form_row(form.orderNumber) }}
-                </div>
-                <div class="col-md-6">
-                    {{ form_row(form.orderDate) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     {{ form_row(form.start) }}
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     {{ form_row(form.end) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_row(form.lockedUntil) }}
                 </div>
             </div>
             {% if form.budgetType is defined %}
@@ -66,6 +62,26 @@
                     </div>
                 </div>
             {% endif %}
+            {{ form_helper.metafields(form, null) }}
+            {% embed '@theme/embeds/collapsible.html.twig' with {id: 'project_invoice_settings'} %}
+                {% import "macros/widgets.html.twig" as widgets %}
+                {% import "macros/form_helper.html.twig" as form_helper %}
+                {% block title %}{{ 'invoices'|trans }}{% endblock %}
+                {% block body %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(form.orderNumber) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(form.orderDate) }}
+                        </div>
+                    </div>
+                    {% if form.invoiceText is defined %}
+                        {{ form_row(form.invoiceText) }}
+                    {% endif %}
+                    {{ form_helper.metafields(form, 'invoice') }}
+                {% endblock %}
+            {% endembed %}
             <div class="row">
                 <div class="col-md-4">
                     {{ form_row(form.visible) }}
@@ -77,18 +93,6 @@
                     {{ form_row(form.globalActivities) }}
                 </div>
             </div>
-            {% if form.metaFields is defined and form.metaFields is not empty %}
-                {{ form_row(form.metaFields) }}
-            {% endif %}
-            {% embed '@theme/embeds/collapsible.html.twig' with {id: 'project_invoice_settings'} %}
-                {% import "macros/widgets.html.twig" as widgets %}
-                {% block title %}{{ 'invoices'|trans }}{% endblock %}
-                {% block body %}
-                    {% if form.invoiceText is defined %}
-                        {{ form_row(form.invoiceText) }}
-                    {% endif %}
-                {% endblock %}
-            {% endembed %}
             {{ form_rest(form) }}
         {% endblock %}
     {% endembed %}

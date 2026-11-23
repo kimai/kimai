@@ -178,9 +178,9 @@
         <source>budget</source>
         <target state="translated">예산</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="translated">예상 시간</target>
+        <target state="translated">시간당 할당량</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -290,9 +290,9 @@
         <source>profile.title</source>
         <target state="translated">사용자 프로필</target>
       </trans-unit>
-      <trans-unit id="HWKJZ0T" resname="profile.about_me">
+      <trans-unit id="HWKJZ0T" resname="profile.about_me" xml:space="preserve">
         <source>profile.about_me</source>
-        <target state="translated">나의 정보</target>
+        <target state="translated">사용자 정보</target>
       </trans-unit>
       <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
@@ -306,21 +306,21 @@
         <source>profile.password</source>
         <target state="translated">암호</target>
       </trans-unit>
-      <trans-unit id="Z34ZpjK" resname="profile.api-token">
+      <trans-unit id="Z34ZpjK" resname="profile.api-token" xml:space="preserve">
         <source>profile.api-token</source>
-        <target>API</target>
+        <target state="translated">API엑세스</target>
       </trans-unit>
       <trans-unit id="ygtTz8." resname="profile.roles">
         <source>profile.roles</source>
         <target state="translated">역할</target>
       </trans-unit>
-      <trans-unit id="MQKiG33" resname="profile.preferences">
+      <trans-unit id="MQKiG33" resname="profile.preferences" xml:space="preserve">
         <source>profile.preferences</source>
-        <target state="translated">설정</target>
+        <target state="translated">환경 설정</target>
       </trans-unit>
-      <trans-unit id="j4Kd9N1" resname="calendar_initial_view">
+      <trans-unit id="j4Kd9N1" resname="calendar_initial_view" xml:space="preserve">
         <source>calendar_initial_view</source>
-        <target state="translated">달력 초기 화면</target>
+        <target state="translated">초기 달력 화면</target>
       </trans-unit>
       <trans-unit id="H.IqJTQ" resname="login_initial_view">
         <source>login_initial_view</source>
@@ -434,25 +434,25 @@
         <source>ROLE_USER</source>
         <target state="translated">사용자</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target state="translated">오늘 근무시간</target>
+        <target state="needs-translation">오늘 근무시간</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target state="translated">이번 주 근무시간</target>
+        <target state="needs-translation">이번 주 근무시간</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target state="translated">이번 달 근무시간</target>
+        <target state="needs-translation">이번 달 근무시간</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target state="translated">올해 근무시간</target>
+        <target state="needs-translation">올해 근무시간</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target state="translated">총 근무시간</target>
+        <target state="needs-translation">총 근무시간</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
@@ -526,24 +526,24 @@
         <source>invoices</source>
         <target state="translated">청구서</target>
       </trans-unit>
-      <trans-unit id="X70dwP8" resname="button.print">
-        <source>button.print</source>
+      <trans-unit id="zpU6DrC" resname="print">
+        <source>print</source>
         <target state="translated">인쇄</target>
       </trans-unit>
-      <trans-unit id="W_TXvSi" resname="button.csv">
-        <source>button.csv</source>
+      <trans-unit id="U7ubCzi" resname="csv">
+        <source>csv</source>
         <target>CSV</target>
       </trans-unit>
-      <trans-unit id="vC2IsaP" resname="button.xlsx">
-        <source>button.xlsx</source>
+      <trans-unit id="HJgLIry" resname="xlsx">
+        <source>xlsx</source>
         <target state="translated">Excel</target>
       </trans-unit>
-      <trans-unit id="aAa5uRR" resname="button.pdf">
-        <source>button.pdf</source>
+      <trans-unit id="w1sh1so" resname="pdf">
+        <source>pdf</source>
         <target>PDF</target>
       </trans-unit>
-      <trans-unit id="ulYFDIo" resname="button.ods">
-        <source>button.ods</source>
+      <trans-unit id="lmUO63g" resname="ods">
+        <source>ods</source>
         <target>ODS</target>
       </trans-unit>
       <trans-unit id="zPcx3O_" resname="invoice_print">
@@ -754,10 +754,6 @@
         <source>attachments</source>
         <target>파일</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile">
-        <source>my.profile</source>
-        <target>내 프로필</target>
-      </trans-unit>
       <trans-unit id="JBkykGe" resname="search">
         <source>search</source>
         <target>찾기</target>
@@ -832,7 +828,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
-        <target>%count% %action% 항목?</target>
+        <target>%count% %action% 항목</target>
       </trans-unit>
       <trans-unit id="iwWaUoa" resname="export.filter">
         <source>export.filter</source>
@@ -990,10 +986,6 @@
         <source>action.add</source>
         <target>첨부</target>
       </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>이번 회계연도 활성화 사용자</target>
-      </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
         <target>이메일이 %email%(으)로 전송되었습니다. 계정을 활성화하는 링크가 이메일에 포함되어 있으니 링크를 클릭하세요.</target>
@@ -1006,21 +998,13 @@
         <source>includeBudgetType_month</source>
         <target>월별 예산 없이 항목 표시</target>
       </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
-        <source>stats.amountFinancialYear</source>
-        <target>올해 회계연도 수익</target>
-      </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">비밀번호 재설정 링크가 전송되었습니다. 참고 : 한 번만 새로운 암호를 요청할 수 있습니다. %tokenLifetime% 시간. 이메일을받지 못하면 스팸 폴더를 확인하고 다시 시도하십시오.</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
         <target>수익</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
-        <source>stats.durationFinancialYear</source>
-        <target>이번 회계 연도 근무 시간</target>
       </trans-unit>
       <trans-unit id="KukrzcT" resname="includeBudgetType_full">
         <source>includeBudgetType_full</source>
@@ -1049,10 +1033,6 @@
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>
         <target>주 %week%</target>
-      </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
-        <source>stats.workingTimeFinancialYear</source>
-        <target>회계연도</target>
       </trans-unit>
       <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
         <source>stats.percentUsed_month</source>
@@ -1220,7 +1200,587 @@
       </trans-unit>
       <trans-unit id="aOJITgv" resname="help.invoiceText" xml:space="preserve">
         <source>help.invoiceText</source>
-        <target state="needs-translation">이 텍스트는 송장 문서에서 사용되며 추가적인 배송 조건을 기록하는 데 사용될 수 있습니다.</target>
+        <target state="translated">이 텍스트는 송장 문서에 사용되며 더 많은 배송 조건을 참고하기 위해 예를 들어 사용할 수 있습니다.</target>
+      </trans-unit>
+      <trans-unit id="bEXLcqN" resname="stop">
+        <source>stop</source>
+        <target state="translated">중지</target>
+      </trans-unit>
+      <trans-unit id="PEgjRvN" resname="back">
+        <source>back</source>
+        <target state="translated">뒤로</target>
+      </trans-unit>
+      <trans-unit id="JiEhxTc" resname="edit">
+        <source>edit</source>
+        <target state="translated">편집</target>
+      </trans-unit>
+      <trans-unit id="4G2jBDS" resname="trash">
+        <source>trash</source>
+        <target state="translated">삭제</target>
+      </trans-unit>
+      <trans-unit id="hF6RgxM" resname="report">
+        <source>report</source>
+        <target state="translated">보고</target>
+      </trans-unit>
+      <trans-unit id="JeK2sQZ" resname="repeat">
+        <source>repeat</source>
+        <target state="translated">다시 시작</target>
+      </trans-unit>
+      <trans-unit id="J0sRBY_" resname="profile-stats">
+        <source>profile-stats</source>
+        <target state="translated">프로필</target>
+      </trans-unit>
+      <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
+        <source>Settings</source>
+        <target state="needs-translation">기본 설정</target>
+      </trans-unit>
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
+        <source>Filter timesheets</source>
+        <target state="needs-translation">타임시트 필터링</target>
+      </trans-unit>
+      <trans-unit id="b1pgNOd" resname="copy">
+        <source>copy</source>
+        <target state="translated">사본 만들기</target>
+      </trans-unit>
+      <trans-unit id="TqFAWIF" resname="home">
+        <source>home</source>
+        <target state="translated">홈페이지</target>
+      </trans-unit>
+      <trans-unit id="PBlIO2x" resname="create-project">
+        <source>create-project</source>
+        <target state="translated">프로젝트 만들기</target>
+      </trans-unit>
+      <trans-unit id="UbouFOs" resname="create-activity">
+        <source>create-activity</source>
+        <target state="translated">활동 만들기</target>
+      </trans-unit>
+      <trans-unit id="QR1nvcR" resname="create-timesheet">
+        <source>create-timesheet</source>
+        <target state="translated">타임시트 만들기</target>
+      </trans-unit>
+      <trans-unit id="T_PN1AT" resname="permissions">
+        <source>permissions</source>
+        <target state="translated">팀 승인</target>
+      </trans-unit>
+      <trans-unit id="9M4b2ZN" resname="invoice.paid">
+        <source>invoice.paid</source>
+        <target>청구서 지불</target>
+      </trans-unit>
+      <trans-unit id="hHIeqOW" resname="invoice.pending">
+        <source>invoice.pending</source>
+        <target>결제 대기 중</target>
+      </trans-unit>
+      <trans-unit id="Qf.Yt2r" resname="details">
+        <source>details</source>
+        <target>표시</target>
+      </trans-unit>
+      <trans-unit id="aP9j_4L" resname="download">
+        <source>download</source>
+        <target state="translated">다운로드</target>
+      </trans-unit>
+      <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser">
+        <source>create-timesheet-multiuser</source>
+        <target>여러 사용자의 경우</target>
+      </trans-unit>
+      <trans-unit id="38M3a4J" resname="filter">
+        <source>filter</source>
+        <target>데이터 필터링</target>
+      </trans-unit>
+      <trans-unit id="SEyZupT" resname="invoice.cancel">
+        <source>invoice.cancel</source>
+        <target>청구서 취소</target>
+      </trans-unit>
+      <trans-unit id="lt2Y2LO" resname="timesheet">
+        <source>Timesheet</source>
+        <target>근무 시간 기록표</target>
+      </trans-unit>
+      <trans-unit id="FxwWVFI" resname="help.globalActivity" xml:space="preserve">
+        <source>help.globalActivity</source>
+        <target state="translated">프로젝트를 선택하지 않는 경우, 이 활동은 글로벌이되고, 모든 프로젝트와 결합될 수 있습니다. 프로젝트를 선택하면 활동은 해당 프로젝트에서만 사용할 수 있습니다. 설정은 나중에 변경할 수 없습니다.</target>
+      </trans-unit>
+      <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
+        <source>count_as_expected_time_help</source>
+        <target state="translated">활성화하면 %type%가 일일 예상 근무시간에 대한 근무시간으로 계산됩니다. 비활성화하면 해당 날짜의 예상 근무시간이 0으로 설정됩니다. 두 설정 잔여 근무 시간을 유지하나 월별 합계에는 서로 다르게 반영됩니다.</target>
+      </trans-unit>
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
+        <source>complete_month.help</source>
+        <target state="translated">이것은 선택한 날짜 전에 일년의 모든 날을 닫습니다. 사용자는 더 이상 잠금 기간 동안 시간을 만들거나 편집할 수 없습니다.</target>
+      </trans-unit>
+      <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
+        <source>api_token_hidden</source>
+        <target state="translated">이 열쇠가 언제나 표시되는 유일한 시간입니다! 그래서 그것을 안전하게 유지하고이 창을 닫기 전에 복사 한지 확인하십시오.</target>
+      </trans-unit>
+      <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer" xml:space="preserve">
+        <source>help.invoiceTemplate_customer</source>
+        <target state="translated">이 클라이언트에 대한 청구서는 기본적으로이 템플릿으로 생성됩니다. 필요한 경우 청구서 생성 기간 동안 변경할 수 있습니다.</target>
+      </trans-unit>
+      <trans-unit id="BmDRYT." resname="sending_company.help" xml:space="preserve">
+        <source>sending_company.help</source>
+        <target state="translated">이 회사는 청구서에 발행자로 표시됩니다. 이름, 주소 및 세금 정보가 사용됩니다.</target>
+      </trans-unit>
+      <trans-unit id="oq1jcSQ" resname="help.billable" xml:space="preserve">
+        <source>help.billable</source>
+        <target state="translated">설정이 꺼지면 미래에 기록된 모든 시간 입금은 "불가치"로 표시됩니다.</target>
+      </trans-unit>
+      <trans-unit id="BrOQ92O" resname="notifications.denied" xml:space="preserve">
+        <source>You have rejected notifications. Please refer to your web-browser documentation to find out how to turn them on.</source>
+        <target state="translated">당신은 알림을 거부했습니다. 귀하의 웹 브라우저 문서를 참조하여 그들을 켜는 방법을 알아보십시오.</target>
+      </trans-unit>
+      <trans-unit id="y1XHR1Q" resname="address_deprecated" xml:space="preserve">
+        <source>address_deprecated</source>
+        <target state="translated">이 필드는 곧 제거됩니다. 유효한 청구서를 계속 생성하기 위해 주소를 전송하시기 바랍니다 (예: 전자 청구서).</target>
+      </trans-unit>
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="translated">지금까지 %used% 이용할 수 있는 %days% 휴일을 제출했습니다.</target>
+      </trans-unit>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help" xml:space="preserve">
+        <source>user_identifier.help</source>
+        <target state="translated">유일한 사용자 식별자는 인증 및 수출에 사용됩니다</target>
+      </trans-unit>
+      <trans-unit id="mhOe3Iy" resname="unlock_month.help" xml:space="preserve">
+        <source>unlock_month.help</source>
+        <target state="translated">이 기능은 선택한 날짜 이후 1년 내 모든 날짜를 사용할 수 없게 합니다</target>
+      </trans-unit>
+      <trans-unit id="IRzPWmL" resname="login.2fa_intro" xml:space="preserve">
+        <source>login.2fa_intro</source>
+        <target state="translated">확인 코드를 입력하여 로그인 프로세스를 완료하십시오.</target>
+      </trans-unit>
+      <trans-unit id="i_XOmN4" resname="help_locales" xml:space="preserve">
+        <source>help_locales</source>
+        <target state="translated">여기에 지원되는 언어에 대한 포맷 규칙의 예가 있습니다</target>
+      </trans-unit>
+      <trans-unit id="JmkKf48" resname="user.language.help" xml:space="preserve">
+        <source>user.language.help</source>
+        <target state="translated">이 설정은 소프트웨어의 번역에 책임이 있습니다</target>
+      </trans-unit>
+      <trans-unit id="DA1.Ln_" resname="time_off.intro" xml:space="preserve">
+        <source>time_off.intro</source>
+        <target state="translated">근무 시간 계정은 %hours% 시간의 균형이 있습니다.</target>
+      </trans-unit>
+      <trans-unit id="HQ2YM1b" resname="attendance_only_project" xml:space="preserve">
+        <source>attendance_only_project</source>
+        <target state="translated">선택한 프로젝트의 입력만 작업 시간으로 계산</target>
+      </trans-unit>
+      <trans-unit id="AXr_aHI" resname="completed_month_pdf_note" xml:space="preserve">
+        <source>completed_month_pdf_note</source>
+        <target state="translated">이 문서는 작업시간 증거자료로 이용됩니다.</target>
+      </trans-unit>
+      <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro" xml:space="preserve">
+        <source>manual_bookings.work_contract_intro</source>
+        <target state="translated">수동 조정은 변동하거나 삭제할 수 없습니다!</target>
+      </trans-unit>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="translated">일, 의료 필요한 약속, 배려 휴가, 등에 대 한 사용.</target>
+      </trans-unit>
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
+        <source>api_password_deprecated</source>
+        <target state="translated">API 암호는 오래되었습니다: 대신 API 토큰을 사용하십시오.</target>
+      </trans-unit>
+      <trans-unit id="cDOQMYv" resname="Beta" xml:space="preserve">
+        <source>Beta</source>
+        <target state="translated">아직 개발 중인 프리뷰 기능을 사용할 수 있습니다.</target>
+      </trans-unit>
+      <trans-unit id="5kFod8o" resname="team.configure_teamlead.help" xml:space="preserve">
+        <source>team.configure_teamlead.help</source>
+        <target state="translated">선택 / 강조 된 사용자는 팀 리더입니다.</target>
+      </trans-unit>
+      <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve">
+        <source>tax.note.reverse_charge</source>
+        <target state="translated">역 책임에 지불되는 세금</target>
+      </trans-unit>
+      <trans-unit id="0Hhg4zQ" resname="system_account.help" xml:space="preserve">
+        <source>system_account.help</source>
+        <target state="translated">보고서와 붕괴에 숨어있을 것입니다</target>
+      </trans-unit>
+      <trans-unit id="2lL9ACs" resname="help.invoiceTemplate" xml:space="preserve">
+        <source>help.invoiceTemplate</source>
+        <target state="translated">이 템플릿으로 청구서가 생성됩니다.</target>
+      </trans-unit>
+      <trans-unit id="wwrREDg" resname="pagination" xml:space="preserve">
+        <source>pagination</source>
+        <target state="translated">%end%에서 %total% 항목 %start%을 표시합니다.</target>
+      </trans-unit>
+      <trans-unit id="NOEx3FF" resname="invoice_date.help" xml:space="preserve">
+        <source>invoice_date.help</source>
+        <target state="translated">여기서 청구 날짜를 변경할 수 있습니다</target>
+      </trans-unit>
+      <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
+        <source>absence_other.intro</source>
+        <target state="needs-translation">가족 사건, 이동하는 집, 날씨 chaos 등.</target>
+      </trans-unit>
+      <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all" xml:space="preserve">
+        <source>batch_table_checkbox_all</source>
+        <target state="translated">배치 업데이트 목록에 대한 모든 입력 선택</target>
+      </trans-unit>
+      <trans-unit id="0ZWvn12" resname="notifications.welcome" xml:space="preserve">
+        <source>notifications.welcome</source>
+        <target state="translated">알림에 동의해 주셔서 감사합니다!</target>
+      </trans-unit>
+      <trans-unit id="biHjm0h" resname="select.add_new" xml:space="preserve">
+        <source>select.add_new</source>
+        <target state="translated">이름으로 새로운 만들기 "%input%"</target>
+      </trans-unit>
+      <trans-unit id="f1Cgptu" resname="batch_table_checkbox" xml:space="preserve">
+        <source>batch_table_checkbox</source>
+        <target state="translated">일괄 업데이트 목록에 항목 추가</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
+        <source>absence_comment_mandatory</source>
+        <target state="translated">부재 : 코멘트는 필수 영역입니다</target>
+      </trans-unit>
+      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek" xml:space="preserve">
+        <source>stats.userDurationWeek</source>
+        <target state="translated">내 근무 시간 이번 주</target>
+      </trans-unit>
+      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth" xml:space="preserve">
+        <source>stats.userDurationMonth</source>
+        <target state="translated">내 근무 시간 이달</target>
+      </trans-unit>
+      <trans-unit id="BjyLITj" resname="stats.userDurationYear" xml:space="preserve">
+        <source>stats.userDurationYear</source>
+        <target state="translated">내 일 시간 올해</target>
+      </trans-unit>
+      <trans-unit id="wYcx0So" resname="search.no_results" xml:space="preserve">
+        <source>search.no_results</source>
+        <target state="translated">"%input%"에 대한 결과가 없습니다</target>
+      </trans-unit>
+      <trans-unit id="8yqaKzX" resname="confirmed_by_at" xml:space="preserve">
+        <source>confirmed_by_at</source>
+        <target state="translated">%user%이 %date%에 확인함</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve" approved="no">
+        <source>Time, date and currency format</source>
+        <target state="translated">시간, 날짜 및 통화 형식</target>
+      </trans-unit>
+      <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve">
+        <source>Log out of all devices</source>
+        <target state="translated">모든 장치에서 녹음</target>
+      </trans-unit>
+      <trans-unit id="6w8kS.m" resname="user_access_all" xml:space="preserve">
+        <source>user_access_all</source>
+        <target state="translated">모든 사용자에 대한 액세스를 허용</target>
+      </trans-unit>
+      <trans-unit id="DbF_j60" resname="count_as_expected_time" xml:space="preserve">
+        <source>count_as_expected_time</source>
+        <target state="translated">예상 시간으로 계산: %type%</target>
+      </trans-unit>
+      <trans-unit id="EI5gPkp" resname="stats.userDurationToday" xml:space="preserve">
+        <source>stats.userDurationToday</source>
+        <target state="translated">내 근무 시간 오늘</target>
+      </trans-unit>
+      <trans-unit id="EedlgkM" resname="stats.userDurationTotal" xml:space="preserve">
+        <source>stats.userDurationTotal</source>
+        <target state="translated">나의 근무 시간 합계</target>
+      </trans-unit>
+      <trans-unit id="LDS9o5X" resname="stats.userAmountWeek" xml:space="preserve">
+        <source>stats.userAmountWeek</source>
+        <target state="translated">이번 주 수익</target>
+      </trans-unit>
+      <trans-unit id="E3Kj9lt" resname="stats.userAmountMonth" xml:space="preserve">
+        <source>stats.userAmountMonth</source>
+        <target state="translated">내 수익 이달</target>
+      </trans-unit>
+      <trans-unit id="xvdsZsS" resname="stats.userAmountYear" xml:space="preserve">
+        <source>stats.userAmountYear</source>
+        <target state="translated">올해의 수익</target>
+      </trans-unit>
+      <trans-unit id="5NugIxO" resname="includeWithBudget" xml:space="preserve">
+        <source>includeWithBudget</source>
+        <target state="translated">예산으로 항목 표시</target>
+      </trans-unit>
+      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve">
+        <source>api_password.missing_title</source>
+        <target state="translated">API는 사용될 수 없습니다</target>
+      </trans-unit>
+      <trans-unit id="6Hip2aF" resname="created_at" xml:space="preserve">
+        <source>created_at</source>
+        <target state="translated">만든 곳:</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created" xml:space="preserve">
+        <source>Created</source>
+        <target state="translated">만들어짐</target>
+      </trans-unit>
+      <trans-unit id="wv3n.FT" resname="dashboard.edit_mode" xml:space="preserve">
+        <source>dashboard.edit_mode</source>
+        <target state="translated">드래그 앤 드롭을 사용하여 위젯을 배열할 수 있습니다. 위젯을 추가하면 변경 사항을 자동 저장합니다.</target>
+      </trans-unit>
+      <trans-unit id="erN3h3b" resname="replace" xml:space="preserve">
+        <source>replace</source>
+        <target state="translated">바꾸기</target>
+      </trans-unit>
+      <trans-unit id="WOAx9yz" resname="modal.columns.profile" xml:space="preserve">
+        <source>modal.columns.profile</source>
+        <target state="translated">프로필</target>
+      </trans-unit>
+      <trans-unit id="aGk9Aqt" resname="desktop" xml:space="preserve">
+        <source>desktop</source>
+        <target state="translated">데스크톱</target>
+      </trans-unit>
+      <trans-unit id="FeFBn_3" resname="profile.2fa" xml:space="preserve">
+        <source>profile.2fa</source>
+        <target state="translated">2단계 인증</target>
+      </trans-unit>
+      <trans-unit id="hPY2VcD" resname="profile.2fa_intro" xml:space="preserve">
+        <source>profile.2fa_intro</source>
+        <target state="translated">앱에서 이미지 스캐닝을 통해 새 기기 활성화가 가능합니다</target>
+      </trans-unit>
+      <trans-unit id="Y0PRG9Z" resname="profile.2fa_confirmation" xml:space="preserve">
+        <source>profile.2fa_confirmation</source>
+        <target state="translated">이 계정의 2단계 인증을 활성화하려면, 코드를 확인하세요.</target>
+      </trans-unit>
+      <trans-unit id="FgKTw5v" resname="login.2fa_label" xml:space="preserve">
+        <source>login.2fa_label</source>
+        <target state="translated">확정 코드</target>
+      </trans-unit>
+      <trans-unit id="eCEGRzN" resname="work_contract" xml:space="preserve">
+        <source>work_contract</source>
+        <target state="translated">채용 연락처</target>
+      </trans-unit>
+      <trans-unit id="7_d7IB3" resname="evaluation" xml:space="preserve">
+        <source>evaluation</source>
+        <target state="translated">평가</target>
+      </trans-unit>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="translated">이것은 선택한 달에 일하는 시간 승인하기라는 특징에 대한 제목인데, 사용자가 잠금할 수 있다. 그럼 그 달은 완료된 것입니다.</target>
+      </trans-unit>
+      <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="no">
+        <source>Unlock month</source>
+        <target state="translated">잠금되지 않은 달</target>
+      </trans-unit>
+      <trans-unit id="eWmotjb" resname="completed_month_pdf" xml:space="preserve">
+        <source>completed_month_pdf</source>
+        <target state="translated">월별 PDF 완료</target>
+      </trans-unit>
+      <trans-unit id="yXrOTI." resname="review" xml:space="preserve">
+        <source>Review</source>
+        <target state="translated">리뷰</target>
+      </trans-unit>
+      <trans-unit id="mS4SSmt" resname="work_times" xml:space="preserve">
+        <source>Working times</source>
+        <target state="translated">작업 시간</target>
+      </trans-unit>
+      <trans-unit id="iaJj4va" resname="work_times_account" xml:space="preserve">
+        <source>Account working times</source>
+        <target state="translated">계정 운영 시간</target>
+      </trans-unit>
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
+        <source>Expected number of hours</source>
+        <target state="translated">예상 시간</target>
+      </trans-unit>
+      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured" xml:space="preserve">
+        <source>work_times_should.none_configured</source>
+        <target state="translated">고용 계약 설정에서 이 사용자의 목표 작업 시간이 설정되지 않았습니다.</target>
+      </trans-unit>
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
+        <source>work_times_is</source>
+        <target state="translated">작업 시간</target>
+      </trans-unit>
+      <trans-unit id="wZRRqg0" resname="manual_bookings" xml:space="preserve">
+        <source>manual_bookings</source>
+        <target state="translated">수동 조정</target>
+      </trans-unit>
+      <trans-unit id="znIJiOw" resname="manual_bookings.duration_help" xml:space="preserve">
+        <source>manual_bookings.duration_help</source>
+        <target state="translated">시간은 양수(실제 작업 시간 증가)와 음수(실제 작업 시간 감소)로 기록할 수 있습니다.</target>
+      </trans-unit>
+      <trans-unit id="M.zFjwe" resname="pto_year_holiday" approved="no" xml:space="preserve">
+        <source>Holidays per year</source>
+        <target state="translated">년도별 휴일</target>
+      </trans-unit>
+      <trans-unit id="gcFtM3o" resname="holiday" xml:space="preserve">
+        <source>holiday</source>
+        <target state="translated">휴일</target>
+      </trans-unit>
+      <trans-unit id="XE01Ar1" resname="parental" xml:space="preserve">
+        <source>parental</source>
+        <target state="translated">육아휴직</target>
+      </trans-unit>
+      <trans-unit id="SdLZTel" resname="favorite_routes" xml:space="preserve">
+        <source>favorite_routes</source>
+        <target state="translated">선호사항</target>
+      </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve">
+        <source>Activity number</source>
+        <target state="translated">활동 숫자</target>
+      </trans-unit>
+      <trans-unit id="PLLl1E0" resname="system_account" xml:space="preserve">
+        <source>system_account</source>
+        <target state="translated">시스템 계정</target>
+      </trans-unit>
+      <trans-unit id="mjKOAgQ" resname="skin.light" xml:space="preserve">
+        <source>skin.light</source>
+        <target state="translated">밝음</target>
+      </trans-unit>
+      <trans-unit id="WOFPb2i" resname="skin.dark" xml:space="preserve">
+        <source>skin.dark</source>
+        <target state="translated">어두움</target>
+      </trans-unit>
+      <trans-unit id="Uu8YvYV" resname="deactivated" xml:space="preserve">
+        <source>Deactivated</source>
+        <target state="translated">비활성된</target>
+      </trans-unit>
+      <trans-unit id="3WHV.yf" resname="activated" xml:space="preserve">
+        <source>Activated</source>
+        <target state="translated">활성화된</target>
+      </trans-unit>
+      <trans-unit id="ulgdXdi" resname="hour_24" xml:space="preserve">
+        <source>hour_24</source>
+        <target state="translated">24시간</target>
+      </trans-unit>
+      <trans-unit id="M2B0gF." resname="time" xml:space="preserve">
+        <source>time</source>
+        <target state="translated">시간대</target>
+      </trans-unit>
+      <trans-unit id="Zngu6M9" resname="status.planned" xml:space="preserve">
+        <source>status.planned</source>
+        <target state="translated">계획된</target>
+      </trans-unit>
+      <trans-unit id="HF70hZq" resname="status.closed" xml:space="preserve">
+        <source>status.closed</source>
+        <target state="translated">완료된</target>
+      </trans-unit>
+      <trans-unit id="GIgQHa4" resname="absence" xml:space="preserve">
+        <source>absence</source>
+        <target state="translated">결근</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
+        <source>default</source>
+        <target state="translated">디폴트</target>
+      </trans-unit>
+      <trans-unit id="opDmYAa" resname="status.approved" xml:space="preserve">
+        <source>status.approved</source>
+        <target state="translated">승인</target>
+      </trans-unit>
+      <trans-unit id="Na24cyT" resname="status.requested" xml:space="preserve">
+        <source>status.requested</source>
+        <target state="translated">요청된</target>
+      </trans-unit>
+      <trans-unit id="_WlU8Fp" resname="sickness" xml:space="preserve">
+        <source>sickness</source>
+        <target state="translated">질병</target>
+      </trans-unit>
+      <trans-unit id="2SmKENG" resname="other" xml:space="preserve">
+        <source>other</source>
+        <target state="translated">다른 사람</target>
+      </trans-unit>
+      <trans-unit id="Od3xvQK" resname="button.report" xml:space="preserve">
+        <source>button.report</source>
+        <target state="translated">보고서</target>
+      </trans-unit>
+      <trans-unit id="CDTC1gc" resname="supervisor" xml:space="preserve">
+        <source>supervisor</source>
+        <target state="translated">관리자</target>
+      </trans-unit>
+      <trans-unit id="rlJLVNm" resname="append" xml:space="preserve">
+        <source>append</source>
+        <target state="translated">첨부된</target>
+      </trans-unit>
+      <trans-unit id="vURcRit" resname="overview" xml:space="preserve">
+        <source>Overview</source>
+        <target state="translated">개요</target>
+      </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses" xml:space="preserve">
+        <source>Expenses</source>
+        <target state="translated">경</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category" xml:space="preserve">
+        <source>Category</source>
+        <target state="translated">카테고리</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories" xml:space="preserve">
+        <source>Categories</source>
+        <target state="translated">카테고리</target>
+      </trans-unit>
+      <trans-unit id="7Sycs4M" resname="Importer" xml:space="preserve">
+        <source>Importer</source>
+        <target state="translated">불러오기</target>
+      </trans-unit>
+      <trans-unit id="JmpBuQ1" resname="Translations" xml:space="preserve">
+        <source>Translations</source>
+        <target state="translated">번역</target>
+      </trans-unit>
+      <trans-unit id="b712axp" resname="Translation" xml:space="preserve">
+        <source>Translation</source>
+        <target state="translated">번역</target>
+      </trans-unit>
+      <trans-unit id="q1EATp1" resname="days" xml:space="preserve">
+        <source>days</source>
+        <target state="translated">일</target>
+      </trans-unit>
+      <trans-unit id="WwesQPU" resname="deactivate" xml:space="preserve">
+        <source>Deactivate</source>
+        <target state="translated">비활성화</target>
+      </trans-unit>
+      <trans-unit id="IAx_YiA" resname="activate" xml:space="preserve">
+        <source>Activate</source>
+        <target state="translated">활성화</target>
+      </trans-unit>
+      <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve">
+        <source>approve</source>
+        <target state="translated">승인</target>
+      </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request" xml:space="preserve">
+        <source>request</source>
+        <target state="translated">요청</target>
+      </trans-unit>
+      <trans-unit id="J_teUVB" resname="updated" xml:space="preserve">
+        <source>Updated</source>
+        <target state="translated">업데이트</target>
+      </trans-unit>
+      <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve">
+        <source>profit</source>
+        <target state="translated">이득</target>
+      </trans-unit>
+      <trans-unit id="vN5pKOU" resname="costs" xml:space="preserve">
+        <source>costs</source>
+        <target state="translated">비용</target>
+      </trans-unit>
+      <trans-unit id="FOvlalA" resname="break" xml:space="preserve">
+        <source>break</source>
+        <target state="translated">휴식</target>
+      </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve" approved="no">
+        <source>Rejected</source>
+        <target state="translated">거부</target>
+      </trans-unit>
+      <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
+        <source>reject</source>
+        <target state="translated">거부</target>
+      </trans-unit>
+      <trans-unit id="QCf1FUG" resname="reload" xml:space="preserve">
+        <source>reload</source>
+        <target state="translated">다시 불러오기</target>
+      </trans-unit>
+      <trans-unit id="5vJvarK" resname="syncronisation" xml:space="preserve">
+        <source>Synchronization</source>
+        <target state="translated">동기화</target>
+      </trans-unit>
+      <trans-unit id="pJzNT.n" resname="vcard" xml:space="preserve">
+        <source>vcard</source>
+        <target state="translated">비지니스 카드</target>
+      </trans-unit>
+      <trans-unit id="2cMESs." resname="widget_add" xml:space="preserve">
+        <source>Add widget</source>
+        <target state="translated">위젯 추가</target>
+      </trans-unit>
+      <trans-unit id="YCc5UoO" resname="widget_remove" xml:space="preserve">
+        <source>Remove widget</source>
+        <target state="translated">위젯 삭제</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
+        <source>Code</source>
+        <target state="translated">코드</target>
+      </trans-unit>
+      <trans-unit id="xZzzKxM" resname="orientation" xml:space="preserve">
+        <source>Orientation</source>
+        <target state="translated">오리엔테이션</target>
+      </trans-unit>
+      <trans-unit id="TJQbc0a" resname="Payment To Bank Account" xml:space="preserve">
+        <source>Payment To Bank Account</source>
+        <target state="translated">은행 계좌 입금</target>
       </trans-unit>
     </body>
   </file>

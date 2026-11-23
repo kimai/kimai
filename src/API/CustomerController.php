@@ -9,63 +9,91 @@
 
 namespace App\API;
 
+use App\API\Serializer\BudgetExclusionStrategy;
 use App\Customer\CustomerService;
 use App\Entity\Customer;
+use App\Entity\CustomerComment;
 use App\Entity\CustomerRate;
 use App\Entity\User;
-use App\Event\CustomerMetaDefinitionEvent;
+use App\Form\API\CommentApiForm;
 use App\Form\API\CustomerApiEditForm;
 use App\Form\API\CustomerRateApiForm;
 use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\Query\CustomerQuery;
 use App\Utils\SearchTerm;
+use App\Validator\MetaFieldValidator;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use OpenApi\Attributes as OA;
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\GoneHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Validator\Constraints;
 
 #[Route(path: '/customers')]
 #[IsGranted('API')]
 #[OA\Tag(name: 'Customer')]
 final class CustomerController extends BaseApiController
 {
-    public const GROUPS_ENTITY = ['Default', 'Entity', 'Customer', 'Customer_Entity'];
-    public const GROUPS_FORM = ['Default', 'Entity', 'Customer'];
-    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Customer'];
-    public const GROUPS_RATE = ['Default', 'Entity', 'Customer_Rate'];
+    private const GROUPS_COMMENT = ['Default', 'Not_Expanded'];
+    private const GROUPS_ENTITY = ['Default', 'Entity', 'Customer', 'Customer_Entity'];
+    private const GROUPS_COLLECTION = ['Default', 'Collection', 'Customer'];
+    private const GROUPS_RATE = ['Default', 'Entity', 'Customer_Rate'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
         private readonly CustomerRepository $repository,
-        private readonly EventDispatcherInterface $dispatcher,
-        private readonly CustomerRateRepository $customerRateRepository
+        private readonly CustomerRateRepository $customerRateRepository,
+        private readonly CustomerService $customerService,
+        private readonly AuthorizationCheckerInterface $security
     ) {
     }
 
     /**
-     * Returns a collection of customers (which are visible to the user)
+     * The budget groups are always requested, the per-record permission filtering
+     * is applied by the BudgetExclusionStrategy.
+     *
+     * @param array<string> $groups
+     */
+    private function renderBudgetAwareView(View $view, array $groups): Response
+    {
+        $context = $view->getContext();
+        $context->setGroups(array_merge($groups, ['Budget_Money', 'Budget_Time']));
+        $context->addExclusionStrategy(new BudgetExclusionStrategy($this->security));
+
+        return $this->viewHandler->handle($view);
+    }
+
+    private function renderEntity(Customer $customer): Response
+    {
+        return $this->renderBudgetAwareView(new View($customer, Response::HTTP_OK), self::GROUPS_ENTITY);
+    }
+
+    /**
+     * Fetch customers
      */
     #[OA\Response(response: 200, description: 'Returns a collection of customers', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/CustomerCollection')))]
     #[Route(methods: ['GET'], path: '', name: 'get_customers')]
     #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', default: 1, strict: true, nullable: true, description: 'Visibility status to filter customers: 1=visible, 2=hidden, 3=both')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name (default: name)')]
-    #[Rest\QueryParam(name: 'term', description: 'Free search term')]
-    #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display, renders a 404 if not found (default: 1)')]
-    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page (default: 50)')]
+    #[Rest\QueryParam(name: 'term', description: 'Free search term', nullable: true)]
+    #[Rest\QueryParam(name: 'full', requirements: '0|1', strict: true, nullable: true, description: 'Allows to fetch objects with full details (needs `details_customer` permission). Allowed values: 0|1 (default: 0)')]
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
         $query = new CustomerQuery();
         $query->loadTeams();
-        $this->prepareQuery($query, $paramFetcher);
+        $query->setCurrentUser($user);
 
         $order = $paramFetcher->get('order');
         if (\is_string($order) && $order !== '') {
@@ -78,7 +106,7 @@ final class CustomerController extends BaseApiController
         }
 
         $visible = $paramFetcher->get('visible');
-        if (\is_string($visible) && $visible !== '') {
+        if (is_numeric($visible)) {
             $query->setVisibility((int) $visible);
         }
 
@@ -87,30 +115,30 @@ final class CustomerController extends BaseApiController
             $query->setSearchTerm(new SearchTerm($term));
         }
 
-        $pagination = $this->repository->getPagerfantaForQuery($query);
-        $view = $this->createPaginatedView($pagination);
+        $query->setIsApiCall(true);
+        $data = $this->repository->getCustomersForQuery($query);
 
-        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
+        $groups = self::GROUPS_COLLECTION;
+        if ($paramFetcher->get('full') === '1' && $this->isGranted('details_customer')) {
+            $groups = array_merge($groups, ['Customer_Details']);
+        }
 
-        return $this->viewHandler->handle($view);
+        return $this->renderBudgetAwareView(new View($data, Response::HTTP_OK), $groups);
     }
 
     /**
-     * Returns one customer
+     * Fetch customer
      */
     #[OA\Response(response: 200, description: 'Returns one customer entity', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))]
     #[Route(methods: ['GET'], path: '/{id}', name: 'get_customer', requirements: ['id' => '\d+'])]
     #[IsGranted('view', 'customer')]
     public function getAction(Customer $customer): Response
     {
-        $view = new View($customer, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($customer);
     }
 
     /**
-     * Creates a new customer
+     * Create customer
      */
     #[OA\Post(description: 'Creates a new customer and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created customer', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CustomerEditForm'))]
@@ -123,33 +151,24 @@ final class CustomerController extends BaseApiController
 
         $customer = $customerService->createNewCustomer('');
 
-        $event = new CustomerMetaDefinitionEvent($customer);
-        $this->dispatcher->dispatch($event);
-
         $form = $this->createForm(CustomerApiEditForm::class, $customer, [
             'include_budget' => $this->isGranted('budget', $customer),
             'include_time' => $this->isGranted('time', $customer),
         ]);
 
-        $form->submit($request->request->all());
+        $form->submit($request->request->all(), false);
 
-        if ($form->isValid()) {
-            $this->repository->saveCustomer($customer);
-
-            $view = new View($customer, 200);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-            return $this->viewHandler->handle($view);
+        if (false === $form->isValid()) {
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
-        $view = new View($form);
-        $view->getContext()->setGroups(self::GROUPS_FORM);
+        $this->customerService->saveCustomer($customer);
 
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($customer);
     }
 
     /**
-     * Update an existing customer
+     * Update customer
      */
     #[IsGranted('edit', 'customer')]
     #[OA\Patch(description: 'Update an existing customer, you can pass all or just a subset of all attributes', responses: [new OA\Response(response: 200, description: 'Returns the updated customer', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))])]
@@ -158,8 +177,7 @@ final class CustomerController extends BaseApiController
     #[Route(methods: ['PATCH'], path: '/{id}', name: 'patch_customer', requirements: ['id' => '\d+'])]
     public function patchAction(Request $request, Customer $customer): Response
     {
-        $event = new CustomerMetaDefinitionEvent($customer);
-        $this->dispatcher->dispatch($event);
+        $this->customerService->loadMetaFields($customer);
 
         $form = $this->createForm(CustomerApiEditForm::class, $customer, [
             'include_budget' => $this->isGranted('budget', $customer),
@@ -170,33 +188,45 @@ final class CustomerController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
-            $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_FORM);
-
-            return $this->viewHandler->handle($view);
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
-        $this->repository->saveCustomer($customer);
+        $this->customerService->saveCustomer($customer);
 
-        $view = new View($customer, Response::HTTP_OK);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+        return $this->renderEntity($customer);
+    }
+
+    /**
+     * Delete customer
+     *
+     * [DANGER] This will also delete ALL linked projects, project activities and timesheets.
+     * Do you want to use `PATCH` instead and mark it as inactive with `{visible: false}`?
+     */
+    #[IsGranted('delete', 'customer')]
+    #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one customer')])]
+    #[OA\Parameter(name: 'id', description: 'Customer ID to delete', in: 'path', required: true)]
+    #[Route(path: '/{id}', name: 'delete_customer', requirements: ['id' => '\d+'], methods: ['DELETE'])]
+    public function deleteAction(Customer $customer): Response
+    {
+        $this->customerService->deleteCustomer($customer);
+
+        $view = new View(null, Response::HTTP_NO_CONTENT);
 
         return $this->viewHandler->handle($view);
     }
 
     /**
-     * Sets the value of a meta-field for an existing customer
+     * Update customer custom-field
      */
     #[IsGranted('edit', 'customer')]
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Customer record ID to set the meta-field value for', required: true)]
     #[Route(methods: ['PATCH'], path: '/{id}/meta', requirements: ['id' => '\d+'])]
-    #[Rest\RequestParam(name: 'name', strict: true, nullable: false, description: 'The meta-field name')]
+    #[Rest\RequestParam(name: 'name', requirements: [new Constraints\Type('string')], strict: true, nullable: false, description: 'The meta-field name')]
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
-    public function metaAction(Customer $customer, ParamFetcherInterface $paramFetcher): Response
+    public function metaAction(Customer $customer, ParamFetcherInterface $paramFetcher, MetaFieldValidator $metaFieldValidator): Response
     {
-        $event = new CustomerMetaDefinitionEvent($customer);
-        $this->dispatcher->dispatch($event);
+        $this->customerService->loadMetaFields($customer);
 
         $name = $paramFetcher->get('name');
         $value = $paramFetcher->get('value');
@@ -205,18 +235,16 @@ final class CustomerController extends BaseApiController
             throw $this->createNotFoundException('Unknown meta-field requested');
         }
 
+        $metaFieldValidator->validate($customer, $meta, $value);
         $meta->setValue($value);
 
-        $this->repository->saveCustomer($customer);
+        $this->customerService->saveCustomer($customer);
 
-        $view = new View($customer, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($customer);
     }
 
     /**
-     * Returns a collection of all rates for one customer
+     * Fetch rates for customer
      */
     #[IsGranted('edit', 'customer')]
     #[OA\Response(response: 200, description: 'Returns a collection of customer rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/CustomerRate')))]
@@ -233,7 +261,7 @@ final class CustomerController extends BaseApiController
     }
 
     /**
-     * Deletes one rate for a customer
+     * Delete rate for customer
      */
     #[IsGranted('edit', 'customer')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
@@ -254,7 +282,7 @@ final class CustomerController extends BaseApiController
     }
 
     /**
-     * Adds a new rate to a customer
+     * Add rate for customer
      */
     #[IsGranted('edit', 'customer')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/CustomerRate'))])]
@@ -274,10 +302,7 @@ final class CustomerController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
-            $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_RATE);
-
-            return $this->viewHandler->handle($view);
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
         $this->customerRateRepository->saveRate($rate);
@@ -286,5 +311,117 @@ final class CustomerController extends BaseApiController
         $view->getContext()->setGroups(self::GROUPS_RATE);
 
         return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Fetch comments for customer
+     */
+    #[IsGranted('view', 'customer')]
+    #[IsGranted('comments', 'customer')]
+    #[OA\Response(response: 200, description: 'Returns a collection of customer comments', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/Comment')))]
+    #[OA\Parameter(name: 'id', description: 'The customer whose comments will be returned', in: 'path', required: true)]
+    #[Route(path: '/{id}/comments', name: 'get_customer_comments', requirements: ['id' => '\d+'], methods: ['GET'])]
+    public function getCommentsAction(#[MapEntity(mapping: ['id' => 'id'])] Customer $customer): Response
+    {
+        $comments = $this->repository->getComments($customer);
+
+        $view = new View($comments, 200);
+        $view->getContext()->setGroups(self::GROUPS_COMMENT);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Add comment for customer
+     */
+    #[IsGranted('view', 'customer')]
+    #[IsGranted('comments', 'customer')]
+    #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the newly created customer comment', content: new OA\JsonContent(ref: '#/components/schemas/Comment'))])]
+    #[OA\Parameter(name: 'id', description: 'The customer to add the comment for', in: 'path', required: true)]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CommentForm'))]
+    #[Route(path: '/{id}/comments', name: 'post_customer_comment', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function postCommentAction(#[MapEntity(mapping: ['id' => 'id'])] Customer $customer, Request $request): Response
+    {
+        $comment = new CustomerComment($customer);
+        $comment->setCreatedBy($this->getUser());
+
+        $form = $this->createForm(CommentApiForm::class, $comment, [
+            'method' => 'POST',
+        ]);
+
+        $form->setData($comment);
+        $form->submit($request->request->all(), false);
+
+        if (false === $form->isValid()) {
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
+        }
+
+        $this->repository->saveComment($comment);
+
+        $view = new View($comment, 200);
+        $view->getContext()->setGroups(self::GROUPS_COMMENT);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Pin customer comment
+     *
+     * This toggles the `pinned` status of the given comment.
+     */
+    #[IsGranted('view', 'customer')]
+    #[IsGranted('edit', 'customer')]
+    #[IsGranted('comments', 'customer')]
+    #[OA\Patch(responses: [new OA\Response(response: 200, description: 'Returns the updated customer comment', content: new OA\JsonContent(ref: '#/components/schemas/Comment'))])]
+    #[OA\Parameter(name: 'id', description: 'The customer whose comment will be pinned or unpinned', in: 'path', required: true)]
+    #[OA\Parameter(name: 'comment', description: 'The comment whose pinned status will be toggled', in: 'path', required: true)]
+    #[Route(path: '/{id}/comments/{comment}/pin', name: 'toggle_customer_comment_pin', requirements: ['id' => '\d+', 'comment' => '\d+'], methods: ['PATCH'])]
+    public function toggleCommentPin(#[MapEntity(mapping: ['id' => 'id'])] Customer $customer, #[MapEntity(mapping: ['comment' => 'id'])] CustomerComment $comment): Response
+    {
+        if ($comment->getCustomer() !== $customer) {
+            throw $this->createAccessDeniedException(\sprintf('Comment %s does not belong to customer %s', $comment->getId(), $customer->getId()));
+        }
+
+        $comment->setPinned(!$comment->isPinned());
+        $this->repository->saveComment($comment);
+
+        $view = new View($comment, 200);
+        $view->getContext()->setGroups(self::GROUPS_COMMENT);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Delete customer comment
+     */
+    #[IsGranted('view', 'customer')]
+    #[IsGranted('edit', 'customer')]
+    #[IsGranted('comments', 'customer')]
+    #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
+    #[OA\Parameter(name: 'id', description: 'The customer whose comment will be removed', in: 'path', required: true)]
+    #[OA\Parameter(name: 'comment', description: 'The comment to remove', in: 'path', required: true)]
+    #[Route(path: '/{id}/comments/{comment}', name: 'delete_customer_comment', requirements: ['id' => '\d+', 'comment' => '\d+'], methods: ['DELETE'])]
+    public function deleteCommentAction(#[MapEntity(mapping: ['id' => 'id'])] Customer $customer, #[MapEntity(mapping: ['comment' => 'id'])] CustomerComment $comment): Response
+    {
+        if ($comment->getCustomer() !== $customer) {
+            throw $this->createAccessDeniedException(\sprintf('Comment %s does not belong to customer %s', $comment->getId(), $customer->getId()));
+        }
+
+        $this->repository->deleteComment($comment);
+
+        return $this->viewHandler->handle(new View(null, Response::HTTP_NO_CONTENT));
+    }
+
+    /**
+     * Create team for customer
+     *
+     * REMOVED: this endpoint was removed, use `POST /api/teams/` instead.
+     */
+    #[OA\Post(description: 'REMOVED: this endpoint was removed, use `POST /api/teams/` instead.', responses: [new OA\Response(response: 410, description: 'This endpoint was removed')], deprecated: true)]
+    #[OA\Parameter(name: 'id', description: 'The customer to create a default team for', in: 'path', required: true)]
+    #[Route(path: '/{id}/team', name: 'post_customer_team', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function postDefaultTeamAction(): Response
+    {
+        throw new GoneHttpException('This endpoint was removed, use "POST /api/teams/" instead.');
     }
 }

@@ -14,6 +14,7 @@ use App\Form\Type\InvoiceTemplateType;
 use App\Form\Type\MailType;
 use App\Form\Type\TeamType;
 use App\Form\Type\TimezoneType;
+use App\Form\Type\UserLanguageType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
@@ -33,25 +34,32 @@ class CustomerEditForm extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $isNew = false;
+        $isNew = true;
+        $hasAddress = false;
 
         if (isset($options['data'])) {
             /** @var Customer $customer */
             $customer = $options['data'];
             $isNew = $customer->getId() === null;
             $options['currency'] = $customer->getCurrency();
+            $hasAddress = $customer->getAddress() !== null && $customer->getAddress() !== '';
         }
 
         $builder
             ->add('name', TextType::class, [
                 'label' => 'name',
                 'attr' => [
-                    'autofocus' => 'autofocus'
+                    'autofocus' => 'autofocus',
+                    // deactivated: browser use utf16 to calculate maxlength, which can interfere with backend validation
+                    // 'maxlength' => 150,
                 ],
             ])
             ->add('number', TextType::class, [
                 'label' => 'number',
                 'required' => false,
+                'attr' => [
+                    'maxlength' => 50,
+                ],
             ])
             ->add('comment', TextareaType::class, [
                 'label' => 'description',
@@ -69,12 +77,44 @@ class CustomerEditForm extends AbstractType
                 'label' => 'contact',
                 'required' => false,
             ])
-            ->add('address', TextareaType::class, [
+        ;
+
+        if ($hasAddress) {
+            $builder
+                ->add('address', TextareaType::class, [
+                    'label' => 'address',
+                    'help' => 'address_deprecated',
+                    'required' => false,
+                ]);
+        }
+
+        $builder
+            ->add('addressLine1', TextType::class, [
                 'label' => 'address',
+                'required' => false,
+            ])
+            ->add('addressLine2', TextType::class, [
+                'label' => false,
+                'required' => false,
+            ])
+            ->add('addressLine3', TextType::class, [
+                'label' => false,
+                'required' => false,
+            ])
+            ->add('postCode', TextType::class, [
+                'label' => 'postcode',
+                'required' => false,
+            ])
+            ->add('city', TextType::class, [
+                'label' => 'city',
                 'required' => false,
             ])
             ->add('country', CountryType::class, [
                 'label' => 'country',
+            ])
+            ->add('language', UserLanguageType::class, [
+                'label' => 'language',
+                'required' => true,
             ])
             ->add('currency', CurrencyType::class, [
                 'label' => 'currency',
@@ -115,6 +155,14 @@ class CustomerEditForm extends AbstractType
             ])
             ->add('invoiceTemplate', InvoiceTemplateType::class, [
                 'help' => 'help.invoiceTemplate_customer',
+                'required' => false,
+            ])
+            ->add('invoiceEmail', MailType::class, [
+                'label' => 'invoice_email',
+                'required' => false,
+            ])
+            ->add('buyerReference', TextType::class, [
+                'label' => 'buyerReference',
                 'required' => false,
             ])
         ;

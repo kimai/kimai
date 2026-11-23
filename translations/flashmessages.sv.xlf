@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="WmrEP_5" resname="timesheet.stop.success" xml:space="preserve">
         <source>timesheet.stop.success</source>
-        <target state="translated">Tidsmätningen har stoppats</target>
+        <target state="translated">Tidsmätningen stoppades</target>
       </trans-unit>
       <trans-unit id="NPBnpK_" resname="timesheet.stop.error" xml:space="preserve">
         <source>timesheet.stop.error</source>
@@ -16,43 +16,43 @@
       </trans-unit>
       <trans-unit id="CCUoZga" resname="timesheet.start.success" xml:space="preserve">
         <source>timesheet.start.success</source>
-        <target state="translated">Tidsmätningen har startat</target>
+        <target state="translated">Tidsmätningen startades</target>
       </trans-unit>
       <trans-unit id="3w9tuox" resname="timesheet.start.error">
         <source>timesheet.start.error</source>
         <target state="translated">Tidsinspelning kunde inte startas</target>
       </trans-unit>
-      <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
+      <trans-unit id="kPINWEK" resname="timesheet.locked.warning" xml:space="preserve">
         <source>timesheet.locked.warning</source>
-        <target state="translated">Du håller på att ändra en exporterad post</target>
+        <target state="translated">Du håller på att redigera en exporterad anteckning</target>
       </trans-unit>
-      <trans-unit id="72Ih8zO" resname="action.update.success">
+      <trans-unit id="72Ih8zO" resname="action.update.success" xml:space="preserve">
         <source>action.update.success</source>
-        <target state="translated">Ändringarna har sparats</target>
+        <target state="translated">Ändringarna sparades</target>
       </trans-unit>
       <trans-unit id="xeu1LSy" resname="action.update.error">
         <source>action.update.error</source>
         <target state="translated">Ändringar kunde inte sparas: %reason%</target>
       </trans-unit>
-      <trans-unit id="YV50HDB" resname="action.delete.success">
+      <trans-unit id="YV50HDB" resname="action.delete.success" xml:space="preserve">
         <source>action.delete.success</source>
-        <target state="translated">Denna post är borttagen</target>
+        <target state="translated">Inlägget togs bort</target>
       </trans-unit>
-      <trans-unit id="mW91Tmb" resname="action.delete.error">
+      <trans-unit id="mW91Tmb" resname="action.delete.error" xml:space="preserve">
         <source>action.delete.error</source>
-        <target state="translated">Post kunde inte raderas: %reason%</target>
+        <target state="translated">Inlägget kunde inte tas bort: %reason%</target>
       </trans-unit>
-      <trans-unit id="B_cz49z" resname="invoice.first_template">
+      <trans-unit id="B_cz49z" resname="invoice.first_template" xml:space="preserve">
         <source>invoice.first_template</source>
-        <target state="translated">Du måste skapa din första fakturamall innan du kan fortsätta</target>
+        <target state="translated">Vänligen skapa en faktureringsmall först</target>
       </trans-unit>
       <trans-unit id="wejAEcR" resname="action.upload.error">
         <source>action.upload.error</source>
         <target>Filen kunde inte laddas upp eller sparas: %reason%</target>
       </trans-unit>
-      <trans-unit resname="action.csrf.error" id="bOE_q5R">
+      <trans-unit resname="action.csrf.error" id="bOE_q5R" xml:space="preserve">
         <source>action.csrf.error</source>
-        <target>Den här åtgärden kunde inte utföras: säkerhetssymbolen är ogiltig.</target>
+        <target state="translated">Åtgärden kunde inte utföras: säkerhetsnyckeln är ogiltig.</target>
       </trans-unit>
     </body>
   </file>

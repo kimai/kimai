@@ -9,7 +9,6 @@
 
 namespace App\Form\MultiUpdate;
 
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -18,17 +17,21 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @template T of object
+ */
 final class MultiUpdateTable extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var EntityRepository $repository */
+        /** @var EntityRepository<T> $repository */
         $repository = $options['repository'];
         /** @var MultiUpdateTableDTO $dto */
         $dto = $options['data'];
 
         $builder->add('entities', HiddenType::class, [
             'required' => false,
+            'attr' => ['class' => 'multi_update_ids']
         ]);
 
         $builder->get('entities')->addModelTransformer(
@@ -41,7 +44,12 @@ final class MultiUpdateTable extends AbstractType
                         return [];
                     }
 
-                    return $repository->matching((new Criteria())->where(Criteria::expr()->in('id', explode(',', $ids))));
+                    $temp = explode(',', $ids);
+                    if (\count($temp) === 0) {
+                        return [];
+                    }
+
+                    return $repository->findBy(['id' => $temp]);
                 }
             )
         );
@@ -55,7 +63,7 @@ final class MultiUpdateTable extends AbstractType
                 'label' => $key,
                 'attr' => [
                     'data-href' => $value,
-                    'class' => 'multi_update_table_action' . (stripos($key, 'delete') !== false ? ' btn-danger' : ''),
+                    'class' => 'multi_update_table_action' . (stripos($key, 'delete') !== false ? ' btn-danger' : ' btn-primary'),
                 ],
             ]);
         }

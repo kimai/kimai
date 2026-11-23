@@ -9,6 +9,9 @@
 
 namespace App\Event;
 
+use App\Webhook\Attribute\AsWebhook;
+
+#[AsWebhook(name: 'timesheet.stopped', description: 'Triggered after a timesheet was stopped', payload: 'object.getTimesheet()')]
 final class TimesheetStopPostEvent extends AbstractTimesheetEvent
 {
 }

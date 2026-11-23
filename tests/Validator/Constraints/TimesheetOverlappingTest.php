@@ -11,11 +11,10 @@ namespace App\Tests\Validator\Constraints;
 
 use App\Validator\Constraints\TimesheetConstraint;
 use App\Validator\Constraints\TimesheetOverlapping;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Validator\Constraints\TimesheetOverlapping
- */
+#[CoversClass(TimesheetOverlapping::class)]
 class TimesheetOverlappingTest extends TestCase
 {
     public function testIsTimesheetConstraint(): void

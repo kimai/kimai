@@ -10,15 +10,17 @@
 namespace App\Tests\Form\Type;
 
 use App\Form\Type\DurationType;
+use App\Validator\Constraints\Duration as DurationConstraint;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Test\TypeTestCase;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 
-/**
- * @covers \App\Form\Type\DurationType
- */
+#[CoversClass(DurationType::class)]
 class DurationTypeTest extends TypeTestCase
 {
-    public function getTestData()
+    public static function getTestData()
     {
         yield [4.5, 16200];
         yield ['4,5', 16200];
@@ -26,9 +28,7 @@ class DurationTypeTest extends TypeTestCase
         yield ['4h30m', 16200];
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testSubmitValidData($value, $expected): void
     {
         $data = ['duration' => $value];
@@ -44,8 +44,8 @@ class DurationTypeTest extends TypeTestCase
 
         $form->submit($data);
 
-        $this->assertTrue($form->isSynchronized());
-        $this->assertEquals($expected, $model);
+        self::assertTrue($form->isSynchronized());
+        self::assertEquals($expected, $model);
     }
 
     public function testPresetPopulatesView(): void
@@ -107,5 +107,78 @@ class DurationTypeTest extends TypeTestCase
 
         self::assertArrayHasKey('class', $view->vars['attr']);
         self::assertStringContainsString('duration-input testing', $view->vars['attr']['class']);
+    }
+
+    public function testDefaultParseMode(): void
+    {
+        $view = $this->factory->create(DurationType::class, 3600)->createView();
+
+        self::assertArrayHasKey('data-duration-mode', $view->vars['attr']);
+        self::assertEquals(DurationType::PARSE_MODE_DEFAULT, $view->vars['attr']['data-duration-mode']);
+    }
+
+    public function testIntegerMinutesParseMode(): void
+    {
+        $view = $this->factory->create(DurationType::class, 3600, [
+            'parse_mode' => DurationType::PARSE_MODE_INTEGER_MINUTES,
+        ])->createView();
+
+        self::assertEquals(DurationType::PARSE_MODE_INTEGER_MINUTES, $view->vars['attr']['data-duration-mode']);
+    }
+
+    public function testHasValidationPattern(): void
+    {
+        $view = $this->factory->create(DurationType::class, 3600)->createView();
+
+        self::assertArrayHasKey('pattern', $view->vars['attr']);
+        self::assertEquals((new DurationConstraint())->getHtmlPattern(), $view->vars['attr']['pattern']);
+    }
+
+    public function testValidationPatternCanBeOverwritten(): void
+    {
+        $view = $this->factory->create(DurationType::class, 3600, [
+            'attr' => ['pattern' => '[0-9]+']
+        ])->createView();
+
+        self::assertEquals('[0-9]+', $view->vars['attr']['pattern']);
+    }
+
+    public function testNegativeValuesAreNotAllowedByDefault(): void
+    {
+        $view = $this->factory->create(DurationType::class, 3600)->createView();
+
+        self::assertArrayNotHasKey('data-duration-negative', $view->vars['attr']);
+    }
+
+    public function testAllowNegativeValues(): void
+    {
+        $view = $this->factory->create(DurationType::class, 3600, [
+            'allow_negative' => true,
+        ])->createView();
+
+        self::assertEquals('1', $view->vars['attr']['data-duration-negative']);
+    }
+
+    public function testSubmitNegativeValue(): void
+    {
+        $model = new TypeTestModel(['duration' => 3600]);
+
+        $form = $this->factory->createBuilder(FormType::class, $model);
+        $form->add('duration', DurationType::class, ['allow_negative' => true]);
+        $form = $form->getForm();
+
+        $form->submit(['duration' => '-1:30']);
+
+        self::assertTrue($form->isSynchronized());
+        self::assertEquals(new TypeTestModel(['duration' => -5400]), $model);
+    }
+
+    public function testInvalidParseModeThrowsException(): void
+    {
+        $this->expectException(InvalidOptionsException::class);
+
+        $this->factory->create(DurationType::class, 3600, [
+            'parse_mode' => 'foo',
+        ]);
     }
 }

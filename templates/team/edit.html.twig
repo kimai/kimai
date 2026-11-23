@@ -42,27 +42,34 @@
         document.addEventListener('kimai.initialized', (event) => {
             /** @type {KimaiAPI} API */
             const API = event.detail.kimai.getPlugin('api');
-            /** @type {KimaiAlert} ALERT */
-            const ALERT = event.detail.kimai.getPlugin('alert');
+
+            const successHandle = (json) => {
+                document.dispatchEvent(new CustomEvent('kimai.reloadedContent'));
+            };
+            const errorHandle = (error) => {
+                document.dispatchEvent(new CustomEvent('kimai.reloadedContent'));
+                API.handleError('action.update.error', error);
+            };
 
             {% if customerForm is defined and customerForm is not null %}
                 document.getElementById('team_customer_form').addEventListener('change',
                     (event) => {
                         if (event.target.matches('input[type=checkbox]')) {
+                            document.dispatchEvent(new CustomEvent('kimai.reloadContent'));
                             const checkbox = event.target;
                             const customerId = checkbox.value;
                             if (checkbox.checked) {
                                 API.post(
                                     '{{ path('post_team_customer', {'id': team.id, 'customerId': '000'}) }}'.replace(/000/, customerId),
                                     {},
-                                    (json) => {ALERT.success('action.update.success');},
-                                    (error) => {ALERT.error('action.update.error', error);}, // TODO test me
+                                    successHandle,
+                                    errorHandle,
                                 );
                             } else {
                                 API.delete(
                                     '{{ path('delete_team_customer', {'id': team.id, 'customerId': '000'}) }}'.replace(/000/, customerId),
-                                    (json) => {ALERT.success('action.delete.success');},
-                                    (error) => {ALERT.error('action.delete.error', error);}, // TODO test me
+                                    successHandle,
+                                    errorHandle,
                                 );
                             }
                         }
@@ -74,20 +81,21 @@
                 document.getElementById('team_project_form').addEventListener('change',
                     (event) => {
                         if (event.target.matches('input[type=checkbox]')) {
+                            document.dispatchEvent(new CustomEvent('kimai.reloadContent'));
                             const checkbox = event.target;
                             const projectId = checkbox.value;
                             if (checkbox.checked) {
                                 API.post(
                                     '{{ path('post_team_project', {'id': team.id, 'projectId': '000'}) }}'.replace(/000/, projectId),
                                     {},
-                                    (json) => {ALERT.success('action.update.success');},
-                                    (error) => {ALERT.error('action.update.error', error);}, // TODO test me
+                                    successHandle,
+                                    errorHandle,
                                 );
                             } else {
                                 API.delete(
                                     '{{ path('delete_team_project', {'id': team.id, 'projectId': '000'}) }}'.replace(/000/, projectId),
-                                    (json) => {ALERT.success('action.delete.success');},
-                                    (error) => {ALERT.error('action.delete.error', error);}, // TODO test me
+                                    successHandle,
+                                    errorHandle,
                                 );
                             }
                         }

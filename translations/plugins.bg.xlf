@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="bg" datatype="plaintext" original="plugins.en.xlf">
+    <body>
+      <trans-unit id="vFSLi54" resname="plugin.none_installed" xml:space="preserve">
+        <source>plugin.none_installed</source>
+        <target state="translated">Все още нямате инсталирани плъгини.</target>
+      </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace" xml:space="preserve">
+        <source>Available plugins</source>
+        <target state="translated">Налични плъгини</target>
+      </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy" xml:space="preserve">
+        <source>Buy now</source>
+        <target state="translated">Купи сега</target>
+      </trans-unit>
+      <trans-unit id="jZAB0yx" resname="shop" xml:space="preserve">
+        <source>Plugin Shop</source>
+        <target state="translated">Още разширения</target>
+      </trans-unit>
+      <trans-unit id="aNvGEaj" resname="update_available" xml:space="preserve">
+        <source>Update available</source>
+        <target state="translated">Налична актуализация: %version%</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

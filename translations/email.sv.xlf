@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="sv" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
-        <source>button_copy_url_to_browser</source>
-        <target state="translated">Om knappen inte fungerar, vänligen kopiera &amp; klistra in följande URL i din webbläsare: %url%</target>
-      </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" xml:space="preserve">
         <source>automated_email_dont_answer</source>
         <target state="translated">Detta är ett automatiskt meddelande som ej går att svara på.</target>
@@ -26,41 +22,73 @@
         <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
         <target state="translated">Du har registrerat dig hos Kimai tidrapportering med e-postadressen %email%. Vänligen aktivera ditt konto inom de närmaste timmarna, innan länken går ut och blir ogiltig.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="translated">Återställ ditt lösenord</target>
+        <target state="translated">Logga in till Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">Det kan hända …</target>
+        <target state="translated">Logga in till ditt konto</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="translated">Återställ ditt lösenord</target>
+        <target state="translated">Logga in</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">… så du glömde ditt lösenord? Oroa dig inte: Kimai hjälper dig att skapa ett nytt:</target>
+        <target state="translated">Den här länken kommer bara att vara giltig under de nästkommande 15 minutrarna.</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
         <source>absence_created_supervisor_subject</source>
-        <target state="translated">Ny frånvaro | %absence_user% | %absence_type%</target>
+        <target state="translated">Ny frånvaro | %user% | %type%</target>
       </trans-unit>
       <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
-        <source>A new absence was created for %absence_user%.
+        <source>A new absence was created for %user%.
 
-%absence_type% - %absence_comment%
+%list%
 
-%absence_list%
+Please review them at: %url%</source>
+        <target state="translated">Ny frånvaro skapades för %user%.
 
-Please review them at: %approval_url%</source>
-        <target state="translated">Ny frånvaro skapades för %absence_user%.
+%list%
 
-%absence_type% - %absence_comment%
+Vänligen kontrollera den här: %url%</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Din begäran om autentisering har nekats av %created_by%.
 
-%absence_list%
+%list%
 
-Vänligen kontrollera den här: %approval_url%</target>
+Vänligen granska dem på: %url%</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">Din begäran godkändes av %created_by%.
+
+%list%
+
+Du kan hitta alla dina förfrågningar under: %url%</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">Godkännande begärs: %user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">Ett godkännande för %user% begärdes.
+
+%list%
+
+Vänligen granska dem på: %url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Din begäran har nekats</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Din begäran har godkänts</target>
       </trans-unit>
     </body>
   </file>

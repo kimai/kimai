@@ -4,7 +4,7 @@
 {% block main %}
     {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
     {% set formOptions = {
-        'title': (tag.id is null ? 'create'|trans : 'edit'|trans({}, 'actions')),
+        'title': (tag.id is null ? 'create'|trans : 'edit'|trans),
         'form': form,
         'back': path('tags')
     } %}

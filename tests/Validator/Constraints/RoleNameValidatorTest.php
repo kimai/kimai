@@ -13,15 +13,17 @@ use App\Entity\User;
 use App\Tests\Mocks\Security\RoleServiceFactory;
 use App\Validator\Constraints\RoleName;
 use App\Validator\Constraints\RoleNameValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\RoleName
- * @covers \App\Validator\Constraints\RoleNameValidator
  * @extends ConstraintValidatorTestCase<RoleNameValidator>
  */
+#[CoversClass(RoleName::class)]
+#[CoversClass(RoleNameValidator::class)]
 class RoleNameValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): RoleNameValidator
@@ -34,7 +36,7 @@ class RoleNameValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return array<array<int, string>>
      */
-    public function getValidRoleNames(): array
+    public static function getValidRoleNames(): array
     {
         return [
             ['FOOBAR'],
@@ -52,10 +54,7 @@ class RoleNameValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate('foo', new NotBlank());
     }
 
-    /**
-     * @dataProvider getValidRoleNames
-     * @param string $role
-     */
+    #[DataProvider('getValidRoleNames')]
     public function testConstraintWithValidRole(string $role): void
     {
         $constraint = new RoleName();
@@ -76,7 +75,7 @@ class RoleNameValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return array<array<string|int>>
      */
-    public function getInvalidRoleNames(): array
+    public static function getInvalidRoleNames(): array
     {
         return [
             ['foo'],
@@ -97,9 +96,7 @@ class RoleNameValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @dataProvider getInvalidRoleNames
-     */
+    #[DataProvider('getInvalidRoleNames')]
     public function testValidationError(string|int $role): void
     {
         $constraint = new RoleName([

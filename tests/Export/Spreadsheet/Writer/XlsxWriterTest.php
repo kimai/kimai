@@ -11,11 +11,10 @@ namespace App\Tests\Export\Spreadsheet\Writer;
 
 use App\Export\Spreadsheet\Writer\XlsxWriter;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Export\Spreadsheet\Writer\XlsxWriter
- */
+#[CoversClass(XlsxWriter::class)]
 class XlsxWriterTest extends TestCase
 {
     public function testWriter(): void

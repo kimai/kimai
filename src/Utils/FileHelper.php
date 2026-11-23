@@ -29,7 +29,7 @@ final class FileHelper
         $this->dataDir = $directory;
     }
 
-    public function getDataDirectory(string $subDirectory = null): string
+    public function getDataDirectory(?string $subDirectory = null): string
     {
         $directory = $this->dataDir . '/';
 

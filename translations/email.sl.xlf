@@ -2,10 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="sl" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
-        <source>button_copy_url_to_browser</source>
-        <target state="translated">Če gumb ne deluje, kopirajte in prilepite naslednji URL v brskalnik: %url%</target>
-      </trans-unit>
+      
     </body>
   </file>
 </xliff>

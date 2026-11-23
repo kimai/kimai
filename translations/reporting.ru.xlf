@@ -46,6 +46,10 @@
         <source>report_project_details</source>
         <target state="translated">Детали проекта</target>
       </trans-unit>
+      <trans-unit id="Yz_lySk" resname="report_customer_view" xml:space="preserve">
+        <source>report_customer_view</source>
+        <target state="translated">Обзор клиента</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

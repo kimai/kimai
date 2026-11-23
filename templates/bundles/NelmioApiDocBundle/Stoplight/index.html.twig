@@ -1,0 +1,10 @@
+{% extends '@!NelmioApiDoc/Stoplight/index.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #mosaic-provider-react-aria-0-1 > div > div > div > div.sl-flex > div.sl-flex.sl-overflow-y-auto.sl-flex-col.sl-sticky.sl-inset-y-0.sl-pt-8.sl-bg-canvas-100.sl-border-r > a {
+            display: none;
+        }
+    </style>
+{% endblock stylesheets %}

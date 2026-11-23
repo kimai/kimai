@@ -11,13 +11,12 @@ namespace App\Tests\Reporting\YearByUser;
 
 use App\Reporting\DateByUser;
 use App\Reporting\YearByUser\YearByUser;
-use App\Tests\Reporting\AbstractDateByUserTest;
+use App\Tests\Reporting\AbstractDateByUserTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Reporting\YearByUser\YearByUser
- * @covers \App\Reporting\DateByUser
- */
-class YearByUserTest extends AbstractDateByUserTest
+#[CoversClass(YearByUser::class)]
+#[CoversClass(DateByUser::class)]
+class YearByUserTest extends AbstractDateByUserTestCase
 {
     protected function createSut(): DateByUser
     {

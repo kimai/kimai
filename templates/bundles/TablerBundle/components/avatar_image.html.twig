@@ -1,5 +1,5 @@
 {% macro avatar_image(user) %}
-    {% if user.avatar is not empty and kimai_config.themeAllowAvatarUrls %}
+    {% if user.avatar is not empty and config('themeAllowAvatarUrls') %}
         {% set avatar = asset(user.avatar, 'avatars') %}
         <span class="avatar" style="background-image:url({{ avatar }})" title="{{ user.displayName }}">&nbsp;</span>
     {% else %}

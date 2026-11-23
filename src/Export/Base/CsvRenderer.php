@@ -9,63 +9,86 @@
 
 namespace App\Export\Base;
 
-use PhpOffice\PhpSpreadsheet\Cell\CellAddress;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use App\Entity\ExportableItem;
+use App\Export\ColumnConverter;
+use App\Export\ExportFilename;
+use App\Export\ExportRendererInterface;
+use App\Export\Package\CellFormatter\DateStringFormatter;
+use App\Export\Package\CellFormatter\DurationPlainFormatter;
+use App\Export\Package\SpoutSpreadsheet;
+use App\Export\TemplateInterface;
+use App\Repository\Query\TimesheetQuery;
+use OpenSpout\Writer\CSV\Options;
+use OpenSpout\Writer\CSV\Writer;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-class CsvRenderer extends AbstractSpreadsheetRenderer
+#[Exclude]
+final class CsvRenderer extends AbstractSpreadsheetRenderer implements ExportRendererInterface
 {
-    /**
-     * @return string
-     */
-    public function getFileExtension(): string
+    public function __construct(
+        private readonly ColumnConverter $columnConverter,
+        private readonly TranslatorInterface $translator,
+        private readonly TemplateInterface $template,
+    )
     {
-        return '.csv';
+    }
+
+    public function getType(): string
+    {
+        return 'csv';
+    }
+
+    public function getId(): string
+    {
+        return $this->template->getId();
+    }
+
+    public function getTitle(): string
+    {
+        return $this->template->getTitle();
     }
 
     /**
-     * @return string
+     * @param ExportableItem[] $exportItems
      */
-    protected function getContentType(): string
+    public function render(array $exportItems, TimesheetQuery $query): Response
     {
-        return 'text/csv';
+        return $this->getFileResponse(
+            $this->renderFile($exportItems, $query),
+            (new ExportFilename($query))->getFilename() . '.csv',
+            'text/csv'
+        );
     }
 
     /**
-     * @param Spreadsheet $spreadsheet
-     * @return string
-     * @throws \Exception
+     * @param ExportableItem[] $exportItems
      */
-    protected function saveSpreadsheet(Spreadsheet $spreadsheet): string
+    private function renderFile(array $exportItems, TimesheetQuery $query): \SplFileInfo
     {
         $filename = @tempnam(sys_get_temp_dir(), 'kimai-export-csv');
         if (false === $filename) {
             throw new \Exception('Could not open temporary file');
         }
 
-        $writer = IOFactory::createWriter($spreadsheet, 'Csv');
-        $writer->save($filename);
+        $options = new Options();
+        $options->SHOULD_ADD_BOM = false;
 
-        return $filename;
-    }
-
-    public function getId(): string
-    {
-        return 'csv';
-    }
-
-    protected function setDuration(Worksheet $sheet, int $column, int $row, ?int $duration): void
-    {
-        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), \sprintf('=%s', $duration ?? 0));
-    }
-
-    protected function setRate(Worksheet $sheet, int $column, int $row, ?float $rate, ?string $currency): void
-    {
-        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), $rate);
-        if ($rate === 0.00) {
-            return;
+        $opts = $this->template->getOptions();
+        if (\array_key_exists('separator', $opts) && $opts['separator'] === ';') {
+            $options->FIELD_DELIMITER = ';';
         }
-        $this->setRateStyle($sheet, $column, $row, $currency);
+
+        $spreadsheet = new SpoutSpreadsheet(new Writer($options), $this->translator, $this->template->getLocale());
+        $spreadsheet->open($filename);
+
+        $this->columnConverter->registerFormatter('date', new DateStringFormatter());
+        $this->columnConverter->registerFormatter('duration', new DurationPlainFormatter(false));
+        $this->columnConverter->registerFormatter('duration_seconds', new DurationPlainFormatter(true));
+
+        $this->writeSpreadsheet($this->columnConverter, $this->template, $spreadsheet, $exportItems, $query);
+
+        return new \SplFileInfo($filename);
     }
 }

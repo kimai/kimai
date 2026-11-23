@@ -11,11 +11,10 @@ namespace App\Tests\Invoice\Hydrator;
 
 use App\Invoice\Hydrator\InvoiceModelUserHydrator;
 use App\Tests\Invoice\Renderer\RendererTestTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Invoice\Hydrator\InvoiceModelUserHydrator
- */
+#[CoversClass(InvoiceModelUserHydrator::class)]
 class InvoiceModelUserHydratorTest extends TestCase
 {
     use RendererTestTrait;
@@ -38,6 +37,7 @@ class InvoiceModelUserHydratorTest extends TestCase
             'user.email',
             'user.name',
             'user.title',
+            'user.account',
             'user.meta.hello',
             'user.meta.kitty',
         ];
@@ -46,6 +46,6 @@ class InvoiceModelUserHydratorTest extends TestCase
         sort($keys);
         sort($givenKeys);
 
-        $this->assertEquals($keys, $givenKeys);
+        self::assertEquals($keys, $givenKeys);
     }
 }

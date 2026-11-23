@@ -17,6 +17,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
+ * Adds the links in the user profile dropdown in the template on each page.
+ *
  * @internal
  */
 class UserDetailsSubscriber implements EventSubscriberInterface
@@ -43,10 +45,10 @@ class UserDetailsSubscriber implements EventSubscriberInterface
         $event->setUser($user);
 
         if ($this->auth->isGranted('view', $user)) {
-            $event->addLink(new MenuItemModel('user_profile', 'my.profile', 'user_profile', ['username' => $user->getUserIdentifier()]));
+            $event->addLink(new MenuItemModel('user_profile', 'user_profile', 'user_profile', ['username' => $user->getUserIdentifier()]));
         }
         if ($this->auth->isGranted('edit', $user)) {
-            $event->addLink(new MenuItemModel('user_profile_edit', 'action.edit', 'user_profile_edit', ['username' => $user->getUserIdentifier()]));
+            $event->addLink(new MenuItemModel('user_profile_edit', 'edit', 'user_profile_edit', ['username' => $user->getUserIdentifier()]));
         }
         if ($this->auth->isGranted('password', $user)) {
             $event->addLink(new MenuItemModel('password', 'profile.password', 'user_profile_password', ['username' => $user->getUserIdentifier()]));

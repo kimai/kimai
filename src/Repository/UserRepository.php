@@ -20,6 +20,8 @@ use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\UserQuery;
 use App\Repository\Query\VisibilityInterface;
+use App\Repository\Search\SearchConfiguration;
+use App\Repository\Search\SearchHelper;
 use App\Utils\Pagination;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Types\Types;
@@ -35,7 +37,6 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * @extends EntityRepository<User>
- * @template-implements PasswordUpgraderInterface<User>
  * @template-implements UserProviderInterface<User>
  */
 class UserRepository extends EntityRepository implements UserLoaderInterface, UserProviderInterface, PasswordUpgraderInterface
@@ -47,6 +48,28 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
         if ($flush) {
             $entityManager->flush();
         }
+    }
+
+    public function updateLastLogin(User $user): void
+    {
+        if ($user->getId() === null) {
+            return;
+        }
+
+        // the exact moment is not relevant (e.g. each API call)
+        // we just want to know roughly when the user was last seen in the auth process
+        $minWindow = new \DateTime('-15 minute', $user->getDateTimezone());
+        $lastLogin = $user->getLastLogin();
+        if ($lastLogin !== null && $lastLogin >= $minWindow) {
+            return;
+        }
+
+        // prevent using entity manager and calculating changesets
+        $this->getEntityManager()->getConnection()->executeStatement(
+            'UPDATE kimai2_users SET last_login = ? WHERE id = ?',
+            [new \DateTime('now', $user->getDateTimezone()), $user->getId()],
+            [Types::DATETIME_MUTABLE, Types::INTEGER],
+        );
     }
 
     public function saveUser(User $user): void
@@ -115,7 +138,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
      * Overwritten to fetch preferences when using the Profile controller actions.
      * Depends on the query, some magic mechanisms like the ParamConverter will use this method to fetch the user.
      */
-    public function findOneBy(array $criteria, array $orderBy = null): ?object
+    public function findOneBy(array $criteria, ?array $orderBy = null): ?object
     {
         if (\count($criteria) === 1 && isset($criteria['username']) && \is_string($criteria['username'])) {
             return $this->loadUserByIdentifier($criteria['username']);
@@ -169,6 +192,9 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
 
     public function refreshUser(UserInterface $user): User
     {
+        // TODO 3.0 add a last_updated field to user and ONLY load this for comparison.
+        // TODO then only execute the below code if last_updated != session.last_updated
+
         return $this->loadUserByIdentifier($user->getUserIdentifier());
     }
 
@@ -306,12 +332,13 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
         }
 
         if ($query->getRole() !== null) {
+            // roles are stored as JSON list, the quotes prevent partial matches like ROLE_ADMIN in ROLE_ADMIN_FOO
             $rolesWhere = 'u.roles LIKE :role';
-            $qb->setParameter('role', '%' . $query->getRole() . '%');
+            $qb->setParameter('role', '%"' . $query->getRole() . '"%');
             // a workaround, because ROLE_USER is not saved in the database
             if ($query->getRole() === User::ROLE_USER) {
                 $rolesWhere .= ' OR u.roles LIKE :role1';
-                $qb->setParameter('role1', '%{}');
+                $qb->setParameter('role1', '[]');
             }
             $qb->andWhere($rolesWhere);
         }
@@ -321,43 +348,21 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
             $qb->setParameter('system', $query->getSystemAccount(), Types::BOOLEAN);
         }
 
-        $searchTerm = $query->getSearchTerm();
-        if ($searchTerm !== null) {
-            $searchAnd = $qb->expr()->andX();
-
-            foreach ($searchTerm->getSearchFields() as $metaName => $metaValue) {
-                $qb->leftJoin('u.preferences', 'meta');
-                $searchAnd->add(
-                    $qb->expr()->andX(
-                        $qb->expr()->eq('meta.name', ':metaName'),
-                        $qb->expr()->like('meta.value', ':metaValue')
-                    )
-                );
-                $qb->setParameter('metaName', $metaName);
-                $qb->setParameter('metaValue', '%' . $metaValue . '%');
-            }
-
-            if ($searchTerm->hasSearchTerm()) {
-                $searchAnd->add(
-                    $qb->expr()->orX(
-                        $qb->expr()->like('u.alias', ':searchTerm'),
-                        $qb->expr()->like('u.title', ':searchTerm'),
-                        $qb->expr()->like('u.accountNumber', ':searchTerm'),
-                        $qb->expr()->like('u.email', ':searchTerm'),
-                        $qb->expr()->like('u.username', ':searchTerm')
-                    )
-                );
-                $qb->setParameter('searchTerm', '%' . $searchTerm->getSearchTerm() . '%');
-            }
-
-            if ($searchAnd->count() > 0) {
-                $qb->andWhere($searchAnd);
-            }
-        }
+        $configuration = new SearchConfiguration(
+            ['u.alias', 'u.title', 'u.accountNumber', 'u.email', 'u.username'],
+            UserPreference::class,
+            'user'
+        );
+        $configuration->setEntityFieldName('preferences');
+        $helper = new SearchHelper($configuration);
+        $helper->addSearchTerm($qb, $query);
 
         return $qb;
     }
 
+    /**
+     * @return Pagination<User>
+     */
     public function getPagerfantaForQuery(UserQuery $query): Pagination
     {
         return new Pagination($this->getPaginatorForQuery($query), $query);

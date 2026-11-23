@@ -30,9 +30,9 @@
         <source>The begin date cannot be in the future.</source>
         <target>Η ημερομηνία έναρξης δεν γίνεται να είναι σε μέλλοντα χρόνο.</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
-        <source>End date must not be earlier then start date.</source>
-        <target>Η ημερομηνία λήξης δεν γίνεται να είναι προγενέστερη από την ημερομηνία έναρξης.</target>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
+        <source>The end date must not be earlier than the start date.</source>
+        <target state="needs-translation">Η ημερομηνία λήξης δεν γίνεται να είναι προγενέστερη από την ημερομηνία έναρξης.</target>
       </trans-unit>
       <trans-unit id="IkNxbBI" resname="This value is not a valid role.">
         <source>This value is not a valid role.</source>

@@ -14,11 +14,10 @@ use App\Entity\EntityWithMetaFields;
 use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
 use App\Entity\ProjectMeta;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Entity\ProjectMeta
- */
-class ProjectMetaTest extends AbstractMetaEntityTest
+#[CoversClass(ProjectMeta::class)]
+class ProjectMetaTest extends AbstractMetaEntityTestCase
 {
     protected function getEntity(): EntityWithMetaFields
     {

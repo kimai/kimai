@@ -27,7 +27,7 @@
             {% endblock %}
             {% block box_footer %}
                 <button type="submit" class="btn btn-primary">{{ 'action.save'|trans }}</button>
-                <a href="{{ path('admin_invoice_template') }}" class="btn btn-link">{{ 'back'|trans({}, 'actions') }}</a>
+                <a href="{{ path('admin_invoice_template') }}" class="btn btn-link">{{ 'back'|trans }}</a>
             {% endblock %}
         {% endembed %}
     {% elseif upload_error is not null %}
@@ -35,14 +35,13 @@
     {% endif %}
 
     {% if documents|length > 0 %}
-        {% embed '@theme/embeds/card.html.twig' with {'documents': documents} %}
+        {% embed '@theme/embeds/card.html.twig' with {'documents': documents, fullsize: true} %}
             {% import "invoice/actions.html.twig" as actions %}
             {% import "macros/widgets.html.twig" as widgets %}
             {% block box_title %}{{ 'invoice_renderer'|trans({}, 'invoice-renderer') }}{% endblock %}
             {% block box_attributes %}
                 id="invoice_document_list"
             {% endblock %}
-            {% block box_body_class %}p-0{% endblock %}
             {% block box_body %}
                 <table class="table table-hover dataTable">
                     <thead>
@@ -74,4 +73,13 @@
             {% endblock %}
         {% endembed %}
     {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            KimaiReloadPageWidget.create('kimai.invoiceDocumentUpdate', true);
+        });
+    </script>
 {% endblock %}

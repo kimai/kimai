@@ -10,6 +10,7 @@
 namespace App\Export\Renderer;
 
 use App\Activity\ActivityStatisticService;
+use App\Export\Base\HtmlRenderer;
 use App\Project\ProjectStatisticService;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;
@@ -17,19 +18,23 @@ use Twig\Environment;
 final class HtmlRendererFactory
 {
     public function __construct(
-        private Environment $twig,
-        private EventDispatcherInterface $dispatcher,
-        private ProjectStatisticService $projectStatisticService,
-        private ActivityStatisticService $activityStatisticService
+        private readonly Environment $twig,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly ProjectStatisticService $projectStatisticService,
+        private readonly ActivityStatisticService $activityStatisticService
     ) {
     }
 
-    public function create(string $id, string $template): HtmlRenderer
+    public function create(string $id, string $template, string $title = 'print'): HtmlRenderer
     {
-        $renderer = new HtmlRenderer($this->twig, $this->dispatcher, $this->projectStatisticService, $this->activityStatisticService);
-        $renderer->setId($id);
-        $renderer->setTemplate($template);
-
-        return $renderer;
+        return new HtmlRenderer(
+            $this->twig,
+            $this->dispatcher,
+            $this->projectStatisticService,
+            $this->activityStatisticService,
+            $id,
+            $title,
+            $template
+        );
     }
 }

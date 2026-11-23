@@ -15,16 +15,16 @@ use FOS\RestBundle\Serializer\Normalizer\FlattenExceptionHandler;
 use JMS\Serializer\GraphNavigatorInterface;
 use JMS\Serializer\JsonSerializationVisitor;
 use JMS\Serializer\SerializationContext;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\API\Serializer\ValidationFailedExceptionErrorHandler
- */
+#[CoversClass(ValidationFailedExceptionErrorHandler::class)]
 class ValidationFailedExceptionErrorHandlerTest extends TestCase
 {
     public function testSubscribingMethods(): void
@@ -34,13 +34,13 @@ class ValidationFailedExceptionErrorHandlerTest extends TestCase
             'type' => FlattenException::class,
             'format' => 'json',
             'method' => 'serializeExceptionToJson',
-            'priority' => -1
+            'priority' => -1,
         ], [
             'direction' => GraphNavigatorInterface::DIRECTION_SERIALIZATION,
             'type' => ValidationFailedException::class,
             'format' => 'json',
             'method' => 'serializeValidationExceptionToJson',
-            'priority' => -1
+            'priority' => -1,
         ]], ValidationFailedExceptionErrorHandler::getSubscribingMethods());
     }
 
@@ -55,7 +55,7 @@ class ValidationFailedExceptionErrorHandlerTest extends TestCase
         $validations = new ValidationFailedException($constraints, 'Uuups, that is broken');
 
         $expected = [
-            'code' => '400',
+            'code' => Response::HTTP_BAD_REQUEST,
             'message' => null,
             'errors' => [
                 'children' => []
@@ -99,7 +99,7 @@ class ValidationFailedExceptionErrorHandlerTest extends TestCase
         $context->setAttribute('exception', $validations);
 
         $expected = [
-            'code' => '400',
+            'code' => Response::HTTP_BAD_REQUEST,
             'message' => 'Uuups, that is broken',
             'errors' => [
                 'children' => [

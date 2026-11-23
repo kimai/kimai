@@ -13,25 +13,30 @@ use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Invoice\Calculator\DefaultCalculator;
 use App\Invoice\InvoiceModel;
+use App\Invoice\InvoicePeriod;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\NumberGenerator\IncrementingNumberGenerator;
+use App\Tests\Invoice\Renderer\RendererTestTrait;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
+use App\Timesheet\RateCalculator\DecimalRateCalculator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Invoice\InvoiceModel
- */
+#[CoversClass(InvoiceModel::class)]
+#[CoversClass(InvoicePeriod::class)]
 class InvoiceModelTest extends TestCase
 {
+    use RendererTestTrait;
+
     public function testEmptyObject(): void
     {
         $formatter = new DebugFormatter();
         $sut = (new InvoiceModelFactoryFactory($this))->create()->createModel($formatter, new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery());
 
         self::assertNotNull($sut->getQuery());
-        self::assertNotNull($sut->getCustomer());
-        self::assertNotNull($sut->getTemplate());
 
+        self::assertFalse($sut->isPreview());
+        self::assertFalse($sut->isHideZeroTax());
         self::assertNull($sut->getCalculator());
         self::assertEmpty($sut->getEntries());
         self::assertIsArray($sut->getEntries());
@@ -43,6 +48,12 @@ class InvoiceModelTest extends TestCase
         $sut->setFormatter($newFormatter);
         self::assertNotSame($formatter, $sut->getFormatter());
         self::assertSame($newFormatter, $sut->getFormatter());
+        self::assertEquals([], $sut->getOptions());
+
+        $sut->setPreview(true);
+        $sut->setHideZeroTax(true);
+        self::assertTrue($sut->isPreview());
+        self::assertTrue($sut->isHideZeroTax());
     }
 
     public function testEmptyObjectThrowsExceptionOnNumberGenerator(): void
@@ -75,6 +86,23 @@ class InvoiceModelTest extends TestCase
 
         self::assertSame($template, $sut->getTemplate());
         self::assertInstanceOf(\DateTimeInterface::class, $sut->getDueDate());
+
+        $sut->setOption('foo-int', 123);
+        $sut->setOption('foo-float', 123.45);
+        $sut->setOption('foo-string', '12345');
+        $sut->setOption('foo-null', null);
+        $sut->setOption('foo-bool', true);
+        $sut->setOption('foo-array', ['foo' => 'bar']);
+        $sut->setOption('foo-array2', ['foo', 'bar']);
+        self::assertEquals([
+            'foo-int' => 123,
+            'foo-float' => 123.45,
+            'foo-string' => '12345',
+            'foo-null' => null,
+            'foo-bool' => true,
+            'foo-array' => ['foo' => 'bar'],
+            'foo-array2' => ['foo', 'bar']
+        ], $sut->getOptions());
     }
 
     public function testDueDate(): void
@@ -96,5 +124,51 @@ class InvoiceModelTest extends TestCase
         $dueDate = $sut->getDueDate();
         $expected = new \DateTimeImmutable('2022-06-06');
         self::assertEquals($expected->format('Y-m-d'), $dueDate->format('Y-m-d'));
+    }
+
+    public function testGetInvoicePeriod(): void
+    {
+        $sut = $this->getInvoiceModel();
+
+        $period = $sut->getInvoicePeriod();
+
+        self::assertSame('2020-08-12 18:00:00', $period->getStart()->format('Y-m-d H:i:s'));
+        self::assertSame('2021-03-12 12:17:40', $period->getEnd()->format('Y-m-d H:i:s'));
+    }
+
+    public function testGetInvoicePeriodFallsBackToQueryDates(): void
+    {
+        $query = new InvoiceQuery();
+        $query->setBegin(new \DateTime('2022-01-02 03:04:05'));
+        $query->setEnd(new \DateTime('2022-06-07 08:09:10'));
+
+        $sut = (new InvoiceModelFactoryFactory($this))->create()->createModel(
+            new DebugFormatter(),
+            new Customer('foo'),
+            new InvoiceTemplate(),
+            $query
+        );
+
+        $period = $sut->getInvoicePeriod();
+
+        self::assertSame('2022-01-02 00:00:00', $period->getStart()->format('Y-m-d H:i:s'));
+        self::assertSame('2022-06-07 23:59:59', $period->getEnd()->format('Y-m-d H:i:s'));
+    }
+
+    public function testGetInvoicePeriodFallsBackToInvoiceDateWithoutQuery(): void
+    {
+        $invoiceDate = new \DateTimeImmutable('2023-09-10 11:12:13');
+        $sut = new InvoiceModel(
+            new DebugFormatter(),
+            new Customer('foo'),
+            new InvoiceTemplate(),
+            new DecimalRateCalculator()
+        );
+        $sut->setInvoiceDate($invoiceDate);
+
+        $period = $sut->getInvoicePeriod();
+
+        self::assertSame('2023-09-10 11:12:13', $period->getStart()->format('Y-m-d H:i:s'));
+        self::assertSame('2023-09-10 11:12:13', $period->getEnd()->format('Y-m-d H:i:s'));
     }
 }

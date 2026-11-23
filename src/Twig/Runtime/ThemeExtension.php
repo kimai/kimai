@@ -17,56 +17,71 @@ use App\Event\ThemeEvent;
 use App\Event\ThemeJavascriptTranslationsEvent;
 use App\Utils\Color;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Extension\RuntimeExtensionInterface;
 
 final class ThemeExtension implements RuntimeExtensionInterface
 {
-    public function __construct(private EventDispatcherInterface $eventDispatcher, private TranslatorInterface $translator, private SystemConfiguration $configuration, private Security $security)
+    public function __construct(
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly TranslatorInterface $translator,
+        private readonly SystemConfiguration $configuration,
+        private readonly Security $security
+    )
     {
     }
 
     /**
-     * @param Environment $environment
-     * @param string $eventName
+     * TODO 3.0 return string, remove Environment
      * @param array<string, mixed> $payload
-     * @return ThemeEvent
      */
     public function trigger(Environment $environment, string $eventName, array $payload = []): ThemeEvent
     {
         /** @var User $user */
         $user = $this->security->getUser();
-
         $themeEvent = new ThemeEvent($user, $payload);
-
-        if ($this->eventDispatcher->hasListeners($eventName)) {
-            $this->eventDispatcher->dispatch($themeEvent, $eventName);
-        }
+        $this->eventDispatcher->dispatch($themeEvent, $eventName);
 
         return $themeEvent;
+    }
+
+    /**
+     * @param class-string $eventName
+     */
+    public function themeEvent(string $eventName): string
+    {
+        if (!class_exists($eventName)) {
+            throw new \Exception('Unknown Theme Event triggered');
+        }
+
+        $themeEvent = new $eventName();
+        if (!$themeEvent instanceof \Stringable) {
+            throw new \Exception('Theme Event needs to be Stringable');
+        }
+
+        $this->eventDispatcher->dispatch($themeEvent);
+
+        return (string) $themeEvent;
     }
 
     public function actions(User $user, string $action, string $view, array $payload = []): ThemeEvent
     {
         $themeEvent = new PageActionsEvent($user, $payload, $action, $view);
-
-        if ($this->eventDispatcher->hasListeners($themeEvent->getEventName())) {
-            $this->eventDispatcher->dispatch($themeEvent, $themeEvent->getEventName());
-        }
+        $this->eventDispatcher->dispatch($themeEvent, $themeEvent->getEventName());
 
         return $themeEvent;
     }
 
     public function getJavascriptTranslations(): array
     {
-        $event = new ThemeJavascriptTranslationsEvent();
+        $event = new ThemeJavascriptTranslationsEvent(); // @phpstan-ignore new.deprecatedClass
 
         $this->eventDispatcher->dispatch($event);
 
         $all = [];
-        foreach ($event->getTranslations() as $key => $translation) {
+        foreach ($event->getTranslations() as $key => $translation) { // @phpstan-ignore method.deprecatedClass
             $all[$key] = $this->translator->trans($translation[0], [], $translation[1]);
         }
 
@@ -95,9 +110,9 @@ final class ThemeExtension implements RuntimeExtensionInterface
         return $class;
     }
 
-    public function generateTitle(?string $prefix = null, string $delimiter = ' – '): string
+    public function generateTitle(): string
     {
-        return ($prefix ?? '') . Constants::SOFTWARE . $delimiter . $this->translator->trans('time_tracking', [], 'messages');
+        return Constants::SOFTWARE;
     }
 
     public function colorize(?string $color, ?string $identifier = null): string

@@ -17,11 +17,10 @@ use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Form\MultiUpdate\TimesheetMultiUpdateDTO;
 use Doctrine\Common\Collections\Collection;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Form\MultiUpdate\TimesheetMultiUpdateDTO
- */
+#[CoversClass(TimesheetMultiUpdateDTO::class)]
 class TimesheetMultiUpdateDTOTest extends TestCase
 {
     public function testDefaultValues(): void
@@ -44,6 +43,7 @@ class TimesheetMultiUpdateDTOTest extends TestCase
         self::assertInstanceOf(Collection::class, $sut->getMetaFields());
         self::assertEmpty($sut->getMetaFields());
         self::assertEquals([], $sut->getUpdateMeta());
+        self::assertNull($sut->getBreak());
     }
 
     public function testSetterAndGetter(): void
@@ -56,7 +56,7 @@ class TimesheetMultiUpdateDTOTest extends TestCase
         self::assertEquals(
             [
                 '' => '',
-                'action.edit' => 'foo',
+                'edit' => 'foo',
                 'delete' => 'bar',
                 'test' => 'hello/world'
             ],
@@ -111,6 +111,13 @@ class TimesheetMultiUpdateDTOTest extends TestCase
 
         $sut->setHourlyRate(123.45);
         self::assertEquals(123.45, $sut->getHourlyRate());
+
+        $sut->setBreak(1800);
+        self::assertEquals(1800, $sut->getBreak());
+        $sut->setBreak(0);
+        self::assertEquals(0, $sut->getBreak());
+        $sut->setBreak(null);
+        self::assertNull($sut->getBreak());
 
         self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setUpdateMeta(['foo', 'bar']));
         self::assertEquals(['foo', 'bar'], $sut->getUpdateMeta());

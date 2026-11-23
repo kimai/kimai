@@ -18,6 +18,10 @@
         <source>plugin.marketplace</source>
         <target state="translated">Nouveaux greffons du marché</target>
       </trans-unit>
+      <trans-unit id="aNvGEaj" resname="update_available" xml:space="preserve">
+        <source>Update available</source>
+        <target state="translated">Mise à jour disponible : %version%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

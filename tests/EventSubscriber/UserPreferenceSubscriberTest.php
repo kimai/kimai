@@ -9,18 +9,18 @@
 
 namespace App\Tests\EventSubscriber;
 
+use App\Configuration\LocaleService;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
 use App\EventSubscriber\UserPreferenceSubscriber;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-/**
- * @covers \App\EventSubscriber\UserPreferenceSubscriber
- */
+#[CoversClass(UserPreferenceSubscriber::class)]
 class UserPreferenceSubscriberTest extends TestCase
 {
     public const EXPECTED_PREFERENCES = [
@@ -42,9 +42,25 @@ class UserPreferenceSubscriberTest extends TestCase
     public function testGetSubscribedEvents(): void
     {
         $events = UserPreferenceSubscriber::getSubscribedEvents();
-        $this->assertArrayHasKey(PrepareUserEvent::class, $events);
+        self::assertArrayHasKey(PrepareUserEvent::class, $events);
         $methodName = $events[PrepareUserEvent::class][0];
-        $this->assertTrue(method_exists(UserPreferenceSubscriber::class, $methodName));
+        self::assertIsString($methodName);
+        self::assertTrue(method_exists(UserPreferenceSubscriber::class, $methodName));
+    }
+
+    public function testPreferencesRegisterConstraints(): void
+    {
+        $sut = $this->getSubscriber(true);
+        $withoutConstraints = [];
+
+        foreach ($sut->getDefaultPreferences(new User()) as $pref) {
+            if (\count($pref->getConstraints()) === 0) {
+                $withoutConstraints[] = $pref->getName();
+            }
+        }
+
+        // the value of these is normalized in UserPreference::setValue()
+        self::assertEquals(['update_browser_title', 'daily_stats', 'export_decimal'], $withoutConstraints);
     }
 
     public function testWithHourlyRateAllowed(): void
@@ -57,7 +73,7 @@ class UserPreferenceSubscriberTest extends TestCase
 
         $prefs = $sut->getDefaultPreferences($user);
         foreach ($prefs as $pref) {
-            $this->assertTrue(\in_array($pref->getName(), self::EXPECTED_PREFERENCES), 'Unknown user preference: ' . $pref->getName());
+            self::assertTrue(\in_array($pref->getName(), self::EXPECTED_PREFERENCES), 'Unknown user preference: ' . $pref->getName());
         }
 
         self::assertCount(\count(self::EXPECTED_PREFERENCES), $prefs);
@@ -105,7 +121,33 @@ class UserPreferenceSubscriberTest extends TestCase
         }
     }
 
-    protected function getSubscriber(bool $seeHourlyRate): UserPreferenceSubscriber
+    public function testMissingLocaleDefaultsToUserLanguage(): void
+    {
+        $sut = $this->getSubscriber(false, 'en_AU');
+
+        // an existing user (created before the locale was split from the language) has no stored locale:
+        // formatting must keep using the language, the system default locale is only for new users
+        $user = new User();
+        $user->setLanguage('de');
+        $sut->loadUserPreferences(new PrepareUserEvent($user));
+
+        self::assertEquals('de', $user->getLocale());
+        self::assertEquals('de', $user->getPreferenceValue(UserPreference::LOCALE));
+    }
+
+    public function testStoredLocaleIsKept(): void
+    {
+        $sut = $this->getSubscriber(false, 'en_AU');
+
+        $user = new User();
+        $user->setLanguage('de');
+        $user->setLocale('de_CH');
+        $sut->loadUserPreferences(new PrepareUserEvent($user));
+
+        self::assertEquals('de_CH', $user->getLocale());
+    }
+
+    protected function getSubscriber(bool $seeHourlyRate, ?string $defaultLocale = null): UserPreferenceSubscriber
     {
         $authMock = $this->createMock(AuthorizationCheckerInterface::class);
         $authMock->method('isGranted')->willReturn($seeHourlyRate);
@@ -115,11 +157,17 @@ class UserPreferenceSubscriberTest extends TestCase
             'defaults' => [
                 'user' => [
                     'language' => 'en',
+                    'locale' => $defaultLocale,
                     'currency' => 'EUR',
                 ]
             ]
         ]);
 
-        return new UserPreferenceSubscriber($eventMock, $authMock, $formConfigMock);
+        $locales = new LocaleService([
+            'en' => ['date' => 'dd.MM.yyyy', 'time' => 'HH:mm', 'translation' => true],
+            'de_AT' => ['date' => 'dd.MM.yyyy', 'time' => 'HH:mm', 'translation' => false],
+        ]);
+
+        return new UserPreferenceSubscriber($eventMock, $authMock, $formConfigMock, $locales);
     }
 }

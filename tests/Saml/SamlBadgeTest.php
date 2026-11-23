@@ -11,11 +11,10 @@ namespace App\Tests\Saml;
 
 use App\Saml\SamlBadge;
 use App\Saml\SamlLoginAttributes;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Saml\SamlBadge
- */
+#[CoversClass(SamlBadge::class)]
 class SamlBadgeTest extends TestCase
 {
     public function testConstruct(): void

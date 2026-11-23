@@ -11,6 +11,7 @@ namespace App\Twig;
 
 use App\Constants;
 use App\Entity\EntityWithMetaFields;
+use App\Form\Type\DateRangeType;
 use App\Utils\Color;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -37,6 +38,7 @@ final class Extensions extends AbstractExtension
     public function getFunctions(): array
     {
         return [
+            new TwigFunction('date_range', [$this, 'buildDateRange']),
             new TwigFunction('report_date', [$this, 'buildReportDate']),
             new TwigFunction('class_name', [$this, 'getClassName']),
             new TwigFunction('iso_day_by_name', [$this, 'getIsoDayByName']),
@@ -88,6 +90,11 @@ final class Extensions extends AbstractExtension
     public function formatReportDate(\DateTimeInterface $dateTime): string
     {
         return $dateTime->format(self::REPORT_DATE);
+    }
+
+    public function buildDateRange(\DateTimeInterface $begin, \DateTimeInterface $end): string
+    {
+        return DateRangeType::formatQueryString($begin, $end);
     }
 
     public function getIsoDayByName(string $weekDay): int
@@ -164,9 +171,24 @@ final class Extensions extends AbstractExtension
         return implode(PHP_EOL, $parts);
     }
 
-    public function documentationLink(?string $url = ''): string
+    /**
+     * @param string|null $url the documentation page, e.g. "timesheet.html"
+     * @param string $medium the UI element which links to the documentation, used to compare the usage of the different help entry points
+     */
+    public function documentationLink(?string $url = '', string $medium = 'app'): string
     {
-        return Constants::HOMEPAGE . '/documentation/' . $url;
+        $url ??= '';
+        $anchor = '';
+
+        // the query string has to be added before the anchor, otherwise it becomes part of the fragment and is lost
+        if (($pos = strpos($url, '#')) !== false) {
+            $anchor = substr($url, $pos);
+            $url = substr($url, 0, $pos);
+        }
+
+        $query = '?utm_source=kimai&utm_medium=' . $medium;
+
+        return Constants::HOMEPAGE . '/documentation/' . $url . $query . $anchor;
     }
 
     public function replaceNewline($input, string $newline)

@@ -9,16 +9,17 @@
 
 namespace App\Tests;
 
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Yaml\Yaml;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class TranslationsTest extends TestCase
 {
     public function testForWrongFileExtension(): void
     {
         $files = glob(__DIR__ . '/../translations/*.*');
+        self::assertIsArray($files);
         foreach ($files as $file) {
             self::assertStringEndsWith('.xlf', $file);
         }
@@ -27,6 +28,7 @@ class TranslationsTest extends TestCase
     public function testForEmptyStrings(): void
     {
         $files = glob(__DIR__ . '/../translations/*.xlf');
+        self::assertIsArray($files);
         foreach ($files as $file) {
             $xml = simplexml_load_file($file);
 
@@ -50,6 +52,7 @@ class TranslationsTest extends TestCase
     public function testReplacerWereNotTranslated(): void
     {
         $englishFiles = glob(__DIR__ . '/../translations/*.en.xlf');
+        self::assertIsArray($englishFiles);
         foreach ($englishFiles as $englishFile) {
             $english = simplexml_load_file($englishFile);
             $trans = [];
@@ -70,6 +73,7 @@ class TranslationsTest extends TestCase
 
             $expectedCounter = \count($trans);
             $files = glob(__DIR__ . '/../translations/' . str_replace('.en.xlf', '', basename($englishFile)) . '*.xlf');
+            self::assertIsArray($files);
             foreach ($files as $file) {
                 if ($englishFile === $file) {
                     continue;
@@ -98,5 +102,34 @@ class TranslationsTest extends TestCase
                 self::assertEquals($expectedCounter, $counter, \sprintf('Missing replacer in "%s", did not find translation keys: %s', basename($file), implode(', ', array_keys($transLang))));
             }
         }
+    }
+
+    public function testEnabledLocalesAreLimitedToTranslatedLocales(): void
+    {
+        $translationConfig = Yaml::parseFile(__DIR__ . '/../config/packages/translation.yaml');
+        self::assertIsArray($translationConfig);
+        $framework = $translationConfig['framework'];
+        self::assertIsArray($framework);
+        self::assertSame('%kimai_translated_locales%', $framework['enabled_locales']);
+
+        $services = Yaml::parseFile(__DIR__ . '/../config/services.yaml');
+        self::assertIsArray($services);
+        $parameters = $services['parameters'];
+        self::assertIsArray($parameters);
+        $enabledLocales = $parameters['kimai_translated_locales'];
+        self::assertIsArray($enabledLocales);
+
+        $localeSettings = include __DIR__ . '/../config/locales.php';
+        self::assertIsArray($localeSettings);
+
+        $translatedLocales = [];
+        foreach ($localeSettings as $locale => $settings) {
+            self::assertIsArray($settings);
+            if ($settings['translation'] === true) {
+                $translatedLocales[] = $locale;
+            }
+        }
+
+        self::assertSame($translatedLocales, $enabledLocales);
     }
 }

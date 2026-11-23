@@ -16,12 +16,14 @@ use App\Form\Type\CustomerType;
 use App\Form\Type\ProjectType;
 use App\Repository\Query\TeamQuery;
 use App\Repository\TeamRepository;
+use App\User\TeamService;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -29,19 +31,16 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('view_team')]
 final class TeamController extends AbstractController
 {
-    public function __construct(private TeamRepository $repository)
+    public function __construct(
+        private readonly TeamRepository $repository,
+        private readonly TeamService $teamService,
+    )
     {
     }
 
-    /**
-     * @param TeamRepository $repository
-     * @param Request $request
-     * @param int $page
-     * @return Response
-     */
     #[Route(path: '/', defaults: ['page' => 1], name: 'admin_team', methods: ['GET'])]
     #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_team_paginated', methods: ['GET'])]
-    public function listTeams(TeamRepository $repository, Request $request, $page): Response
+    public function listTeams(int $page, TeamRepository $repository, Request $request): Response
     {
         $query = new TeamQuery();
         $query->setPage($page);
@@ -62,7 +61,7 @@ final class TeamController extends AbstractController
 
         $table->addColumn('name', ['class' => 'alwaysVisible']);
         $table->addColumn('avatar', ['title' => 'team.member', 'translation_domain' => 'teams', 'class' => 'd-none d-sm-table-cell avatars avatar-list avatar-list-stacked', 'orderBy' => false]);
-        $table->addColumn('amount', ['title' => 'amount', 'class' => 'd-sm-none text-center', 'orderBy' => false]);
+        $table->addColumn('amount', ['title' => 'amount', 'class' => 'd-sm-none text-center w-min', 'orderBy' => false]);
         $table->addColumn('actions', ['class' => 'actions']);
 
         $page = new PageSetup('teams');
@@ -76,15 +75,13 @@ final class TeamController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
     #[Route(path: '/create', name: 'admin_team_create', methods: ['GET', 'POST'])]
     #[IsGranted('create_team')]
     public function createTeam(Request $request): Response
     {
-        return $this->renderEditScreen(new Team(''), $request, true);
+        $team = $this->teamService->createNewTeam('');
+
+        return $this->renderEditScreen($team, $request, true);
     }
 
     #[Route(path: '/{id}/duplicate', name: 'team_duplicate', methods: ['GET', 'POST'])]
@@ -93,6 +90,10 @@ final class TeamController extends AbstractController
     public function duplicateTeam(Team $team, Request $request): Response
     {
         $newTeam = clone $team;
+
+        if ($team->getName() === null) {
+            throw new BadRequestHttpException('Team with empty name cannot be duplicated');
+        }
 
         $i = 1;
         do {
@@ -123,7 +124,7 @@ final class TeamController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->repository->saveTeam($team);
+                $this->teamService->saveTeam($team);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
@@ -162,11 +163,16 @@ final class TeamController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->repository->saveTeam($team);
+                $this->teamService->saveTeam($team);
                 $this->flashSuccess('action.update.success');
 
                 if ($create) {
-                    return $this->redirectToRouteAfterCreate('admin_team_edit', ['id' => $team->getId()]);
+                    // a really weird combination of permissions makes this possible
+                    if ($this->isGranted('edit', $team)) {
+                        return $this->redirectToRouteAfterCreate('admin_team_edit', ['id' => $team->getId()]);
+                    }
+
+                    return $this->redirectToRoute('admin_team');
                 }
 
                 return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
@@ -181,7 +187,6 @@ final class TeamController extends AbstractController
                     'label' => false,
                     'multiple' => true,
                     'expanded' => true,
-                    'query_builder_for_user' => false,
                 ]);
 
             $projectForm = $this->createFormWithName('team_project_form', FormType::class, $team)
@@ -189,7 +194,6 @@ final class TeamController extends AbstractController
                     'label' => false,
                     'multiple' => true,
                     'expanded' => true,
-                    'query_builder_for_user' => false,
                 ]);
         }
 

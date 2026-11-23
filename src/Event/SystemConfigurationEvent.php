@@ -13,7 +13,7 @@ use App\Form\Model\SystemConfiguration;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
- * This event should be used, if system configurations should be changed/added dynamically.
+ * Adjust system configurations dynamically.
  */
 final class SystemConfigurationEvent extends Event
 {
@@ -32,10 +32,6 @@ final class SystemConfigurationEvent extends Event
         return $this->configurations;
     }
 
-    /**
-     * @param SystemConfiguration $configuration
-     * @return SystemConfigurationEvent
-     */
     public function addConfiguration(SystemConfiguration $configuration): SystemConfigurationEvent
     {
         $this->configurations[] = $configuration;

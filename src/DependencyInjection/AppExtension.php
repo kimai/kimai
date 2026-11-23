@@ -99,7 +99,7 @@ final class AppExtension extends Extension
             foreach (range(0, $iterator->getDepth()) as $depth) {
                 $keys[] = $iterator->getSubIterator($depth)->key();
             }
-            $newConfig[implode('.', $keys)] = $value;
+            $newConfig[implode('.', $keys)] = $value; // @phpstan-ignore argument.type
         }
 
         $container->setParameter('kimai.config', $newConfig);
@@ -108,8 +108,10 @@ final class AppExtension extends Extension
     private function setLanguageFormats(ContainerBuilder $container): void
     {
         $locales = $container->getParameter('kimai_locales');
-        // @deprecated since 2.21.0
-        $container->setParameter('app_locales', implode('|', $locales));
+        // the locale in the URL is the one used for translating the UI, so only translated locales are allowed.
+        // the locales for formatting dates, times and money are configured in the user profile.
+        // @deprecated since 2.21.0 - only kept for (plugin) route requirements
+        $container->setParameter('app_locales', implode('|', $container->getParameter('kimai_translated_locales')));
 
         $directory = $container->getParameter('kernel.project_dir');
         $settings = include $directory . DIRECTORY_SEPARATOR . 'config/locales.php';
@@ -146,7 +148,7 @@ final class AppExtension extends Extension
         $names = [];
         // this does not include all possible permission, as plugins do not register them and Kimai defines a couple of
         // permissions as well, which are off by default for all roles
-        foreach ($config['sets'] as $set => $permNames) {
+        foreach ($config['sets'] as $permNames) {
             foreach ($permNames as $name) {
                 $names[$name] = true;
             }
@@ -177,7 +179,7 @@ final class AppExtension extends Extension
         }
 
         // make sure to apply all other permissions that might have been registered through plugins
-        foreach ($config['roles'] as $role => $perms) {
+        foreach ($config['roles'] as $perms) {
             $names = array_merge($names, $perms);
         }
 

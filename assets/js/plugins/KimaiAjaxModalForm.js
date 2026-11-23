@@ -69,7 +69,7 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
 
     _getModal()
     {
-        return Modal.getOrCreateInstance(this._getModalElement())
+        return Modal.getOrCreateInstance(this._getModalElement());
     }
 
     /**
@@ -217,8 +217,6 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
                 const eventName = form.dataset['formEvent'];
                 /** @type {KimaiEvent} alert */
                 const events = this.getContainer().getPlugin('event');
-                /** @type {KimaiAlert} alert */
-                const alert = this.getContainer().getPlugin('alert');
 
                 event.preventDefault();
                 event.stopPropagation();
@@ -257,17 +255,12 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
                             if (hasFieldError || hasFormError || hasFlashError) {
                                 this._openFormInModal(html);
                             } else {
-                                events.trigger(eventName);
-
-                                // try to find form defined message first, but
-                                let msg = form.dataset['msgSuccess'];
-                                // if that is not available: use a generic fallback message
-                                if (msg === null || msg === undefined || msg === '') {
-                                    msg = 'action.update.success';
+                                if (eventName !== undefined) {
+                                    events.trigger(eventName);
                                 }
+
                                 this._isDirty = false;
                                 this._getModal().hide();
-                                alert.success(msg);
                             }
                         });
                     })
@@ -277,6 +270,8 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
                             message = 'action.update.error';
                         }
 
+                        /** @type {KimaiAlert} alert */
+                        const alert = this.getContainer().getPlugin('alert');
                         alert.error(message, error.message);
 
                         // this is useful for changing form fields and retrying to save (and in development to test form changes)
