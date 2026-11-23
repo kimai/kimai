@@ -21,10 +21,23 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\NullLogger;
 
 #[CoversClass(LdapManager::class)]
 class LdapManagerTest extends TestCase
 {
+    /**
+     * A new user receives a random password (see User::setUnusablePassword()), which cannot be
+     * pre-calculated: verify it and copy it over to the expected user, so both can be compared.
+     */
+    protected function assertUnusablePassword(User $expected, User $user): void
+    {
+        self::assertNotEmpty($user->getPlainPassword());
+        self::assertEquals('', $user->getPassword());
+
+        $expected->setPlainPassword($user->getPlainPassword())->setPassword($user->getPassword());
+    }
+
     protected function getLdapManager(LdapDriver $driver, $roleConfig = null)
     {
         if (null === $roleConfig) {
@@ -61,7 +74,7 @@ class LdapManagerTest extends TestCase
             'ROLE_SUPER_ADMIN',
         ];
 
-        return new LdapManager($driver, $config, (new RoleServiceFactory($this))->create($roles));
+        return new LdapManager($driver, $config, (new RoleServiceFactory($this))->create($roles), new NullLogger());
     }
 
     public function testFindUserByUsernameOnZeroResults(): void
@@ -322,8 +335,10 @@ class LdapManagerTest extends TestCase
         ]);
 
         $userOrig = clone $user;
+        $userOrig->setEmail('foobar')->setAuth(User::AUTH_LDAP);
         $sut->updateUser($user);
-        self::assertEquals($userOrig->setEmail('foobar')->setAuth(User::AUTH_LDAP), $user);
+        $this->assertUnusablePassword($userOrig, $user);
+        self::assertEquals($userOrig, $user);
         self::assertEquals($user->getPreferenceValue('ldap_dn'), 'blub-updated');
     }
 
@@ -456,6 +471,7 @@ class LdapManagerTest extends TestCase
         $userOrig->setEmail('Karl-Heinz')->setRoles(['ROLE_TEAMLEAD', 'ROLE_ADMIN'])->setAuth(User::AUTH_LDAP);
 
         $sut->updateUser($user);
+        $this->assertUnusablePassword($userOrig, $user);
         self::assertEquals($userOrig, $user);
         self::assertEquals(['ROLE_TEAMLEAD', 'ROLE_ADMIN', 'ROLE_USER'], $user->getRoles());
     }
@@ -477,7 +493,7 @@ class LdapManagerTest extends TestCase
 
         $config = new LdapConfiguration($systemConfig);
 
-        $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]));
+        $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]), new NullLogger());
         $user = new User();
         $user->setEnabled(true);
         $sut->hydrateUser($user, ['dn' => 'blub', 'foo' => ['blub']]);
@@ -485,6 +501,9 @@ class LdapManagerTest extends TestCase
         self::assertEquals('blub', $user->getUserIdentifier());
         self::assertEquals('blub', $user->getUserIdentifier());
         self::assertEquals('blub', $user->getEmail());
+        // a new user needs a plain password to pass the validation in UserService
+        self::assertNotEmpty($user->getPlainPassword());
+        self::assertEquals('', $user->getPassword());
     }
 
     public function testEmptyHydrateThrowsException(): void
@@ -507,7 +526,7 @@ class LdapManagerTest extends TestCase
 
         $config = new LdapConfiguration($systemConfig);
 
-        $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]));
+        $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]), new NullLogger());
         $user = new User();
         $user->setEnabled(true);
         $sut->hydrateUser($user, ['dn' => 'blub']);
@@ -547,7 +566,7 @@ class LdapManagerTest extends TestCase
             'dn' => 'blub',
         ];
 
-        $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]));
+        $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]), new NullLogger());
         $user = new User();
         $user->setEnabled(true);
         $sut->hydrateUser($user, $ldapEntry);
@@ -559,6 +578,122 @@ class LdapManagerTest extends TestCase
         self::assertEquals(['ROLE_TEAMLEAD', 'ROLE_ADMIN', 'ROLE_USER'], $user->getRoles());
         self::assertEquals('https://www.example.com', $user->getAvatar());
         self::assertEquals('Karl-Heinz', $user->getEmail());
+    }
+
+    public function testHydrateIgnoresMappedPasswordAndAuth(): void
+    {
+        $ldapConfig = [
+            'connection' => [
+                'host' => '1.1.1.1'
+            ],
+            'user' => [
+                'usernameAttribute' => 'foo',
+                'attributes' => [
+                    ['ldap_attr' => 'uid', 'user_method' => 'setUserIdentifier'],
+                    // a misconfigured (or manipulated) mapping must not allow the LDAP
+                    // server to define the local password or the authentication type
+                    ['ldap_attr' => 'secret', 'user_method' => 'setPassword'],
+                    ['ldap_attr' => 'secret', 'user_method' => 'setPlainPassword'],
+                    ['ldap_attr' => 'kimai_auth', 'user_method' => 'setAuth'],
+                ]
+            ],
+            'role' => [],
+        ];
+        $systemConfig = SystemConfigurationFactory::create(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
+        $config = new LdapConfiguration($systemConfig);
+
+        $ldapEntry = [
+            'uid' => ['Karl-Heinz'],
+            'secret' => ['i-know-your-password'],
+            'kimai_auth' => [User::AUTH_INTERNAL],
+            'dn' => 'blub',
+        ];
+
+        $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]), new NullLogger());
+        $user = new User();
+        $user->setEnabled(true);
+        $sut->hydrateUser($user, $ldapEntry);
+
+        self::assertEquals('Karl-Heinz', $user->getUserIdentifier());
+        self::assertEquals('', $user->getPassword());
+        self::assertNotEquals('i-know-your-password', $user->getPlainPassword());
+        self::assertEquals(User::AUTH_LDAP, $user->getAuth());
+    }
+
+    public function testHydrateExistingLdapUserIgnoresMappedCredentials(): void
+    {
+        $ldapConfig = [
+            'connection' => [
+                'host' => '1.1.1.1'
+            ],
+            'user' => [
+                'usernameAttribute' => 'foo',
+                'attributes' => [
+                    ['ldap_attr' => 'uid', 'user_method' => 'setUserIdentifier'],
+                    // the auth does not change for existing LDAP users, so the password is not reset:
+                    // the mapping must be ignored, independent of the case of the method name
+                    ['ldap_attr' => 'kimai_auth', 'user_method' => 'setAuth'],
+                    ['ldap_attr' => 'secret', 'user_method' => 'SETPLAINPASSWORD'],
+                    ['ldap_attr' => 'secret', 'user_method' => 'setPassword'],
+                    ['ldap_attr' => 'secret', 'user_method' => 'setApiToken'],
+                    ['ldap_attr' => 'secret', 'user_method' => 'setTotpSecret'],
+                    ['ldap_attr' => 'secret', 'user_method' => 'switchToInternalAuth'],
+                ]
+            ],
+            'role' => [],
+        ];
+        $systemConfig = SystemConfigurationFactory::create(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
+        $config = new LdapConfiguration($systemConfig);
+
+        $ldapEntry = [
+            'uid' => ['Karl-Heinz'],
+            'secret' => ['i-know-your-password'],
+            'kimai_auth' => [User::AUTH_LDAP],
+            'dn' => 'blub',
+        ];
+
+        $user = new User();
+        $user->setAuth(User::AUTH_LDAP);
+        $user->setPassword('existing-hash');
+        $user->eraseCredentials();
+
+        $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]), new NullLogger());
+        $sut->hydrateUser($user, $ldapEntry);
+
+        self::assertEquals('Karl-Heinz', $user->getUserIdentifier());
+        self::assertEquals(User::AUTH_LDAP, $user->getAuth());
+        self::assertEquals('existing-hash', $user->getPassword());
+        self::assertNull($user->getPlainPassword());
+        self::assertNull($user->getApiToken()); // @phpstan-ignore method.deprecated
+        self::assertNull($user->getTotpSecret());
+    }
+
+    public function testHydrateInternalUserInvalidatesPassword(): void
+    {
+        $ldapConfig = [
+            'connection' => [
+                'host' => '1.1.1.1'
+            ],
+            'user' => [
+                'usernameAttribute' => 'uid',
+                'attributes' => [],
+            ],
+            'role' => [],
+        ];
+        $systemConfig = SystemConfigurationFactory::create(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
+        $config = new LdapConfiguration($systemConfig);
+
+        // an existing internal user, which is upgraded to LDAP on the first successful bind()
+        $user = new User();
+        $user->setUserIdentifier('Karl-Heinz');
+        $user->setPassword('hash-of-the-internal-password');
+
+        $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]), new NullLogger());
+        $sut->hydrateUser($user, ['uid' => ['Karl-Heinz'], 'dn' => 'blub']);
+
+        self::assertTrue($user->isLdapUser());
+        self::assertEquals('', $user->getPassword());
+        self::assertNotEmpty($user->getPlainPassword());
     }
 
     public function testThrowsOnMissingMethod(): void
@@ -584,7 +719,7 @@ class LdapManagerTest extends TestCase
             'foo' => ['count' => 1, 0 => 'bar'],
         ];
 
-        $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]));
+        $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]), new NullLogger());
         $user = new User();
         $user->setEnabled(true);
         $sut->hydrateUser($user, $ldapEntry);
@@ -624,7 +759,7 @@ class LdapManagerTest extends TestCase
             'dn' => 'blub',
         ];
 
-        $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]));
+        $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]), new NullLogger());
         $user = new User();
         $user->setEnabled(true);
         $sut->hydrateUser($user, $ldapEntry);
@@ -670,7 +805,7 @@ class LdapManagerTest extends TestCase
             'dn' => 'blub',
         ];
 
-        $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]));
+        $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]), new NullLogger());
 
         $user = new User();
         $user->setPassword('foobar');
@@ -743,7 +878,7 @@ class LdapManagerTest extends TestCase
             'ROLE_SUPER_ADMIN',
         ];
 
-        $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create($roles));
+        $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create($roles), new NullLogger());
 
         $user = new User();
         $sut->hydrateRoles($user, $ldapGroups);

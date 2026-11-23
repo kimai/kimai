@@ -87,9 +87,6 @@ class LdapCredentialsSubscriberTest extends TestCase
 
         $sut = $this->createSut($this->createLdapManager(), $userService);
         $sut->onCheckPassport($this->createEvent($user));
-
-        // a plain password is required by the validator, when creating a new user
-        self::assertNotEmpty($user->getPlainPassword());
     }
 
     public function testExistingUserIsSavedWithoutDefaults(): void
@@ -98,7 +95,6 @@ class LdapCredentialsSubscriberTest extends TestCase
         $user->method('getId')->willReturn(13);
         $user->method('getUserIdentifier')->willReturn('foobar');
         $user->method('isLdapUser')->willReturn(true);
-        $user->expects($this->never())->method('setPlainPassword');
 
         $userService = $this->createUserService();
         $userService->expects($this->never())->method('prepareNewUser');

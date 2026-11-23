@@ -86,8 +86,6 @@ final class LdapCredentialsSubscriber implements EventSubscriberInterface
             // the user provider only creates an empty account (it runs before this bind() and must not
             // trigger any side effects), so the system defaults are applied now that the login succeeded
             $this->userService->prepareNewUser($user);
-            // set a plain password to satisfy the validator, it is never used to authenticate LDAP users
-            $user->setPlainPassword(substr(bin2hex(random_bytes(100)), 0, 50));
         }
 
         // the LDAP attributes and roles are applied afterwards, they win over the system defaults
