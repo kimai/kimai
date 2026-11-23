@@ -172,7 +172,7 @@
       </trans-unit>
       <trans-unit id="udkGKEU" resname="authentication">
         <source>authentication</source>
-        <target>验证</target>
+        <target state="translated">认证</target>
       </trans-unit>
       <trans-unit id="EFY6GmX" resname="theme.color_choices">
         <source>theme.color_choices</source>
