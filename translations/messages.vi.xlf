@@ -1870,6 +1870,14 @@
         <source>status.todo</source>
         <target state="translated">Cần làm</target>
       </trans-unit>
+      <trans-unit id="fxkWjGQ" resname="password_current">
+        <source>password_current</source>
+        <target state="translated">Mật khẩu hiện tại</target>
+      </trans-unit>
+      <trans-unit id="8MwThZv" resname="export.too_many_entries">
+        <source>export.too_many_entries</source>
+        <target state="translated">Kết quả tìm kiếm theo yêu cầu là %count% kết quả. Do mỗi lần chỉ có thể xuất tối đa %limit% mục, nên cần thu hẹp phạm vi tìm kiếm hơn nữa.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
