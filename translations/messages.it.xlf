@@ -2130,6 +2130,10 @@
         <source>help.project_locked_until</source>
         <target state="final">Gli orari fino a questa data (inclusa) non possono essere né creati né modificati.</target>
       </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication" approved="yes">
+        <source>authentication</source>
+        <target state="final">Autenticazione</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
