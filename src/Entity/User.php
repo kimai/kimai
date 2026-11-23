@@ -69,6 +69,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public const AUTH_INTERNAL = 'kimai';
     public const AUTH_LDAP = 'ldap';
     public const AUTH_SAML = 'saml';
+    public const AUTH_OIDC = 'oidc';
 
     public const WIZARDS = ['intro', 'profile'];
 
@@ -897,6 +898,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function isSamlUser(): bool
     {
         return $this->auth === self::AUTH_SAML;
+    }
+
+    public function isOidcUser(): bool
+    {
+        return $this->auth === self::AUTH_OIDC;
     }
 
     public function isLdapUser(): bool

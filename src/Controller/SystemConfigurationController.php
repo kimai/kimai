@@ -307,7 +307,7 @@ final class SystemConfigurationController extends AbstractController
             $authentication->getConfigurationByName('user.registration')?->setEnabled(false);
         }
 
-        if (!$this->systemConfiguration->isSamlActive()) {
+        if (!$this->systemConfiguration->isSamlActive() && !$this->systemConfiguration->isOidcActive()) {
             $authentication->getConfigurationByName('user.login')?->setEnabled(false);
         }
 
