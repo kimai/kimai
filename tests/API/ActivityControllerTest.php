@@ -20,6 +20,7 @@ use App\Entity\User;
 use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\VisibilityInterface;
+use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
 use App\Tests\Mocks\ActivityTestUrlMetaFieldSubscriberMock;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -280,6 +281,80 @@ class ActivityControllerTest extends APIControllerBaseTestCase
         self::assertApiResponseTypeStructure('ActivityCollection', $result[4], self::BUDGET_FIELDS);
         self::assertArrayHasKey('project', $result[4]);
         self::assertEquals($imports[0]->getId(), $result[4]['project']);
+    }
+
+    public function testGetCollectionWithoutPaginationReturnsAll(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $fixture = new ActivityFixtures(59);
+        $fixture->setIsGlobal(true);
+        $fixture->setIsVisible(true);
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/api/activities', 'GET', ['globals' => '1']);
+        $response = $client->getResponse();
+        self::assertFalse($response->headers->has('X-Page'));
+
+        $content = $response->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertCount(60, $result);
+    }
+
+    public function testGetCollectionWithPagination(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $fixture = new ActivityFixtures(11);
+        $fixture->setIsGlobal(true);
+        $fixture->setIsVisible(true);
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/api/activities', 'GET', ['globals' => '1', 'orderBy' => 'id']);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $all = json_decode($content, true);
+        self::assertIsArray($all);
+        self::assertCount(12, $all);
+
+        $this->assertAccessIsGranted($client, '/api/activities', 'GET', ['globals' => '1', 'orderBy' => 'id', 'page' => 2, 'size' => 5]);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        $this->assertPagination($client->getResponse(), 2, 5, 3, 12);
+        self::assertEquals(array_column(\array_slice($all, 5, 5), 'id'), array_column($result, 'id'));
+        self::assertIsArray($result[0]);
+        self::assertApiResponseTypeStructure('ActivityCollection', $result[0], self::BUDGET_FIELDS);
+    }
+
+    public function testGetCollectionWithSizeOnly(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $fixture = new ActivityFixtures(11);
+        $fixture->setIsGlobal(true);
+        $fixture->setIsVisible(true);
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/api/activities', 'GET', ['globals' => '1', 'size' => 5]);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertCount(5, $result);
+        $this->assertPagination($client->getResponse(), 1, 5, 3, 12);
+    }
+
+    public function testGetCollectionFailsWith404OnOutOfRangePage(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        // the last page exists, the one after it does not
+        $this->assertAccessIsGranted($client, '/api/activities', 'GET', ['size' => 2]);
+        $lastPage = (int) $client->getResponse()->headers->get('X-Total-Pages');
+        self::assertGreaterThan(0, $lastPage);
+        $this->assertAccessIsGranted($client, '/api/activities', 'GET', ['page' => $lastPage, 'size' => 2]);
+        $this->request($client, '/api/activities', 'GET', ['page' => $lastPage + 1, 'size' => 2]);
+        $this->assertApiException($client->getResponse(), ['code' => Response::HTTP_NOT_FOUND, 'message' => 'Not Found']);
     }
 
     public function testGetEntityIsSecure(): void

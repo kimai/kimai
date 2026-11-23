@@ -85,6 +85,8 @@ final class ActivityController extends BaseApiController
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name|project', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name, project (default: name)')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term', nullable: true)]
+    #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display, renders a 404 if not found. Without page and size, all activities are returned (default: 1)')]
+    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page. Without page and size, all activities are returned (default: 50, max: 500)')]
     public function cgetAction(ParamFetcherInterface $paramFetcher, ProjectRepository $projectRepository): Response
     {
         $query = new ActivityQuery();
@@ -120,7 +122,11 @@ final class ActivityController extends BaseApiController
             $query->setSearchTerm(new SearchTerm($term));
         }
 
-        $data = $this->repository->getActivitiesForQuery($query);
+        if ($this->isPaginationRequested($paramFetcher)) {
+            $data = $this->repository->getPagerfantaForQuery($query);
+        } else {
+            $data = $this->repository->getActivitiesForQuery($query);
+        }
 
         return $this->renderBudgetAwareView(new View($data, Response::HTTP_OK), self::GROUPS_COLLECTION);
     }
