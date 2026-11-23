@@ -110,4 +110,14 @@ abstract class BaseApiController extends AbstractController
 
         return $query;
     }
+
+    /**
+     * For collections that return all entries unless the client asks for a page.
+     */
+    protected function isPaginationRequested(ParamFetcherInterface $paramFetcher): bool
+    {
+        $all = $paramFetcher->all();
+
+        return ($all['page'] ?? null) !== null || ($all['size'] ?? null) !== null;
+    }
 }
