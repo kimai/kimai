@@ -21,6 +21,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 #[CoversClass(UserVoter::class)]
 class UserVoterTest extends AbstractVoterTestCase
 {
+    private const HIERARCHY_GUARDED_ATTRIBUTES = ['roles', 'password', 'api-token', 'edit'];
+
     #[DataProvider('getTestData')]
     public function testVote(User $user, $subject, $attribute, $result): void
     {
@@ -228,42 +230,53 @@ class UserVoterTest extends AbstractVoterTestCase
     }
 
     /**
-     * A user with the "roles_other_profile" permission must not be able to edit the roles of a
-     * subject who holds a role the user cannot assign themselves (privilege escalation guard).
+     * A user with the "<attribute>_other_profile" permission must not be able to manage the roles, password,
+     * API token or profile of a subject who holds a role the user cannot assign themselves.
+     * Otherwise a lower-privileged user could strip a higher role from the subject or take over its account
+     * (directly via password / API token, or indirectly by changing the email and using "password forgotten").
      *
      * @param string|null $actorRole the role of the acting user
      * @param string|null $subjectRole the role held by the edited subject
-     * @param int $result expected voter result for the "roles" attribute
+     * @param int $result expected voter result for the guarded attributes
      */
-    #[DataProvider('getRolesManagementTestData')]
-    public function testRolesManagementRespectsRoleHierarchy(?string $actorRole, ?string $subjectRole, int $result): void
+    #[DataProvider('getProfileManagementTestData')]
+    public function testProfileManagementRespectsRoleHierarchy(?string $actorRole, ?string $subjectRole, int $result): void
     {
         $actor = self::getUser(60, $actorRole);
         $actor->setEnabled(true);
-        // grant "see all data" so RolePermissionManager::checkUserAccess() passes and the new
+        // grant "see all data" so RolePermissionManager::checkUserAccess() passes and the
         // hierarchy guard is the only thing that can still deny access
         $actor->initCanSeeAllData(true);
 
         $subject = self::getUser(61, $subjectRole);
         $subject->setEnabled(true);
 
-        $permissions = [
-            'ROLE_TEAMLEAD' => ['roles_other_profile', 'edit_other_profile'],
-            'ROLE_ADMIN' => ['roles_other_profile', 'edit_other_profile'],
-            'ROLE_SUPER_ADMIN' => ['roles_other_profile', 'edit_other_profile'],
-        ];
+        $permissions = [];
+        foreach ([User::ROLE_USER, User::ROLE_TEAMLEAD, User::ROLE_ADMIN, User::ROLE_SUPER_ADMIN] as $role) {
+            $permissions[$role] = [
+                'roles_other_profile',
+                'password_other_profile',
+                'api-token_other_profile',
+                'edit_other_profile',
+                'view_other_profile',
+                'preferences_other_profile',
+            ];
+        }
         $voter = new UserVoter($this->getRolePermissionManager($permissions, true));
 
         $token = new UsernamePasswordToken($actor, 'bar', $actor->getRoles());
 
-        self::assertEquals($result, $voter->vote($token, $subject, ['roles']));
+        foreach (self::HIERARCHY_GUARDED_ATTRIBUTES as $attribute) {
+            self::assertEquals($result, $voter->vote($token, $subject, [$attribute]), 'Attribute: ' . $attribute);
+        }
 
-        // the "edit" attribute has no hierarchy guard, so it must stay granted in every case,
-        // proving the denial above is specific to role management
-        self::assertEquals(VoterInterface::ACCESS_GRANTED, $voter->vote($token, $subject, ['edit']));
+        // attributes without hierarchy guard must stay granted in every case,
+        // proving the denial above is specific to the guarded attributes
+        self::assertEquals(VoterInterface::ACCESS_GRANTED, $voter->vote($token, $subject, ['view']));
+        self::assertEquals(VoterInterface::ACCESS_GRANTED, $voter->vote($token, $subject, ['preferences']));
     }
 
-    public static function getRolesManagementTestData(): \Generator
+    public static function getProfileManagementTestData(): \Generator
     {
         $granted = VoterInterface::ACCESS_GRANTED;
         $denied = VoterInterface::ACCESS_DENIED;
@@ -285,6 +298,66 @@ class UserVoterTest extends AbstractVoterTestCase
         yield [User::ROLE_TEAMLEAD, User::ROLE_ADMIN, $denied];
         yield [User::ROLE_TEAMLEAD, User::ROLE_TEAMLEAD, $granted];
         yield [User::ROLE_TEAMLEAD, User::ROLE_USER, $granted];
+
+        // a user may only manage other users
+        yield [User::ROLE_USER, User::ROLE_SUPER_ADMIN, $denied];
+        yield [User::ROLE_USER, User::ROLE_ADMIN, $denied];
+        yield [User::ROLE_USER, User::ROLE_TEAMLEAD, $denied];
+        yield [User::ROLE_USER, User::ROLE_USER, $granted];
+    }
+
+    /**
+     * The hierarchy guard must never lock users out of their own profile.
+     */
+    #[DataProvider('getOwnProfileRoleTestData')]
+    public function testOwnProfileIsNotAffectedByRoleHierarchy(string $role): void
+    {
+        $user = self::getUser(90, $role);
+        $user->setEnabled(true);
+
+        $permissions = [
+            $role => ['roles_own_profile', 'password_own_profile', 'api-token_own_profile', 'edit_own_profile'],
+        ];
+        $voter = new UserVoter($this->getRolePermissionManager($permissions, true));
+
+        $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
+
+        foreach (self::HIERARCHY_GUARDED_ATTRIBUTES as $attribute) {
+            self::assertEquals(VoterInterface::ACCESS_GRANTED, $voter->vote($token, $user, [$attribute]), 'Attribute: ' . $attribute);
+        }
+    }
+
+    public static function getOwnProfileRoleTestData(): \Generator
+    {
+        yield [User::ROLE_USER];
+        yield [User::ROLE_TEAMLEAD];
+        yield [User::ROLE_ADMIN];
+        yield [User::ROLE_SUPER_ADMIN];
+    }
+
+    /**
+     * A subject holding multiple roles is protected by its highest role.
+     */
+    public function testProfileManagementDeniedForSubjectWithAdditionalSuperAdminRole(): void
+    {
+        $actor = self::getUser(80, User::ROLE_ADMIN);
+        $actor->setEnabled(true);
+        $actor->initCanSeeAllData(true);
+
+        $subject = self::getUser(81, User::ROLE_ADMIN);
+        $subject->addRole(User::ROLE_SUPER_ADMIN);
+        $subject->setEnabled(true);
+
+        $permissions = [
+            User::ROLE_ADMIN => ['roles_other_profile', 'password_other_profile', 'api-token_other_profile', 'edit_other_profile'],
+        ];
+        $voter = new UserVoter($this->getRolePermissionManager($permissions, true));
+
+        $token = new UsernamePasswordToken($actor, 'bar', $actor->getRoles());
+
+        foreach (self::HIERARCHY_GUARDED_ATTRIBUTES as $attribute) {
+            self::assertEquals(VoterInterface::ACCESS_DENIED, $voter->vote($token, $subject, [$attribute]), 'Attribute: ' . $attribute);
+        }
     }
 
     /**
