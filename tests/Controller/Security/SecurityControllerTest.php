@@ -168,6 +168,10 @@ class SecurityControllerTest extends AbstractControllerBaseTestCase
      */
     public function testLoginCheckIsReachableWithLdap(): void
     {
+        if (!class_exists('Laminas\Ldap\Ldap')) {
+            $this->markTestSkipped('Laminas LDAP is not installed');
+        }
+
         $client = self::createClient();
         $this->setSystemConfiguration('saml.activate', true);
         $this->setSystemConfiguration('user.login', false);

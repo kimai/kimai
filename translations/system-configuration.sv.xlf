@@ -166,10 +166,6 @@
         <source>rounding</source>
         <target>Avrundning av tid</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target>Budgetår</target>
-      </trans-unit>
       <trans-unit id="en0.Ahu" resname="theme.branding.company">
         <source>theme.branding.company</source>
         <target>Företagsnamn</target>

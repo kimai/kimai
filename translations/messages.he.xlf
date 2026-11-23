@@ -926,22 +926,6 @@
         <source>invoice.payment_date</source>
         <target>תאריך תשלום</target>
       </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>משתמשים פעילים בשנה הפיננסית הזאת</target>
-      </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
-        <source>stats.amountFinancialYear</source>
-        <target>הכנסות בשנה הפיננסית הזאת</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve" approved="yes">
-        <source>stats.durationFinancialYear</source>
-        <target state="final">שנה פיננסית</target>
-      </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
-        <source>stats.workingTimeFinancialYear</source>
-        <target>שנה פיננסית</target>
-      </trans-unit>
       <trans-unit id="qX_CKtU" resname="tax_rate">
         <source>tax_rate</source>
         <target>גובה המס</target>

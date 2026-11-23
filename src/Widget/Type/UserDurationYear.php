@@ -9,16 +9,14 @@
 
 namespace App\Widget\Type;
 
-use App\Configuration\SystemConfiguration;
 use App\Repository\TimesheetRepository;
 use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 
 final class UserDurationYear extends AbstractCounterYear
 {
-    public function __construct(private TimesheetRepository $repository, SystemConfiguration $systemConfiguration)
+    public function __construct(private readonly TimesheetRepository $repository)
     {
-        parent::__construct($systemConfiguration);
     }
 
     public function getId(): string
@@ -55,10 +53,5 @@ final class UserDurationYear extends AbstractCounterYear
                 'Failed loading widget data: ' . $ex->getMessage()
             );
         }
-    }
-
-    protected function getFinancialYearTitle(): string
-    {
-        return 'stats.userDurationYear';
     }
 }

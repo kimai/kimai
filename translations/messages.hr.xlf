@@ -638,10 +638,6 @@
         <source>stats.workingTimeYear</source>
         <target state="translated">Cijela %year%. godina</target>
       </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
-        <source>stats.workingTimeFinancialYear</source>
-        <target>Fiskalna godina</target>
-      </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
         <source>Working hours</source>
         <target>Radno vrijeme</target>
@@ -665,10 +661,6 @@
       <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
         <target state="translated">Ova godina</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="translated">Fiskalna godina</target>
       </trans-unit>
       <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
@@ -694,10 +686,6 @@
         <source>stats.amountYear</source>
         <target>Prihod ove godine</target>
       </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
-        <source>stats.amountFinancialYear</source>
-        <target>Prihod ove fiskalne godine</target>
-      </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal">
         <source>stats.amountTotal</source>
         <target>Prihod ukupno</target>
@@ -717,10 +705,6 @@
       <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
         <source>stats.activeUsersYear</source>
         <target>Aktivni korisnici ove godine</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>Aktivni korisnici ove fiskalne godine</target>
       </trans-unit>
       <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal" xml:space="preserve">
         <source>stats.activeUsersTotal</source>

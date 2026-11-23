@@ -42,10 +42,6 @@
         <source>daterangepicker.lastMonth</source>
         <target state="needs-translation">上个月</target>
       </trans-unit>
-      <trans-unit id="mgJ2Z7M" resname="daterangepicker.thisFinancialYear" xml:space="preserve">
-        <source>daterangepicker.thisFinancialYear</source>
-        <target state="needs-translation">本财政年度</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

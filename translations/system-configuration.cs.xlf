@@ -222,10 +222,6 @@
         <source>quick_entry.minimum_rows</source>
         <target state="translated">Minimální počet řádků</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target state="translated">Účetní rok</target>
-      </trans-unit>
       <trans-unit id="winWMI1" resname="calendar.title_pattern">
         <source>calendar.title_pattern</source>
         <target state="translated">Zobrazení názvů položek kalendáře</target>

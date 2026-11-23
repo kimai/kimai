@@ -19,7 +19,6 @@ use App\Form\Type\ActivityTypePatternType;
 use App\Form\Type\ArrayToCommaStringType;
 use App\Form\Type\CalendarTitlePatternType;
 use App\Form\Type\CustomerTypePatternType;
-use App\Form\Type\DatePickerType;
 use App\Form\Type\DateTimeTextType;
 use App\Form\Type\DayTimeType;
 use App\Form\Type\MinuteIncrementType;
@@ -654,11 +653,6 @@ final class SystemConfigurationController extends AbstractController
                         ->setLabel('currency')
                         ->setType(CurrencyType::class)
                         ->setOptions(['help' => 'Can be overwritten per customer']),
-                    (new Configuration('company.financial_year'))
-                        ->setTranslationDomain('system-configuration')
-                        ->setRequired(false)
-                        ->setType(DatePickerType::class)
-                        ->setOptions(['input' => 'string']),
                 ]),
         ];
     }

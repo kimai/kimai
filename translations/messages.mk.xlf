@@ -898,10 +898,6 @@
         <source>stats.workingTimeYear</source>
         <target state="translated">Цела година %year%</target>
       </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear" xml:space="preserve">
-        <source>stats.workingTimeFinancialYear</source>
-        <target state="translated">Финансиска година</target>
-      </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve" approved="no">
         <source>Working hours</source>
         <target state="translated">Работни часови</target>
@@ -925,10 +921,6 @@
       <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
         <target state="translated">Оваа година</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="translated">Финансиска година</target>
       </trans-unit>
       <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
@@ -974,10 +966,6 @@
         <source>stats.amountYear</source>
         <target state="translated">Приход оваа година</target>
       </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear" xml:space="preserve">
-        <source>stats.amountFinancialYear</source>
-        <target state="translated">Приход оваа финансиска година</target>
-      </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal" xml:space="preserve">
         <source>stats.amountTotal</source>
         <target state="translated">Вкупен приход</target>
@@ -1017,10 +1005,6 @@
       <trans-unit id="lGuZo7g" resname="stats.activeUsersYear" xml:space="preserve">
         <source>stats.activeUsersYear</source>
         <target state="translated">Активни корисници оваа година</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear" xml:space="preserve">
-        <source>stats.activeUsersFinancialYear</source>
-        <target state="translated">Активни корисници оваа финансиска година</target>
       </trans-unit>
       <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal" xml:space="preserve">
         <source>stats.activeUsersTotal</source>

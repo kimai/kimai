@@ -213,32 +213,19 @@ final class DateTimeFactory
         return $date->modify('last day of december 23:59:59');
     }
 
+    /**
+     * @deprecated will be removed in 3.0 - use createStartOfYear() instead
+     */
     public function createStartOfFinancialYear(?string $financialYear = null): DateTimeInterface
     {
-        $defaultDate = $this->createDateTime('01 january this year 00:00:00');
-
-        if (null === $financialYear) {
-            return $defaultDate;
-        }
-
-        $financialYear = $this->createDateTime($financialYear);
-        $financialYear = $financialYear->setDate((int) $defaultDate->format('Y'), (int) $financialYear->format('m'), (int) $financialYear->format('d'));
-        $financialYear = $financialYear->setTime(0, 0, 0);
-
-        $today = $this->createDateTime('00:00:00');
-
-        if ($financialYear > $today) {
-            $financialYear = $financialYear->modify('-1 year');
-        }
-
-        return $financialYear;
+        return $this->createStartOfYear($financialYear);
     }
 
+    /**
+     * @deprecated will be removed in 3.0 - use createEndOfYear() instead
+     */
     public function createEndOfFinancialYear(DateTimeInterface $financialYear): DateTimeInterface
     {
-        $yearEnd = DateTime::createFromInterface($financialYear);
-        $yearEnd = $yearEnd->modify('+1 year')->modify('-1 day')->setTime(23, 59, 59);
-
-        return $yearEnd;
+        return $this->createEndOfYear($financialYear);
     }
 }

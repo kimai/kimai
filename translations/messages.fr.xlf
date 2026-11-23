@@ -1002,22 +1002,6 @@
         <source>last_record_before</source>
         <target>Aucune réservation de temps depuis</target>
       </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>Utilisateurs actifs cette année fiscale</target>
-      </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
-        <source>stats.amountFinancialYear</source>
-        <target>Revenus pour cette année fiscale</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="translated">Année financière</target>
-      </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
-        <source>stats.workingTimeFinancialYear</source>
-        <target>Année fiscale</target>
-      </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">Un e-mail contenant un lien pour réinitialiser votre mot de passe vous a été envoyé. Remarque : vous ne pouvez demander un nouveau mot de passe qu'une fois toutes les %tokenLifetime% heures. Si vous ne recevez pas cet e-mail, veuillez vérifier votre dossier de courrier indésirable ou réessayer.</target>

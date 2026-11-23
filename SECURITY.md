@@ -1,7 +1,7 @@
 # Security Policy
 
-Please read out [Reporting security issues](https://www.kimai.org/documentation/bughunter.html) documentation. 
-It covers everything you need to know.
+Please read our "[Reporting security issues](https://www.kimai.org/documentation/bughunter.html)" documentation. 
+It covers everything you need to know to start hacking Kimai.
 
 ## Supported versions
 
@@ -57,7 +57,20 @@ responsibility for its content and is available for questions.
 Maintainer time is the scarcest resource in this project. A report that respects it,
 by being short, verified and honest about its impact, gets a faster and friendlier response.
 
-### Reply template for unreviewed reports
+## Reply templates
+
+### Duplicates
+```
+Thank you for your report, your hard work is appreciated!
+
+We had a look at your report and unfortunately, this has been reported before, meaning we will mark this report as duplicate.
+
+Don’t let that discourage you as you still get reputation points, and you are on the correct path of finding valid bugs.
+
+Happy hacking & keep up the good work.
+```
+
+### Unreviewed reports
 
 Maintainers can use this text when closing such a report:
 

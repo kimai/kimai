@@ -218,10 +218,6 @@
         <source>theme.color_choices</source>
         <target>Sta kleuren toe</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target>Financieel jaar</target>
-      </trans-unit>
       <trans-unit id="wrnXs_a" resname="timesheet.rules.lockdown_period_timezone">
         <source>timesheet.rules.lockdown_period_timezone</source>
         <target>Tijdzone (Indien leeg, wordt de tijdzone van de betreffende gebruiker gebruikt)</target>

@@ -226,10 +226,6 @@
         <source>quick_entry.minimum_rows</source>
         <target state="translated">Số hàng tối thiểu</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target state="translated">Năm tài chính</target>
-      </trans-unit>
       <trans-unit id="6CSB6iM" resname="first_weekday">
         <source>first_weekday</source>
         <target state="translated">Ngày đầu tiên của tuần</target>

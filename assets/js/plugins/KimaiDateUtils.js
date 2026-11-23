@@ -286,7 +286,7 @@ export default class KimaiDateUtils extends KimaiPlugin {
             luxonDuration = Duration.fromObject({hours: hours, minutes: minutes, seconds: seconds});
         } else if (duration.indexOf('.') !== -1 || duration.indexOf(',') !== -1) {
             duration = duration.replace(/,/, '.');
-            duration = (parseFloat(duration) * 3600).toString();
+            duration = Math.round(parseFloat(duration) * 3600).toString();
             luxonDuration = Duration.fromISO('PT' + duration + 'S');
         } else if (duration.indexOf('H') !== -1 || duration.indexOf('M') !== -1 || duration.indexOf('S') !== -1) {
             /* D for days does not work, because 'PT1H' but with days 'P1D' is used */
