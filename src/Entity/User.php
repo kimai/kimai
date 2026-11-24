@@ -68,6 +68,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public const AUTH_INTERNAL = 'kimai';
     public const AUTH_LDAP = 'ldap';
+    public const AUTH_OIDC = 'oidc';
     public const AUTH_SAML = 'saml';
     /**
      * Methods that must never be called by the attribute mapping of an external user source.
