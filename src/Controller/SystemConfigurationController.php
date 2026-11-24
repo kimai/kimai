@@ -654,6 +654,13 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(CurrencyType::class)
                         ->setOptions(['help' => 'Can be overwritten per customer']),
                 ]),
+            (new SystemConfigurationModel('export'))
+                ->setConfiguration([
+                    (new Configuration('export.show_default_templates'))
+                        ->setTranslationDomain('system-configuration')
+                        ->setRequired(false)
+                        ->setType(YesNoType::class),
+                ]),
         ];
     }
 }
