@@ -229,6 +229,137 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         self::assertNull($timesheet->getFixedRate());
     }
 
+    /**
+     * Submits the create form as if it had been opened 10 minutes ago, with the begin that was prefilled then.
+     *
+     * @param array<string, mixed> $values
+     */
+    private function submitCreateFormOpenedEarlier(HttpKernelBrowser $client, array $values = []): \DateTime
+    {
+        $this->request($client, '/timesheet/create');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        self::assertTrue($form->has('timesheet_edit_form[begin_prefilled]'));
+        $value = $form->getValues()['timesheet_edit_form[begin_prefilled]'];
+        self::assertIsString($value);
+        $prefilled = \DateTime::createFromFormat('Y-m-d H:i', $value);
+        self::assertInstanceOf(\DateTime::class, $prefilled);
+
+        $opened = (clone $prefilled)->modify('-10 minutes');
+        $client->submit($form, [
+            'timesheet_edit_form' => array_merge([
+                'begin_prefilled' => $opened->format('Y-m-d H:i'),
+                'begin_date' => $opened->format('m/d/Y'),
+                'begin_time' => $opened->format('h:i A'),
+                'end_time' => null,
+                'project' => 1,
+                'activity' => 1,
+            ], $values)
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+        $client->followRedirect();
+        $this->assertHasFlashSuccess($client);
+
+        return $opened;
+    }
+
+    private function getCreatedTimesheet(): Timesheet
+    {
+        /** @var Timesheet $timesheet */
+        $timesheet = $this->getEntityManager()->getRepository(Timesheet::class)->findAll()[0];
+
+        return $timesheet;
+    }
+
+    private function getCreatedBegin(Timesheet $timesheet): \DateTime
+    {
+        $begin = $timesheet->getBegin();
+        self::assertInstanceOf(\DateTime::class, $begin);
+
+        return $begin;
+    }
+
+    public function testCreateActionWithUnchangedPrefilledBeginStartsWhenSaved(): void
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $opened = $this->submitCreateFormOpenedEarlier($client);
+
+        $timesheet = $this->getCreatedTimesheet();
+        self::assertNull($timesheet->getEnd());
+        // the begin prepared for the save request, not the minute when the form was opened
+        $begin = $this->getCreatedBegin($timesheet);
+        self::assertNotEquals($opened->format('Y-m-d H:i'), $begin->format('Y-m-d H:i'));
+        self::assertLessThan(120, abs(time() - $begin->getTimestamp()));
+    }
+
+    public function testCreateActionWithChangedBeginKeepsTheBegin(): void
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $typed = new \DateTime('-20 minutes');
+        $this->submitCreateFormOpenedEarlier($client, [
+            'begin_date' => $typed->format('m/d/Y'),
+            'begin_time' => $typed->format('h:i A'),
+        ]);
+
+        $timesheet = $this->getCreatedTimesheet();
+        self::assertNull($timesheet->getEnd());
+        self::assertEquals($typed->format('Y-m-d H:i') . ':00', $this->getCreatedBegin($timesheet)->format('Y-m-d H:i:s'));
+    }
+
+    public function testCreateActionWithUnchangedPrefilledBeginAndDurationKeepsTheBegin(): void
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $opened = $this->submitCreateFormOpenedEarlier($client, ['duration' => '01:00']);
+
+        $timesheet = $this->getCreatedTimesheet();
+        self::assertInstanceOf(\DateTime::class, $timesheet->getEnd());
+        self::assertEquals($opened->format('Y-m-d H:i') . ':00', $this->getCreatedBegin($timesheet)->format('Y-m-d H:i:s'));
+        self::assertEquals(3600, $timesheet->getDuration());
+    }
+
+    public function testCreateActionWithBeginFromRequestHasNoPrefilledBegin(): void
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $this->request($client, '/timesheet/create?begin=2018-12-31');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        self::assertTrue($form->has('timesheet_edit_form[begin_prefilled]'));
+        $values = $form->getValues();
+        self::assertEquals('', $values['timesheet_edit_form[begin_prefilled]']);
+        self::assertEquals('12/31/2018', $values['timesheet_edit_form[begin_date]']);
+
+        $client->submit($form, [
+            'timesheet_edit_form' => [
+                'end_time' => null,
+                'project' => 1,
+                'activity' => 1,
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+
+        $timesheet = $this->getCreatedTimesheet();
+        self::assertEquals('2018-12-31', $this->getCreatedBegin($timesheet)->format('Y-m-d'));
+    }
+
+    public function testEditActionHasNoPrefilledBegin(): void
+    {
+        $client = $this->getClientForAuthenticatedUser();
+
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(1);
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
+        $timesheets = $this->importFixture($fixture);
+
+        $this->request($client, '/timesheet/' . $timesheets[0]->getId() . '/edit');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        self::assertFalse($form->has('timesheet_edit_form[begin_prefilled]'));
+    }
+
     #[DataProvider('getTestDataForDurationValues')]
     public function testCreateActionWithDurationValues($beginDate, $beginTime, $end, $duration, $expectedDuration, $expectedEnd): void
     {
