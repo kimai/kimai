@@ -22,6 +22,8 @@ use App\Entity\UserPreference;
 use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\VisibilityInterface;
+use App\Tests\DataFixtures\CustomerFixtures;
+use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\Mocks\ProjectTestMetaFieldSubscriberMock;
 use App\Tests\Mocks\ProjectTestUrlMetaFieldSubscriberMock;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -159,6 +161,137 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         self::assertEquals(1, \count($result));
         self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('ProjectCollection', $result[0], self::BUDGET_FIELDS);
+    }
+
+    public function testGetCollectionWithoutPaginationReturnsAll(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $fixture = new ProjectFixtures(60);
+        $fixture->setIsVisible(true);
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/api/projects');
+        $response = $client->getResponse();
+        self::assertFalse($response->headers->has('X-Page'));
+
+        $content = $response->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertCount(61, $result);
+    }
+
+    public function testGetCollectionWithPagination(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $fixture = new ProjectFixtures(11);
+        $fixture->setIsVisible(true);
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/api/projects', 'GET', ['orderBy' => 'id']);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $all = json_decode($content, true);
+        self::assertIsArray($all);
+        self::assertCount(12, $all);
+
+        $this->assertAccessIsGranted($client, '/api/projects', 'GET', ['orderBy' => 'id', 'page' => 2, 'size' => 5]);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        $this->assertPagination($client->getResponse(), 2, 5, 3, 12);
+        self::assertEquals(array_column(\array_slice($all, 5, 5), 'id'), array_column($result, 'id'));
+        self::assertIsArray($result[0]);
+        self::assertApiResponseTypeStructure('ProjectCollection', $result[0], self::BUDGET_FIELDS);
+    }
+
+    public function testGetCollectionWithSizeOnly(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $fixture = new ProjectFixtures(11);
+        $fixture->setIsVisible(true);
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/api/projects', 'GET', ['size' => 5]);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertCount(5, $result);
+        $this->assertPagination($client->getResponse(), 1, 5, 3, 12);
+    }
+
+    public function testGetCollectionFailsWith404OnOutOfRangePage(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        // the last page exists, the one after it does not
+        $this->assertAccessIsGranted($client, '/api/projects', 'GET', ['size' => 2]);
+        $lastPage = (int) $client->getResponse()->headers->get('X-Total-Pages');
+        self::assertGreaterThan(0, $lastPage);
+        $this->assertAccessIsGranted($client, '/api/projects', 'GET', ['page' => $lastPage, 'size' => 2]);
+        $this->request($client, '/api/projects', 'GET', ['page' => $lastPage + 1, 'size' => 2]);
+        $this->assertApiException($client->getResponse(), ['code' => Response::HTTP_NOT_FOUND, 'message' => 'Not Found']);
+    }
+
+    public function testGetCollectionSearchesTheCustomerName(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->importCustomerWithProjects('Searchable Corp', ['Website', 'Shop']);
+
+        // each word matches the customer name or a project field
+        self::assertEquals(['Shop', 'Website'], $this->getCollectionNames($client, '/api/projects', ['term' => 'searchable corp', 'ignoreDates' => 1, 'searchCustomer' => 1]));
+        self::assertEquals(['Shop'], $this->getCollectionNames($client, '/api/projects', ['term' => 'searchable shop', 'ignoreDates' => 1, 'searchCustomer' => 1]));
+        self::assertEquals([], $this->getCollectionNames($client, '/api/projects', ['term' => 'searchable corp', 'ignoreDates' => 1]));
+        self::assertEquals([], $this->getCollectionNames($client, '/api/projects', ['term' => 'searchable corp', 'ignoreDates' => 1, 'searchCustomer' => 0]));
+    }
+
+    public function testGetCollectionOrderedByCustomer(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->importCustomerWithProjects('Ordered B', ['Zulu', 'Alpha']);
+        $this->importCustomerWithProjects('Ordered A', ['Mike']);
+
+        self::assertEquals(['Mike', 'Alpha', 'Zulu'], $this->getCollectionNames($client, '/api/projects', ['term' => 'ordered', 'ignoreDates' => 1, 'orderBy' => 'customer', 'searchCustomer' => 1]));
+    }
+
+    public function testGetCollectionWithEqualNamesHasStablePages(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $fixture = new ProjectFixtures(6);
+        $fixture->setIsVisible(true);
+        $fixture->setCallback(function (Project $project): void {
+            $project->setName('Same name');
+        });
+        $projects = $this->importFixture($fixture);
+
+        $ids = [];
+        foreach ([1, 2, 3] as $page) {
+            $this->assertAccessIsGranted($client, '/api/projects', 'GET', ['term' => 'same name', 'ignoreDates' => 1, 'orderBy' => 'name', 'page' => $page, 'size' => 2]);
+            $ids = array_merge($ids, array_column($this->getJsonRows($client), 'id'));
+        }
+
+        self::assertEquals(array_map(fn (Project $project) => $project->getId(), $projects), $ids);
+    }
+
+    /**
+     * @param array<string> $projectNames
+     */
+    private function importCustomerWithProjects(string $customerName, array $projectNames): void
+    {
+        $customers = new CustomerFixtures(1);
+        $customers->setIsVisible(true);
+        $customers->setCallback(function (Customer $customer) use ($customerName): void {
+            $customer->setName($customerName);
+        });
+
+        $fixture = new ProjectFixtures(\count($projectNames));
+        $fixture->setIsVisible(true);
+        $fixture->setCustomers($this->importFixture($customers));
+        $fixture->setCallback(function (Project $project) use (&$projectNames): void {
+            $project->setName((string) array_shift($projectNames));
+        });
+        $this->importFixture($fixture);
     }
 
     /**

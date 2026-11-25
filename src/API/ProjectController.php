@@ -13,7 +13,6 @@ use App\API\Serializer\BudgetExclusionStrategy;
 use App\Entity\Project;
 use App\Entity\ProjectComment;
 use App\Entity\ProjectRate;
-use App\Entity\User;
 use App\Form\API\CommentApiForm;
 use App\Form\API\ProjectApiEditForm;
 use App\Form\API\ProjectRateApiForm;
@@ -109,24 +108,14 @@ final class ProjectController extends BaseApiController
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name|customer', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name, customer (default: name)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term', nullable: true)]
+    #[Rest\QueryParam(name: 'searchCustomer', requirements: '0|1', strict: true, nullable: true, description: 'If set, the search term also matches the customer name and orderBy=customer orders the projects of a customer by name. Allowed values: 0|1 (default: 0)')]
+    #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display, renders a 404 if not found. Without page and size, all projects are returned (default: 1)')]
+    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page. Without page and size, all projects are returned (default: 50, max: 500)')]
     public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository): Response
     {
-        /** @var User $user */
-        $user = $this->getUser();
-
         $query = new ProjectQuery();
         $query->loadTeams();
-        $query->setCurrentUser($user);
-
-        $order = $paramFetcher->get('order');
-        if (\is_string($order) && $order !== '') {
-            $query->setOrder($order);
-        }
-
-        $orderBy = $paramFetcher->get('orderBy');
-        if (\is_string($orderBy) && $orderBy !== '') {
-            $query->setOrderBy($orderBy);
-        }
+        $this->prepareQuery($query, $paramFetcher);
 
         /** @var array<int> $customers */
         $customers = $paramFetcher->get('customers');
@@ -177,13 +166,18 @@ final class ProjectController extends BaseApiController
             }
         }
 
+        $query->setSearchCustomer($paramFetcher->get('searchCustomer') === '1');
+
         $term = $paramFetcher->get('term');
         if (\is_string($term) && $term !== '') {
             $query->setSearchTerm(new SearchTerm($term));
         }
 
-        $query->setIsApiCall(true);
-        $data = $this->repository->getProjectsForQuery($query);
+        if ($this->isPaginationRequested($paramFetcher)) {
+            $data = $this->repository->getPagerfantaForQuery($query);
+        } else {
+            $data = $this->repository->getProjectsForQuery($query);
+        }
 
         return $this->renderBudgetAwareView(new View($data, Response::HTTP_OK), self::GROUPS_COLLECTION);
     }

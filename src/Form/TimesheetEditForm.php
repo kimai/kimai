@@ -129,7 +129,8 @@ class TimesheetEditForm extends AbstractType
         }
 
         // TODO pre-select if only one exists
-        $this->addProject($builder, $isNew, $project, $customer);
+        // too many projects to render all
+        $this->addProject($builder, $isNew, $project, $customer, ['lazy_load' => true]);
 
         // TODO make creation possible
         //$allowCreate = (bool) $this->systemConfiguration->find('activity.allow_inline_create');

@@ -19,6 +19,7 @@ use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Form\Type\TagsType;
 use App\Tests\DataFixtures\ActivityFixtures;
+use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\TagFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\TimesheetTestMetaFieldSubscriberMock;
@@ -193,13 +194,38 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         $this->assertRouteNotFound($client);
     }
 
+    public function testProjectSelectSearchesThroughTheApi(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        // the customer select needs more than one customer
+        $customers = new CustomerFixtures(1);
+        $customers->setIsVisible(true);
+        $customer = $this->importFixture($customers)[0];
+
+        // without dates the API uses today
+        $this->request($client, '/timesheet/create');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $select = $client->getCrawler()->filter('select#timesheet_edit_form_project');
+        self::assertEquals([''], $select->filter('option')->extract(['value']));
+        self::assertEquals('/api/projects?visible=1&orderBy=customer&searchCustomer=1', $select->attr('data-lazy-url'));
+        self::assertEquals('customer', $select->attr('data-lazy-parent'));
+        self::assertEquals('1', $select->attr('data-lazy-all-without-parent'));
+
+        $form = $this->getFormWithLazySelects($client, 'timesheet_edit_form');
+        $client->submit($form, ['timesheet_edit_form' => ['customer' => (string) $customer->getId(), 'project' => '']]);
+        self::assertFalse($client->getResponse()->isRedirection());
+        $select = $client->getCrawler()->filter('select#timesheet_edit_form_project');
+        self::assertEquals([''], $select->filter('option')->extract(['value']));
+        self::assertEquals('/api/projects?visible=1&orderBy=customer&searchCustomer=1&customer=' . $customer->getId(), $select->attr('data-lazy-url'));
+    }
+
     public function testCreateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/timesheet/create');
         self::assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $form = $this->getFormWithLazySelects($client, 'timesheet_edit_form');
         $client->submit($form, [
             'timesheet_edit_form' => [
                 'description' => 'Testing is fun!',
@@ -236,7 +262,7 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         $this->request($client, '/timesheet/create');
         self::assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $form = $this->getFormWithLazySelects($client, 'timesheet_edit_form');
         $client->submit($form, [
             'timesheet_edit_form' => [
                 'description' => 'Testing is fun!',
@@ -343,7 +369,7 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         $this->request($client, '/timesheet/create?from=2018-08-02T20%3A00%3A00&to=2018-08-02T20%3A30%3A00');
         self::assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $form = $this->getFormWithLazySelects($client, 'timesheet_edit_form');
         $client->submit($form, [
             'timesheet_edit_form' => [
                 'hourlyRate' => 100,
@@ -377,7 +403,7 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         $this->request($client, '/timesheet/create?from=2018-08-02T20%3A00%3A00&to=2018-08-02T20%3A30%3A00');
         self::assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $form = $this->getFormWithLazySelects($client, 'timesheet_edit_form');
         $client->submit($form, [
             'timesheet_edit_form' => [
                 'hourlyRate' => 100,
@@ -408,7 +434,7 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         $this->request($client, '/timesheet/create?from=2018-08-02T20%3A02%3A00&to=2018-08-02T20%3A20%3A00');
         self::assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $form = $this->getFormWithLazySelects($client, 'timesheet_edit_form');
         $client->submit($form, [
             'timesheet_edit_form' => [
                 'hourlyRate' => 100,
@@ -580,7 +606,7 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         $this->request($client, '/timesheet/create?begin=2018-08-02&end=2018-08-02&tags=one,two,three');
         self::assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $form = $this->getFormWithLazySelects($client, 'timesheet_edit_form');
         $client->submit($form, [
             'timesheet_edit_form' => [
                 'hourlyRate' => 100,
@@ -617,7 +643,7 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         $this->request($client, '/timesheet/create?description=Lorem%20Ipsum');
         self::assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $form = $this->getFormWithLazySelects($client, 'timesheet_edit_form');
         $client->submit($form, [
             'timesheet_edit_form' => [
                 'hourlyRate' => 100,
@@ -644,7 +670,7 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         $this->request($client, '/timesheet/create?description=Some text"><bold>HelloWorld<%2Fbold>');
         self::assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $form = $this->getFormWithLazySelects($client, 'timesheet_edit_form');
         $client->submit($form, [
             'timesheet_edit_form' => [
                 'hourlyRate' => 100,

@@ -935,4 +935,30 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
             );
         }
     }
+
+    /**
+     * @return array<mixed>
+     */
+    protected function getJsonRows(HttpKernelBrowser $client): array
+    {
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+
+        return $result;
+    }
+
+    /**
+     * @param array<string, string|int> $params
+     * @return array<string>
+     */
+    protected function getCollectionNames(HttpKernelBrowser $client, string $url, array $params): array
+    {
+        $this->assertAccessIsGranted($client, $url, 'GET', $params);
+
+        return array_column($this->getJsonRows($client), 'name');
+    }
 }

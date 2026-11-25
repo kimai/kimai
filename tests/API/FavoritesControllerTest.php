@@ -51,21 +51,6 @@ class FavoritesControllerTest extends APIControllerBaseTestCase
     /**
      * @return array<mixed>
      */
-    private function getJsonRows(HttpKernelBrowser $client): array
-    {
-        self::assertTrue($client->getResponse()->isSuccessful());
-        $content = $client->getResponse()->getContent();
-        self::assertIsString($content);
-
-        $result = json_decode($content, true);
-        self::assertIsArray($result);
-
-        return $result;
-    }
-
-    /**
-     * @return array<mixed>
-     */
     private function getJsonRow(HttpKernelBrowser $client, int $index = 0): array
     {
         $rows = $this->getJsonRows($client);

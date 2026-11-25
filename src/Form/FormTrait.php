@@ -15,8 +15,6 @@ use App\Entity\Project;
 use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
 use App\Form\Type\ProjectType;
-use App\Repository\ProjectRepository;
-use App\Repository\Query\ProjectFormTypeQuery;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -56,35 +54,30 @@ trait FormTrait
         // replaces the project select after submission, to make sure only projects for the selected customer are displayed
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($builder, $project, $isNew, $options): void {
+            function (FormEvent $event) use ($project, $isNew, $options): void {
                 /** @var array<string, mixed> $data */
                 $data = $event->getData();
                 $customer = \array_key_exists('customer', $data) && $data['customer'] !== '' ? $data['customer'] : null;
+                $customer = \is_string($customer) ? (int) $customer : $customer;
+
+                // is there a better way to prevent starting a record with a hidden project ?
+                if ($isNew && $project instanceof Project) {
+                    if (!$project->getCustomer()->isVisible()) {
+                        $customer = null;
+                        $project = null;
+                    } elseif (!$project->isVisible()) {
+                        $project = null;
+                    }
+                }
+
+                if ($customer !== null && !\is_int($customer) && !($customer instanceof Customer)) {
+                    throw new \InvalidArgumentException('Project type needs a customer object or an ID');
+                }
 
                 $event->getForm()->add('project', ProjectType::class, array_merge($options, [
                     'group_by' => null,
-                    'query_builder' => function (ProjectRepository $repo) use ($builder, $project, $customer, $isNew) {
-                        // is there a better way to prevent starting a record with a hidden project ?
-                        $customer = \is_string($customer) ? (int) $customer : $customer;
-                        if ($isNew && $project instanceof Project) {
-                            if (!$project->getCustomer()->isVisible()) {
-                                $customer = null;
-                                $project = null;
-                            } elseif (!$project->isVisible()) {
-                                $project = null;
-                            }
-                        }
-
-                        if ($customer !== null && !\is_int($customer) && !($customer instanceof Customer)) {
-                            throw new \InvalidArgumentException('Project type needs a customer object or an ID');
-                        }
-
-                        $query = new ProjectFormTypeQuery($project, $customer);
-                        $query->setUser($builder->getOption('user'));
-                        $query->setWithCustomer(true);
-
-                        return $repo->getQueryBuilderForFormType($query);
-                    },
+                    'projects' => $project,
+                    'customers' => $customer,
                 ]));
             }
         );

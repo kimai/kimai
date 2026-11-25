@@ -48,5 +48,11 @@ class ProjectQueryTest extends BaseQueryTest
 
         $sut->setGlobalActivities(true);
         self::assertTrue($sut->getGlobalActivities());
+
+        self::assertFalse($sut->isSearchCustomer());
+        $sut->setSearchCustomer(true);
+        self::assertTrue($sut->isSearchCustomer());
+
+        self::assertTrue($sut->copyTo(new ProjectQuery())->isSearchCustomer());
     }
 }

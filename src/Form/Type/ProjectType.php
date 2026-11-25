@@ -10,11 +10,13 @@
 namespace App\Form\Type;
 
 use App\Entity\Project;
+use App\Form\ChoiceList\LazyChoiceTypeInterface;
 use App\Form\Helper\CustomerHelper;
 use App\Form\Helper\ProjectHelper;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\ProjectFormTypeQuery;
+use App\Repository\Query\VisibilityInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
@@ -25,13 +27,38 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select a project.
  */
-final class ProjectType extends AbstractType
+final class ProjectType extends AbstractType implements LazyChoiceTypeInterface
 {
     public function __construct(
         private readonly ProjectHelper $projectHelper,
         private readonly CustomerHelper $customerHelper
     )
     {
+    }
+
+    public function getLazyLoadApi(array $options): array
+    {
+        // like the form type: match customer names, projects by name
+        $params = ['visible' => VisibilityInterface::SHOW_VISIBLE, 'orderBy' => 'customer', 'searchCustomer' => 1];
+
+        if ($options['ignore_date'] === true) {
+            $params['ignoreDates'] = 1;
+        } elseif ($options['project_date_start'] !== null || $options['project_date_end'] !== null) {
+            // a missing date is today, like the form type and the API
+            $today = new \DateTime();
+            $start = $options['project_date_start'] instanceof \DateTimeInterface ? $options['project_date_start'] : $today;
+            $end = $options['project_date_end'] instanceof \DateTimeInterface ? $options['project_date_end'] : $today;
+            $params['start'] = $start->format('Y-m-d');
+            $params['end'] = $end->format('Y-m-d');
+        }
+
+        return [
+            'route' => 'get_projects',
+            'params' => $params,
+            'parent_param' => 'customer',
+            'parent' => $options['customers'],
+            'all_without_parent' => true,
+        ];
     }
 
     public function getChoiceLabel(Project $project): string

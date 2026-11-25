@@ -26,4 +26,15 @@ class ActivityQueryTest extends BaseQueryTest
         $this->assertProject($sut);
         $this->assertResetByFormError(new ActivityQuery(), 'name');
     }
+
+    public function testSearchProject(): void
+    {
+        $sut = new ActivityQuery();
+
+        self::assertFalse($sut->isSearchProject());
+        self::assertSame($sut, $sut->setSearchProject(true));
+        self::assertTrue($sut->isSearchProject());
+
+        self::assertTrue($sut->copyTo(new ActivityQuery())->isSearchProject());
+    }
 }
