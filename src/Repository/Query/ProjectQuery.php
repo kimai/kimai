@@ -32,6 +32,7 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
     private ?\DateTime $projectStart = null;
     private ?\DateTime $projectEnd = null;
     private ?bool $globalActivities = null;
+    private bool $searchCustomer = false;
     /**
      * @var array<int>
      */
@@ -51,6 +52,7 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
             'visibility' => VisibilityInterface::SHOW_VISIBLE,
             'globalActivities' => null,
             'projectIds' => [],
+            'searchCustomer' => false,
         ]);
     }
 
@@ -67,10 +69,24 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
             $this->setProjectStart($query->getProjectStart());
             $this->setProjectEnd($query->getProjectEnd());
             $this->setGlobalActivities($query->getGlobalActivities());
+            $this->setSearchCustomer($query->isSearchCustomer());
             foreach ($query->getHydrate() as $hydrate) {
                 $this->addHydrate($hydrate);
             }
         }
+    }
+
+    /**
+     * Also search the customer name and order by customer, then project name.
+     */
+    public function isSearchCustomer(): bool
+    {
+        return $this->searchCustomer;
+    }
+
+    public function setSearchCustomer(bool $searchCustomer): void
+    {
+        $this->searchCustomer = $searchCustomer;
     }
 
     public function getProjectStart(): ?\DateTime

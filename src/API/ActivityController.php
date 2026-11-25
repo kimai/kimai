@@ -85,6 +85,7 @@ final class ActivityController extends BaseApiController
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name|project', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name, project (default: name)')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term', nullable: true)]
+    #[Rest\QueryParam(name: 'searchProject', requirements: '0|1', strict: true, nullable: true, description: 'If set, the search term also matches the project name and orderBy=project orders the activities of a project by name. Allowed values: 0|1 (default: 0)')]
     #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display, renders a 404 if not found. Without page and size, all activities are returned (default: 1)')]
     #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page. Without page and size, all activities are returned (default: 50, max: 500)')]
     public function cgetAction(ParamFetcherInterface $paramFetcher, ProjectRepository $projectRepository): Response
@@ -116,6 +117,8 @@ final class ActivityController extends BaseApiController
         if (is_numeric($visible)) {
             $query->setVisibility((int) $visible);
         }
+
+        $query->setSearchProject($paramFetcher->get('searchProject') === '1');
 
         $term = $paramFetcher->get('term');
         if (\is_string($term) && $term !== '') {

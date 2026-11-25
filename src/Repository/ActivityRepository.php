@@ -258,6 +258,12 @@ class ActivityRepository extends EntityRepository
         foreach ($query->getOrderGroups() as $orderBy => $order) {
             switch ($orderBy) {
                 case 'project':
+                    if ($query->isSearchProject()) {
+                        $qb->addOrderBy('p.name', $order);
+                        $orderBy = 'a.name';
+                        $order = 'ASC';
+                        break;
+                    }
                     $orderBy = 'p.name';
                     break;
                 case 'customer':
@@ -269,6 +275,8 @@ class ActivityRepository extends EntityRepository
             }
             $qb->addOrderBy($orderBy, $order);
         }
+        // stable pages for equal values
+        $qb->addOrderBy('a.id', 'ASC');
 
         $where = $qb->expr()->andX();
 
@@ -327,8 +335,13 @@ class ActivityRepository extends EntityRepository
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams(), $query->isGlobalsOnly());
 
+        $fields = ['a.name', 'a.comment', 'a.number'];
+        if ($query->isSearchProject()) {
+            $fields[] = 'p.name';
+        }
+
         $configuration = new SearchConfiguration(
-            ['a.name', 'a.comment', 'a.number'],
+            $fields,
             ActivityMeta::class,
             'activity'
         );

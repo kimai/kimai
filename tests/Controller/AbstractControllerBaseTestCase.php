@@ -23,6 +23,8 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\DomCrawler\Field\ChoiceFormField;
+use Symfony\Component\DomCrawler\Form;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -206,6 +208,24 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
     public function requestPure(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = [], ?string $content = null): Crawler
     {
         return $client->request($method, $url, $parameters, [], [], $content);
+    }
+
+    /**
+     * Lazy selects render only the selected option, so accept any value for them.
+     */
+    protected function getFormWithLazySelects(HttpKernelBrowser $client, string $name): Form
+    {
+        $node = $client->getCrawler()->filter('form[name=' . $name . ']');
+        $form = $node->form();
+
+        foreach ($node->filter('select[data-lazy-url]')->extract(['name']) as $field) {
+            $select = $form->get($field);
+            if ($select instanceof ChoiceFormField) {
+                $select->disableValidation();
+            }
+        }
+
+        return $form;
     }
 
     /**

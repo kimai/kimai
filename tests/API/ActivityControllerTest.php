@@ -21,6 +21,7 @@ use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\VisibilityInterface;
 use App\Tests\DataFixtures\ActivityFixtures;
+use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
 use App\Tests\Mocks\ActivityTestUrlMetaFieldSubscriberMock;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -355,6 +356,61 @@ class ActivityControllerTest extends APIControllerBaseTestCase
         $this->assertAccessIsGranted($client, '/api/activities', 'GET', ['page' => $lastPage, 'size' => 2]);
         $this->request($client, '/api/activities', 'GET', ['page' => $lastPage + 1, 'size' => 2]);
         $this->assertApiException($client->getResponse(), ['code' => Response::HTTP_NOT_FOUND, 'message' => 'Not Found']);
+    }
+
+    public function testGetCollectionSearchesTheProjectName(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $projects = new ProjectFixtures(1);
+        $projects->setIsVisible(true);
+        $projects->setCallback(function (Project $project): void {
+            $project->setName('Searchable Website');
+        });
+        $projects = $this->importFixture($projects);
+
+        $this->importActivity('Design', $projects);
+        $this->importActivity('Design meeting', null);
+
+        // each word matches the project name or an activity field
+        self::assertEquals(['Design'], $this->getCollectionNames($client, '/api/activities', ['term' => 'searchable website', 'searchProject' => 1]));
+        self::assertEquals(['Design'], $this->getCollectionNames($client, '/api/activities', ['term' => 'searchable design', 'searchProject' => 1]));
+        self::assertEquals(['Design', 'Design meeting'], $this->getCollectionNames($client, '/api/activities', ['term' => 'design', 'searchProject' => 1]));
+        self::assertEquals([], $this->getCollectionNames($client, '/api/activities', ['term' => 'searchable website']));
+        self::assertEquals([], $this->getCollectionNames($client, '/api/activities', ['term' => 'searchable website', 'searchProject' => 0]));
+    }
+
+    public function testGetCollectionOrderedByProject(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $projects = new ProjectFixtures(1);
+        $projects->setIsVisible(true);
+        $projects = $this->importFixture($projects);
+
+        $this->importActivity('Ordered Zulu', $projects);
+        $this->importActivity('Ordered Beta', null);
+        $this->importActivity('Ordered Alpha', $projects);
+
+        self::assertEquals(['Ordered Beta', 'Ordered Alpha', 'Ordered Zulu'], $this->getCollectionNames($client, '/api/activities', ['term' => 'ordered', 'orderBy' => 'project', 'searchProject' => 1]));
+        self::assertEquals(['Ordered Alpha', 'Ordered Zulu', 'Ordered Beta'], $this->getCollectionNames($client, '/api/activities', ['term' => 'ordered', 'orderBy' => 'project', 'order' => 'DESC', 'searchProject' => 1]));
+        // without searchProject in creation order
+        self::assertEquals(['Ordered Beta', 'Ordered Zulu', 'Ordered Alpha'], $this->getCollectionNames($client, '/api/activities', ['term' => 'ordered', 'orderBy' => 'project']));
+    }
+
+    /**
+     * @param array<Project>|null $projects null for a global activity
+     */
+    private function importActivity(string $name, ?array $projects): void
+    {
+        $fixture = new ActivityFixtures(1);
+        $fixture->setIsGlobal($projects === null);
+        $fixture->setIsVisible(true);
+        if ($projects !== null) {
+            $fixture->setProjects($projects);
+        }
+        $fixture->setCallback(function (Activity $activity) use ($name): void {
+            $activity->setName($name);
+        });
+        $this->importFixture($fixture);
     }
 
     public function testGetEntityIsSecure(): void

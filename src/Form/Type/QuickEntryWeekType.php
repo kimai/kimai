@@ -34,6 +34,7 @@ final class QuickEntryWeekType extends AbstractType
             'activity_enabled' => true,
             'project_date_start' => $options['start_date'],
             'project_date_end' => $options['end_date'],
+            'lazy_load' => true,
         ];
 
         $builder->add('project', ProjectType::class, $projectOptions);
@@ -56,6 +57,7 @@ final class QuickEntryWeekType extends AbstractType
             'label' => false,
             'required' => false,
             'placeholder' => '',
+            'lazy_load' => true,
         ];
 
         $builder->add('activity', ActivityType::class, $activityOptions);

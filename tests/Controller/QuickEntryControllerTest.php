@@ -9,6 +9,8 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\Activity;
+use App\Entity\Project;
 use App\Entity\Role;
 use App\Entity\RolePermission;
 use App\Entity\Team;
@@ -23,6 +25,7 @@ use App\Tests\Mocks\QuickEntryMetaFieldSubscriberMock;
 use App\User\PermissionService;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 #[Group('integration')]
 class QuickEntryControllerTest extends AbstractControllerBaseTestCase
@@ -242,6 +245,129 @@ class QuickEntryControllerTest extends AbstractControllerBaseTestCase
         self::assertCount(2, $this->findTimesheets($victim));
     }
 
+    public function testRowsRenderOnlyTheSelectedProjectAndActivity(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
+        [$projects, $activities] = $this->importProjectsAndActivities(20);
+
+        $this->importRow($user, $projects[0], $activities[0]);
+
+        $this->request($client, '/quick_entry/?date=2020-05-11');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=quick_entry_form]');
+
+        $project = $form->filter('select[name="quick_entry_form[rows][0][project]"]');
+        self::assertEquals(['', (string) $projects[0]->getId()], $project->filter('option')->extract(['value']));
+        // projects active at the end of the week (see QuickEntryForm)
+        self::assertEquals('/api/projects?visible=1&orderBy=customer&searchCustomer=1&start=2020-05-17&end=2020-05-17', $project->attr('data-lazy-url'));
+        self::assertEquals('customer', $project->attr('data-lazy-parent'));
+
+        $activity = $form->filter('select[name="quick_entry_form[rows][0][activity]"]');
+        self::assertEquals(['', (string) $activities[0]->getId()], $activity->filter('option')->extract(['value']));
+        self::assertEquals('/api/activities?visible=1&orderBy=project&order=DESC&searchProject=1&project=' . $projects[0]->getId(), $activity->attr('data-lazy-url'));
+        self::assertEquals('project', $activity->attr('data-lazy-parent'));
+        self::assertEquals('0', $activity->attr('data-lazy-all-without-parent'));
+
+        $activity = $form->filter('select[name="quick_entry_form[rows][1][activity]"]');
+        self::assertEquals('/api/activities?visible=1&orderBy=project&order=DESC&searchProject=1&globals=true', $activity->attr('data-lazy-url'));
+
+        $project = $form->filter('select[name="quick_entry_form[rows][1][project]"]');
+        self::assertEquals([''], $project->filter('option')->extract(['value']));
+    }
+
+    public function testRowWithProjectThatWasNotRenderedIsSaved(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
+        [$projects, $activities] = $this->importProjectsAndActivities(5);
+
+        $this->submitRow($client, $projects[3], $activities[0]);
+
+        $timesheets = $this->findTimesheets($user);
+        self::assertCount(1, $timesheets);
+        self::assertEquals($projects[3]->getId(), $timesheets[0]->getProject()?->getId());
+        self::assertEquals($activities[0]->getId(), $timesheets[0]->getActivity()?->getId());
+    }
+
+    public function testRowWithProjectOutsideOfTheWeekIsRejected(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
+        [$projects, $activities] = $this->importProjectsAndActivities(1);
+
+        $em = $this->getEntityManager();
+        $project = $projects[0];
+        $project->setEnd(new \DateTime('2020-01-31'));
+        $em->persist($project);
+        $em->flush();
+
+        $this->submitRow($client, $project, $activities[0]);
+
+        self::assertCount(0, $this->findTimesheets($user));
+    }
+
+    /**
+     * @return array{0: array<Project>, 1: array<Activity>}
+     */
+    private function importProjectsAndActivities(int $projectAmount): array
+    {
+        $customers = new CustomerFixtures();
+        $customers->setIsVisible(true);
+        $customers->setAmount(1);
+        $customers = $this->importFixture($customers);
+
+        $projects = new ProjectFixtures();
+        $projects->setCustomers($customers);
+        $projects->setIsVisible(true);
+        $projects->setAmount($projectAmount);
+        $projects = $this->importFixture($projects);
+
+        $activities = new ActivityFixtures();
+        $activities->setIsGlobal(true);
+        $activities->setIsVisible(true);
+        $activities->setAmount(1);
+        $activities = $this->importFixture($activities);
+
+        return [$projects, $activities];
+    }
+
+    /**
+     * A record in the first row of the week of 2020-05-11.
+     */
+    private function importRow(User $user, Project $project, Activity $activity): void
+    {
+        $timesheets = new TimesheetFixtures();
+        $timesheets->setUser($user);
+        $timesheets->setProjects([$project]);
+        $timesheets->setActivities([$activity]);
+        $timesheets->setAmount(1);
+        $timesheets->setCallback(function (Timesheet $timesheet): void {
+            $timesheet->setBegin(new \DateTime('2020-05-11 10:00:00'));
+            $timesheet->setEnd(new \DateTime('2020-05-11 11:00:00'));
+            $timesheet->setDuration(3600);
+        });
+        $this->importFixture($timesheets);
+    }
+
+    /**
+     * Submits the first row of the week of 2020-05-11 with a Tuesday duration.
+     */
+    private function submitRow(HttpKernelBrowser $client, Project $project, Activity $activity): void
+    {
+        $url = '/quick_entry/?date=2020-05-11';
+        $this->request($client, $url);
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $values = $client->getCrawler()->filter('form[name=quick_entry_form]')->form()->getPhpValues();
+        $values['quick_entry_form']['rows'][0]['project'] = (string) $project->getId();
+        $values['quick_entry_form']['rows'][0]['activity'] = (string) $activity->getId();
+        $values['quick_entry_form']['rows'][0]['timesheets'][1]['duration'] = '1:30';
+
+        $client->request('POST', $this->createUrl($url), $values);
+    }
+
     /**
      * @return array<Timesheet>
      */
@@ -279,34 +405,8 @@ class QuickEntryControllerTest extends AbstractControllerBaseTestCase
         $em->persist($team);
         $em->flush();
 
-        $customers = new CustomerFixtures();
-        $customers->setIsVisible(true);
-        $customers->setAmount(1);
-        $customers = $this->importFixture($customers);
-
-        $projects = new ProjectFixtures();
-        $projects->setCustomers($customers);
-        $projects->setIsVisible(true);
-        $projects->setAmount(1);
-        $projects = $this->importFixture($projects);
-
-        $activities = new ActivityFixtures();
-        $activities->setIsGlobal(true);
-        $activities->setIsVisible(true);
-        $activities->setAmount(1);
-        $activities = $this->importFixture($activities);
-
-        $timesheets = new TimesheetFixtures();
-        $timesheets->setUser($victim);
-        $timesheets->setProjects($projects);
-        $timesheets->setActivities($activities);
-        $timesheets->setAmount(1);
-        $timesheets->setCallback(function (Timesheet $timesheet): void {
-            $timesheet->setBegin(new \DateTime('2020-05-11 10:00:00'));
-            $timesheet->setEnd(new \DateTime('2020-05-11 11:00:00'));
-            $timesheet->setDuration(3600);
-        });
-        $this->importFixture($timesheets);
+        [$projects, $activities] = $this->importProjectsAndActivities(1);
+        $this->importRow($victim, $projects[0], $activities[0]);
 
         return $victim;
     }

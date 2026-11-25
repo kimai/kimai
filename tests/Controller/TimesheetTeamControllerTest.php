@@ -174,7 +174,7 @@ class TimesheetTeamControllerTest extends AbstractControllerBaseTestCase
         $this->request($client, '/team/timesheet/create');
         self::assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form[name=timesheet_admin_edit_form]')->form();
+        $form = $this->getFormWithLazySelects($client, 'timesheet_admin_edit_form');
         $client->submit($form, [
             'timesheet_admin_edit_form' => [
                 'description' => 'Testing is fun!',
@@ -210,7 +210,7 @@ class TimesheetTeamControllerTest extends AbstractControllerBaseTestCase
         $this->request($client, '/team/timesheet/create_mu');
         self::assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form[name=timesheet_multi_user_edit_form]')->form();
+        $form = $this->getFormWithLazySelects($client, 'timesheet_multi_user_edit_form');
         $client->submit($form, [
             'timesheet_multi_user_edit_form' => [
                 'description' => 'Testing is more fun!',

@@ -224,6 +224,12 @@ class ProjectRepository extends EntityRepository
         foreach ($query->getOrderGroups() as $orderBy => $order) {
             switch ($orderBy) {
                 case 'customer':
+                    if ($query->isSearchCustomer()) {
+                        $qb->addOrderBy('c.name', $order);
+                        $orderBy = 'p.name';
+                        $order = 'ASC';
+                        break;
+                    }
                     $orderBy = 'c.name';
                     break;
                 case 'project_start':
@@ -238,6 +244,8 @@ class ProjectRepository extends EntityRepository
             }
             $qb->addOrderBy($orderBy, $order);
         }
+        // stable pages for equal values
+        $qb->addOrderBy('p.id', 'ASC');
 
         if (!$query->isShowBoth()) {
             $qb
@@ -278,8 +286,13 @@ class ProjectRepository extends EntityRepository
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser());
 
+        $fields = ['p.name', 'p.comment', 'p.orderNumber', 'p.number'];
+        if ($query->isSearchCustomer()) {
+            $fields[] = 'c.name';
+        }
+
         $configuration = new SearchConfiguration(
-            ['p.name', 'p.comment', 'p.orderNumber', 'p.number'],
+            $fields,
             ProjectMeta::class,
             'project'
         );

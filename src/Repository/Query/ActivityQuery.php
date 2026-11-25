@@ -36,6 +36,7 @@ class ActivityQuery extends BaseQuery implements VisibilityInterface
     private array $projects = [];
     private bool $globalsOnly = false;
     private bool $excludeGlobals = false;
+    private bool $searchProject = false;
     /**
      * @var array<int>
      */
@@ -54,6 +55,7 @@ class ActivityQuery extends BaseQuery implements VisibilityInterface
             'globalsOnly' => false,
             'excludeGlobals' => false,
             'activityIds' => [],
+            'searchProject' => false,
         ]);
     }
 
@@ -69,10 +71,26 @@ class ActivityQuery extends BaseQuery implements VisibilityInterface
             $this->setActivityIds($query->getActivityIds());
             $this->setGlobalsOnly($query->isGlobalsOnly());
             $this->setExcludeGlobals($query->isExcludeGlobals());
+            $this->setSearchProject($query->isSearchProject());
             foreach ($query->getHydrate() as $hydrate) {
                 $this->addHydrate($hydrate);
             }
         }
+    }
+
+    /**
+     * Also search the project name and order by project, then activity name.
+     */
+    public function isSearchProject(): bool
+    {
+        return $this->searchProject;
+    }
+
+    public function setSearchProject(bool $searchProject): self
+    {
+        $this->searchProject = $searchProject;
+
+        return $this;
     }
 
     public function isGlobalsOnly(): bool

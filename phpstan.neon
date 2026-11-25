@@ -1669,11 +1669,6 @@ parameters:
             path: src/Form/TimesheetEditForm.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
-            count: 1
-            path: src/Form/TimesheetEditForm.php
-
-        -
             message: "#^Cannot call method isVisible\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
             path: src/Form/TimesheetPreCreateForm.php
@@ -1685,11 +1680,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Form\\\\TimesheetPreCreateForm\\:\\:addProject\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/TimesheetPreCreateForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
             count: 1
             path: src/Form/TimesheetPreCreateForm.php
 

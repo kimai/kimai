@@ -12,6 +12,34 @@
 import TomSelect from 'tom-select';
 import KimaiFormTomselectPlugin from "./KimaiFormTomselectPlugin";
 
+/**
+ * @param {TomSelect} select
+ * @param {array<{value: string, text: string, group: string}>} results with further option data, e.g. the parent
+ * @return {array} the options and the new optgroups
+ */
+function createLazyOptions(select, results)
+{
+    // HTML optgroups have numeric ids
+    const groupIds = new Map(Object.entries(select.optgroups).map(([id, optgroup]) => [optgroup.label, id]));
+    const optgroups = [];
+
+    const options = results.map(({group, ...data}) => {
+        if (!groupIds.has(group)) {
+            groupIds.set(group, 'lazy:' + group);
+            optgroups.push({value: 'lazy:' + group, label: group});
+        }
+        const $order = ++select.order;
+        // tom-select does not re-add known options, so move them
+        if (select.options[data.value] !== undefined) {
+            select.options[data.value].$order = $order;
+        }
+
+        return {...data, optgroup: groupIds.get(group), $order};
+    });
+
+    return [options, optgroups];
+}
+
 export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
 
     constructor(selector, apiSelects)
@@ -141,6 +169,10 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             options.items = JSON.parse(node.dataset['items']);
         }
 
+        if (node.dataset['lazyUrl'] !== undefined) {
+            options = this._activateLazySearch(node, options);
+        }
+
         const select = new TomSelect(node, options);
         node.addEventListener('data-reloaded', (event) => {
             select.clear(true);
@@ -203,6 +235,178 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
                 node.tomselect.destroy();
             }
         });
+    }
+
+    /**
+     * Searches the options of a "lazy_load" select page by page through the API.
+     *
+     * @param {HTMLSelectElement} node
+     * @param {object} options the tom-select settings
+     * @return {object}
+     * @private
+     */
+    _activateLazySearch(node, options)
+    {
+        const pageSize = 50;
+        // values of the current search
+        let matches = new Set();
+        let lastQuery = null;
+        // newer requests make older responses outdated
+        let requests = 0;
+        // separate, so a newer search does not skip resetting the selection
+        let parentRequests = 0;
+        // virtual_scroll waits for the next page
+        let loadingMore = false;
+        // after a parent change, search via its reload URL
+        let parent = null;
+        let parentValue = '';
+        // parent field in API results and option data, e.g. "customer"
+        const parentKey = node.dataset['lazyParent'];
+        const allWithoutParent = node.dataset['lazyAllWithoutParent'] === '1';
+        const pattern = node.dataset['optionPattern'] || '{name}';
+        // options without parent (global activities) always belong, without parent value only if the reload lists all
+        const belongsToParent = (option) => option[parentKey] === undefined || (parentValue === '' ? allWithoutParent : option[parentKey] === parentValue);
+
+        const createUrl = (term, page) => {
+            const params = new URLSearchParams({term: term, page: page, size: pageSize});
+            let url = node.dataset['lazyUrl'];
+            const parentUrl = parent === null ? undefined : parent.dataset[parentValue === '' ? 'emptyUrl' : 'apiUrl'];
+            if (parentUrl !== undefined) {
+                // reload filters, lazy search order
+                const order = new URLSearchParams(url.split('?')[1] ?? '');
+                ['orderBy', 'order'].filter((key) => order.has(key)).forEach((key) => params.set(key, order.get(key)));
+                url = this._buildUrlWithFormFields(parentUrl, this._getFormPrefix(parent));
+            }
+            return url + (url.includes('?') ? '&' : '?') + params.toString();
+        };
+
+        const search = (term, page) => this.fetch(createUrl(term, page), {method: 'GET'}).then((response) => {
+            const pages = parseInt(response.headers.get('X-Total-Pages') ?? '1', 10);
+            return response.json().then((entities) => {
+                const results = entities.map((entity) => ({
+                    value: String(entity.id),
+                    text: this._getTitleFromPattern(pattern, entity),
+                    // empty group for options without parent, so they are not listed first
+                    group: entity.parentTitle ?? '',
+                    [parentKey]: entity[parentKey]?.toString(),
+                }));
+                return {results: results, more: page < pages};
+            });
+        });
+
+        // keep the selection if the new parent has it, otherwise autoselect a single option
+        node.addEventListener('lazy-parent-changed', (event) => {
+            const select = node.tomselect;
+            const parentToken = ++parentRequests;
+            const token = ++requests;
+            parent = event.detail;
+            parentValue = parent.value ?? '';
+            matches = new Set();
+            lastQuery = null;
+            select.clearPagination();
+            select.clearOptions((_option, key) => key === '' || select.items.includes(key));
+
+            const removeOthers = () => {
+                [...node.options].filter((option) => option.value !== '' && !option.selected).forEach((option) => option.remove());
+                select.clearOptions((_option, key) => key === '' || matches.has(key) || select.items.includes(key));
+                node.dispatchEvent(new Event('change'));
+            };
+
+            search('', 1).then((data) => {
+                if (parentToken !== parentRequests) {
+                    return;
+                }
+                const [newOptions, optgroups] = createLazyOptions(select, data.results);
+                optgroups.forEach((optgroup) => select.addOptionGroup(optgroup.value, optgroup));
+                select.addOptions(newOptions);
+                const found = new Set(newOptions.map((option) => option.value));
+                // so opening the dropdown does not load the first page again
+                if (token === requests) {
+                    matches = found;
+                    lastQuery = '';
+                    select.setNextUrl('', data.more ? 2 : null);
+                }
+
+                let value = select.getValue();
+                const option = select.options[value];
+                // the selected option may be on another page
+                if (!found.has(value) && !(data.more && value !== '' && option !== undefined && belongsToParent(option))) {
+                    const autoselect = !data.more && newOptions.length === 1 && node.dataset['autoselect'] !== 'false';
+                    value = autoselect ? newOptions[0].value : '';
+                }
+                select.setValue(value, true);
+                removeOthers();
+            }).catch(() => {
+                if (parentToken !== parentRequests) {
+                    return;
+                }
+                select.setValue('', true);
+                removeOthers();
+            });
+        });
+
+        options.plugins.push('virtual_scroll');
+
+        return {...options,
+            // the API pages and orders the options
+            maxOptions: null,
+            lockOptgroupOrder: false,
+            // the virtual_scroll "URL" is the page number
+            firstUrl: () => 1,
+            shouldLoad: () => true,
+            onInitialize: function() {
+                // continue after the order of the HTML options
+                this.order = Math.max(this.order, ...Object.values(this.options).map((option) => option.$order));
+            },
+            score: function(search) {
+                return (item) => {
+                    if (item.value === '') {
+                        return search === '' ? 1 : 0;
+                    }
+                    return matches.has(item.value) ? 1 : 0;
+                };
+            },
+            load: function(query, callback) {
+                // a new term restarts at page 1
+                if (query !== lastQuery) {
+                    lastQuery = query;
+                    this.clearPagination();
+                }
+                const page = this.getUrl(query);
+                if (page === 1) {
+                    matches = new Set();
+                } else {
+                    loadingMore = true;
+                }
+                const done = (newOptions, optgroups) => {
+                    loadingMore = false;
+                    callback(newOptions, optgroups);
+                };
+                const token = ++requests;
+                // outdated: only end loading, virtual_scroll would drop the current options
+                const outdated = () => (loadingMore && page > 1 ? done([], []) : TomSelect.prototype.loadCallback.call(this, [], []));
+                const current = (fn) => (...args) => (token === requests ? fn(...args) : outdated());
+
+                search(query, page).then(current((data) => {
+                    this.setNextUrl(query, data.more ? page + 1 : null);
+                    const [newOptions, optgroups] = createLazyOptions(this, data.results);
+                    newOptions.forEach((option) => matches.add(option.value));
+                    done(newOptions, optgroups);
+                })).catch(current(() => {
+                    this.setNextUrl(query, null);
+                    done([], []);
+                }));
+            },
+            onDropdownOpen: function() {
+                if (lastQuery !== this.lastValue) {
+                    this.load(this.lastValue);
+                }
+            },
+            render: {...options.render,
+                loading_more: () => '<div class="loading-more-results py-2 text-center"><span class="spinner-border spinner-border-sm text-secondary"></span></div>',
+                no_more_results: () => null,
+            },
+        };
     }
 
     /**
@@ -446,6 +650,12 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
                 if (targetSelect === null || targetSelect.dataset['reloading'] === '1') {
                     return;
                 }
+
+                if (targetSelect.dataset['lazyUrl'] !== undefined) {
+                    targetSelect.dispatchEvent(new CustomEvent('lazy-parent-changed', {detail: apiSelect}));
+                    return;
+                }
+
                 targetSelect.dataset['reloading'] = '1';
 
                 if (targetSelect.tomselect !== undefined) {
@@ -453,13 +663,7 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
                 }
                 targetSelect.disabled = true;
 
-                let formPrefix = apiSelect.dataset['formPrefix'];
-                if (formPrefix === undefined || formPrefix === null) {
-                    formPrefix = '';
-                } else if (formPrefix.length > 0) {
-                    formPrefix += '_';
-                }
-
+                const formPrefix = this._getFormPrefix(apiSelect);
                 let newApiUrl = this._buildUrlWithFormFields(apiSelect.dataset['apiUrl'], formPrefix);
 
                 const selectValue = apiSelect.value;
@@ -490,6 +694,18 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
 
             document.addEventListener('change', this._eventHandlerApiSelects);
         }
+    }
+
+    /**
+     * @param {HTMLSelectElement} apiSelect a select with related select (see data-related-select)
+     * @return {string} the prefix of the form fields in its URLs
+     * @private
+     */
+    _getFormPrefix(apiSelect)
+    {
+        const formPrefix = apiSelect.dataset['formPrefix'] ?? '';
+
+        return formPrefix === '' ? '' : formPrefix + '_';
     }
 
     /**

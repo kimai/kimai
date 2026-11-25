@@ -10,10 +10,12 @@
 namespace App\Form\Type;
 
 use App\Entity\Activity;
+use App\Form\ChoiceList\LazyChoiceTypeInterface;
 use App\Form\Helper\ActivityHelper;
 use App\Form\Helper\ProjectHelper;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityFormTypeQuery;
+use App\Repository\Query\VisibilityInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
@@ -24,10 +26,32 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select an activity.
  */
-final class ActivityType extends AbstractType
+final class ActivityType extends AbstractType implements LazyChoiceTypeInterface
 {
     public function __construct(private readonly ActivityHelper $activityHelper, private readonly ProjectHelper $projectHelper)
     {
+    }
+
+    public function getLazyLoadApi(array $options): array
+    {
+        // global activities last, like the form type
+        $params = ['visible' => VisibilityInterface::SHOW_VISIBLE, 'orderBy' => 'project', 'order' => 'DESC', 'searchProject' => 1];
+        $projects = $options['projects'];
+        // [null] from a quick entry row without project
+        if (\is_array($projects)) {
+            $projects = array_filter($projects, fn ($project) => $project !== null);
+        }
+        if ($projects === null || $projects === []) {
+            $params['globals'] = 'true';
+        }
+
+        return [
+            'route' => 'get_activities',
+            'params' => $params,
+            'parent_param' => 'project',
+            'parent' => $projects,
+            'all_without_parent' => false,
+        ];
     }
 
     public function getChoiceLabel(Activity $activity): string
