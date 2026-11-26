@@ -149,3 +149,5 @@ tabler:
         widget_remove: fas fa-folder-minus
         work_times: fas fa-calculator
         xlsx: fas fa-file-excel
+        work_open: fas fa-check
+        work_done: far fa-check-circle
