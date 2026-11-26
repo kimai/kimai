@@ -990,18 +990,6 @@
         <source>last_record_before</source>
         <target state="final">Nessuna prenotazione di tempo da</target>
       </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear" approved="yes">
-        <source>stats.activeUsersFinancialYear</source>
-        <target state="final">Utenti attivi in quest'anno finanziario</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" approved="yes" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="final">Anno finanziario</target>
-      </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear" approved="yes">
-        <source>stats.workingTimeFinancialYear</source>
-        <target state="final">Anno finanziario</target>
-      </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="yes" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="final">È stata inviata un'e-mail con un collegamento per reimpostare la password. Nota: puoi richiedere una nuova password solo una volta ogni %tokenLifetime% ore. Se non ricevi l'e-mail, controlla la cartella spam o riprova.</target>
@@ -1009,10 +997,6 @@
       <trans-unit id=".ndupSK" resname="registration.check_email" approved="yes">
         <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
         <target state="final">È stata inviata un'e-mail a %email%. Contiene un collegamento su cui devi fare clic per attivare l'account.</target>
-      </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear" approved="yes">
-        <source>stats.amountFinancialYear</source>
-        <target state="final">Entrate in quest'anno finanziario</target>
       </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue" approved="yes">
         <source>revenue</source>
@@ -1558,9 +1542,9 @@
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
         <target state="final">Finora hai usato %used% dei tuoi %days% giorni di ferie disponibili.</target>
       </trans-unit>
-      <trans-unit id="YPO294a" resname="absence_other.intro" approved="yes">
+      <trans-unit id="YPO294a" resname="absence_other.intro" approved="no">
         <source>absence_other.intro</source>
-        <target state="final">Eventi familiari, trasloco, calamità naturali, ecc.</target>
+        <target state="needs-translation">Eventi familiari, trasloco, calamità naturali, ecc.</target>
       </trans-unit>
       <trans-unit id="DA1.Ln_" resname="time_off.intro" approved="yes">
         <source>time_off.intro</source>
@@ -2129,6 +2113,26 @@
       <trans-unit id="pNRR7CN" resname="release" xml:space="preserve" approved="yes">
         <source>release</source>
         <target state="final">Pubblica</target>
+      </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until" xml:space="preserve" approved="yes">
+        <source>project_locked_until</source>
+        <target state="final">Orari bloccati fino a</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start" xml:space="preserve" approved="yes">
+        <source>help.project_start</source>
+        <target state="final">Gli orari precedenti a questa data non possono essere registrati.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end" xml:space="preserve" approved="yes">
+        <source>help.project_end</source>
+        <target state="final">Gli orari successivi a questa data non possono essere registrati.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until" xml:space="preserve" approved="yes">
+        <source>help.project_locked_until</source>
+        <target state="final">Gli orari fino a questa data (inclusa) non possono essere né creati né modificati.</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication" approved="yes">
+        <source>authentication</source>
+        <target state="final">Autenticazione</target>
       </trans-unit>
     </body>
   </file>

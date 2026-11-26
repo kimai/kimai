@@ -34,6 +34,7 @@ final class RateService implements RateServiceInterface
             return new Rate(0.00, 0.00);
         }
 
+        $currency = $record->getProject()?->getCustomer()?->getCurrency();
         $fixedRate = $record->getFixedRate();
         $hourlyRate = $record->getHourlyRate();
         $fixedInternalRate = null;
@@ -63,7 +64,7 @@ final class RateService implements RateServiceInterface
                     $fixedInternalRate = $fixedRate;
                 } else {
                     // the user's internal rate is an hourly rate, so the total internal rate is calculated from the duration - see #4801
-                    $fixedInternalRate = $this->calculatorMode->calculateRate((float) $internalHourlyRate, $record->getDuration() ?? 0);
+                    $fixedInternalRate = $this->calculatorMode->calculateRate((float) $internalHourlyRate, $record->getDuration() ?? 0, $currency);
                 }
             }
 
@@ -91,8 +92,8 @@ final class RateService implements RateServiceInterface
         $totalInternalRate = 0;
 
         if (null !== $record->getDuration()) {
-            $totalRate = $this->calculatorMode->calculateRate($factoredHourlyRate, $record->getDuration());
-            $totalInternalRate = $this->calculatorMode->calculateRate($factoredInternalRate, $record->getDuration());
+            $totalRate = $this->calculatorMode->calculateRate($factoredHourlyRate, $record->getDuration(), $currency);
+            $totalInternalRate = $this->calculatorMode->calculateRate($factoredInternalRate, $record->getDuration(), $currency);
         }
 
         return new Rate($totalRate, $totalInternalRate, $factoredHourlyRate, null);

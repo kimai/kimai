@@ -21,6 +21,8 @@
         {% if entry.start is not null %}{{ entry.start|date_short }}{% endif %}
     {% elseif column == 'project_end' %}
         {% if entry.end is not null %}{{ entry.end|date_short }}{% endif %}
+    {% elseif column == 'lockedUntil' %}
+        {% if entry.lockedUntil is not null %}{{ entry.lockedUntil|date_short }}{% endif %}
     {% elseif column == 'budget' %}
         {% if entry.hasBudget() and is_granted('budget', entry) %}
             {{ entry.budget|money(entry.customer.currency) }}

@@ -39,6 +39,17 @@ final class UserRoleType extends AbstractType
 
         $resolver->setAllowedTypes('restrict_to_assignable', 'bool');
 
+        $resolver->setDefault('documentation', function (Options $options): array {
+            if ($options['multiple'] === true) {
+                return [
+                    'type' => 'array',
+                    'items' => ['type' => 'string'],
+                ];
+            }
+
+            return ['type' => 'string'];
+        });
+
         $resolver->setDefault('choices', function (Options $options): array {
             $roles = [];
             foreach ($this->roles->getAvailableNames() as $name) {

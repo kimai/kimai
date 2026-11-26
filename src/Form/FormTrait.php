@@ -31,7 +31,6 @@ trait FormTrait
     protected function addCustomer(FormBuilderInterface $builder, ?Customer $customer = null): void
     {
         $builder->add('customer', CustomerType::class, [
-            'query_builder_for_user' => true,
             'customers' => $customer,
             'data' => $customer,
             'required' => false,
@@ -46,7 +45,6 @@ trait FormTrait
         $options = array_merge([
             'placeholder' => '',
             'activity_enabled' => true,
-            'query_builder_for_user' => true,
             'join_customer' => true
         ], $options);
 
@@ -58,7 +56,7 @@ trait FormTrait
         // replaces the project select after submission, to make sure only projects for the selected customer are displayed
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($builder, $project, $customer, $isNew, $options): void {
+            function (FormEvent $event) use ($builder, $project, $isNew, $options): void {
                 /** @var array<string, mixed> $data */
                 $data = $event->getData();
                 $customer = \array_key_exists('customer', $data) && $data['customer'] !== '' ? $data['customer'] : null;
@@ -94,7 +92,7 @@ trait FormTrait
 
     protected function addActivity(FormBuilderInterface $builder, ?Activity $activity = null, ?Project $project = null, array $options = []): void
     {
-        $options = array_merge(['placeholder' => '', 'query_builder_for_user' => true], $options);
+        $options = array_merge(['placeholder' => ''], $options);
 
         $options['projects'] = $project;
         $options['activities'] = $activity;

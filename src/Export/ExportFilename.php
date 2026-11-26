@@ -14,7 +14,9 @@ use App\Entity\Project;
 use App\Entity\User;
 use App\Repository\Query\TimesheetQuery;
 use App\Utils\FileHelper;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
 
+#[Exclude]
 final class ExportFilename
 {
     private ?string $filename = null;

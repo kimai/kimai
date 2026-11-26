@@ -21,6 +21,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class CalendarViewType extends AbstractType
 {
     public const DEFAULT_VIEW = 'month';
+    public const CHOICES = [
+        'month' => 'month',
+        'agendaWeek' => 'week',
+        'agendaDay' => 'day',
+    ];
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -40,15 +45,9 @@ final class CalendarViewType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $choices = [
-            'month' => 'month',
-            'agendaWeek' => 'week',
-            'agendaDay' => 'day',
-        ];
-
         $resolver->setDefaults([
             'required' => true,
-            'choices' => $choices,
+            'choices' => self::CHOICES,
             'search' => false,
         ]);
     }

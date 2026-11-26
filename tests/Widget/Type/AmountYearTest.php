@@ -11,7 +11,6 @@ namespace App\Tests\Widget\Type;
 
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
-use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Widget\Type\AbstractCounterYear;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\AmountYear;
@@ -34,10 +33,9 @@ class AmountYearTest extends AbstractWidgetTypeTestCase
     public function createSut(): AbstractWidgetType
     {
         $repository = $this->createMock(TimesheetRepository::class);
-        $configuration = SystemConfigurationFactory::createStub();
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
 
-        $sut = new AmountYear($repository, $configuration, $dispatcher);
+        $sut = new AmountYear($repository, $dispatcher);
         $sut->setUser(new User());
 
         return $sut;
@@ -57,5 +55,24 @@ class AmountYearTest extends AbstractWidgetTypeTestCase
 
         self::assertEquals('widget/widget-counter-money.html.twig', $sut->getTemplateName());
         self::assertEquals('AmountYear', $sut->getId());
+    }
+
+    public function testUsesTheCalendarYear(): void
+    {
+        $repository = $this->createMock(TimesheetRepository::class);
+        $repository->expects($this->once())->method('getRevenue')->willReturnCallback(
+            function (\DateTimeInterface $begin, \DateTimeInterface $end) {
+                self::assertEquals(date('Y') . '-01-01 00:00:00', $begin->format('Y-m-d H:i:s'));
+                self::assertEquals(date('Y') . '-12-31 23:59:59', $end->format('Y-m-d H:i:s'));
+
+                return [];
+            }
+        );
+
+        $sut = new AmountYear($repository, $this->createMock(EventDispatcherInterface::class));
+        $sut->setUser(new User());
+
+        self::assertEquals([], $sut->getData());
+        self::assertEquals('stats.amountYear', $sut->getTitle());
     }
 }

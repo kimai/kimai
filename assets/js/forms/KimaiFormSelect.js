@@ -135,6 +135,12 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             }};
         }
 
+        // the selected options are read in the order of the HTML, which is the order of the choice list:
+        // use the given order instead, otherwise sorted selections would be re-ordered upon saving
+        if (isMultiple && node.dataset['items'] !== undefined) {
+            options.items = JSON.parse(node.dataset['items']);
+        }
+
         const select = new TomSelect(node, options);
         node.addEventListener('data-reloaded', (event) => {
             select.clear(true);
@@ -320,7 +326,7 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
         const DATE_UTILS = this.getDateUtils();
         const regexp = new RegExp('{[^}]*?}','g');
         let title = pattern;
-        let match = null;
+        let match;
 
         while ((match = regexp.exec(pattern)) !== null) {
             // cutting a string like "{name}" into "name"

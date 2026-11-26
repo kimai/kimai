@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
+    - name: Feature request
+      url: https://roadmap.kimai.org/
+      about: Suggest an idea to make Kimai better, at our Roadmap platform.
     - name: Read our documentation
       url: https://www.kimai.org/documentation/
       about: Save your time! There is an instant solution for many issues in the documentation.

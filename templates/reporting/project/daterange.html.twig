@@ -35,6 +35,7 @@
 {% endblock %}
 
 {% block report_form_layout %}
+    {{ tables.datatable_column_modal_link(tableName) }}
     {{ form_widget(form.month, {'label': false}) }}
     {{ form_widget(form.customer, {'label': false, 'placeholder': 'customer'}) }}
     <div class="dropdown">
@@ -72,7 +73,7 @@
             {% if not hasData %}
                 {{ widgets.nothing_found() }}
             {% else %}
-                {{ tables.datatable_header(tableName, columns, null, {'boxClass': ''}) }}
+                {{ tables.datatable_header(tableName, columns, null, {'boxClass': '', stickyFirst: true, columnConfig: false}) }}
 
                 {% if queryValue != '1' %}
                     {% for id, mapping in entries|sort((a, b) => a.customer.name <=> b.customer.name) %}

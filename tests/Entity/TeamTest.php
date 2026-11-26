@@ -284,7 +284,9 @@ class TeamTest extends TestCase
         self::assertSame($p, $sut->getProjects()[0]);
         self::assertSame($a, $sut->getActivities()[0]);
         self::assertSame($u, $sut->getTeamleads()[0]);
-        self::assertSame($u, $sut->getMembers()[0]->getUser());
+        $firstMember = $sut->getMembers()[0];
+        self::assertInstanceOf(TeamMember::class, $firstMember);
+        self::assertSame($u, $firstMember->getUser());
         self::assertSame($member->getUser(), $sut->getUsers()[1]);
     }
 }

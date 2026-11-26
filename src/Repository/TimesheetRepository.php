@@ -530,6 +530,9 @@ class TimesheetRepository extends EntityRepository
         return $aliases;
     }
 
+    /**
+     * @return Pagination<Timesheet>
+     */
     public function getPagerfantaForQuery(TimesheetQuery $query): Pagination
     {
         return new Pagination($this->getPaginatorForQuery($query), $query);
@@ -607,7 +610,7 @@ class TimesheetRepository extends EntityRepository
         return $timesheets;
     }
 
-    private function getQueryBuilderForQuery(TimesheetQuery $query): QueryBuilder
+    public function getQueryBuilderForQuery(TimesheetQuery $query): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -785,23 +788,11 @@ class TimesheetRepository extends EntityRepository
      */
     public function getRecentActivityIds(User $user, ?\DateTimeInterface $startFrom = null, int $limit = 10): array
     {
+        // find the highest timesheet ID per project/activity combination used by the user,
+        // then return the $limit most recently used combinations (highest ID = most recent).
         $qb = $this->getEntityManager()->createQueryBuilder();
-
-        // do NOT join the customer and do NOT check the customer visibility, as this
-        // will dramatically increase the speed of this (otherwise slow) query
-        // ->andWhere($qb->expr()->eq('c.visible', ':visible'))
-
-        // you might want to join activity and project to check their visibility
-        // but for now this is way slower than simply fetching more items
-        //
-        // ->andWhere($qb->expr()->eq('p.visible', ':visible'))
-        // ->join('t.activity', 'a')
-        // ->andWhere($qb->expr()->eq('a.visible', ':visible'))
-        // ->setParameter('visible', true, Types::BOOLEAN)
-
         $qb->select($qb->expr()->max('t.id') . ' AS maxid')
             ->from(Timesheet::class, 't')
-            ->indexBy('t', 't.id')
             ->andWhere($qb->expr()->eq('t.user', ':user'))
             ->groupBy('t.project', 't.activity')
             ->orderBy('maxid', 'DESC')
@@ -814,13 +805,21 @@ class TimesheetRepository extends EntityRepository
                 ->setParameter('begin', \DateTimeImmutable::createFromInterface($startFrom), Types::DATETIME_IMMUTABLE);
         }
 
-        $results = $qb->getQuery()->getScalarResult();
+        $permissionAliases = $this->addPermissionCriteria($qb, $user);
 
-        if (empty($results)) {
-            return [];
+        if (\in_array('p', $permissionAliases, true) || \in_array('c', $permissionAliases, true)) {
+            $qb->join('t.project', 'p');
         }
 
-        return array_column($results, 'maxid');
+        if (\in_array('c', $permissionAliases, true)) {
+            $qb->join('p.customer', 'c');
+        }
+
+        if (\in_array('a', $permissionAliases, true)) {
+            $qb->join('t.activity', 'a');
+        }
+
+        return array_column($qb->getQuery()->getScalarResult(), 'maxid');
     }
 
     /**
@@ -877,72 +876,76 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
-     * @param Timesheet $timesheet
      * @return RateInterface[]
      */
     public function findMatchingRates(Timesheet $timesheet): array
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('r, u, a')
-            ->from(ActivityRate::class, 'r')
-            ->leftJoin('r.user', 'u')
-            ->leftJoin('r.activity', 'a')
-            ->andWhere(
-                $qb->expr()->orX(
-                    $qb->expr()->eq('r.user', ':user'),
-                    $qb->expr()->isNull('r.user')
-                ),
-                $qb->expr()->orX(
-                    $qb->expr()->eq('r.activity', ':activity'),
-                    $qb->expr()->isNull('r.activity')
-                )
-            )
-            ->setParameter('user', $timesheet->getUser())
-            ->setParameter('activity', $timesheet->getActivity())
-        ;
-        $results = $qb->getQuery()->getResult();
+        $user = $timesheet->getUser();
+        $activity = $timesheet->getActivity();
+        $project = $timesheet->getProject();
+        $customer = $project?->getCustomer();
 
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('r, u, p')
-            ->from(ProjectRate::class, 'r')
-            ->leftJoin('r.user', 'u')
-            ->leftJoin('r.project', 'p')
-            ->andWhere(
-                $qb->expr()->orX(
-                    $qb->expr()->eq('r.user', ':user'),
-                    $qb->expr()->isNull('r.user')
-                ),
-                $qb->expr()->orX(
-                    $qb->expr()->eq('r.project', ':project'),
-                    $qb->expr()->isNull('r.project')
-                )
-            )
-            ->setParameter('user', $timesheet->getUser())
-            ->setParameter('project', $timesheet->getProject())
-        ;
-        $results = array_merge($results, $qb->getQuery()->getResult());
+        $results = [];
 
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('r, u, c')
-            ->from(CustomerRate::class, 'r')
-            ->leftJoin('r.user', 'u')
-            ->leftJoin('r.customer', 'c')
-            ->andWhere(
-                $qb->expr()->orX(
-                    $qb->expr()->eq('r.user', ':user'),
-                    $qb->expr()->isNull('r.user')
-                ),
-                $qb->expr()->orX(
-                    $qb->expr()->eq('r.customer', ':customer'),
-                    $qb->expr()->isNull('r.customer')
-                )
-            )
-            ->setParameter('user', $timesheet->getUser())
-            ->setParameter('customer', $timesheet->getProject()->getCustomer())
-        ;
-        $results = array_merge($results, $qb->getQuery()->getResult());
+        if ($activity?->getId() !== null) {
+            $qb = $this->getEntityManager()->createQueryBuilder();
+            $qb->select('r, u, a')
+                ->from(ActivityRate::class, 'r')
+                ->leftJoin('r.user', 'u')
+                ->leftJoin('r.activity', 'a')
+                ->andWhere($qb->expr()->eq('r.activity', ':activity'))
+                ->setParameter('activity', $activity)
+            ;
+            $this->addRateUserCriteria($qb, $user);
+            $results = array_merge($results, $qb->getQuery()->getResult());
+        }
+
+        if ($project?->getId() !== null) {
+            $qb = $this->getEntityManager()->createQueryBuilder();
+            $qb->select('r, u, p')
+                ->from(ProjectRate::class, 'r')
+                ->leftJoin('r.user', 'u')
+                ->leftJoin('r.project', 'p')
+                ->andWhere($qb->expr()->eq('r.project', ':project'))
+                ->setParameter('project', $project)
+            ;
+            $this->addRateUserCriteria($qb, $user);
+            $results = array_merge($results, $qb->getQuery()->getResult());
+        }
+
+        if ($customer?->getId() !== null) {
+            $qb = $this->getEntityManager()->createQueryBuilder();
+            $qb->select('r, u, c')
+                ->from(CustomerRate::class, 'r')
+                ->leftJoin('r.user', 'u')
+                ->leftJoin('r.customer', 'c')
+                ->andWhere($qb->expr()->eq('r.customer', ':customer'))
+                ->setParameter('customer', $customer)
+            ;
+            $this->addRateUserCriteria($qb, $user);
+            $results = array_merge($results, $qb->getQuery()->getResult());
+        }
 
         return $results;
+    }
+
+    private function addRateUserCriteria(QueryBuilder $qb, ?User $user): void
+    {
+        if ($user?->getId() === null) {
+            $qb->andWhere($qb->expr()->isNull('r.user'));
+
+            return;
+        }
+
+        $qb
+            ->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->eq('r.user', ':user'),
+                    $qb->expr()->isNull('r.user')
+                )
+            )
+            ->setParameter('user', $user)
+        ;
     }
 
     public function hasRecordForTime(Timesheet $timesheet): bool

@@ -1282,10 +1282,6 @@
         <source>revenue</source>
         <target state="translated">Indkomster</target>
       </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear" xml:space="preserve">
-        <source>stats.workingTimeFinancialYear</source>
-        <target state="translated">Finansår</target>
-      </trans-unit>
       <trans-unit id="nqEYrfk" resname="security.unlock.intro" xml:space="preserve">
         <source>security.unlock.intro</source>
         <target state="translated">Indtast venligst din adgangskode for fuld adgang</target>
@@ -1314,10 +1310,6 @@
         <source>Working hours</source>
         <target state="translated">Arbejdstimer</target>
       </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear" xml:space="preserve">
-        <source>stats.amountFinancialYear</source>
-        <target state="translated">Indtægter dette finansår</target>
-      </trans-unit>
       <trans-unit id="2lL9ACs" resname="help.invoiceTemplate" xml:space="preserve">
         <source>help.invoiceTemplate</source>
         <target state="translated">Fakturaren er genereret med denne skabelon.</target>
@@ -1342,10 +1334,6 @@
         <source>Apps</source>
         <target state="translated">Applikationer</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="translated">Finansår</target>
-      </trans-unit>
       <trans-unit id="E3Kj9lt" resname="stats.userAmountMonth" xml:space="preserve">
         <source>stats.userAmountMonth</source>
         <target state="translated">Mine indtægter denne måned</target>
@@ -1357,10 +1345,6 @@
       <trans-unit id="LDS9o5X" resname="stats.userAmountWeek" xml:space="preserve">
         <source>stats.userAmountWeek</source>
         <target state="translated">Min indtægt denne uge</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear" xml:space="preserve">
-        <source>stats.activeUsersFinancialYear</source>
-        <target state="translated">Aktive brugere dette finansielle år</target>
       </trans-unit>
       <trans-unit id="EwPAaws" resname="type" xml:space="preserve">
         <source>type</source>
@@ -1776,7 +1760,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">Familiebegivenheder, flytning, farligt vejr, osv.</target>
+        <target state="needs-translation">Familiebegivenheder, flytning, farligt vejr, osv.</target>
       </trans-unit>
       <trans-unit id="TTnaBm4" resname="day_full" xml:space="preserve">
         <source>day_full</source>

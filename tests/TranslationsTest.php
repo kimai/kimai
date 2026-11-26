@@ -11,6 +11,7 @@ namespace App\Tests;
 
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Yaml\Yaml;
 
 #[Group('integration')]
 class TranslationsTest extends TestCase
@@ -101,5 +102,34 @@ class TranslationsTest extends TestCase
                 self::assertEquals($expectedCounter, $counter, \sprintf('Missing replacer in "%s", did not find translation keys: %s', basename($file), implode(', ', array_keys($transLang))));
             }
         }
+    }
+
+    public function testEnabledLocalesAreLimitedToTranslatedLocales(): void
+    {
+        $translationConfig = Yaml::parseFile(__DIR__ . '/../config/packages/translation.yaml');
+        self::assertIsArray($translationConfig);
+        $framework = $translationConfig['framework'];
+        self::assertIsArray($framework);
+        self::assertSame('%kimai_translated_locales%', $framework['enabled_locales']);
+
+        $services = Yaml::parseFile(__DIR__ . '/../config/services.yaml');
+        self::assertIsArray($services);
+        $parameters = $services['parameters'];
+        self::assertIsArray($parameters);
+        $enabledLocales = $parameters['kimai_translated_locales'];
+        self::assertIsArray($enabledLocales);
+
+        $localeSettings = include __DIR__ . '/../config/locales.php';
+        self::assertIsArray($localeSettings);
+
+        $translatedLocales = [];
+        foreach ($localeSettings as $locale => $settings) {
+            self::assertIsArray($settings);
+            if ($settings['translation'] === true) {
+                $translatedLocales[] = $locale;
+            }
+        }
+
+        self::assertSame($translatedLocales, $enabledLocales);
     }
 }

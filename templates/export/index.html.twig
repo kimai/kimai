@@ -4,9 +4,13 @@
 
 {% set totalDuration = 0 %}
 {% set totalRates = {} %}
+{% set totalItems = 0 %}
+{% set entries = preview is not null ? preview.exportItems : [] %}
+{% set preview_items = entries|length %}
 
-{% if too_many is not same as (true) and preview_show and entries is not empty %}
-    {% for row in by_customer %}
+{% if preview is not null %}
+    {% for row in preview.statistic %}
+        {% set totalItems = totalItems + row.count %}
         {% set totalDuration = totalDuration + row.duration %}
         {% set customerCurrency = row.customer.currency %}
         {% if totalRates[customerCurrency] is not defined %}
@@ -43,9 +47,9 @@
 {% set editExported = is_granted('edit_exported_timesheet') %}
 {% set showMarkAsExportedButton = false %}
 {% set showToggleButton = false %}
-{% if entries is not empty and form.markAsExported is defined %}
+{% if preview is not null and form.markAsExported is defined %}
     {% set showMarkAsExportedButton = form.exported.vars.value != constant('App\\Repository\\Query\\TimesheetQuery::STATE_EXPORTED') %}
-    {% set showToggleButton = preview_show and form.exported.vars.value != constant('App\\Repository\\Query\\TimesheetQuery::STATE_ALL') %}
+    {% set showToggleButton = form.exported.vars.value != constant('App\\Repository\\Query\\TimesheetQuery::STATE_ALL') %}
 {% endif %}
 
 {% block status %}
@@ -95,12 +99,13 @@
         {% block box_footer%}
             {{ search.searchButton(form) }}
         {% endblock %}
-        {% block box_after %}{{ form_end(form) }}{% endblock %}
+        {% block box_after %}
+            {{ form_end(form) }}
+            <div style="display: none" id="export-token" data-value="{{ csrf_token('export.data') }}"></div>
+        {% endblock %}
     {% endembed %}
 
-    {% if too_many is same as (true) %}
-        {{ widgets.callout('danger', 'error.too_many_entries') }}
-    {% elseif preview_show %}
+    {% if preview is not null %}
         {% if entries is empty %}
             {{ widgets.nothing_found() }}
         {% else %}
@@ -110,17 +115,47 @@
                     {{ 'preview'|trans }}
                 {% endblock %}
                 {% block box_attributes %}id="preview_export"{% endblock %}
-                {% block box_footer %}
-                    {% if showMarkAsExportedButton %}
-                    <div class="d-flex">
-                        <div class="form-check form-switch">
-                            <input type="checkbox" id="markAsExportedCheck" name="markAsExportedCheck" class="form-check-input" value="1" {% if form.markAsExported.vars.value == '1' %} checked="checked"{% endif %}>
-                            <label class="form-check-label" for="markAsExportedCheck">{{ 'mark_as_exported'|trans }}</label>
-                        </div>
-                    </div>
-                    {% endif %}
-                    <div class="d-flex">
-                        <div class="btn-group me-auto" id="export-buttons" role="group">
+                {% block box_body %}
+                    <table class="table table-hover dataTable">
+                        <thead>
+                        <tr>
+                            <th>{{ 'customer'|trans }}</th>
+                            <th class="w-min text-end d-none d-sm-table-cell">{{ 'duration'|trans }}</th>
+                            {% if show_rates %}
+                            <th class="w-min text-end">{{ 'total_rate'|trans }}</th>
+                            {% endif %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for row in preview.statistic %}
+                            {% set currency = row.customer.currency %}
+                            <tr>
+                                <td>
+                                    {{ widgets.label_customer(row.customer) }}
+                                </td>
+                                <td class="w-min text-end d-none d-sm-table-cell">
+                                    {{ row.duration|duration }}
+                                </td>
+                                {% if show_rates %}
+                                <td class="w-min text-end">
+                                    {{ row.rate|money(currency) }}
+                                </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endblock %}
+            {% endembed %}
+
+
+            {% if preview is not null %}
+                {% if totalItems > max_export_items %}
+                    {{ widgets.callout('danger', 'export.too_many_entries'|trans({'%limit%': max_export_items, '%count%': totalItems})) }}
+                {% else %}
+                    <div class="btn-list w-100 mb-3">
+                        {{ tables.datatable_column_modal_link(tableName) }}
+                        <div class="btn-group{% if not showMarkAsExportedButton %} me-auto{% endif %}" id="export-buttons" role="group">
                             {% set allowCreate = is_granted('create_export_template') %}
                             {% for type, group in buttons %}
                                 {% if type == 'html' %}
@@ -161,6 +196,12 @@
                                 {{ widgets.action_button('create', {'url': path('export_template_create'), 'class': 'btn modal-ajax-form open-edit', 'title': 'create'|trans}) }}
                             {% endif %}
                         </div>
+                        {% if showMarkAsExportedButton %}
+                            <div class="form-check form-switch d-flex align-items-center mb-0 me-auto">
+                                <input type="checkbox" id="markAsExportedCheck" name="markAsExportedCheck" class="form-check-input mt-0" value="1" {% if form.markAsExported.vars.value == '1' %} checked="checked"{% endif %}>
+                                <label class="form-check-label ms-2" for="markAsExportedCheck">{{ 'mark_as_exported'|trans }}</label>
+                            </div>
+                        {% endif %}
                         {% if showToggleButton %}
                             <button id="toggle-button" class="btn ms-auto d-none d-sm-inline-flex">
                                 {% if form.exported.vars.value == '5' %}
@@ -173,46 +214,10 @@
                             </button>
                         {% endif %}
                     </div>
-                {% endblock %}
-                {% block box_body %}
-                    <table class="table table-hover dataTable">
-                        <thead>
-                        <tr>
-                            <th>{{ 'customer'|trans }}</th>
-                            <th class="w-min text-end d-none d-sm-table-cell">{{ 'duration'|trans }}</th>
-                            {% if show_rates %}
-                            <th class="w-min text-end">{{ 'total_rate'|trans }}</th>
-                            {% endif %}
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for row in by_customer %}
-                            {% set currency = row.customer.currency %}
-                            <tr>
-                                <td>
-                                    {{ widgets.label_customer(row.customer) }}
-                                </td>
-                                <td class="w-min text-end d-none d-sm-table-cell">
-                                    {{ row.duration|duration }}
-                                </td>
-                                {% if show_rates %}
-                                <td class="w-min text-end">
-                                    {{ row.rate|money(currency) }}
-                                </td>
-                                {% endif %}
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                {% endblock %}
-            {% endembed %}
-
-            {% set itemsAmount = entries|length %}
-            {% if preview_limit %}
-                {% set entries = entries|slice(0, preview_limit) %}
+                {% endif %}
             {% endif %}
 
-            {{ tables.datatable_header(tableName, columns, query) }}
+            {{ tables.datatable_header(tableName, columns, query, {columnConfig: false}) }}
             {% set edit_route = is_granted('view_other_timesheet') ? 'admin_timesheet_edit' : 'timesheet_edit' %}
             {% for entry in entries %}
                 {% set currency = entry.project.customer.currency %}
@@ -301,9 +306,9 @@
                     </td>
                 </tr>
             {% endfor %}
-            {% if preview_limit and itemsAmount > preview_limit %}
+            {% if totalItems > preview_items %}
                 <tr class="warning">
-                    <td colspan="10">&raquo; {{ 'preview.skipped_rows'|trans({'%rows%': (itemsAmount - preview_limit)}) }}</td>
+                    <td colspan="10">&raquo; {{ 'preview.skipped_rows'|trans({'%rows%': (totalItems - preview_items)}) }}</td>
                 </tr>
             {% endif %}
             {{ tables.data_table_footer(entries) }}
@@ -354,26 +359,50 @@
                     Toggle the form, because by default it triggers the search
                 #}
                 if (node.matches('#export-buttons .startExportBtn')) {
-                    document.getElementById('renderer').value = node.dataset['type'];
-                    const form = document.getElementById("export-form");
-                    const previousAction = form.action;
-                    const previousMethod = form.method;
-                    const previousTarget = form.target;
-                    form.target = '_blank';
+                    event.preventDefault();
+
+                    /** @type {KimaiForm} */
+                    const FORM = kimai.getPlugin('form');
+                    const overwrites = {
+                        'renderer': node.dataset['type'],
+                        '_token': document.getElementById('export-token').dataset['value'],
+                    };
+
+                    const uri = FORM.convertFormDataToQueryString(document.getElementById('export-form'), overwrites);
+
+                    // remove the form of a previous export, it cannot be deleted right
+                    // after submitting it, as that might cancel the pending request
+                    const previous = document.getElementById('export-post-form');
+                    if (previous !== null) {
+                        previous.remove();
+                    }
+
+                    const form = document.createElement('form');
+                    form.id = 'export-post-form';
                     form.method = 'POST';
                     form.action = '{{ path('export_data') }}';
+                    form.target = '_blank';
+
+                    for (const [name, value] of new URLSearchParams(uri)) {
+                        const field = document.createElement('input');
+                        field.type = 'hidden';
+                        field.name = name;
+                        field.value = value;
+                        form.appendChild(field);
+                    }
+
+                    document.body.appendChild(form);
                     form.submit();
-                    document.getElementById('renderer').value = '';
-                    form.target = previousTarget;
-                    form.method = previousMethod;
-                    form.action = previousAction;
                 }
             }, false);
 
             {% if showMarkAsExportedButton %}
-                document.getElementById('markAsExportedCheck').addEventListener('change', function(event) {
+            let mrkExpBtn = document.getElementById('markAsExportedCheck');
+            if (mrkExpBtn !== null) {
+                mrkExpBtn.addEventListener('change', function (event) {
                     document.getElementById('markAsExported').value = event.target.checked ? 1 : 0;
                 });
+            }
             {% endif %}
         });
 
@@ -400,9 +429,13 @@
                 });
             }
 
-            document.getElementById('toggle-button').addEventListener('click', function (event) {
-                confirmToggleState({% if form.exported.vars.value == '5' %}true{% else %}false{% endif %});
-            }, false);
+            let tglBtn = document.getElementById('toggle-button');
+
+            if (tglBtn !== null) {
+                tglBtn.addEventListener('click', function (event) {
+                    confirmToggleState({% if form.exported.vars.value == '5' %}true{% else %}false{% endif %});
+                }, false);
+            }
         {% endif %}
     </script>
 {% endblock %}

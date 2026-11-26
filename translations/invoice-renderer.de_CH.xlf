@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="m1UyfD9" resname="service-date" approved="no">
         <source>Single service date</source>
-        <target state="translated">Servicedatum</target>
+        <target state="translated">Leistungsdatum</target>
       </trans-unit>
     </body>
   </file>

@@ -50,6 +50,12 @@ final class TeamController extends BaseApiController
     {
     }
 
+    private function loadTeamWithDependencies(Team $team): void
+    {
+        $loader = $this->repository->createTeamLoader(false, true);
+        $loader->loadResults([$team]);
+    }
+
     /**
      * Fetch teams
      */
@@ -72,11 +78,13 @@ final class TeamController extends BaseApiController
     /**
      * Fetch team
      */
-    #[IsGranted('view_team')]
+    #[IsGranted('view', 'team')]
     #[OA\Response(response: 200, description: 'Returns the team', content: new OA\JsonContent(ref: '#/components/schemas/Team'))]
     #[Route(methods: ['GET'], path: '/{id}', name: 'get_team', requirements: ['id' => '\d+'])]
     public function getAction(Team $team): Response
     {
+        $this->loadTeamWithDependencies($team);
+
         $view = new View($team, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
@@ -115,6 +123,7 @@ final class TeamController extends BaseApiController
 
         if ($form->isValid()) {
             $this->teamService->saveTeam($team);
+            $this->loadTeamWithDependencies($team);
 
             $view = new View($team, 200);
             $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -158,6 +167,7 @@ final class TeamController extends BaseApiController
         }
 
         $this->teamService->saveTeam($team);
+        $this->loadTeamWithDependencies($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -326,6 +336,7 @@ final class TeamController extends BaseApiController
         $team->addUser($member);
 
         $this->teamService->saveTeam($team);
+        $this->loadTeamWithDependencies($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -343,6 +354,19 @@ final class TeamController extends BaseApiController
     #[Route(methods: ['DELETE'], path: '/{id}/members/{userId}', name: 'delete_team_member', requirements: ['id' => '\d+', 'userId' => '\d+'])]
     public function deleteMemberAction(Team $team, #[MapEntity(mapping: ['userId' => 'id'])] User $member): Response
     {
+        // SECURITY NOTE: this is intentional and NOT a missing authorization check.
+        // Unlike postMemberAction(), this route deliberately does NOT check 'access_user' on $member.
+        //
+        // 'access_user' protects the ACQUISITION of access to a user: adding someone to a team makes the
+        // teamlead their supervisor (see RolePermissionManager::checkUserAccess), which must not be possible
+        // for disabled users or system accounts. Removing a member is the inverse operation: it only reduces
+        // the members access and grants nothing to the caller. There is no "no team = visible to everyone"
+        // fallback for users (unlike customers/projects/activities, which is why their revoke routes check
+        // 'permissions'), so the reasoning behind those checks does not apply here.
+        //
+        // Anyone allowed to edit the team must be able to remove ALL of its members, including disabled users
+        // and system accounts (e.g. cleaning up offboarded employees), which matches the web UI.
+        // Adding 'access_user' here would make disabled members unremovable for teamleads - a regression.
         if (!$member->isInTeam($team)) {
             throw new BadRequestHttpException('User is not a member of the team');
         }
@@ -354,6 +378,7 @@ final class TeamController extends BaseApiController
         $team->removeUser($member);
 
         $this->teamService->saveTeam($team);
+        $this->loadTeamWithDependencies($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -380,6 +405,7 @@ final class TeamController extends BaseApiController
 
         $team->addCustomer($customer);
         $customerRepository->saveCustomer($customer);
+        $this->loadTeamWithDependencies($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -406,6 +432,7 @@ final class TeamController extends BaseApiController
 
         $team->removeCustomer($customer);
         $customerRepository->saveCustomer($customer);
+        $this->loadTeamWithDependencies($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -432,6 +459,7 @@ final class TeamController extends BaseApiController
 
         $team->addProject($project);
         $projectRepository->saveProject($project);
+        $this->loadTeamWithDependencies($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -458,6 +486,7 @@ final class TeamController extends BaseApiController
 
         $team->removeProject($project);
         $projectRepository->saveProject($project);
+        $this->loadTeamWithDependencies($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -484,6 +513,7 @@ final class TeamController extends BaseApiController
 
         $team->addActivity($activity);
         $activityRepository->saveActivity($activity);
+        $this->loadTeamWithDependencies($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -510,6 +540,7 @@ final class TeamController extends BaseApiController
 
         $team->removeActivity($activity);
         $activityRepository->saveActivity($activity);
+        $this->loadTeamWithDependencies($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);

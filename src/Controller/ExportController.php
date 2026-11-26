@@ -13,6 +13,7 @@ use App\Configuration\SystemConfiguration;
 use App\Entity\ExportableItem;
 use App\Entity\ExportTemplate;
 use App\Export\Base\DispositionInlineInterface;
+use App\Export\ExportableResultInterface;
 use App\Export\ServiceExport;
 use App\Export\TooManyItemsExportException;
 use App\Form\ExportTemplateSpreadsheetForm;
@@ -41,43 +42,17 @@ final class ExportController extends AbstractController
     public function indexAction(Request $request): Response
     {
         $query = $this->getDefaultQuery();
-
-        $showPreview = false;
-        $tooManyResults = false;
-        $maxItemsPreview = 500;
-        $entries = [];
+        $preview = null;
 
         $form = $this->getToolbarForm($query, 'GET');
         if ($this->handleSearch($form, $request)) {
             return $this->redirectToRoute('export');
         }
 
-        $byCustomer = [];
+        $maxItems = $this->export->getMaximumResults($query) ?? PHP_INT_MAX;
 
-        if ($form->isValid() && ($query->hasBookmark() || $request->query->has('performSearch'))) {
-            try {
-                $showPreview = true;
-                $entries = $this->getEntries($query);
-                foreach ($entries as $entry) {
-                    $cid = $entry->getProject()->getCustomer()->getId();
-                    if (!isset($byCustomer[$cid])) {
-                        $byCustomer[$cid] = [
-                            'customer' => $entry->getProject()->getCustomer(),
-                            'rate' => 0,
-                            'internalRate' => 0,
-                            'duration' => 0,
-                        ];
-                    }
-                    $byCustomer[$cid]['rate'] += $entry->getRate();
-                    $byCustomer[$cid]['internalRate'] += $entry->getInternalRate() ?? 0.0;
-                    $byCustomer[$cid]['duration'] += $entry->getDuration() ?? 0;
-                }
-            } catch (TooManyItemsExportException $ex) {
-                $tooManyResults = true;
-                $showPreview = false;
-                $entries = [];
-                $this->logException($ex);
-            }
+        if ($form->isSubmitted() && $form->isValid() && ($query->hasBookmark() || $request->query->has('performSearch'))) {
+            $preview = $this->getPreview($query, min(500, $maxItems));
         }
 
         $page = new PageSetup('export');
@@ -110,14 +85,11 @@ final class ExportController extends AbstractController
 
         return $this->render('export/index.html.twig', [
             'page_setup' => $page,
-            'too_many' => $tooManyResults,
-            'by_customer' => $byCustomer,
             'query' => $query,
-            'entries' => $entries,
+            'preview' => $preview,
             'form' => $form->createView(),
             'buttons' => $buttons,
-            'preview_limit' => $maxItemsPreview,
-            'preview_show' => $showPreview,
+            'max_export_items' => $maxItems,
             'show_rates' => $showRates,
         ]);
     }
@@ -125,10 +97,25 @@ final class ExportController extends AbstractController
     #[Route(path: '/data', name: 'export_data', methods: ['POST'])]
     public function export(Request $request, SystemConfiguration $systemConfiguration): Response
     {
+        $token = $request->request->get('_token');
+        $token = \is_string($token) ? $token : null;
+
+        if (!$this->isCsrfTokenValid('export.data', $token)) {
+            throw $this->createAccessDeniedException('Invalid security token for export.');
+        }
+
+        // prevent the token from becoming part of the search query
+        $request->request->remove('_token');
+
         $query = $this->getDefaultQuery();
 
         $form = $this->getToolbarForm($query, 'POST');
         $form->handleRequest($request);
+
+        // shouldn't happen in regular use-cases, do not show form errors
+        if ($form->isSubmitted() && !$form->isValid()) {
+            throw $this->createAccessDeniedException('Export form validation failed.');
+        }
 
         $type = $query->getRenderer();
         if (null === $type) {
@@ -174,11 +161,7 @@ final class ExportController extends AbstractController
         return $query;
     }
 
-    /**
-     * @return ExportableItem[]
-     * @throws TooManyItemsExportException
-     */
-    private function getEntries(ExportQuery $query): array
+    private function sanitizeQuery(ExportQuery $query): void
     {
         if (null !== $query->getBegin()) {
             $query->getBegin()->setTime(0, 0, 0);
@@ -186,8 +169,27 @@ final class ExportController extends AbstractController
         if (null !== $query->getEnd()) {
             $query->getEnd()->setTime(23, 59, 59);
         }
+    }
+
+    /**
+     * @return ExportableItem[]
+     * @throws TooManyItemsExportException
+     */
+    private function getEntries(ExportQuery $query): array
+    {
+        $this->sanitizeQuery($query);
 
         return $this->export->getExportItems($query);
+    }
+
+    /**
+     * @param non-negative-int $maxItems
+     */
+    private function getPreview(ExportQuery $query, int $maxItems): ExportableResultInterface
+    {
+        $this->sanitizeQuery($query);
+
+        return $this->export->getExportPreview($query, $maxItems);
     }
 
     /**

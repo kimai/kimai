@@ -34,6 +34,14 @@
         <source>daterangepicker.allTime</source>
         <target state="translated">Totale periode</target>
       </trans-unit>
+      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth" xml:space="preserve">
+        <source>daterangepicker.thisMonth</source>
+        <target state="translated">Deze maand</target>
+      </trans-unit>
+      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" xml:space="preserve">
+        <source>daterangepicker.lastMonth</source>
+        <target state="translated">Vorige maand</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

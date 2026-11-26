@@ -233,7 +233,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     /**
      * Tags
      *
-     * @var Collection<Tag>
+     * @var Collection<int, Tag>
      */
     #[ORM\JoinTable(name: 'kimai2_timesheet_tags')]
     #[ORM\JoinColumn(name: 'timesheet_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
@@ -244,7 +244,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     /**
      * Meta fields registered with the timesheet
      *
-     * @var Collection<TimesheetMeta>
+     * @var Collection<int, TimesheetMeta>
      */
     #[ORM\OneToMany(mappedBy: 'timesheet', targetEntity: TimesheetMeta::class, cascade: ['persist'])]
     #[Serializer\Expose]
@@ -463,7 +463,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     }
 
     /**
-     * @return Collection<Tag>
+     * @return Collection<int, Tag>
      */
     public function getTags(): Collection
     {
@@ -644,6 +644,11 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
         $this->markAsModified();
 
         if (null === ($current = $this->getMetaField($meta->getName()))) {
+            if (!($meta instanceof TimesheetMeta)) {
+                throw new \InvalidArgumentException(
+                    \sprintf('Expected instanceof TimesheetMeta, received "%s"', \get_class($meta))
+                );
+            }
             $meta->setEntity($this);
             $this->meta->add($meta);
 

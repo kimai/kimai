@@ -42,11 +42,17 @@ class PasswordResetSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $uri = $event->getRequest()->getRequestUri();
+        $request = $event->getRequest();
 
         // never trigger password reset on API calls
-        // TODO 3.0 remove /register/
-        if (str_starts_with($uri, '/api/') || stripos($uri, '/register/') !== false || stripos($uri, '/wizard/') !== false) {
+        if (str_starts_with($request->getPathInfo(), '/api/')) {
+            return;
+        }
+
+        // the matched route name is used on purpose: matching on the raw request URI
+        // would allow to bypass this check by adding e.g. "?foo=/wizard/" to any URL
+        $route = $request->attributes->get('_route');
+        if (\is_string($route) && self::isAllowedRoute($route)) {
             return;
         }
 
@@ -56,7 +62,9 @@ class PasswordResetSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if (!$this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
+        // remembered users must be redirected as well, otherwise closing the browser would skip the reset.
+        // users with a pending 2FA challenge are not granted this attribute and must finish the login first.
+        if (!$this->security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return;
         }
 
@@ -66,5 +74,20 @@ class PasswordResetSubscriber implements EventSubscriberInterface
 
         $response = new RedirectResponse($this->urlGenerator->generate('wizard_password'));
         $event->setResponse($response);
+    }
+
+    /**
+     * Routes that must be reachable while a password reset is pending.
+     */
+    public static function isAllowedRoute(string $route): bool
+    {
+        // TODO 3.0 remove registration routes
+        // remembered users are sent from the wizard (requires full authentication) to the login form to unlock their session
+        return $route === 'logout'
+            || $route === 'login'
+            || $route === 'security_check'
+            || $route === 'user_registration_check_email'
+            || str_starts_with($route, 'wizard_')
+            || str_starts_with($route, 'registration_');
     }
 }

@@ -216,7 +216,7 @@
       </trans-unit>
       <trans-unit id="udkGKEU" resname="authentication">
         <source>authentication</source>
-        <target>Авторизация</target>
+        <target state="translated">Аутентификация</target>
       </trans-unit>
       <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
         <source>help.theme.color_choices</source>
@@ -229,10 +229,6 @@
       <trans-unit id="OIvZ_wc" resname="timesheet.time_increment">
         <source>timesheet.time_increment</source>
         <target>Выбор минут для С &amp; По</target>
-      </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target>Финансовый год</target>
       </trans-unit>
       <trans-unit id="wrnXs_a" resname="timesheet.rules.lockdown_period_timezone">
         <source>timesheet.rules.lockdown_period_timezone</source>

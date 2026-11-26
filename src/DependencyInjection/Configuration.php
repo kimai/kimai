@@ -50,7 +50,6 @@ final class Configuration implements ConfigurationInterface
                 ->append($this->getExportNode())
                 ->append($this->getCalendarNode())
                 ->append($this->getThemeNode())
-                ->append($this->getCompanyNode())
                 ->append($this->getDefaultsNode())
                 ->append($this->getPermissionsNode())
                 ->append($this->getLdapNode())
@@ -528,22 +527,6 @@ final class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    private function getCompanyNode(): ArrayNodeDefinition
-    {
-        $builder = new TreeBuilder('company');
-        /** @var ArrayNodeDefinition $node */
-        $node = $builder->getRootNode();
-
-        $node
-            ->addDefaultsIfNotSet()
-            ->children()
-                ->scalarNode('financial_year')->defaultNull()->end()
-            ->end()
-        ;
-
-        return $node;
-    }
-
     private function getUserNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('user');
@@ -578,7 +561,16 @@ final class Configuration implements ConfigurationInterface
                     ->defaultValue(3600)
                 ->end()
                 ->integerNode('password_reset_token_ttl')
-                    ->defaultValue(86400)
+                    ->defaultValue(1800)
+                ->end()
+                ->integerNode('password_strength')
+                    ->info('Minimum password strength: 0 = disabled, 1 = weak, 2 = medium, 3 = strong, 4 = very strong')
+                    ->defaultValue(0)
+                    ->min(0)
+                    ->max(4)
+                ->end()
+                ->booleanNode('auth_change')
+                    ->defaultFalse()
                 ->end()
             ->end()
         ;
@@ -642,6 +634,7 @@ final class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('timezone')->defaultNull()->end()
                         ->scalarNode('language')->defaultValue(User::DEFAULT_LANGUAGE)->end()
+                        ->scalarNode('locale')->defaultNull()->end()
                         ->scalarNode('theme')
                             ->defaultValue('auto')
                             ->validate()

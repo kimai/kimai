@@ -20,9 +20,18 @@ class TotpActivationTest extends TestCase
     public function testDefaultValues(): void
     {
         $user = new User();
-        $sut = new TotpActivation($user);
+        $user->setUserIdentifier('foo-bar');
+        $sut = new TotpActivation($user, 'JBSWY3DPEHPK3PXP');
 
         self::assertSame($user, $sut->getUser());
+        self::assertSame('JBSWY3DPEHPK3PXP', $sut->getSecret());
+        self::assertTrue($sut->isTotpAuthenticationEnabled());
+        self::assertSame('foo-bar', $sut->getTotpAuthenticationUsername());
+        self::assertSame('JBSWY3DPEHPK3PXP', $sut->getTotpAuthenticationConfiguration()->getSecret());
+        // the pending secret must use the same TOTP settings as the user
+        self::assertEquals($user->createTotpAuthenticationConfiguration('JBSWY3DPEHPK3PXP'), $sut->getTotpAuthenticationConfiguration());
+        // the pending secret must not be stored in the user
+        self::assertFalse($user->hasTotpSecret());
         self::assertNull($sut->getCode());
         $sut->setCode('');
         self::assertEquals('', $sut->getCode());

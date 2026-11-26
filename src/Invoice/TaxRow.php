@@ -10,12 +10,14 @@
 namespace App\Invoice;
 
 use App\Entity\Tax;
+use App\Utils\MoneyRounding;
 
 final class TaxRow
 {
     public function __construct(
         private readonly Tax $tax,
-        private readonly float $basePrice = 0.0
+        private readonly float $basePrice = 0.0,
+        private readonly ?string $currency = null,
     )
     {
     }
@@ -34,6 +36,8 @@ final class TaxRow
     {
         $percent = $this->tax->getRate() / 100.00;
 
-        return round($this->basePrice * $percent, 4);
+        // rounded to the currency precision: the total tax is calculated
+        // as the sum of all tax rows (EN 16931 rule BR-CO-14)
+        return MoneyRounding::round($this->basePrice * $percent, $this->currency);
     }
 }

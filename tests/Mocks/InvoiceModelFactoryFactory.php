@@ -21,10 +21,11 @@ use App\Invoice\Hydrator\InvoiceModelUserHydrator;
 use App\Invoice\InvoiceModelFactory;
 use App\Project\ProjectStatisticService;
 use App\Timesheet\RateCalculator\DecimalRateCalculator;
+use App\Timesheet\RateCalculator\RateCalculatorMode;
 
 class InvoiceModelFactoryFactory extends AbstractMockFactory
 {
-    public function create(): InvoiceModelFactory
+    public function create(?RateCalculatorMode $rateCalculatorMode = null): InvoiceModelFactory
     {
         /** @var CustomerStatisticService $customerStatistic */
         $customerStatistic = $this->getMockBuilder(CustomerStatisticService::class)->disableOriginalConstructor()->getMock();
@@ -45,6 +46,6 @@ class InvoiceModelFactoryFactory extends AbstractMockFactory
             new InvoiceItemDefaultHydrator(),
         ];
 
-        return new InvoiceModelFactory(new DecimalRateCalculator(), $modelHydrators, $itemHydrators);
+        return new InvoiceModelFactory($rateCalculatorMode ?? new DecimalRateCalculator(), $modelHydrators, $itemHydrators);
     }
 }

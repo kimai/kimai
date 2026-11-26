@@ -179,7 +179,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     /**
      * Meta fields registered with the customer
      *
-     * @var Collection<CustomerMeta>
+     * @var Collection<int, CustomerMeta>
      */
     #[ORM\OneToMany(mappedBy: 'customer', targetEntity: CustomerMeta::class, cascade: ['persist'])]
     #[Serializer\Expose]
@@ -191,7 +191,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     /**
      * Teams with access to the customer
      *
-     * @var Collection<Team>
+     * @var Collection<int, Team>
      */
     #[ORM\JoinTable(name: 'kimai2_customers_teams')]
     #[ORM\JoinColumn(name: 'customer_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
@@ -546,6 +546,11 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
     {
         if (null === ($current = $this->getMetaField($meta->getName()))) {
+            if (!($meta instanceof CustomerMeta)) {
+                throw new \InvalidArgumentException(
+                    \sprintf('Expected instanceof CustomerMeta, received "%s"', \get_class($meta))
+                );
+            }
             $meta->setEntity($this);
             $this->meta->add($meta);
 
@@ -577,7 +582,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     }
 
     /**
-     * @return Collection<Team>
+     * @return Collection<int, Team>
      */
     public function getTeams(): Collection
     {

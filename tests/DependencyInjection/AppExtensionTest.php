@@ -30,6 +30,7 @@ class AppExtensionTest extends TestCase
     {
         $container = new ContainerBuilder();
         $container->setParameter('kimai_locales', ['de', 'en', 'he', 'tr', 'zh_CN']);
+        $container->setParameter('kimai_translated_locales', ['de', 'en', 'he', 'tr', 'zh_CN']);
         $container->setParameter('kernel.project_dir', realpath(__DIR__ . '/../../'));
         $container->setParameter('security.role_hierarchy.roles', [
             'ROLE_TEAMLEAD' => ['ROLE_USER'],

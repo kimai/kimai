@@ -15,6 +15,7 @@ use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\TrackingMode\DurationFixedBeginMode;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -67,6 +68,33 @@ class DurationFixedBeginModeTest extends TestCase
         $diff = $timesheet->getBegin()->getTimestamp() - $seconds;
         // amount of seconds doesn't really matter, it must only be near "now"
         self::assertLessThanOrEqual(2, $diff);
+    }
+
+    /**
+     * @return array<int, array{0: array<string>, 1: bool}>
+     */
+    public static function getApiTimesPermissionData(): array
+    {
+        return [
+            [[], false],
+            [['view_other_timesheet'], false],
+            [['edit_other_timesheet'], true],
+            [['view_other_timesheet', 'edit_other_timesheet'], true],
+        ];
+    }
+
+    /**
+     * @param array<string> $permissions
+     */
+    #[DataProvider('getApiTimesPermissionData')]
+    public function testCanUpdateTimesWithAPIRequiresEditOtherTimesheet(array $permissions, bool $expected): void
+    {
+        $auth = $this->createMock(AuthorizationCheckerInterface::class);
+        $auth->method('isGranted')->willReturnCallback(fn (string $attribute): bool => \in_array($attribute, $permissions, true));
+
+        $sut = new DurationFixedBeginMode(SystemConfigurationFactory::create(new TestConfigLoader([]), []), $auth);
+
+        self::assertSame($expected, $sut->canUpdateTimesWithAPI());
     }
 
     public function testCreate(): void

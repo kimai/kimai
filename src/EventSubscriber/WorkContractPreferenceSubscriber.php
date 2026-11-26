@@ -14,13 +14,20 @@ use App\Entity\UserPreference;
 use App\Event\UserCreateEvent;
 use App\Event\UserPreferenceEvent;
 use App\WorkingTime\Calculator\WorkingTimeCalculatorDay;
+use App\WorkingTime\Mode\WorkingTimeMode;
+use App\WorkingTime\Mode\WorkingTimeModeFactory;
 use App\WorkingTime\Mode\WorkingTimeModeNone;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Validator\Constraints\Choice;
+use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Range;
 
 final class WorkContractPreferenceSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly AuthorizationCheckerInterface $voter)
+    public function __construct(private readonly AuthorizationCheckerInterface $voter, private readonly WorkingTimeModeFactory $modeFactory)
     {
     }
 
@@ -50,27 +57,32 @@ final class WorkContractPreferenceSubscriber implements EventSubscriberInterface
     {
         $canEditContract = $this->voter->isGranted('contract', $user);
 
+        $modes = array_map(fn (WorkingTimeMode $mode): string => $mode->getId(), $this->modeFactory->getAll());
+        $workHours = [new Range(['min' => 0, 'max' => 86400])];
+        $date = [new Date()];
+
         $prefs = [
-            UserPreference::WORK_CONTRACT_TYPE => WorkingTimeModeNone::ID,
-            WorkingTimeCalculatorDay::WORK_HOURS_MONDAY => 0,
-            WorkingTimeCalculatorDay::WORK_HOURS_TUESDAY => 0,
-            WorkingTimeCalculatorDay::WORK_HOURS_WEDNESDAY => 0,
-            WorkingTimeCalculatorDay::WORK_HOURS_THURSDAY => 0,
-            WorkingTimeCalculatorDay::WORK_HOURS_FRIDAY => 0,
-            WorkingTimeCalculatorDay::WORK_HOURS_SATURDAY => 0,
-            WorkingTimeCalculatorDay::WORK_HOURS_SUNDAY => 0,
-            UserPreference::PUBLIC_HOLIDAY_GROUP => null,
-            UserPreference::HOLIDAYS_PER_YEAR => 0.0,
-            'work_start_day' => null,
-            'work_last_day' => null,
+            UserPreference::WORK_CONTRACT_TYPE => [WorkingTimeModeNone::ID, [new NotBlank(), new Choice(choices: $modes)]],
+            WorkingTimeCalculatorDay::WORK_HOURS_MONDAY => [0, $workHours],
+            WorkingTimeCalculatorDay::WORK_HOURS_TUESDAY => [0, $workHours],
+            WorkingTimeCalculatorDay::WORK_HOURS_WEDNESDAY => [0, $workHours],
+            WorkingTimeCalculatorDay::WORK_HOURS_THURSDAY => [0, $workHours],
+            WorkingTimeCalculatorDay::WORK_HOURS_FRIDAY => [0, $workHours],
+            WorkingTimeCalculatorDay::WORK_HOURS_SATURDAY => [0, $workHours],
+            WorkingTimeCalculatorDay::WORK_HOURS_SUNDAY => [0, $workHours],
+            UserPreference::PUBLIC_HOLIDAY_GROUP => [null, [new Length(['max' => 250])]],
+            UserPreference::HOLIDAYS_PER_YEAR => [0.0, [new Range(['min' => 0])]],
+            'work_start_day' => [null, $date],
+            'work_last_day' => [null, $date],
         ];
 
-        foreach ($prefs as $prefName => $defaultValue) {
+        foreach ($prefs as $prefName => [$defaultValue, $constraints]) {
             $pref = $user->getPreference($prefName);
             if ($pref === null) {
                 $pref = new UserPreference($prefName, $defaultValue);
                 $user->addPreference($pref);
             }
+            $pref->setConstraints($constraints);
             $pref->setEnabled($canEditContract);
         }
     }

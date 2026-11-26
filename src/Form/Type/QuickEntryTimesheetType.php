@@ -33,6 +33,7 @@ final class QuickEntryTimesheetType extends AbstractType
                 'placeholder' => '0:00',
             ],
             'icon' => null,
+            'parse_mode' => DurationType::PARSE_MODE_INTEGER_MINUTES,
         ];
 
         $duration = $options['duration_minutes'];

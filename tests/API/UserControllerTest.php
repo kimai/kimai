@@ -9,9 +9,12 @@
 
 namespace App\Tests\API;
 
+use App\DataFixtures\UserFixtures;
 use App\Entity\Role;
+use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\Mocks\PrepareUserEventSubscriberMock;
+use App\Timesheet\RateServiceInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -140,6 +143,101 @@ class UserControllerTest extends APIControllerBaseTestCase
         self::assertEquals('6', $result['id']);
         self::assertEquals('Super Administrator', $result['title']);
         self::assertEquals('', $result['alias']);
+    }
+
+    private function assignSupervisorWithRates(string $username, string $supervisorName): User
+    {
+        $em = $this->getEntityManager();
+        $supervisor = $this->loadUserFromDatabase($supervisorName);
+        $supervisor->setPreferenceValue('hourly_rate', 175);
+        $supervisor->setPreferenceValue('internal_rate', 95);
+        $user = $this->loadUserFromDatabase($username);
+        $user->setSupervisor($supervisor);
+        $em->persist($supervisor);
+        $em->persist($user);
+        $em->flush();
+        $em->clear();
+
+        return $supervisor;
+    }
+
+    /**
+     * @param array<mixed> $supervisor
+     */
+    private function assertSupervisorWithoutDetails(array $supervisor, User $expected): void
+    {
+        self::assertApiResponseTypeStructure('User', $supervisor);
+        self::assertEquals($expected->getId(), $supervisor['id']);
+        foreach (['preferences', 'roles', 'teams', 'memberships', 'supervisor'] as $field) {
+            self::assertArrayNotHasKey($field, $supervisor);
+        }
+    }
+
+    public function testGetMyProfileDoesNotExposeSupervisorDetails(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $supervisor = $this->assignSupervisorWithRates(UserFixtures::USERNAME_USER, UserFixtures::USERNAME_TEAMLEAD);
+
+        $this->assertAccessIsGranted($client, '/api/users/me');
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('UserEntity', $result);
+        self::assertIsArray($result['supervisor']);
+        $this->assertSupervisorWithoutDetails($result['supervisor'], $supervisor);
+
+        // the users own preferences are still filtered
+        self::assertIsArray($result['preferences']);
+        $names = array_column($result['preferences'], 'name');
+        self::assertNotEmpty($names);
+        self::assertNotContains('hourly_rate', $names);
+        self::assertNotContains('internal_rate', $names);
+    }
+
+    public function testGetEntityDoesNotExposeSupervisorDetails(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $supervisor = $this->assignSupervisorWithRates(UserFixtures::USERNAME_USER, UserFixtures::USERNAME_TEAMLEAD);
+
+        $this->assertAccessIsGranted($client, '/api/users/' . $this->getAuthenticatedUserId(User::ROLE_USER));
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('UserEntity', $result);
+        self::assertIsArray($result['supervisor']);
+        $this->assertSupervisorWithoutDetails($result['supervisor'], $supervisor);
+
+        // the requested user itself is serialized with all details
+        self::assertIsArray($result['preferences']);
+        self::assertContains('hourly_rate', array_column($result['preferences'], 'name'));
+    }
+
+    public function testGetCollectionFullDoesNotExposeSupervisorDetails(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $supervisor = $this->assignSupervisorWithRates(UserFixtures::USERNAME_USER, UserFixtures::USERNAME_TEAMLEAD);
+
+        $this->assertAccessIsGranted($client, '/api/users?full=true');
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+
+        $found = false;
+        foreach ($result as $user) {
+            self::assertIsArray($user);
+            self::assertApiResponseTypeStructure('UserEntity', $user);
+            if ($user['id'] === $this->getAuthenticatedUserId(User::ROLE_USER)) {
+                self::assertIsArray($user['supervisor']);
+                $this->assertSupervisorWithoutDetails($user['supervisor'], $supervisor);
+                $found = true;
+            }
+        }
+        self::assertTrue($found);
     }
 
     public function testNotFound(): void
@@ -309,6 +407,67 @@ class UserControllerTest extends APIControllerBaseTestCase
         self::assertEquals(['ROLE_TEAMLEAD'], $result['roles']);
     }
 
+    public function testPatchActionCannotChangeSystemAccountAndPasswordResetOnOwnProfile(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        $user->setRequiresPasswordReset(true);
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+        $this->getEntityManager()->clear();
+        self::assertTrue($this->loadUserFromDatabase(UserFixtures::USERNAME_USER)->requiresPasswordReset());
+
+        $data = [
+            'title' => 'qwertzui',
+            'systemAccount' => true,
+            'requiresPasswordReset' => false,
+        ];
+        $this->request($client, '/api/users/' . $user->getId(), 'PATCH', [], (string) json_encode($data));
+        $this->assertApiCallValidationError($client->getResponse(), [], true, [], [], ['systemAccount', 'requiresPasswordReset']);
+
+        $this->getEntityManager()->clear();
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        self::assertFalse($user->isSystemAccount());
+        self::assertTrue($user->requiresPasswordReset());
+        self::assertEquals('Developer', $user->getTitle());
+    }
+
+    public function testPatchActionCannotChangeSystemAccountAndPasswordResetAsTeamlead(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        $data = [
+            'systemAccount' => true,
+            'requiresPasswordReset' => true,
+        ];
+        $this->request($client, '/api/users/' . $user->getId(), 'PATCH', [], (string) json_encode($data));
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'Access denied.');
+
+        $this->getEntityManager()->clear();
+        $user = $this->getUserByRole(User::ROLE_USER);
+        self::assertFalse($user->isSystemAccount());
+        self::assertFalse($user->requiresPasswordReset());
+    }
+
+    public function testPatchActionSystemAccountAndPasswordResetAsSuperAdmin(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        $data = [
+            'systemAccount' => true,
+            'requiresPasswordReset' => true,
+        ];
+        $this->request($client, '/api/users/' . $user->getId(), 'PATCH', [], (string) json_encode($data));
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $this->getEntityManager()->clear();
+        $user = $this->getUserByRole(User::ROLE_USER);
+        self::assertTrue($user->isSystemAccount());
+        self::assertTrue($user->requiresPasswordReset());
+    }
+
     public function testPatchActionWithUnknownUser(): void
     {
         $this->assertEntityNotFoundForPatch(User::ROLE_SUPER_ADMIN, '/api/users/255', []);
@@ -360,6 +519,29 @@ class UserControllerTest extends APIControllerBaseTestCase
     public function testUpdateUserPreferenceThrowsExceptionOnMissingName(): void
     {
         $this->assertExceptionForPatchAction(User::ROLE_SUPER_ADMIN, '/api/users/1/preferences', [['value' => 'X']], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
+    /**
+     * @return array<int, array{array<string>|false}>
+     */
+    public static function getInvalidPreferenceNames(): array
+    {
+        return [
+            [['X']],
+            [false],
+        ];
+    }
+
+    /**
+     * @param array<string>|false $name
+     */
+    #[DataProvider('getInvalidPreferenceNames')]
+    public function testUpdateUserPreferenceThrowsExceptionOnInvalidName(array|false $name): void
+    {
+        $this->assertExceptionForPatchAction(User::ROLE_SUPER_ADMIN, '/api/users/1/preferences', [['name' => $name, 'value' => 'X']], [
             'code' => Response::HTTP_BAD_REQUEST,
             'message' => 'Bad Request'
         ]);
@@ -430,6 +612,234 @@ class UserControllerTest extends APIControllerBaseTestCase
         self::assertEquals(99, $user->getPreferenceValue('hourly_rate'));
     }
 
+    public function testUpdateUserPreferenceValidatesConfiguredConstraints(): void
+    {
+        $role = User::ROLE_SUPER_ADMIN;
+        $id = $this->getAuthenticatedUserId($role);
+        $client = $this->getClientForAuthenticatedUser($role);
+
+        $data = [
+            [
+                'name' => 'hourly_rate',
+                'value' => -5
+            ]
+        ];
+        $this->request($client, '/api/users/' . $id . '/preferences', 'PATCH', [], (string) json_encode($data));
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['hourly_rate']);
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        /** @var User $user */
+        $user = $em->getRepository(User::class)->find($id);
+        self::assertEquals(46, $user->getPreferenceValue('hourly_rate'));
+    }
+
+    public function testUpdateUserPreferenceValidatesConstraintsOfRegisteredPreference(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new PrepareUserEventSubscriberMock());
+
+        $data = [
+            [
+                'name' => 'metatestmock',
+                'value' => str_repeat('x', 201)
+            ]
+        ];
+        $this->request($client, '/api/users/1/preferences', 'PATCH', [], (string) json_encode($data));
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['metatestmock']);
+    }
+
+    public function testUpdateUserPreferenceStoresNothingIfOneValueIsInvalid(): void
+    {
+        $role = User::ROLE_SUPER_ADMIN;
+        $id = $this->getAuthenticatedUserId($role);
+        $client = $this->getClientForAuthenticatedUser($role);
+
+        $data = [
+            [
+                'name' => 'hourly_rate',
+                'value' => 99
+            ],
+            [
+                'name' => 'internal_rate',
+                'value' => -5
+            ]
+        ];
+        $this->request($client, '/api/users/' . $id . '/preferences', 'PATCH', [], (string) json_encode($data));
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['internal_rate']);
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        /** @var User $user */
+        $user = $em->getRepository(User::class)->find($id);
+        self::assertEquals(46, $user->getPreferenceValue('hourly_rate'));
+    }
+
+    /**
+     * @return array<int, array{string|null}>
+     */
+    public static function getClearedPreferenceValues(): array
+    {
+        return [
+            [null],
+            [''],
+        ];
+    }
+
+    #[DataProvider('getClearedPreferenceValues')]
+    public function testUpdateUserPreferenceStoresClearedValueAsNull(?string $cleared): void
+    {
+        $role = User::ROLE_SUPER_ADMIN;
+        $id = $this->getAuthenticatedUserId($role);
+        $client = $this->getClientForAuthenticatedUser($role);
+        $em = $this->getEntityManager();
+
+        $this->request($client, '/api/users/' . $id . '/preferences', 'PATCH', [], (string) json_encode([['name' => 'internal_rate', 'value' => 50]]));
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $em->clear();
+        /** @var User $user */
+        $user = $em->getRepository(User::class)->find($id);
+        self::assertEquals(50, $user->getPreferenceValue('internal_rate'));
+
+        $this->request($client, '/api/users/' . $id . '/preferences', 'PATCH', [], (string) json_encode([['name' => 'internal_rate', 'value' => $cleared]]));
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $em->clear();
+        /** @var User $user */
+        $user = $em->getRepository(User::class)->find($id);
+        self::assertNull($user->getPreferenceValue('internal_rate'));
+
+        // the rate calculation falls back to the hourly rate, if the internal rate is not configured
+        $timesheet = new Timesheet();
+        $timesheet->setUser($user);
+        $timesheet->setBegin(new \DateTime('2025-01-01 10:00:00'));
+        $timesheet->setEnd(new \DateTime('2025-01-01 11:00:00'));
+        $timesheet->setDuration(3600);
+        /** @var RateServiceInterface $rateService */
+        $rateService = static::getContainer()->get(RateServiceInterface::class);
+        self::assertEquals(46, $rateService->calculate($timesheet)->getInternalRate());
+    }
+
+    /**
+     * @return array<int, array{string, string|int|array<string>|null}>
+     */
+    public static function getInvalidPreferenceValues(): array
+    {
+        return [
+            ['timezone', 'XXX/YYY'],
+            ['timezone', null],
+            ['language', 'xx'],
+            ['language', null],
+            ['locale', 'xx'],
+            ['locale', null],
+            ['first_weekday', 'friday'],
+            ['first_weekday', null],
+            ['skin', 'foo'],
+            ['skin', null],
+            ['calendar_initial_view', 'year'],
+            ['calendar_initial_view', null],
+            ['login_initial_view', str_repeat('x', 151)],
+            ['login_initial_view', null],
+            ['work_contract_type', 'foo'],
+            ['work_contract_type', null],
+            ['work_monday', -1],
+            ['work_sunday', 86401],
+            ['work_monday', 'foo'],
+            ['holidays', -1],
+            ['public_holiday_group', str_repeat('x', 251)],
+            ['work_start_day', 'foo'],
+            ['work_last_day', '2026-13-01'],
+            // non-scalar values, the last one has no constraints
+            ['timezone', ['Europe/Berlin']],
+            ['work_start_day', ['2026-01-01']],
+            ['favorite_routes', ['timesheet']],
+            ['hourly_rate', ['10']],
+            ['update_browser_title', ['1']],
+        ];
+    }
+
+    /**
+     * @param string|int|array<string>|null $value
+     */
+    #[DataProvider('getInvalidPreferenceValues')]
+    public function testUpdateUserPreferenceRejectsInvalidValue(string $name, string|int|array|null $value): void
+    {
+        $role = User::ROLE_SUPER_ADMIN;
+        $id = $this->getAuthenticatedUserId($role);
+        $client = $this->getClientForAuthenticatedUser($role);
+
+        $data = [
+            [
+                'name' => $name,
+                'value' => $value
+            ]
+        ];
+        $this->request($client, '/api/users/' . $id . '/preferences', 'PATCH', [], (string) json_encode($data));
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, [$name]);
+    }
+
+    /**
+     * @return array<int, array{string, string|int}>
+     */
+    public static function getValidPreferenceValues(): array
+    {
+        return [
+            ['timezone', 'Europe/Berlin'],
+            ['language', 'de'],
+            ['locale', 'de_CH'],
+            ['first_weekday', 'sunday'],
+            ['skin', 'dark'],
+            ['calendar_initial_view', 'week'],
+            ['login_initial_view', 'timesheet'],
+            ['work_contract_type', 'day'],
+            ['work_monday', 28800],
+            ['work_sunday', 86400],
+            ['holidays', '30.5'],
+            ['public_holiday_group', '1'],
+            ['work_start_day', '2026-01-01'],
+            ['work_last_day', '2026-12-31'],
+        ];
+    }
+
+    #[DataProvider('getValidPreferenceValues')]
+    public function testUpdateUserPreferenceAcceptsValidValue(string $name, string|int $value): void
+    {
+        $role = User::ROLE_SUPER_ADMIN;
+        $id = $this->getAuthenticatedUserId($role);
+        $client = $this->getClientForAuthenticatedUser($role);
+
+        $data = [
+            [
+                'name' => $name,
+                'value' => $value
+            ]
+        ];
+        $this->request($client, '/api/users/' . $id . '/preferences', 'PATCH', [], (string) json_encode($data));
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        /** @var User $user */
+        $user = $em->getRepository(User::class)->find($id);
+        self::assertEquals((string) $value, $user->getPreferenceValue($name));
+    }
+
     public function testUpdateUserPreferenceWithDisabledPreference(): void
     {
         $role = User::ROLE_USER;
@@ -449,6 +859,65 @@ class UserControllerTest extends APIControllerBaseTestCase
         ];
         $this->request($client, '/api/users/' . $id . '/preferences', 'PATCH', [], (string) json_encode($data));
         self::assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    /**
+     * Regression test: internal preferences (prefixed with "__") must never be writable through the API,
+     * otherwise a user could clear the password reset flag that was set by an administrator.
+     */
+    public function testUpdateUserPreferenceCannotChangeInternalPreference(): void
+    {
+        $role = User::ROLE_USER;
+        $id = $this->getAuthenticatedUserId($role);
+        $client = $this->getClientForAuthenticatedUser($role);
+
+        $em = $this->getEntityManager();
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        self::assertSame($id, $user->getId());
+        $user->setRequiresPasswordReset(true);
+        $em->persist($user);
+        $em->flush();
+        $em->clear();
+
+        $data = [
+            [
+                'name' => '__pw_reset__',
+                'value' => '0'
+            ]
+        ];
+        $this->request($client, '/api/users/' . $id . '/preferences', 'PATCH', [], (string) json_encode($data));
+        self::assertApiResponseAccessDenied($client->getResponse());
+
+        $em->clear();
+        self::assertTrue($this->loadUserFromDatabase(UserFixtures::USERNAME_USER)->requiresPasswordReset());
+    }
+
+    public function testUpdateUserPreferenceCannotChangeInternalPreferenceWithDots(): void
+    {
+        $role = User::ROLE_USER;
+        $id = $this->getAuthenticatedUserId($role);
+        $client = $this->getClientForAuthenticatedUser($role);
+
+        $em = $this->getEntityManager();
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        self::assertSame($id, $user->getId());
+        $user->setRequiresPasswordReset(true);
+        $em->persist($user);
+        $em->flush();
+        $em->clear();
+
+        // names are normalized, dots are replaced by underscores
+        $data = [
+            [
+                'name' => '..pw_reset__',
+                'value' => '0'
+            ]
+        ];
+        $this->request($client, '/api/users/' . $id . '/preferences', 'PATCH', [], (string) json_encode($data));
+        self::assertApiResponseAccessDenied($client->getResponse());
+
+        $em->clear();
+        self::assertTrue($this->loadUserFromDatabase(UserFixtures::USERNAME_USER)->requiresPasswordReset());
     }
 
     public function testDeleteRoleIsSecure(): void

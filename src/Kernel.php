@@ -165,7 +165,7 @@ class Kernel extends BaseKernel
         $container->addCompilerPass(new WidgetCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
     }
 
-    private function configureRoutes(RoutingConfigurator $routes): void // @phpstan-ignore-line
+    private function configureRoutes(RoutingConfigurator $routes): void
     {
         $configDir = $this->getConfigDir();
 

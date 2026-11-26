@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="518eY_l" resname="report_project_details">
         <source>report_project_details</source>
-        <target state="translated">Projekt Details</target>
+        <target state="translated">Projektdetails</target>
       </trans-unit>
       <trans-unit id="1gBKwGH" resname="report_inactive_project">
         <source>report_inactive_project</source>

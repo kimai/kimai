@@ -946,18 +946,6 @@
         <source>file</source>
         <target>Fájl</target>
       </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
-        <source>stats.amountFinancialYear</source>
-        <target>Bevétel ebben a pénzügyi évben</target>
-      </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
-        <source>stats.workingTimeFinancialYear</source>
-        <target>Pénzügyi év</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="translated">Munkaórák ebben a pénzügyi évben</target>
-      </trans-unit>
       <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month" xml:space="preserve">
         <source>stats.percentUsedLeft_month</source>
         <target state="translated">%percent%% felhasználva (%left% még felhasználható ebben a hónapban)</target>
@@ -985,10 +973,6 @@
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
         <target>Egy üzenet lett küldve a %email% címre. Ebben az üzenetben található az aktivációs link, amire kattintva aktiválhatod a fiókodat.</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>Aktív felhasználók ebben a pénzügyi évben</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
@@ -1424,7 +1408,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">Családi események, költözés, szélsőséges időjárás, stb.</target>
+        <target state="needs-translation">Családi események, költözés, szélsőséges időjárás, stb.</target>
       </trans-unit>
       <trans-unit id="TTnaBm4" resname="day_full" xml:space="preserve">
         <source>day_full</source>
@@ -1969,6 +1953,22 @@
       <trans-unit id="6w8kS.m" resname="user_access_all" xml:space="preserve">
         <source>user_access_all</source>
         <target state="translated">Hozzáférés engedélyezése minden felhasználónak</target>
+      </trans-unit>
+      <trans-unit id="DAMFhpR" resname="lock">
+        <source>lock</source>
+        <target state="translated">Lezár</target>
+      </trans-unit>
+      <trans-unit id="LfO_otF" resname="reopen">
+        <source>reopen</source>
+        <target state="translated">Újra nyit</target>
+      </trans-unit>
+      <trans-unit id="kwC00lZ" resname="assign">
+        <source>assign</source>
+        <target state="translated">Hozzárendel</target>
+      </trans-unit>
+      <trans-unit id="DI8vH1J" resname="copy_to_clipboard">
+        <source>copy_to_clipboard</source>
+        <target state="translated">Vágólapra másol</target>
       </trans-unit>
     </body>
   </file>

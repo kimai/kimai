@@ -88,6 +88,7 @@ final class CustomerController extends AbstractController
         $table->addColumn('company', ['class' => 'd-none']);
         $table->addColumn('vat_id', ['class' => 'd-none w-min']);
         $table->addColumn('contact', ['class' => 'd-none']);
+        $table->addColumn('street', ['class' => 'd-none', 'title' => 'address']);
         $table->addColumn('city', ['class' => 'd-none']);
         $table->addColumn('country', ['class' => 'd-none w-min']);
         $table->addColumn('language', ['class' => 'd-none w-min']);
@@ -392,7 +393,6 @@ final class CustomerController extends AbstractController
                 ]
             ])
             ->add('customer', CustomerType::class, [
-                'query_builder_for_user' => true,
                 'ignore_customer' => $customer,
                 'required' => false,
             ])
@@ -523,6 +523,9 @@ final class CustomerController extends AbstractController
         ]);
     }
 
+    /**
+     * @return PageSetup<Customer>
+     */
     private function createPageSetup(): PageSetup
     {
         $page = new PageSetup('customers');

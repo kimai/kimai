@@ -30,7 +30,6 @@ final class QuickEntryWeekType extends AbstractType
             'label' => false,
             'required' => false,
             'join_customer' => true,
-            'query_builder_for_user' => true,
             'placeholder' => '',
             'activity_enabled' => true,
             'project_date_start' => $options['start_date'],
@@ -57,7 +56,6 @@ final class QuickEntryWeekType extends AbstractType
             'label' => false,
             'required' => false,
             'placeholder' => '',
-            'query_builder_for_user' => true,
         ];
 
         $builder->add('activity', ActivityType::class, $activityOptions);

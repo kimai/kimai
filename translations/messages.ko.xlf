@@ -986,10 +986,6 @@
         <source>action.add</source>
         <target>첨부</target>
       </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>이번 회계연도 활성화 사용자</target>
-      </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
         <target>이메일이 %email%(으)로 전송되었습니다. 계정을 활성화하는 링크가 이메일에 포함되어 있으니 링크를 클릭하세요.</target>
@@ -1002,10 +998,6 @@
         <source>includeBudgetType_month</source>
         <target>월별 예산 없이 항목 표시</target>
       </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
-        <source>stats.amountFinancialYear</source>
-        <target>올해 회계연도 수익</target>
-      </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">비밀번호 재설정 링크가 전송되었습니다. 참고 : 한 번만 새로운 암호를 요청할 수 있습니다. %tokenLifetime% 시간. 이메일을받지 못하면 스팸 폴더를 확인하고 다시 시도하십시오.</target>
@@ -1013,10 +1005,6 @@
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>
         <target>수익</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="needs-translation">이번 회계 연도 근무 시간</target>
       </trans-unit>
       <trans-unit id="KukrzcT" resname="includeBudgetType_full">
         <source>includeBudgetType_full</source>
@@ -1045,10 +1033,6 @@
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>
         <target>주 %week%</target>
-      </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
-        <source>stats.workingTimeFinancialYear</source>
-        <target>회계연도</target>
       </trans-unit>
       <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
         <source>stats.percentUsed_month</source>
@@ -1424,7 +1408,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">가족 사건, 이동하는 집, 날씨 chaos 등.</target>
+        <target state="needs-translation">가족 사건, 이동하는 집, 날씨 chaos 등.</target>
       </trans-unit>
       <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all" xml:space="preserve">
         <source>batch_table_checkbox_all</source>

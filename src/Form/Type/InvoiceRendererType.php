@@ -19,15 +19,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class InvoiceRendererType extends AbstractType
 {
-    public function __construct(private InvoiceService $service)
+    public function __construct(private InvoiceService $invoiceService)
     {
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $documents = [];
-        foreach ($this->service->getDocuments() as $document) {
-            foreach ($this->service->getRenderer() as $renderer) {
+        foreach ($this->invoiceService->getDocuments() as $document) {
+            foreach ($this->invoiceService->getRenderer() as $renderer) {
                 if ($renderer->supports($document)) {
                     $documents[$document->getId()] = $document->getName();
                     break;

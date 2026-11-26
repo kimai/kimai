@@ -89,6 +89,9 @@ class TeamRepository extends EntityRepository
         return $qb;
     }
 
+    /**
+     * @return Pagination<Team>
+     */
     public function getPagerfantaForQuery(TeamQuery $query): Pagination
     {
         return new Pagination($this->getPaginatorForQuery($query), $query);
@@ -111,6 +114,16 @@ class TeamRepository extends EntityRepository
         $query = $this->createTeamQuery($teamQuery);
 
         return new LoaderQueryPaginator(new TeamLoader($qb->getEntityManager()), $query, $counter);
+    }
+
+    /**
+     * Returns a Team loader, that can be used to hydrate the full dependency tree.
+     *
+     * Use this when you e.g. have a Team entity, which was fetched via #[MapEntity] parameter.
+     */
+    public function createTeamLoader(bool $withCustomer = false, bool $withUserPreferences = false): TeamLoader
+    {
+        return new TeamLoader($this->getEntityManager(), $withCustomer, $withUserPreferences);
     }
 
     /**

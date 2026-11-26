@@ -10,7 +10,9 @@
 namespace App\Configuration;
 
 use App\Constants;
+use Symfony\Bundle\FrameworkBundle\Routing\Attribute\AsRoutingConditionService;
 
+#[AsRoutingConditionService(alias: 'system_configuration')]
 final class SystemConfiguration
 {
     private bool $initialized = false;
@@ -190,6 +192,14 @@ final class SystemConfiguration
         return (int) $this->find('user.password_reset_retry_ttl');
     }
 
+    /**
+     * Minimum password strength (see PasswordStrength constants), 0 means the check is disabled.
+     */
+    public function getPasswordStrength(): int
+    {
+        return (int) $this->find('user.password_strength');
+    }
+
     public function isPasswordResetActive(): bool
     {
         if (!$this->isLoginFormActive()) {
@@ -256,6 +266,23 @@ final class SystemConfiguration
     public function isLdapActive(): bool
     {
         return (bool) $this->find('ldap.activate');
+    }
+
+    /**
+     * Whether a super-admin may switch LDAP and SAML accounts back to the internal authentication.
+     */
+    public function isUserAuthChangeAllowed(): bool
+    {
+        if (!$this->isExternalLoginActive()) {
+            return false;
+        }
+
+        return (bool) $this->find('user.auth_change');
+    }
+
+    public function isExternalLoginActive(): bool
+    {
+        return $this->isLdapActive() || $this->isSamlActive();
     }
 
     // ========== Calendar configurations ==========
@@ -352,6 +379,14 @@ final class SystemConfiguration
     public function getUserDefaultLanguage(): string
     {
         return $this->getString('defaults.user.language', 'en');
+    }
+
+    /**
+     * The locale used to format date, time and money for new users.
+     */
+    public function getUserDefaultLocale(): string
+    {
+        return $this->getString('defaults.user.locale', $this->getUserDefaultLanguage());
     }
 
     public function getDefaultCurrency(): string
@@ -489,15 +524,15 @@ final class SystemConfiguration
 
     // ========== Company configurations ==========
 
+    /**
+     * @deprecated will be removed in 3.0
+     * @phpstan-ignore return.unusedType
+     */
     public function getFinancialYearStart(): ?string
     {
-        $start = $this->find('company.financial_year');
+        @trigger_error('The method "SystemConfiguration::getFinancialYearStart()" is deprecated', E_USER_DEPRECATED);
 
-        if (empty($start)) {
-            return null;
-        }
-
-        return (string) $start;
+        return null;
     }
 
     // ========== Theme configurations ==========

@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="8p.2pXa" resname="wizard.done.title">
         <source>wizard.done.title</source>
-        <target state="translated">Děkujeme</target>
+        <target state="translated">Gratulujeme</target>
       </trans-unit>
       <trans-unit id="X0ws5mu" resname="wizard.intro.description">
         <source>wizard.intro.description</source>

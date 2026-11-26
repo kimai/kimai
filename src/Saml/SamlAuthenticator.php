@@ -92,7 +92,6 @@ class SamlAuthenticator extends AbstractAuthenticator
             throw new AuthenticationException($oneLoginAuth->getLastErrorReason());
         }
 
-        $attributes = [];
         if (isset($this->options['use_attribute_friendly_name']) && $this->options['use_attribute_friendly_name']) {
             $attributes = $oneLoginAuth->getAttributesWithFriendlyName();
         } else {

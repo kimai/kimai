@@ -234,7 +234,8 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
     {
         self::assertFalse($response->isSuccessful());
         $result = json_decode($response->getContent(), true);
-        self::assertArrayHasKey('errors', $result);
+        self::assertIsArray($result, 'JSON result is not array: ' . get_debug_type($result));
+        self::assertArrayHasKey('errors', $result, 'Missing errors key in JSON result with keys: ' . implode(',', array_keys($result)));
 
         if ($extraFields) {
             self::assertArrayHasKey('errors', $result['errors']);
@@ -316,7 +317,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'dueDays' => 'int',
                     'invoiceNumber' => 'string',
                     'invoiceFilename' => 'string',
-                    'paymentDate' => '@datetime',
+                    'paymentDate' => '@date',
                     'status' => 'string',
                     'tax' => 'float',
                     'total' => 'float',
@@ -413,7 +414,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'locale' => 'string',
                     'timezone' => 'string',
                     // TODO more info in entity than in collection
-                    'supervisor' => ['result' => 'object', 'type' => '@UserEntity'],
+                    'supervisor' => ['result' => 'object', 'type' => '@User'],
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                     'roles' => ['result' => 'array', 'type' => 'string'],
                     'memberships' => ['result' => 'array', 'type' => 'TeamMembership'],
@@ -601,6 +602,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'comment' => '@string',
                     'start' => '@datetime',
                     'end' => '@datetime',
+                    'lockedUntil' => '@datetime',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                 ];
 
@@ -621,6 +623,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'comment' => '@string',
                     'start' => '@datetime',
                     'end' => '@datetime',
+                    'lockedUntil' => '@datetime',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                 ];
 
@@ -641,6 +644,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'comment' => '@string',
                     'start' => '@datetime',
                     'end' => '@datetime',
+                    'lockedUntil' => '@datetime',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                     'parentTitle' => 'string',
@@ -667,6 +671,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'comment' => '@string',
                     'start' => '@date',
                     'end' => '@date',
+                    'lockedUntil' => '@date',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                     'parentTitle' => 'string',

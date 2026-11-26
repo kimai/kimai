@@ -990,18 +990,6 @@
         <source>last_record</source>
         <target>Τελευταία καταχώρηση</target>
       </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>Ενεργοί χρήστες κατά το τρέχον οικονομικό έτος</target>
-      </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
-        <source>stats.amountFinancialYear</source>
-        <target>Έσοδα τρέχοντος οικονομικού έτους</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="translated">Οικονομικό Έτος</target>
-      </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>
         <target>Εισπράξεις</target>
@@ -1009,10 +997,6 @@
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
         <source>Working hours</source>
         <target>Χρόνος εργασίας</target>
-      </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
-        <source>stats.workingTimeFinancialYear</source>
-        <target>Οικονομικό έτος</target>
       </trans-unit>
       <trans-unit id="KH2hgil" resname="account_number">
         <source>account_number</source>
@@ -1524,7 +1508,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">Οικογενειακά γεγονότα, μετακόμιση, καιρικό χάος κ.λπ.</target>
+        <target state="needs-translation">Οικογενειακά γεγονότα, μετακόμιση, καιρικό χάος κ.λπ.</target>
       </trans-unit>
       <trans-unit id="JmpBuQ1" resname="Translations" xml:space="preserve">
         <source>Translations</source>

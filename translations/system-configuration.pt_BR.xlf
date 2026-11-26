@@ -190,10 +190,6 @@
         <source>timesheet.duration_increment</source>
         <target>Seleção de minutos para a duração</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target>Ano fiscal</target>
-      </trans-unit>
       <trans-unit id="2KUm56c" resname="timesheet.rules.allow_overbooking_budget">
         <source>timesheet.rules.allow_overbooking_budget</source>
         <target>Permitir o overbooking (a reserva em excesso) dos orçamentos acumulados</target>
@@ -317,6 +313,42 @@
       <trans-unit id="uf2_qIW" resname="user_auth_wizard" xml:space="preserve">
         <source>user_auth_wizard</source>
         <target state="translated">Exibir o assistente de configuração para novos usuários</target>
+      </trans-unit>
+      <trans-unit id="iobaZJS" resname="user_auth_change">
+        <source>user_auth_change</source>
+        <target state="translated">Alterar a autenticação de usuários com login externo</target>
+      </trans-unit>
+      <trans-unit id="iMmgno5" resname="user_auth_change.help">
+        <source>user_auth_change.help</source>
+        <target state="translated">Permite que superadministradores alterem usuários com logins externos de volta para o login interno no perfil do usuário.</target>
+      </trans-unit>
+      <trans-unit id="6pqJCWV" resname="user_auth_password_strength">
+        <source>user_auth_password_strength</source>
+        <target state="translated">Força da senha</target>
+      </trans-unit>
+      <trans-unit id="0hLoKXm" resname="user_auth_password_strength.help">
+        <source>user_auth_password_strength.help</source>
+        <target state="translated">Aplica-se sempre que uma senha é definida. A força é estimada com base no comprimento e nos tipos de caracteres utilizados.</target>
+      </trans-unit>
+      <trans-unit id="svXdXTq" resname="password_strength.none">
+        <source>password_strength.none</source>
+        <target state="translated">Sem requisitos (apenas extensão mínima)</target>
+      </trans-unit>
+      <trans-unit id="3jD52PB" resname="password_strength.normal">
+        <source>password_strength.normal</source>
+        <target state="translated">Normal</target>
+      </trans-unit>
+      <trans-unit id="0e4HBxu" resname="password_strength.medium">
+        <source>password_strength.medium</source>
+        <target state="translated">Médio</target>
+      </trans-unit>
+      <trans-unit id="VlOVWX7" resname="password_strength.strong">
+        <source>password_strength.strong</source>
+        <target state="translated">Forte</target>
+      </trans-unit>
+      <trans-unit id="R5QYeOG" resname="password_strength.very_strong">
+        <source>password_strength.very_strong</source>
+        <target state="translated">Muito forte</target>
       </trans-unit>
     </body>
   </file>

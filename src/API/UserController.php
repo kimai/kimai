@@ -9,6 +9,7 @@
 
 namespace App\API;
 
+use App\API\Serializer\UserEntityExclusionStrategy;
 use App\Entity\AccessToken;
 use App\Entity\Role;
 use App\Entity\User;
@@ -22,6 +23,7 @@ use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
 use App\User\UserService;
 use App\Utils\SearchTerm;
+use App\Validator\MetaFieldValidator;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
@@ -47,8 +49,32 @@ final class UserController extends BaseApiController
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
-        private readonly UserRepository $repository,
+        private readonly UserRepository $repository
     ) {
+    }
+
+    /**
+     * Embedded users (like the supervisor) are not prepared for the current viewer,
+     * so only the given users will be serialized including their detail fields.
+     *
+     * @param array<string> $groups
+     * @param iterable<User> $users the users which were prepared via PrepareUserEvent
+     */
+    private function renderUserView(View $view, array $groups, iterable $users): Response
+    {
+        $context = $view->getContext();
+        $context->setGroups($groups);
+        $context->addExclusionStrategy(new UserEntityExclusionStrategy($users));
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Use only for users which were prepared via PrepareUserEvent.
+     */
+    private function renderEntity(User $user): Response
+    {
+        return $this->renderUserView(new View($user, Response::HTTP_OK), self::GROUPS_ENTITY, [$user]);
     }
 
     /**
@@ -62,7 +88,7 @@ final class UserController extends BaseApiController
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term', nullable: true)]
     #[Rest\QueryParam(name: 'full', requirements: '0|1|true|false', strict: true, nullable: true, description: 'Allows to fetch full objects including subresources. Allowed values: 0|1|false|true (default: false)')]
-    public function cgetAction(ParamFetcherInterface $paramFetcher): Response
+    public function cgetAction(ParamFetcherInterface $paramFetcher, EventDispatcherInterface $dispatcher): Response
     {
         $query = new UserQuery();
         $query->setCurrentUser($this->getUser());
@@ -93,10 +119,15 @@ final class UserController extends BaseApiController
 
         $full = $paramFetcher->get('full');
         if ($full === '1' || $full === 'true') {
-            $view->getContext()->setGroups(self::GROUPS_COLLECTION_FULL);
-        } else {
-            $view->getContext()->setGroups(self::GROUPS_COLLECTION);
+            // we need to prepare the user preferences, which is done via an EventSubscriber
+            foreach ($data as $user) {
+                $dispatcher->dispatch(new PrepareUserEvent($user));
+            }
+
+            return $this->renderUserView($view, self::GROUPS_COLLECTION_FULL, $data);
         }
+
+        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
         return $this->viewHandler->handle($view);
     }
@@ -114,10 +145,7 @@ final class UserController extends BaseApiController
         $event = new PrepareUserEvent($profile);
         $dispatcher->dispatch($event);
 
-        $view = new View($profile, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($profile);
     }
 
     /**
@@ -127,10 +155,8 @@ final class UserController extends BaseApiController
     #[Route(methods: ['GET'], path: '/me', name: 'me_user')]
     public function meAction(): Response
     {
-        $view = new View($this->getUser(), 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        // the current user was already prepared, see UserProfileSubscriber
+        return $this->renderEntity($this->getUser());
     }
 
     /**
@@ -140,7 +166,7 @@ final class UserController extends BaseApiController
     #[OA\Post(description: 'Creates a new user and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created user', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/UserCreateForm'))]
     #[Route(path: '', name: 'post_user', methods: ['POST'])]
-    public function postAction(Request $request, UserService $userService): Response
+    public function postAction(Request $request, UserService $userService, EventDispatcherInterface $dispatcher): Response
     {
         $user = $userService->createNewUser();
 
@@ -155,10 +181,9 @@ final class UserController extends BaseApiController
         if ($form->isValid()) {
             $user = $userService->saveNewUser($user);
 
-            $view = new View($user, 200);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
+            $dispatcher->dispatch(new PrepareUserEvent($user));
 
-            return $this->viewHandler->handle($view);
+            return $this->renderEntity($user);
         }
 
         $view = new View($form);
@@ -175,14 +200,16 @@ final class UserController extends BaseApiController
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/UserEditForm'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to update', required: true)]
     #[Route(methods: ['PATCH'], path: '/{id}', name: 'patch_user', requirements: ['id' => '\d+'])]
-    public function patchAction(Request $request, User $profile): Response
+    public function patchAction(Request $request, User $profile, EventDispatcherInterface $dispatcher): Response
     {
+        $dispatcher->dispatch(new PrepareUserEvent($profile));
+
         $form = $this->createForm(UserApiEditForm::class, $profile, [
             'include_roles' => $this->isGranted('roles', $profile),
             'include_active_flag' => ($profile->getId() !== $this->getUser()->getId()),
             'include_preferences' => $this->isGranted('preferences', $profile),
             'include_supervisor' => $this->isGranted('supervisor', $profile),
-            'include_password_reset' => $this->isGranted('password', $profile),
+            'include_password_reset' => $this->isGranted('roles', $profile),
         ]);
 
         $form->setData($profile);
@@ -197,10 +224,7 @@ final class UserController extends BaseApiController
 
         $this->repository->saveUser($profile);
 
-        $view = new View($profile, Response::HTTP_OK);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($profile);
     }
 
     /**
@@ -258,12 +282,12 @@ final class UserController extends BaseApiController
     /**
      * Update user preferences
      */
-    #[IsGranted('edit', 'profile')]
-    #[OA\Response(response: 200, description: 'Sets the value of a configured preference. You cannot create unknown or updated disabled preferences.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
+    #[IsGranted('preferences', 'profile')]
+    #[OA\Response(response: 200, description: 'Sets the value of a configured preference. You cannot create unknown or update disabled preferences.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
     #[OA\Parameter(name: 'id', description: 'User ID to set the custom-field value for', in: 'path', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(type: 'array', items: new OA\Items(new Model(type: UserPreference::class))))]
     #[Route(path: '/{id}/preferences', requirements: ['id' => '\d+'], methods: ['PATCH'])]
-    public function updateUserPreference(User $profile, Request $request, EventDispatcherInterface $dispatcher, UserService $userService): Response
+    public function updateUserPreference(User $profile, Request $request, EventDispatcherInterface $dispatcher, UserService $userService, MetaFieldValidator $metaFieldValidator): Response
     {
         $event = new PrepareUserEvent($profile, false);
         $dispatcher->dispatch($event);
@@ -279,6 +303,10 @@ final class UserController extends BaseApiController
                 throw new BadRequestHttpException('Missing required parameter "name" or "value"');
             }
 
+            if (!\is_string($preference['name'])) {
+                throw new BadRequestHttpException('Invalid parameter "name", string expected');
+            }
+
             $name = $preference['name'];
             $value = $preference['value'];
 
@@ -286,11 +314,21 @@ final class UserController extends BaseApiController
                 throw $this->createNotFoundException(\sprintf('Unknown custom-field "%s" requested', $name));
             }
 
+            // the name is normalized and dots (.) are replaced with underscores (_)
+            // a string like ..pw_reset.. is normalized to __pw_reset__
+
+            if (str_starts_with($meta->getName(), '__')) {
+                throw $this->createAccessDeniedException('Cannot modify internal preference: ' . $name);
+            }
+
             if (!$meta->isEnabled()) {
                 throw $this->createAccessDeniedException('User tried to update preference: ' . $name);
             }
 
-            $meta->setValue($value);
+            $metaFieldValidator->validateUserPreference($profile, $meta, $value);
+            // like the form layer: the JSON decoder converts null to an empty string, which is
+            // not the same as "not configured" for preferences with a fallback like internal_rate
+            $meta->setValue($value === '' ? null : $value);
             $dirty = true;
         }
 
@@ -298,9 +336,6 @@ final class UserController extends BaseApiController
             $userService->saveUser($profile);
         }
 
-        $view = new View($profile, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($profile);
     }
 }

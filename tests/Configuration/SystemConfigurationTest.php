@@ -159,12 +159,39 @@ class SystemConfigurationTest extends TestCase
             (new Configuration())->setName('timesheet.rules.allow_future_times')->setValue(''),
             (new Configuration())->setName('saml.activate')->setValue(true),
             (new Configuration())->setName('theme.color_choices')->setValue(''),
-            (new Configuration())->setName('company.financial_year')->setValue('2020-03-27'),
         ]);
         self::assertFalse($sut->find('timesheet.rules.allow_future_times'));
         self::assertTrue($sut->isSamlActive());
         self::assertEquals(['Silver' => '#c0c0c0'], $sut->getThemeColors());
-        self::assertEquals('2020-03-27', $sut->getFinancialYearStart());
+    }
+
+    public function testIsUserAuthChangeAllowed(): void
+    {
+        $sut = $this->getSut($this->getDefaultSettings(), []);
+        self::assertFalse($sut->isUserAuthChangeAllowed());
+
+        $sut = $this->getSut($this->getDefaultSettings(), [
+            (new Configuration())->setName('user.auth_change')->setValue(true),
+        ]);
+        self::assertFalse($sut->isUserAuthChangeAllowed());
+
+        $sut = $this->getSut($this->getDefaultSettings(), [
+            (new Configuration())->setName('user.auth_change')->setValue(true),
+            (new Configuration())->setName('saml.activate')->setValue(true),
+        ]);
+        self::assertTrue($sut->isUserAuthChangeAllowed());
+
+        $sut = $this->getSut($this->getDefaultSettings(), [
+            (new Configuration())->setName('user.auth_change')->setValue(true),
+            (new Configuration())->setName('ldap.activate')->setValue(true),
+        ]);
+        self::assertTrue($sut->isUserAuthChangeAllowed());
+
+        $sut = $this->getSut($this->getDefaultSettings(), [
+            (new Configuration())->setName('user.auth_change')->setValue(false),
+            (new Configuration())->setName('ldap.activate')->setValue(true),
+        ]);
+        self::assertFalse($sut->isUserAuthChangeAllowed());
     }
 
     public function testUnknownConfigs(): void
@@ -218,7 +245,19 @@ class SystemConfigurationTest extends TestCase
         self::assertEquals('foo/bar', $sut->getUserDefaultTimezone());
         self::assertEquals('blue', $sut->getUserDefaultTheme());
         self::assertEquals('IT', $sut->getUserDefaultLanguage());
-        self::assertNull($sut->getFinancialYearStart());
+        self::assertEquals('IT', $sut->getUserDefaultLocale());
+    }
+
+    public function testUserDefaultLocaleFallsBackToLanguage(): void
+    {
+        $sut = $this->getSut($this->getDefaultSettings(), []);
+        self::assertEquals('IT', $sut->getUserDefaultLocale());
+
+        $sut = $this->getSut($this->getDefaultSettings(), [(new Configuration())->setName('defaults.user.locale')->setValue('')]);
+        self::assertEquals('IT', $sut->getUserDefaultLocale());
+
+        $sut = $this->getSut($this->getDefaultSettings(), [(new Configuration())->setName('defaults.user.locale')->setValue('en_AU')]);
+        self::assertEquals('en_AU', $sut->getUserDefaultLocale());
     }
 
     public function testFormDefaultWithLoader(): void
@@ -231,6 +270,18 @@ class SystemConfigurationTest extends TestCase
         self::assertEquals('foo/bar', $sut->getUserDefaultTimezone());
         self::assertEquals('blue', $sut->getUserDefaultTheme());
         self::assertEquals('IT', $sut->getUserDefaultLanguage());
+    }
+
+    public function testPasswordStrength(): void
+    {
+        $sut = $this->getSut($this->getDefaultSettings(), []);
+        self::assertEquals(0, $sut->getPasswordStrength());
+
+        $sut = $this->getSut(['user' => ['password_strength' => 3]], []);
+        self::assertEquals(3, $sut->getPasswordStrength());
+
+        $sut = $this->getSut(['user' => ['password_strength' => 3]], [(new Configuration())->setName('user.password_strength')->setValue('2')]);
+        self::assertEquals(2, $sut->getPasswordStrength());
     }
 
     public function testUserWizardWithoutLoader(): void

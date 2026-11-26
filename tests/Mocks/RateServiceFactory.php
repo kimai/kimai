@@ -11,17 +11,18 @@ namespace App\Tests\Mocks;
 
 use App\Repository\TimesheetRepository;
 use App\Timesheet\RateCalculator\ClassicRateCalculator;
+use App\Timesheet\RateCalculator\RateCalculatorMode;
 use App\Timesheet\RateService;
 
 class RateServiceFactory extends AbstractMockFactory
 {
-    public function create(array $rules = [], array $rates = []): RateService
+    public function create(array $rules = [], array $rates = [], ?RateCalculatorMode $rateCalculatorMode = null): RateService
     {
         $mock = $this->createMock(TimesheetRepository::class);
         if (!empty($rates)) {
             $mock->expects($this->getTestCase()->any())->method('findMatchingRates')->willReturn($rates);
         }
 
-        return new RateService($rules, $mock, new ClassicRateCalculator());
+        return new RateService($rules, $mock, $rateCalculatorMode ?? new ClassicRateCalculator());
     }
 }

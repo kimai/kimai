@@ -10,6 +10,7 @@ nelmio_api_doc:
             - { alias: Customer,                    type: App\Entity\Customer,                      groups: [Default, Not_Expanded] }
             - { alias: CustomerRate,                type: App\Entity\CustomerRate,                  groups: [Default, Entity, Customer_Rate] }
             - { alias: CustomerRateForm,            type: App\Form\API\CustomerRateApiForm,         groups: [Default, Entity, Customer_Rate] }
+            - { alias: InvoiceEditForm,             type: App\Form\API\InvoiceApiEditForm,          groups: [Default] }
             - { alias: CustomerCollection,          type: App\Entity\Customer,                      groups: [Default, Collection, Customer, Budget_Money, Budget_Time] }
             - { alias: ProjectEditForm,             type: App\Form\API\ProjectApiEditForm,          groups: [Default, Entity, Project, Project_Entity] }
             - { alias: ProjectEntity,               type: App\Entity\Project,                       groups: [Default, Entity, Project, Project_Entity, Budget_Money, Budget_Time, Not_Expanded] }

@@ -17,6 +17,7 @@ use App\Event\InvoiceDeleteEvent;
 use App\Event\InvoiceMetaDefinitionEvent;
 use App\Event\InvoicePostRenderEvent;
 use App\Event\InvoicePreRenderEvent;
+use App\Event\InvoiceStatusChangedEvent;
 use App\Event\InvoiceUpdatePostEvent;
 use App\Event\InvoiceUpdatePreEvent;
 use App\Export\Base\DispositionInlineInterface;
@@ -238,6 +239,8 @@ class InvoiceService
 
     public function changeInvoiceStatus(Invoice $invoice, string $status): void
     {
+        $before = $invoice->getStatus();
+
         switch ($status) {
             case Invoice::STATUS_NEW:
                 $invoice->setIsNew();
@@ -259,7 +262,7 @@ class InvoiceService
                 throw new \InvalidArgumentException('Unknown invoice status');
         }
 
-        $this->saveInvoice($invoice);
+        $this->saveInvoice($invoice, $before);
     }
 
     /**
@@ -384,15 +387,20 @@ class InvoiceService
      */
     public function createModel(InvoiceQuery $query): InvoiceModel
     {
-        $model = $this->createModelWithoutEntries($query);
+        $model = $this->createEmptyModel($query);
         $model->addEntries($this->getInvoiceItems($query));
 
-        $this->prepareModelQueryDates($model);
+        $this->finalizeModel($model);
 
         return $model;
     }
 
-    private function createModelWithoutEntries(InvoiceQuery $query): InvoiceModel
+    public function finalizeModel(InvoiceModel $model): void
+    {
+        $this->prepareModelQueryDates($model);
+    }
+
+    public function createEmptyModel(InvoiceQuery $query): InvoiceModel
     {
         $customer = $query->getCustomer();
         if ($customer === null) {
@@ -534,7 +542,7 @@ class InvoiceService
         foreach ($customerEntries as $settings) {
             $customerQuery = clone $query;
             $customerQuery->setCustomers([$settings['customer']]);
-            $model = $this->createModelWithoutEntries($customerQuery);
+            $model = $this->createEmptyModel($customerQuery);
             $model->addEntries($settings['entries']);
             $this->prepareModelQueryDates($model);
 
@@ -544,11 +552,15 @@ class InvoiceService
         return $models;
     }
 
-    public function saveInvoice(Invoice $invoice): void
+    public function saveInvoice(Invoice $invoice, ?string $statusBefore = null): void
     {
         $this->dispatcher->dispatch(new InvoiceUpdatePreEvent($invoice));
         $this->invoiceRepository->saveInvoice($invoice);
         $this->dispatcher->dispatch(new InvoiceUpdatePostEvent($invoice));
+
+        if ($statusBefore !== null && $statusBefore !== $invoice->getStatus()) {
+            $this->dispatcher->dispatch(new InvoiceStatusChangedEvent($invoice, $statusBefore));
+        }
     }
 
     public function loadMetaFields(Invoice $invoice): void

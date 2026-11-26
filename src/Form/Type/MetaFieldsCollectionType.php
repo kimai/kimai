@@ -28,7 +28,7 @@ final class MetaFieldsCollectionType extends AbstractType
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) use ($options): void {
-                /** @var ArrayCollection<MetaTableTypeInterface> $collection */
+                /** @var ArrayCollection<int|string, MetaTableTypeInterface> $collection */
                 $collection = $event->getData();
                 foreach ($collection as $collectionItem) {
                     $collection->removeElement($collectionItem);

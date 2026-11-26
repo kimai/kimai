@@ -20,6 +20,7 @@ use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
+use App\Tests\Mocks\CustomerTestUrlMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -182,6 +183,49 @@ class CustomerControllerTest extends AbstractControllerBaseTestCase
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/customer/1/details');
         $this->assertDetailsPage($client);
+    }
+
+    /**
+     * @return array<int, array<string>>
+     */
+    public static function getUrlMetaFieldValues(): array
+    {
+        return [
+            ['javascript:alert(1)', 'href="javascript:alert(1)"'],
+            ['JavaScript://%0Aalert(1)', 'href="JavaScript://%0Aalert(1)"'],
+            ['data:text/html,test', 'href="data:text/html,test"'],
+            ['https://www.kimai.org', '<a href="https://www.kimai.org" target="_blank" rel="noopener noreferrer">https://www.kimai.org</a>'],
+        ];
+    }
+
+    /**
+     * Values might have been stored before validation was in place (or by plugins without URL constraint).
+     */
+    #[DataProvider('getUrlMetaFieldValues')]
+    public function testDetailsActionRendersOnlySafeUrlMetaFieldsAsLink(string $value, string $html): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new CustomerTestUrlMetaFieldSubscriberMock());
+
+        $em = $this->getEntityManager();
+        /** @var Customer $customer */
+        $customer = $em->getRepository(Customer::class)->find(1);
+        $customer->setMetaField((new CustomerMeta())->setName('homepage')->setValue($value)->setIsVisible(true));
+        $em->persist($customer);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringContainsString($value, $content);
+
+        if (str_starts_with($value, 'https://')) {
+            self::assertStringContainsString($html, $content);
+        } else {
+            self::assertStringNotContainsString($html, $content);
+        }
     }
 
     private function assertDetailsPage(HttpKernelBrowser $client)

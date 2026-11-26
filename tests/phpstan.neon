@@ -8,10 +8,12 @@ includes:
     - %rootDir%/../phpstan-deprecation-rules/rules.neon
 
 parameters:
+    phpVersion: 80233
     level: 9
     paths:
         - .
     tmpDir: %rootDir%/../../../var/cache/phpstan
+    resultCachePath: %tmpDir%/phpstan-tests.php
     excludePaths:
         - %rootDir%/../../../tests/Ldap/LdapDriverTest.php
     inferPrivatePropertyTypeFromConstructor: true
@@ -26,10 +28,11 @@ parameters:
         - message: '#^Call to deprecated method setApiToken\(\) of class App\\Entity\\User#'
         - message: '#^Call to deprecated method getPlainApiToken\(\) of class App\\Entity\\User#'
         - message: '#^Call to deprecated method setPlainApiToken\(\) of class App\\Entity\\User#'
+        - message: '#^Call to deprecated method enableSandbox\(\) of class Twig\\Extension\\SandboxExtension#'
 
         -
             identifier: classConstant.deprecatedClass
-            count: 2
+            count: 1
             path: API/Authentication/TokenAuthenticatorTest.php
 
         -
@@ -44,12 +47,7 @@ parameters:
 
         -
             identifier: method.deprecatedClass
-            count: 13
-            path: API/Authentication/TokenAuthenticatorTest.php
-
-        -
-            identifier: method.deprecated
-            count: 2
+            count: 8
             path: API/Authentication/TokenAuthenticatorTest.php
 
         -
@@ -135,11 +133,6 @@ parameters:
         -
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
             count: 3
-            path: API/APIControllerBaseTestCase.php
-
-        -
-            message: "#^Parameter \\#2 \\$array of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertArrayHasKey\\(\\) expects array\\|ArrayAccess, mixed given\\.$#"
-            count: 1
             path: API/APIControllerBaseTestCase.php
 
         -
@@ -268,7 +261,7 @@ parameters:
             path: API/TagControllerTest.php
         -
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-            count: 38
+            count: 40
             path: API/TeamControllerTest.php
 
         -
@@ -683,7 +676,7 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$hashedPassword of method Symfony\\\\Component\\\\PasswordHasher\\\\PasswordHasherInterface\\:\\:verify\\(\\) expects string, string\\|null given\\.$#"
-            count: 8
+            count: 4
             path: Controller/ProfileControllerTest.php
 
         -
@@ -1045,11 +1038,6 @@ parameters:
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Project\\:\\:getMetaField\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: Entity/ProjectTest.php
-
-        -
-            message: "#^Cannot call method getUser\\(\\) on mixed\\.$#"
-            count: 1
-            path: Entity/TeamTest.php
 
         -
             message: "#^Cannot call method getValue\\(\\) on App\\\\Entity\\\\MetaTableTypeInterface\\|null\\.$#"
@@ -1695,16 +1683,6 @@ parameters:
             message: "#^Parameter \\#1 \\$invoiceItems of method App\\\\Repository\\\\TimesheetInvoiceItemRepository\\:\\:setExported\\(\\) expects array\\<App\\\\Entity\\\\ExportableItem\\>, array\\<int, App\\\\Entity\\\\Activity\\|App\\\\Entity\\\\Timesheet\\|stdClass\\|null\\> given\\.$#"
             count: 1
             path: Repository/TimesheetInvoiceItemRepositoryTest.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on mixed\\.$#"
-            count: 2
-            path: Repository/TimesheetRepositoryTest.php
-
-        -
-            message: "#^Cannot call method getName\\(\\) on mixed\\.$#"
-            count: 2
-            path: Repository/TimesheetRepositoryTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Saml\\\\SamlProviderTest\\:\\:getSamlProvider\\(\\) has parameter \\$mapping with no value type specified in iterable type array\\.$#"
@@ -2423,12 +2401,12 @@ parameters:
 
         -
             message: "#^Parameter \\#2 \\$array of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertArrayHasKey\\(\\) expects array\\|ArrayAccess, mixed given\\.$#"
-            count: 2
+            count: 1
             path: Widget/Type/PaginatedWorkingTimeChartTest.php
 
         -
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertCount\\(\\) expects Countable\\|iterable, mixed given\\.$#"
-            count: 2
+            count: 1
             path: Widget/Type/PaginatedWorkingTimeChartTest.php
 
         -
@@ -2482,7 +2460,7 @@ parameters:
             path: Widget/Type/UserDurationYearTest.php
         -
           message: '''
-                    #^Access to constant on deprecated class App\\Timesheet\\Util\:
+                    #^Fetching class constant class of deprecated class App\\Timesheet\\Util\:
                     use RateCalculatorMode instead$#
                 '''
           identifier: classConstant.deprecatedClass

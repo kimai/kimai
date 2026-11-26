@@ -43,6 +43,10 @@ final class UserPreferencesCollectionType extends AbstractType
                         continue;
                     }
 
+                    if (null === $collectionItem->getName()) {
+                        continue;
+                    }
+
                     $preferences->set($collectionItem->getName(), clone $collectionItem);
                 }
                 $event->setData($preferences);

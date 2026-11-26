@@ -442,7 +442,9 @@ class ConfigurationTest extends TestCase
                 'wizard' => true,
                 'login' => true,
                 'password_reset_retry_ttl' => 3600,
-                'password_reset_token_ttl' => 86400,
+                'password_reset_token_ttl' => 1800,
+                'password_strength' => 0,
+                'auth_change' => false,
                 'theme' => 'auto',
             ],
             'invoice' => [
@@ -509,6 +511,7 @@ class ConfigurationTest extends TestCase
                     'timezone' => null,
                     'language' => 'en',
                     'theme' => 'auto',
+                    'locale' => null,
                 ],
             ],
             'permissions' => [
@@ -561,9 +564,6 @@ class ConfigurationTest extends TestCase
                     'cleanupLongRelayState' => false
                 ],
                 'provider' => 'default',
-            ],
-            'company' => [
-                'financial_year' => null,
             ],
             'quick_entry' => [
                 'recent_activities' => 5,

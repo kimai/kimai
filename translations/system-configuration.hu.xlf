@@ -190,10 +190,6 @@
         <source>theme.avatar_url</source>
         <target state="translated">URL-ek használatának engedélyezése a profilképekhez</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target>Pénzügyi év</target>
-      </trans-unit>
       <trans-unit id="E9URNEx" resname="user_auth_password_reset_retry_ttl">
         <source>user_auth_password_reset_retry_ttl</source>
         <target>Elfelejtett jelszó – másodpercek azelőtt, hogy a felhasználó kérhetné a következő e-mailt</target>

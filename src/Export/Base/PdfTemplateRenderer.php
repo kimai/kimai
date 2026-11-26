@@ -29,7 +29,7 @@ use Twig\Environment;
 final class PdfTemplateRenderer implements DispositionInlineInterface, ExportRendererInterface
 {
     use RendererTrait;
-    use PDFRendererTrait;
+    use PdfRendererTrait;
 
     public function __construct(
         private readonly Environment $twig,

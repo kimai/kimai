@@ -51,17 +51,19 @@ final class CustomerHelper
         $name = str_replace(self::PATTERN_COMPANY, $customer->getCompany() ?? '', $name);
 
         while (str_starts_with($name, self::SPACER)) {
-            $name = substr($name, \strlen(self::SPACER));
+            $name = mb_substr($name, \strlen(self::SPACER));
         }
 
         while (str_ends_with($name, self::SPACER)) {
-            $name = substr($name, 0, -\strlen(self::SPACER));
+            $name = mb_substr($name, 0, -\strlen(self::SPACER));
         }
 
         if ($name === '' || $name === self::SPACER) {
             $name = $customer->getName() ?? '';
         }
 
-        return substr($name, 0, 110);
+        // this is a rather arbitrary length limitation, which was original introduced with 110 in 2022
+        // in 2026 it was bumped to 180, to allow the 150 char name plus addons like the number
+        return mb_substr($name, 0, 180);
     }
 }

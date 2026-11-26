@@ -50,7 +50,7 @@ final class PluginCommand extends Command
         } elseif ($input->getOption('composer')) {
             return $this->listComposerPackages($io, $this->packageManager->getAvailablePackages());
         } elseif ($input->getOption('install')) {
-            return $this->installPlugins($io, $output, $this->pluginManager->getPlugins());
+            return $this->installPlugins($io, $this->pluginManager->getPlugins());
         }
 
         return $this->listInstalledPlugins($io, $this->pluginManager->getPlugins());
@@ -59,7 +59,7 @@ final class PluginCommand extends Command
     /**
      * @param Plugin[] $plugins
      */
-    private function installPlugins(SymfonyStyle $io, OutputInterface $output, array $plugins): int
+    private function installPlugins(SymfonyStyle $io, array $plugins): int
     {
         foreach ($plugins as $plugin) {
             $config = $plugin->getPath() . '/migrations/doctrine_migrations.yaml';

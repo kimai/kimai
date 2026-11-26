@@ -74,7 +74,7 @@ final class ActivityType extends AbstractType
             'choice_label' => [$this, 'getChoiceLabel'],
             'choice_attr' => [$this, 'getChoiceAttributes'],
             'group_by' => [$this, 'groupBy'],
-            'query_builder_for_user' => true,
+            'query_builder_for_user' => true, // @deprecated since 2.67
             // @var Project|Project[]|int|int[]|null
             'projects' => null,
             // @var Activity|Activity[]|int|int[]|null
@@ -95,10 +95,7 @@ final class ActivityType extends AbstractType
         $resolver->setDefault('query_builder', function (Options $options) {
             return function (ActivityRepository $repo) use ($options) {
                 $query = new ActivityFormTypeQuery($options['activities'], $options['projects']);
-
-                if (true === $options['query_builder_for_user']) {
-                    $query->setUser($options['user']);
-                }
+                $query->setUser($options['user']);
 
                 if (null !== $options['ignore_activity']) {
                     $query->setActivityToIgnore($options['ignore_activity']);

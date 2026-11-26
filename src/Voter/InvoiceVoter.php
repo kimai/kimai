@@ -9,6 +9,7 @@
 
 namespace App\Voter;
 
+use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Entity\User;
 use App\Security\RolePermissionManager;
@@ -42,12 +43,12 @@ final class InvoiceVoter extends Voter
 
     public function supportsType(string $subjectType): bool
     {
-        return str_contains($subjectType, Invoice::class);
+        return str_contains($subjectType, Invoice::class) || str_contains($subjectType, Customer::class);
     }
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return $subject instanceof Invoice && $this->supportsAttribute($attribute);
+        return ($subject instanceof Invoice || $subject instanceof Customer) && $this->supportsAttribute($attribute);
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
@@ -58,7 +59,15 @@ final class InvoiceVoter extends Voter
             return false;
         }
 
-        if (!$subject instanceof Invoice) {
+        $customer = null;
+        if ($subject instanceof Invoice) {
+            $customer = $subject->getCustomer();
+        } elseif ($subject instanceof Customer) {
+            $customer = $subject;
+        }
+
+        // this should never happen
+        if ($customer === null) {
             return false;
         }
 
@@ -67,13 +76,8 @@ final class InvoiceVoter extends Voter
             return false;
         }
 
-        // this should never happen
-        if ($subject->getCustomer() === null) {
-            return false;
-        }
-
         // check if the user is allowed to see the invoice customer
-        if (!$this->rolePermissionManager->checkTeamAccessCustomer($subject->getCustomer(), $user)) {
+        if (!$this->rolePermissionManager->checkTeamAccessCustomer($customer, $user)) {
             return false;
         }
 

@@ -10,7 +10,10 @@
 namespace App\Ldap;
 
 use App\Entity\User;
+use App\User\ExternalUserSanitizer;
 use App\User\UserService;
+use App\Validator\ValidationFailedException;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
@@ -22,8 +25,12 @@ use Symfony\Component\Security\Http\Event\CheckPassportEvent;
  */
 final class LdapCredentialsSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly LdapManager $ldapManager, private readonly UserService $userService)
-    {
+    public function __construct(
+        private readonly LdapManager $ldapManager,
+        private readonly UserService $userService,
+        private readonly ExternalUserSanitizer $userSanitizer,
+        private readonly LoggerInterface $logger
+    ) {
     }
 
     public static function getSubscribedEvents(): array
@@ -79,8 +86,6 @@ final class LdapCredentialsSubscriber implements EventSubscriberInterface
             // the user provider only creates an empty account (it runs before this bind() and must not
             // trigger any side effects), so the system defaults are applied now that the login succeeded
             $this->userService->prepareNewUser($user);
-            // set a plain password to satisfy the validator, it is never used to authenticate LDAP users
-            $user->setPlainPassword(substr(bin2hex(random_bytes(100)), 0, 50));
         }
 
         // the LDAP attributes and roles are applied afterwards, they win over the system defaults
@@ -90,14 +95,21 @@ final class LdapCredentialsSubscriber implements EventSubscriberInterface
             throw new BadCredentialsException('Fetching user data/roles failed, probably DN is expired.');
         }
 
+        // a broken attribute mapping must not prevent the login
+        $this->userSanitizer->sanitize($user);
+
         // new users only exist in memory at this point and the synced attributes/roles of existing
         // users have to be written as well: nothing else in the login process stores the user
         // (see SamlProvider::findUser() which does the same for SAML logins)
         try {
             $this->userService->saveUser($user);
         } catch (\Exception $ex) {
+            $reason = $ex instanceof ValidationFailedException ? $ex->getViolationsAsString() : $ex->getMessage();
+            $this->logger->error(
+                \sprintf('Failed creating or updating LDAP user "%s": %s', $user->getUserIdentifier(), $reason)
+            );
             throw new AuthenticationException(
-                \sprintf('Failed creating or updating user "%s": %s', $user->getUserIdentifier(), $ex->getMessage())
+                \sprintf('Failed creating or updating user "%s": %s', $user->getUserIdentifier(), $reason)
             );
         }
 

@@ -19,7 +19,6 @@ use App\Form\Type\ActivityTypePatternType;
 use App\Form\Type\ArrayToCommaStringType;
 use App\Form\Type\CalendarTitlePatternType;
 use App\Form\Type\CustomerTypePatternType;
-use App\Form\Type\DatePickerType;
 use App\Form\Type\DateTimeTextType;
 use App\Form\Type\DayTimeType;
 use App\Form\Type\MinuteIncrementType;
@@ -29,6 +28,7 @@ use App\Form\Type\SkinType;
 use App\Form\Type\TimezoneType;
 use App\Form\Type\TrackingModeType;
 use App\Form\Type\UserLanguageType;
+use App\Form\Type\UserLocaleType;
 use App\Form\Type\WeekDaysType;
 use App\Form\Type\YesNoType;
 use App\Timesheet\LockdownService;
@@ -280,6 +280,26 @@ final class SystemConfigurationController extends AbstractController
                 (new Configuration('user.theme'))
                     ->setLabel('skin')
                     ->setType(SkinType::class),
+                (new Configuration('user.password_strength'))
+                    ->setTranslationDomain('system-configuration')
+                    ->setLabel('user_auth_password_strength')
+                    ->setType(ChoiceType::class)
+                    ->setOptions([
+                        'help' => 'user_auth_password_strength.help',
+                        'choices' => [
+                            'password_strength.none' => 0,
+                            'password_strength.normal' => 1,
+                            'password_strength.medium' => 2,
+                            'password_strength.strong' => 3,
+                            'password_strength.very_strong' => 4,
+                        ],
+                    ])
+                    ->setConstraints([new NotNull(), new Range(['min' => 0, 'max' => 4])]),
+                (new Configuration('user.auth_change'))
+                    ->setLabel('user_auth_change')
+                    ->setTranslationDomain('system-configuration')
+                    ->setOptions(['help' => 'user_auth_change.help'])
+                    ->setType(YesNoType::class),
             ]);
 
         $allowRegistration = $this->systemConfiguration->find('features.user_registration');
@@ -289,6 +309,10 @@ final class SystemConfigurationController extends AbstractController
 
         if (!$this->systemConfiguration->isSamlActive()) {
             $authentication->getConfigurationByName('user.login')?->setEnabled(false);
+        }
+
+        if (!$this->systemConfiguration->isExternalLoginActive()) {
+            $authentication->getConfigurationByName('user.auth_change')?->setEnabled(false);
         }
 
         if (!$this->systemConfiguration->isPasswordResetActive()) {
@@ -540,6 +564,11 @@ final class SystemConfigurationController extends AbstractController
                         ->setLabel('language')
                         ->setType(UserLanguageType::class)
                         ->setOptions(['help' => 'default_value_new']),
+                    (new Configuration('defaults.user.locale'))
+                        ->setRequired(false)
+                        ->setLabel('locale')
+                        ->setType(UserLocaleType::class)
+                        ->setOptions(['help' => 'default_value_new']),
                     (new Configuration('defaults.user.theme'))
                         ->setLabel('skin')
                         ->setType(SkinType::class)
@@ -624,11 +653,6 @@ final class SystemConfigurationController extends AbstractController
                         ->setLabel('currency')
                         ->setType(CurrencyType::class)
                         ->setOptions(['help' => 'Can be overwritten per customer']),
-                    (new Configuration('company.financial_year'))
-                        ->setTranslationDomain('system-configuration')
-                        ->setRequired(false)
-                        ->setType(DatePickerType::class)
-                        ->setOptions(['input' => 'string']),
                 ]),
         ];
     }

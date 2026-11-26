@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-final class TimesheetApiEditForm extends TimesheetEditForm
+final class TimesheetApiEditForm extends TimesheetEditForm implements ApiFormInterface
 {
     protected function addBillable(FormBuilderInterface $builder, array $options): void
     {
@@ -105,7 +105,6 @@ final class TimesheetApiEditForm extends TimesheetEditForm
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'csrf_protection' => false,
             'allow_duration' => false,
             // overwritten and changed to default "true",
             // because the docs are cached without these fields otherwise

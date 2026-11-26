@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\Collection;
 class MultiUpdateTableDTO
 {
     /**
-     * @var array<object>|Collection<object>
+     * @var array<object>|Collection<int, object>
      */
     private array|Collection $entities = [];
     /**
@@ -32,7 +32,7 @@ class MultiUpdateTableDTO
     }
 
     /**
-     * @param array<object>|Collection<object> $entities
+     * @param array<object>|Collection<int, object> $entities
      * @return MultiUpdateTableDTO
      */
     public function setEntities(array|Collection $entities): MultiUpdateTableDTO

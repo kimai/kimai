@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 KIMAI=$(cat /opt/kimai/version.txt)
 echo $KIMAI
@@ -17,7 +17,10 @@ function waitForDB() {
   fi
 
   echo "Wait for database connection ..."
-  until php /dbtest.php "$DATABASE_HOST" "$DATABASE_BASE" "$DATABASE_PORT" "$DATABASE_USER" "$DATABASE_PASS"; do
+  # Credentials are handed over as environment variables of that single command instead of
+  # command line arguments, so they are neither logged nor visible in the process list.
+  until DBTEST_HOST="$DATABASE_HOST" DBTEST_NAME="$DATABASE_BASE" DBTEST_PORT="$DATABASE_PORT" \
+        DBTEST_USER="$DATABASE_USER" DBTEST_PASS="$DATABASE_PASS" php /dbtest.php; do
     echo Checking DB: $?
     sleep 3
   done
@@ -76,38 +79,29 @@ function handleStartup() {
 function prepareKimai() {
   # These are idempotent, so we can run them on every start-up
   /opt/kimai/bin/console -n kimai:install
-  if [ ! -z "$ADMINPASS" ] && [ ! -a "$ADMINMAIL" ]; then
-    /opt/kimai/bin/console kimai:user:create admin "$ADMINMAIL" ROLE_SUPER_ADMIN "$ADMINPASS"
+  if [ -n "$ADMINPASS" ] && [ -n "$ADMINMAIL" ]; then
+    # --ignore-existing is idempotent: it will only create the admin on the first container start
+    /opt/kimai/bin/console kimai:user:create --ignore-existing admin "$ADMINMAIL" ROLE_SUPER_ADMIN "$ADMINPASS"
   fi
   echo "$KIMAI" > /opt/kimai/var/installed
   echo "Kimai is ready"
 }
 
 function ensureAppSecret() {
-  # GHSA-jr9p-4h4j-6c58
   # Make sure the container never runs with the publicly-known default APP_SECRET.
   # If the user provided their own value (via -e APP_SECRET=...) it is kept untouched.
   # Otherwise a unique secret is generated once and persisted below var/data, which
-  # is the directory mounted as a named volume in the documented Docker setup, so it
-  # stays stable across container restarts and re-creations.
-  #
-  # Disable xtrace around all reads/writes of APP_SECRET so the secret never appears
-  # in container logs. The braces around `set +x` keep the disable command itself
-  # from being traced.
-  { set +x; } 2>/dev/null
-
+  # should be a mounted volume and stable across container restarts and re-creations.
   local SECRET_FILE=/opt/kimai/var/data/.appsecret
   local ENV_LOCAL=/opt/kimai/.env.local
 
   # Always remove any prior .env.local before deciding which secret applies.
-  # This prevents a stale auto-generated value from lingering after a user
-  # later sets APP_SECRET via docker env / compose. It is regenerated below
-  # in the auto-secret path; in the user-provided path it stays absent so
-  # the real env var remains the single source of truth.
+  # This prevents a stale auto-generated value from lingering after a user later sets
+  # APP_SECRET via docker env / compose. It is regenerated below in the auto-secret path; in
+  # the user-provided path it stays absent so the real env remains the single source of truth.
   rm -f "$ENV_LOCAL"
 
   if [ -n "$APP_SECRET" ] && [ "$APP_SECRET" != "change_this_to_something_unique" ]; then
-    set -x
     return
   fi
 
@@ -134,8 +128,6 @@ function ensureAppSecret() {
   # would otherwise be 0600 root:root and unreadable to the web user, causing
   # Symfony's Dotenv to throw PathException at boot.
   chown "$USER_ID:$GROUP_ID" "$ENV_LOCAL"
-
-  set -x
 }
 
 function runServer() {

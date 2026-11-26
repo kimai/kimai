@@ -42,10 +42,6 @@
         <source>daterangepicker.lastMonth</source>
         <target>Last month</target>
       </trans-unit>
-      <trans-unit id="mgJ2Z7M" resname="daterangepicker.thisFinancialYear">
-        <source>daterangepicker.thisFinancialYear</source>
-        <target>This financial year</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

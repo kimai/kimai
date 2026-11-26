@@ -53,6 +53,7 @@ final class LocaleFormatter
     private ?NumberFormatter $decimalFormatter = null;
     private ?NumberFormatter $moneyFormatter = null;
     private ?NumberFormatter $moneyFormatterNoCurrency = null;
+    private int $moneyFormatterNoCurrencyFractionDigits = MoneyRounding::DEFAULT_FRACTION_DIGITS;
 
     public function __construct(private readonly LocaleService $localeService, private readonly string $locale)
     {
@@ -165,17 +166,27 @@ final class LocaleFormatter
         if (false === $withCurrency) {
             if (null === $this->moneyFormatterNoCurrency) {
                 $this->moneyFormatterNoCurrency = new NumberFormatter($this->locale, NumberFormatter::CURRENCY);
+                // commercial rounding, intl defaults to "half even" (see MoneyRounding)
+                $this->moneyFormatterNoCurrency->setAttribute(NumberFormatter::ROUNDING_MODE, NumberFormatter::ROUND_HALFUP);
                 $this->moneyFormatterNoCurrency->setTextAttribute(NumberFormatter::POSITIVE_PREFIX, '');
                 $this->moneyFormatterNoCurrency->setTextAttribute(NumberFormatter::POSITIVE_SUFFIX, '');
                 $this->moneyFormatterNoCurrency->setTextAttribute(NumberFormatter::NEGATIVE_PREFIX, '-');
                 $this->moneyFormatterNoCurrency->setTextAttribute(NumberFormatter::NEGATIVE_SUFFIX, '');
+                $this->moneyFormatterNoCurrencyFractionDigits = (int) $this->moneyFormatterNoCurrency->getAttribute(NumberFormatter::MAX_FRACTION_DIGITS);
             }
+
+            // without a currency symbol intl uses the decimals of the locales default currency,
+            // so they have to be set on every call (the formatter is cached and currencies can change)
+            $fractionDigits = $currency === null ? $this->moneyFormatterNoCurrencyFractionDigits : MoneyRounding::getFractionDigits($currency);
+            $this->moneyFormatterNoCurrency->setAttribute(NumberFormatter::FRACTION_DIGITS, $fractionDigits);
 
             return $this->moneyFormatterNoCurrency->format($amount, NumberFormatter::TYPE_DEFAULT);
         }
 
         if (null === $this->moneyFormatter) {
             $this->moneyFormatter = new NumberFormatter($this->locale, NumberFormatter::CURRENCY);
+            // commercial rounding, intl defaults to "half even" (see MoneyRounding)
+            $this->moneyFormatter->setAttribute(NumberFormatter::ROUNDING_MODE, NumberFormatter::ROUND_HALFUP);
         }
 
         return $this->moneyFormatter->formatCurrency($amount, $currency);
@@ -212,7 +223,7 @@ final class LocaleFormatter
             return null;
         }
 
-        return (string) $formatted;
+        return $formatted;
     }
 
     public function dateTime(DateTimeInterface|string|null $date): ?string
@@ -246,7 +257,7 @@ final class LocaleFormatter
             return null;
         }
 
-        return (string) $formatted;
+        return $formatted;
     }
 
     public function dateFormat(\DateTimeInterface|string|null $date, string $format): ?string
@@ -297,7 +308,7 @@ final class LocaleFormatter
             return null;
         }
 
-        return (string) $formatted;
+        return $formatted;
     }
 
     /**
@@ -320,7 +331,7 @@ final class LocaleFormatter
             throw new \Exception('Invalid dateformat given for formatIntl()');
         }
 
-        return (string) $formatted;
+        return $formatted;
     }
 
     public function monthName(\DateTimeInterface $dateTime, bool $withYear = false): string

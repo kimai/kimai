@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="gkQA1YG" resname="daterangepicker.yesterday">
         <source>daterangepicker.yesterday</source>
-        <target>Zítra</target>
+        <target state="translated">Včera</target>
       </trans-unit>
       <trans-unit id="CAvVEbc" resname="daterangepicker.lastWeek">
         <source>daterangepicker.lastWeek</source>
@@ -37,10 +37,6 @@
       <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" xml:space="preserve">
         <source>daterangepicker.lastMonth</source>
         <target state="translated">Minulý měsíc</target>
-      </trans-unit>
-      <trans-unit id="mgJ2Z7M" resname="daterangepicker.thisFinancialYear" xml:space="preserve">
-        <source>daterangepicker.thisFinancialYear</source>
-        <target state="translated">Tento fiskální rok</target>
       </trans-unit>
       <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth" xml:space="preserve">
         <source>daterangepicker.thisMonth</source>

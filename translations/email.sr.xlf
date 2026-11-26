@@ -4,43 +4,43 @@
     <body>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" xml:space="preserve">
         <source>automated_email_dont_answer</source>
-        <target state="translated">Ovo je automatski generisana e-poruka. Molimo ne odgovarajte na nju, adresa se ne prati.</target>
+        <target state="translated">Ово је аутоматски генерисана е-порука. Молимо не одговарајте на њу, адреса се не прати.</target>
       </trans-unit>
       <trans-unit id="pjr3FDv" resname="registration.subject" xml:space="preserve">
         <source>registration.subject</source>
-        <target state="translated">Aktivirajte svoj nalog</target>
+        <target state="translated">Активирајте свој налог</target>
       </trans-unit>
       <trans-unit id="QtcznHC" resname="registration.title" xml:space="preserve">
         <source>registration.title</source>
-        <target state="translated">Dobrodošli %username%</target>
+        <target state="translated">Добродошли %username%</target>
       </trans-unit>
       <trans-unit id="YMLel3P" resname="registration.button" xml:space="preserve">
         <source>registration.button</source>
-        <target state="translated">Aktiviraj svoj nalog</target>
+        <target state="translated">Активирај свој налог</target>
       </trans-unit>
       <trans-unit id="IkjnHoP" resname="registration.intro" xml:space="preserve">
         <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
-        <target state="translated">Registrovali ste se na Kimai evidenciji vremena sa e-mail adresom %email%. Aktivirajte svoj nalog u narednih nekoliko sati, pre nego što link istekne.</target>
+        <target state="translated">Регистровали сте се на Kimai евиденцији времена са е-маил адресом %email%. Активирајте свој налог у наредних неколико сати, пре него што линк истекне.</target>
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="translated">Prijavite se na Kimai</target>
+        <target state="translated">Пријавите се на Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve" approved="no">
         <source>Forgot your password?</source>
-        <target state="translated">Prijavite se na svoj nalog</target>
+        <target state="translated">Пријавите се на свој налог</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="translated">Prijavi se</target>
+        <target state="translated">Пријави се</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve" approved="no">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="translated">Ovaj link će važiti samo narednih 15 minuta.</target>
+        <target state="translated">Овај линк ће важити само наредних 15 минута.</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
         <source>absence_created_supervisor_subject</source>
-        <target state="translated">Novo odsustvo: %user% (%type%)</target>
+        <target state="translated">Ново одсуство: %user% (%type%)</target>
       </trans-unit>
       <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
         <source>A new absence was created for %user%.
@@ -48,47 +48,47 @@
 %list%
 
 Please review them at: %url%</source>
-        <target state="translated">Novo odsustvo je kreirano za %user%.
+        <target state="translated">Ново одсуство је креирано за %user%.
 
 %list%
 
-Pogledajte ih na: %url%</target>
+Погледајте их на: %url%</target>
       </trans-unit>
       <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
         <source>approval_requested_subject</source>
-        <target state="translated">Zatraženo odobrenje: %user%</target>
+        <target state="translated">Затражено одобрење: %user%</target>
       </trans-unit>
       <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
         <source>approval_requested_message</source>
-        <target state="translated">Zatraženo je odobrenje za %user%.
+        <target state="translated">Затражено је одобрење за %user%.
 
 %list%
 
-Pogledajte ih na: %url%</target>
+Погледајте их на: %url%</target>
       </trans-unit>
       <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
         <source>approval_rejected_subject</source>
-        <target state="translated">Vaš zahtev je odbijen</target>
+        <target state="translated">Ваш захтев је одбијен</target>
       </trans-unit>
       <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
         <source>approval_rejected_message</source>
-        <target state="translated">Vaš zahtev za odobrenje je odbio %created_by%.
+        <target state="translated">Ваш захтев за одобрење је одбио %created_by%.
 
 %list%
 
-Pogledajte svoje zahteve na: %url%</target>
+Погледајте своје захтеве на: %url%</target>
       </trans-unit>
       <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
         <source>approval_approved_subject</source>
-        <target state="translated">Vaš zahtev je odobren</target>
+        <target state="translated">Ваш захтев је одобрен</target>
       </trans-unit>
       <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
         <source>approval_approved_message</source>
-        <target state="translated">Vaš zahtev je odobrio %created_by%.
+        <target state="translated">Ваш захтев је одобрио %created_by%.
 
 %list%
 
-Sve svoje zahteve možete pronaći na: %url%</target>
+Све своје захтеве можете пронаћи на: %url%</target>
       </trans-unit>
     </body>
   </file>

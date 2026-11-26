@@ -53,16 +53,21 @@ class ProjectEditForm extends AbstractType
             'model_timezone' => $options['timezone'],
             'view_timezone' => $options['timezone'],
         ];
+        // date-only fields must not be converted between timezones, otherwise the day would shift
+        $dateOnlyOptions = [];
         // primarily for API usage, where we cannot use a user/locale specific format
         if (null !== $options['date_format']) {
             $dateTimeOptions['format'] = $options['date_format'];
+            $dateOnlyOptions['format'] = $options['date_format'];
         }
 
         $builder
             ->add('name', TextType::class, [
                 'label' => 'name',
                 'attr' => [
-                    'autofocus' => 'autofocus'
+                    'autofocus' => 'autofocus',
+                    // deactivated: browser use utf16 to calculate maxlength, which can interfere with backend validation
+                    // 'maxlength' => 150,
                 ],
             ])
             ->add('number', TextType::class, [
@@ -88,18 +93,26 @@ class ProjectEditForm extends AbstractType
             ]))
             ->add('start', DatePickerType::class, array_merge($dateTimeOptions, [
                 'label' => 'project_start',
+                'help' => 'help.project_start',
                 'required' => false,
                 'force_time' => 'start',
             ]))
             ->add('end', DatePickerType::class, array_merge($dateTimeOptions, [
                 'label' => 'project_end',
+                'help' => 'help.project_end',
                 'required' => false,
                 'force_time' => 'end',
+            ]))
+            // a plain calendar day without timezone
+            ->add('lockedUntil', DatePickerType::class, array_merge($dateOnlyOptions, [
+                'label' => 'project_locked_until',
+                'help' => 'help.project_locked_until',
+                'required' => false,
+                'input' => 'datetime_immutable',
             ]))
             ->add('customer', CustomerType::class, array_merge([
                 'placeholder' => ($isNew && null === $customer) ? '' : false,
                 'customers' => $customer,
-                'query_builder_for_user' => true,
             ], $customerOptions))
             ->add('globalActivities', YesNoType::class, [
                 'label' => 'globalActivities',

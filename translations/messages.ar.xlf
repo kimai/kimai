@@ -742,14 +742,6 @@
         <source>set_as_default</source>
         <target state="translated">حفظ الإعدادات كمفضلة البحث</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="translated">ساعات عمل هذه السنة المالية</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>المستخدمون النشطون في هذه السنة المالية</target>
-      </trans-unit>
       <trans-unit id="WXXPG7p" resname="preview">
         <source>preview</source>
         <target>معاينة</target>
@@ -910,10 +902,6 @@
         <source>stats.workingTimeYear</source>
         <target>السنة الكاملة %year%</target>
       </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
-        <source>stats.workingTimeFinancialYear</source>
-        <target>السنة المالية</target>
-      </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
         <source>Working hours</source>
         <target>وقت العمل</target>
@@ -997,10 +985,6 @@
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
         <target state="translated">الدليل "%dir%" محمي ضد الكتابة.</target>
-      </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
-        <source>stats.amountFinancialYear</source>
-        <target state="translated">إيرادات هذه السنة المالية</target>
       </trans-unit>
       <trans-unit id="unC5MXv" resname="stats.percentUsed">
         <source>stats.percentUsed</source>
@@ -1780,7 +1764,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">المناسبات العائلية، والانتقال إلى منزل جديد، وفوضى الطقس وما إلى ذلك.</target>
+        <target state="needs-translation">المناسبات العائلية، والانتقال إلى منزل جديد، وفوضى الطقس وما إلى ذلك.</target>
       </trans-unit>
       <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro" xml:space="preserve">
         <source>manual_bookings.work_contract_intro</source>

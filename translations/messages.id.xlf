@@ -940,7 +940,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
         <source>default</source>
-        <target state="translated">Default</target>
+        <target state="translated">Bawaan</target>
       </trans-unit>
       <trans-unit id="On18MKP" resname="plugin.installed" xml:space="preserve">
         <source>plugin.installed</source>
@@ -1009,10 +1009,6 @@
       <trans-unit id="lGuZo7g" resname="stats.activeUsersYear" xml:space="preserve">
         <source>stats.activeUsersYear</source>
         <target state="translated">Pengguna aktif tahun ini</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear" xml:space="preserve">
-        <source>stats.activeUsersFinancialYear</source>
-        <target state="translated">Pengguna aktif tahun fiskal ini</target>
       </trans-unit>
       <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal" xml:space="preserve">
         <source>stats.activeUsersTotal</source>
@@ -1194,10 +1190,6 @@
         <source>export.mark_all</source>
         <target state="translated">Tandai semua riwayat sebagai dibersihkan?</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="translated">Tahun Keuangan</target>
-      </trans-unit>
       <trans-unit id="9Wt8Pp_" resname="help.batch_meta_fields" xml:space="preserve">
         <source>help.batch_meta_fields</source>
         <target state="translated">Kolom yang akan diperbarui harus diaktifkan dengan mengklik checkbox pada kolom yang diinginkan.</target>
@@ -1344,7 +1336,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">Acara keluarga, pindahan rumah, cuaca buruk, dll.</target>
+        <target state="needs-translation">Acara keluarga, pindahan rumah, cuaca buruk, dll.</target>
       </trans-unit>
       <trans-unit id="Eml59KV" resname="day_half" xml:space="preserve">
         <source>day_half</source>
@@ -1385,10 +1377,6 @@
       <trans-unit id="023M9Ta" resname="stats.amountToday" xml:space="preserve">
         <source>stats.amountToday</source>
         <target state="translated">Pendapatan Hari ini</target>
-      </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear" xml:space="preserve">
-        <source>stats.amountFinancialYear</source>
-        <target state="translated">Pendapatan tahun fiskal ini</target>
       </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal" xml:space="preserve">
         <source>stats.amountTotal</source>
@@ -1538,10 +1526,6 @@
         <source>invoice_number_generator.date</source>
         <target state="translated">Tanggal</target>
       </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear" xml:space="preserve">
-        <source>stats.workingTimeFinancialYear</source>
-        <target state="translated">Tahun Keuangan</target>
-      </trans-unit>
       <trans-unit id="EI5gPkp" resname="stats.userDurationToday" xml:space="preserve">
         <source>stats.userDurationToday</source>
         <target state="translated">Jam kerja saya hari ini</target>
@@ -1596,7 +1580,7 @@
       </trans-unit>
       <trans-unit id="X_NRsed" resname="status.new" xml:space="preserve">
         <source>status.new</source>
-        <target state="translated">Ini dimaksud "Faktur baru" - dibandingkan dengan "faktur terbayar, faktur tertunda atau faktur jatuh tempo"</target>
+        <target state="translated">Baru</target>
       </trans-unit>
       <trans-unit id="PHJwR4w" resname="status.paid" xml:space="preserve">
         <source>status.paid</source>
@@ -2109,6 +2093,110 @@
       <trans-unit id="LfO_otF" resname="reopen" xml:space="preserve">
         <source>reopen</source>
         <target state="translated">Buka kembali</target>
+      </trans-unit>
+      <trans-unit id="TTL.5NF" resname="status.todo" xml:space="preserve">
+        <source>status.todo</source>
+        <target state="translated">Daftar Tugas</target>
+      </trans-unit>
+      <trans-unit id="j_0FPm3" resname="status.waiting" xml:space="preserve">
+        <source>status.waiting</source>
+        <target state="translated">Menunggu</target>
+      </trans-unit>
+      <trans-unit id="QdfOAGZ" resname="status.done" xml:space="preserve">
+        <source>status.done</source>
+        <target state="translated">Selesai</target>
+      </trans-unit>
+      <trans-unit id="G8ZoGoA" resname="api_token_qr_hint" xml:space="preserve">
+        <source>api_token_qr_hint</source>
+        <target state="translated">Pindai kode QR ini menggunakan aplikasi di ponsel untuk mengatur URL server dan token sekaligus.Jangan bagikan gambar ini kepada siapa pun karena berisi Token API Anda.</target>
+      </trans-unit>
+      <trans-unit id="nlJ2pW2" resname="invoice_email" xml:space="preserve">
+        <source>invoice_email</source>
+        <target state="translated">Email penagihan</target>
+      </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until" xml:space="preserve">
+        <source>project_locked_until</source>
+        <target state="translated">Waktu terkunci hingga</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start" xml:space="preserve">
+        <source>help.project_start</source>
+        <target state="translated">Waktu sebelum tanggal ini tidak dapat dicatat.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end" xml:space="preserve">
+        <source>help.project_end</source>
+        <target state="translated">Waktu setelah tanggal ini tidak dapat dicatat.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until" xml:space="preserve">
+        <source>help.project_locked_until</source>
+        <target state="translated">Waktu dan termasuk tanggal ini tidak dapat dibuat maupun diubah.</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target state="translated">Autentikasi</target>
+      </trans-unit>
+      <trans-unit id="LQXTGjm" resname="authentication.help">
+        <source>authentication.help</source>
+        <target state="translated">Beralih ke "Internal" akan menghapus kata sandi. Setelah itu, tetapkan kata sandi baru atau gunakan "Lupa kata sandi".</target>
+      </trans-unit>
+      <trans-unit id="NvQBTxG" resname="authentication.internal">
+        <source>authentication.internal</source>
+        <target state="translated">Internal</target>
+      </trans-unit>
+      <trans-unit id="DI8vH1J" resname="copy_to_clipboard">
+        <source>copy_to_clipboard</source>
+        <target state="translated">Salin ke papan klip</target>
+      </trans-unit>
+      <trans-unit id="LHDhK3o" resname="key">
+        <source>key</source>
+        <target state="translated">Judul internal</target>
+      </trans-unit>
+      <trans-unit id="Q3gmLM6" resname="key_help">
+        <source>key_help</source>
+        <target state="translated">Nama teknis unik yang tidak dapat diubah setelah ditetapkan. Karakter yang diizinkan adalah huruf kecil (a-z), angka (0-9), dan garis bawah (_).</target>
+      </trans-unit>
+      <trans-unit id="netluHi" resname="approval">
+        <source>approval</source>
+        <target state="translated">Persetujuan</target>
+      </trans-unit>
+      <trans-unit id="9SkAbbx" resname="approval_required">
+        <source>approval_required</source>
+        <target state="translated">Memerlukan persetujuan</target>
+      </trans-unit>
+      <trans-unit id="7dLJTuj" resname="fill_day">
+        <source>fill_day</source>
+        <target state="translated">Melengkapi waktu kerja yang diharapkan</target>
+      </trans-unit>
+      <trans-unit id="O6IGTDm" resname="Absence types">
+        <source>Absence types</source>
+        <target state="translated">Jenis ketidakhadiran</target>
+      </trans-unit>
+      <trans-unit id="2mFc5.v" resname="absence_type.category.help">
+        <source>absence_type.category.help</source>
+        <target state="translated">Kategori menentukan cara pengajuan diperhitungkan (misalnya terhadap jatah cuti atau saldo waktu kerja) dan tempat jenis ketidakhadiran ditampilkan. Kategori tidak dapat diubah setelah ditetapkan.</target>
+      </trans-unit>
+      <trans-unit id="4YKqwfo" resname="absence_type.half_day">
+        <source>absence_type.half_day</source>
+        <target state="translated">Izinkan pengajuan setengah hari</target>
+      </trans-unit>
+      <trans-unit id="ukwjp0C" resname="absence_type.date_range">
+        <source>absence_type.date_range</source>
+        <target state="translated">Izinkan pengajuan beberapa hari</target>
+      </trans-unit>
+      <trans-unit id="j6S5GDf" resname="absence_type.duration">
+        <source>absence_type.duration</source>
+        <target state="translated">Izinkan pengisian durasi</target>
+      </trans-unit>
+      <trans-unit id="E7XVJxv" resname="absence_type.duration_required">
+        <source>absence_type.duration_required</source>
+        <target state="translated">Durasi wajib diisi</target>
+      </trans-unit>
+      <trans-unit id="W_6BSlE" resname="absence_type.max_days">
+        <source>absence_type.max_days</source>
+        <target state="translated">Jumlah hari maksimum per pengajuan</target>
+      </trans-unit>
+      <trans-unit id="_cQHZDu" resname="fill_day.help">
+        <source>fill_day.help</source>
+        <target state="translated">Jika durasi tidak diisi, sisa waktu kerja yang diharapkan pada hari tersebut akan digunakan.</target>
       </trans-unit>
     </body>
   </file>

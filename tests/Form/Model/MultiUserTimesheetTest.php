@@ -53,7 +53,7 @@ class MultiUserTimesheetTest extends TestCase
         self::assertCount(0, $sut->getUsers());
     }
 
-    public function testRemovingUserOnlyRemovesOneDuplicateEntry(): void
+    public function testAddOnlyAddsUserOnlyOnce(): void
     {
         $sut = new MultiUserTimesheet();
         $user = $this->createUser('alpha');
@@ -61,18 +61,17 @@ class MultiUserTimesheetTest extends TestCase
         $sut->addUser($user);
         $sut->addUser($user);
 
-        self::assertCount(2, $sut->getUsers());
+        self::assertCount(1, $sut->getUsers());
 
         $sut->removeUser($user);
 
-        self::assertCount(1, $sut->getUsers());
-        self::assertSame($user, $sut->getUsers()->first());
+        self::assertCount(0, $sut->getUsers());
     }
 
     public function testAddAndRemoveTeam(): void
     {
         $sut = new MultiUserTimesheet();
-        $team = new Team('Team Alpha');
+        $team = $this->createTeam('Team Alpha');
 
         $sut->addTeam($team);
 
@@ -87,27 +86,36 @@ class MultiUserTimesheetTest extends TestCase
     public function testRemovingUnknownTeamDoesNothing(): void
     {
         $sut = new MultiUserTimesheet();
-        $team = new Team('Team Alpha');
+        $team = $this->createTeam('Team Alpha');
 
         $sut->removeTeam($team);
 
         self::assertCount(0, $sut->getTeams());
     }
 
-    public function testRemovingTeamOnlyRemovesOneDuplicateEntry(): void
+    public function testAddOnlyAddsTeamOnlyOnce(): void
     {
         $sut = new MultiUserTimesheet();
-        $team = new Team('Team Alpha');
+        $team = $this->createTeam('Team Alpha');
 
         $sut->addTeam($team);
         $sut->addTeam($team);
 
-        self::assertCount(2, $sut->getTeams());
+        self::assertCount(1, $sut->getTeams());
 
         $sut->removeTeam($team);
 
-        self::assertCount(1, $sut->getTeams());
-        self::assertSame($team, $sut->getTeams()->first());
+        self::assertCount(0, $sut->getTeams());
+    }
+
+    private function createTeam(string $team): Team
+    {
+        $team = new Team($team);
+
+        $ref = new \ReflectionProperty(Team::class, 'id');
+        $ref->setValue($team, rand(1, 999));
+
+        return $team;
     }
 
     private function createUser(string $username): User
@@ -116,6 +124,9 @@ class MultiUserTimesheetTest extends TestCase
         $user->setUsername($username);
         $user->setAlias($username);
         $user->setEmail($username . '@example.com');
+
+        $ref = new \ReflectionProperty(User::class, 'id');
+        $ref->setValue($user, rand(1, 999));
 
         return $user;
     }

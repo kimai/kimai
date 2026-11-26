@@ -137,9 +137,13 @@ export default class KimaiPlugin {
             url = url + (url.includes('?') ? '&' : '?') + data;
             options = {...{method: 'GET'}, ...options};
         } else if (method === 'POST') {
+            const formData = new FormData(form);
+            // only forms with file uploads need multipart/form-data, all others are sent as
+            // application/x-www-form-urlencoded (like a regular browser form submission)
+            const isMultipart = form.enctype === 'multipart/form-data' || form.querySelector('input[type="file"]') !== null;
             options = {...{
                 method: 'POST',
-                body: new FormData(form)
+                body: isMultipart ? formData : new URLSearchParams(formData)
             }, ...options};
         }
 

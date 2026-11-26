@@ -38,6 +38,55 @@ class DecimalRateCalculatorTest extends TestCase
         ];
     }
 
+    /**
+     * @return iterable<string, array{float, int, ?string, float}>
+     */
+    public static function provideRatesWithCurrency(): iterable
+    {
+        yield 'no currency' => [1234.56, 3600, null, 1234.56];
+        yield 'EUR' => [1234.56, 3600, 'EUR', 1234.56];
+        yield 'EUR commercial rounding' => [103.75, 27000, 'EUR', 778.13];
+        yield 'JPY without decimals' => [1234.56, 3600, 'JPY', 1235.0];
+        yield 'JPY lowercase' => [1234.49, 3600, 'jpy', 1234.0];
+        yield 'KWD with 3 decimals' => [12.3456, 3600, 'KWD', 12.346];
+        yield 'unknown currency' => [12.3456, 3600, 'UNKNOWN', 12.35];
+    }
+
+    /**
+     * @return iterable<string, array{float, int, int, float}>
+     */
+    public static function provideBoundaryRates(): iterable
+    {
+        // 0.42h x 103.75 = 43.575, float is 43.574999999999996 - PHP >= 8.4 round() would return 43.57
+        yield '103.75 x 1494s float noise' => [103.75, 1494, 1512, 43.58];
+        yield '103.75 x 1512s float noise' => [103.75, 1512, 1512, 43.58];
+        yield '103.75 x 7.5h' => [103.75, 27000, 27000, 778.13];
+        yield '103.75 x 0.5h' => [103.75, 1800, 1800, 51.88];
+        // 92s = 0.0255h => 0.03h
+        yield '67.89 x 92s' => [67.89, 92, 108, 2.04];
+        // 3438s = 0.955h => 0.96h
+        yield '67.89 x 3438s' => [67.89, 3438, 3456, 65.17];
+    }
+
+    #[DataProvider('provideBoundaryRates')]
+    public function testCalculateRateWithBoundaryValues(float $hourlyRate, int $seconds, int $expectedSeconds, float $expected): void
+    {
+        $sut = new DecimalRateCalculator();
+
+        $duration = $sut->roundDuration($seconds);
+        self::assertSame($expectedSeconds, $duration);
+        self::assertSame($expected, $sut->calculateRate($hourlyRate, $duration));
+        self::assertSame($expected, $sut->calculateRate($hourlyRate, $duration, 'EUR'));
+    }
+
+    #[DataProvider('provideRatesWithCurrency')]
+    public function testCalculateRateRoundsToCurrencyPrecision(float $hourlyRate, int $seconds, ?string $currency, float $expected): void
+    {
+        $sut = new DecimalRateCalculator();
+
+        self::assertSame($expected, $sut->calculateRate($hourlyRate, $seconds, $currency));
+    }
+
     public function testRoundDurationKeepsOriginalSeconds(): void
     {
         $sut = new DecimalRateCalculator();

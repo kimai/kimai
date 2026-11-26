@@ -23,6 +23,7 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
         'orderDate',
         'project_start',
         'project_end',
+        'project_locked_until' => 'lockedUntil',
         'budget',
         'timeBudget',
         'visible'

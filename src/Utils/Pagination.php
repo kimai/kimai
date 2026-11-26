@@ -14,6 +14,11 @@ use Pagerfanta\Adapter\AdapterInterface;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @template T
+ *
+ * @extends Pagerfanta<T>
+ */
 final class Pagination extends Pagerfanta
 {
     public function __construct(AdapterInterface $adapter, ?BaseQuery $query = null)

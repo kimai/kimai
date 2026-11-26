@@ -27,4 +27,9 @@ interface DateRangeInterface
     public function getDateRange(): ?DateRange;
 
     public function setDateRange(DateRange $dateRange): void;
+
+    /**
+     * @phpstan-assert-if-true !null $this->getDateRange()
+     */
+    public function hasFullDateRange(): bool;
 }

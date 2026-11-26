@@ -198,10 +198,6 @@
         <source>timesheet.default_begin</source>
         <target state="final">Orario di inizio predefinito (non usato in tutte le modalità di monitoraggio del tempo)</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year" approved="yes">
-        <source>company.financial_year</source>
-        <target state="final">Anno finanziario</target>
-      </trans-unit>
       <trans-unit id="SnkW0Pk" resname="theme.avatar_url" approved="yes">
         <source>theme.avatar_url</source>
         <target state="final">Consenti uso di URL per immagini avatar</target>

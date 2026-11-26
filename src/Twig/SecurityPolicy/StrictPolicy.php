@@ -13,6 +13,8 @@ use App\Entity\MetaTableTypeInterface;
 use App\Entity\User;
 use App\Pdf\PdfContext;
 use Symfony\Bridge\Twig\AppVariable;
+use Symfony\Component\HttpFoundation\HeaderBag;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ServerBag;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -20,6 +22,7 @@ use Symfony\Component\String\UnicodeString;
 use Twig\Sandbox\SecurityNotAllowedFilterError;
 use Twig\Sandbox\SecurityNotAllowedFunctionError;
 use Twig\Sandbox\SecurityNotAllowedMethodError;
+use Twig\Sandbox\SecurityNotAllowedPropertyError;
 use Twig\Sandbox\SecurityNotAllowedTagError;
 use Twig\Sandbox\SecurityPolicyInterface;
 
@@ -28,6 +31,13 @@ use Twig\Sandbox\SecurityPolicyInterface;
  */
 final class StrictPolicy implements SecurityPolicyInterface
 {
+    /**
+     * Lowercase names of request methods that do not expose user-supplied data or credentials.
+     */
+    private const ALLOWED_REQUEST_METHODS = [
+        'getlocale', 'getdefaultlocale', 'getpreferredlanguage', 'getlanguages', 'getscheme', 'gethost',
+        'gethttphost', 'getport', 'getschemeandhttphost', 'getbasepath', 'getbaseurl', 'getpathinfo',
+    ];
     /** @var string[] */
     private array $allowedTags = ['block', 'if', 'for', 'set', 'macro', 'import', 'extends', 'from'];
     /** @var string[] */
@@ -118,6 +128,11 @@ final class StrictPolicy implements SecurityPolicyInterface
             throw new SecurityNotAllowedMethodError('Tried to access session', SessionInterface::class, $method);
         }
 
+        // request data like headers, cookies, query, request body, attributes and files
+        if ($obj instanceof HeaderBag || $obj instanceof ParameterBag) {
+            throw new SecurityNotAllowedMethodError('Tried to access request data', $obj::class, $method);
+        }
+
         $lcm = strtolower($method);
 
         if ($obj instanceof PdfContext) {
@@ -133,8 +148,8 @@ final class StrictPolicy implements SecurityPolicyInterface
         }
 
         if ($obj instanceof Request) {
-            if (!str_starts_with($lcm, 'get')) {
-                throw new SecurityNotAllowedMethodError('Tried to call setter() of app variable', AppVariable::class, $method);
+            if (!\in_array($lcm, self::ALLOWED_REQUEST_METHODS, true)) {
+                throw new SecurityNotAllowedMethodError('Tried to access forbidden request method', Request::class, $method);
             }
 
             return;
@@ -164,7 +179,27 @@ final class StrictPolicy implements SecurityPolicyInterface
         }
     }
 
+    /**
+     * Reading public properties is forbidden, templates have to use (allowed) getter methods instead.
+     * Twig calls this method for every attribute access on an object, before it checks if the property exists.
+     * Only properties that actually exist are denied, so Twig can fall back to the method check
+     * and undefined attributes keep their usual behavior.
+     */
     public function checkPropertyAllowed($obj, $property): void
     {
+        // plain data containers, e.g. from json_decode()
+        if ($obj instanceof \stdClass) {
+            return;
+        }
+
+        $property = (string) $property;
+
+        if (\array_key_exists($property, get_object_vars($obj)) || isset($obj->$property)) {
+            throw new SecurityNotAllowedPropertyError(
+                \sprintf('Tried to access property "%s" of "%s"', $property, $obj::class),
+                $obj::class,
+                $property
+            );
+        }
     }
 }

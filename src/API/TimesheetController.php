@@ -27,6 +27,7 @@ use App\Repository\UserRepository;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Utils\SearchTerm;
+use App\Validator\MetaFieldValidator;
 use App\Validator\ValidationFailedException;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -54,6 +55,7 @@ final class TimesheetController extends BaseApiController
     public const GROUPS_FORM = ['Default', 'Entity', 'Timesheet', 'Not_Expanded'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Timesheet', 'Not_Expanded'];
     public const GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'Timesheet', 'Expanded'];
+    public const RECENT_ACTIVITIES_MAX_SIZE = 100;
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
@@ -361,7 +363,7 @@ final class TimesheetController extends BaseApiController
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
             'include_billable' => $this->isGranted('edit_billable', $timesheet),
-            'include_user' => $this->isGranted('edit', $timesheet),
+            'include_user' => $this->isGranted('edit_other_timesheet'),
             'allow_begin_datetime' => $mode->canUpdateTimesWithAPI(),
             'allow_end_datetime' => $mode->canUpdateTimesWithAPI(),
             'date_format' => self::DATE_FORMAT,
@@ -405,7 +407,7 @@ final class TimesheetController extends BaseApiController
     #[OA\Response(response: 200, description: 'Returns a collection of recent user activities (always the latest entry of a unique working set grouped by customer, project and activity)', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TimesheetCollectionExpanded')))]
     #[Route(methods: ['GET'], path: '/recent', name: 'recent_timesheet')]
     #[Rest\QueryParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records started at or after this date will be included. Default: today - 1 year (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
-    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries (default: 10)')]
+    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries (default: 10, maximum: ' . self::RECENT_ACTIVITIES_MAX_SIZE . ')')]
     public function recentAction(ParamFetcherInterface $paramFetcher): Response
     {
         $user = $this->getUser();
@@ -414,7 +416,7 @@ final class TimesheetController extends BaseApiController
 
         $reqLimit = $paramFetcher->get('size');
         if (\is_string($reqLimit) && $reqLimit !== '') {
-            $limit = (int) $reqLimit;
+            $limit = min((int) $reqLimit, self::RECENT_ACTIVITIES_MAX_SIZE);
         }
 
         $reqBegin = $paramFetcher->get('begin');
@@ -485,6 +487,9 @@ final class TimesheetController extends BaseApiController
         $begin = $factory->createDateTime();
         $beginTmp = $paramFetcher->get('begin');
         if (\is_string($beginTmp)) {
+            if (!$this->getTrackingMode()->canUpdateTimesWithAPI()) {
+                throw $this->createAccessDeniedException('Cannot set begin in the current tracking mode');
+            }
             $begin = $factory->createDateTime($beginTmp);
         }
 
@@ -566,20 +571,22 @@ final class TimesheetController extends BaseApiController
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet ID to set the meta-field value for', required: true)]
     #[Route(methods: ['PATCH'], path: '/{id}/meta', requirements: ['id' => '\d+'])]
-    #[Rest\RequestParam(name: 'name', strict: true, nullable: false, description: 'The meta-field name')]
+    #[Rest\RequestParam(name: 'name', requirements: [new Constraints\Type('string')], strict: true, nullable: false, description: 'The meta-field name')]
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
-    public function metaAction(Timesheet $timesheet, ParamFetcherInterface $paramFetcher): Response
+    public function metaAction(Timesheet $timesheet, ParamFetcherInterface $paramFetcher, MetaFieldValidator $metaFieldValidator): Response
     {
         $event = new TimesheetMetaDefinitionEvent($timesheet);
         $this->dispatcher->dispatch($event);
 
         $name = $paramFetcher->get('name');
+        $value = $paramFetcher->get('value');
 
         if (!\is_string($name) || null === ($meta = $timesheet->getMetaField($name))) {
             throw $this->createNotFoundException('Unknown meta-field requested');
         }
 
-        $meta->setValue($paramFetcher->get('value'));
+        $metaFieldValidator->validate($timesheet, $meta, $value);
+        $meta->setValue($value);
 
         $this->service->saveTimesheet($timesheet);
 

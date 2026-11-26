@@ -93,6 +93,7 @@ final class ProjectController extends AbstractController
         $table->addColumn('orderDate', ['class' => 'd-none']);
         $table->addColumn('project_start', ['class' => 'd-none']);
         $table->addColumn('project_end', ['class' => 'd-none']);
+        $table->addColumn('lockedUntil', ['class' => 'd-none', 'title' => 'project_locked_until']);
 
         foreach ($metaColumns as $metaColumn) {
             $table->addColumn('mf_' . $metaColumn->getName(), ['title' => $metaColumn->getLabel(), 'class' => 'd-none', 'orderBy' => false, 'data' => $metaColumn]);
@@ -437,7 +438,6 @@ final class ProjectController extends AbstractController
             ->add('project', ProjectType::class, [
                 'ignore_project' => $project,
                 'customers' => $project->getCustomer(),
-                'query_builder_for_user' => true,
                 'required' => false,
             ])
             ->setAction($this->generateUrl('admin_project_delete', ['id' => $project->getId()]))
@@ -534,6 +534,9 @@ final class ProjectController extends AbstractController
         ]);
     }
 
+    /**
+     * @return PageSetup<Project>
+     */
     private function createPageSetup(): PageSetup
     {
         $page = new PageSetup('projects');

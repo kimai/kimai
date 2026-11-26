@@ -28,11 +28,11 @@
       </trans-unit>
       <trans-unit id="DYHuW58" resname="confirm.delete">
         <source>confirm.delete</source>
-        <target state="translated">Êtes-vous sûr·e de vouloir le supprimer ?</target>
+        <target state="translated">Êtes-vous sûr·e de vouloir le supprimer ?</target>
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target state="translated">Ces données seront également supprimées ! Vous pouvez toutefois sélectionner une entrée vers laquelle toutes les données seront transférées :</target>
+        <target state="translated">Ces données seront également supprimées ! Vous pouvez toutefois sélectionner une entrée vers laquelle toutes les données seront transférées :</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -564,7 +564,7 @@
       </trans-unit>
       <trans-unit id="86KyrKO" resname="invoice.subtotal">
         <source>invoice.subtotal</source>
-        <target>Total HT</target>
+        <target state="translated">Total HT</target>
       </trans-unit>
       <trans-unit id="EO57yXg" resname="invoice.tax">
         <source>invoice.tax</source>
@@ -876,7 +876,7 @@
       </trans-unit>
       <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
-        <target>Semaine civile %week%</target>
+        <target state="translated">Semaine calendaire %week%</target>
       </trans-unit>
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
@@ -1002,25 +1002,9 @@
         <source>last_record_before</source>
         <target>Aucune réservation de temps depuis</target>
       </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>Utilisateurs actifs cette année fiscale</target>
-      </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
-        <source>stats.amountFinancialYear</source>
-        <target>Revenus pour cette année fiscale</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="translated">Année financière</target>
-      </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
-        <source>stats.workingTimeFinancialYear</source>
-        <target>Année fiscale</target>
-      </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="translated">Un courriel a été envoyé. Suivez le lien s'y trouvant pour réinitialiser votre mot de passe. Remarque : Vous ne pouvez demander un nouveau mot de passe qu'une fois toutes les %tokenLifetime% heures. Si vous ne recevez pas de courriel, vérifiez vos spams ou réessayez.</target>
+        <target state="translated">Un e-mail contenant un lien pour réinitialiser votre mot de passe vous a été envoyé. Remarque : vous ne pouvez demander un nouveau mot de passe qu'une fois toutes les %tokenLifetime% heures. Si vous ne recevez pas cet e-mail, veuillez vérifier votre dossier de courrier indésirable ou réessayer.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
@@ -1468,7 +1452,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">Evènements familiaux, déménagement, catastrophes climatiques, etc.</target>
+        <target state="translated">Formation, formation continue et autres engagements professionnels ou personnels.</target>
       </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at">
         <source>confirmed_by_at</source>
@@ -2129,6 +2113,106 @@
       <trans-unit id="G8ZoGoA" resname="api_token_qr_hint" xml:space="preserve">
         <source>api_token_qr_hint</source>
         <target state="translated">Vous pouvez scanner ce QR code avec une application mobile, pour configurer l'URL du serveur et le jeton en une seule étape. Ne partagez pas cette image : elle contient votre jeton d'API.</target>
+      </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until" xml:space="preserve">
+        <source>project_locked_until</source>
+        <target state="translated">Temps verrouillé jusqu'à</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start" xml:space="preserve">
+        <source>help.project_start</source>
+        <target state="translated">Les heures avant cette date ne peuvent pas être enregistrées.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end" xml:space="preserve">
+        <source>help.project_end</source>
+        <target state="translated">Les heures après cette date ne peuvent être enregistrés.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until" xml:space="preserve">
+        <source>help.project_locked_until</source>
+        <target state="translated">Les temps jusqu'à et y compris cette date ne peuvent ni être créés ni modifiés.</target>
+      </trans-unit>
+      <trans-unit id="LHDhK3o" resname="key">
+        <source>key</source>
+        <target>Nom intern</target>
+      </trans-unit>
+      <trans-unit id="Q3gmLM6" resname="key_help">
+        <source>key_help</source>
+        <target>Cette valeur sera utilisée en interne, par exemple dans les modèles de facture. Les charactères autorisés sont : lettres minuscules (a-z), les chiffres (0-9) et le tiret bas (_).</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target state="translated">Authentification</target>
+      </trans-unit>
+      <trans-unit id="LQXTGjm" resname="authentication.help">
+        <source>authentication.help</source>
+        <target state="translated">En sélectionnant « Interne », le mot de passe est supprimé. Vous pouvez ensuite définir un nouveau mot de passe ou utiliser la fonction « Mot de passe oublié ».</target>
+      </trans-unit>
+      <trans-unit id="NvQBTxG" resname="authentication.internal">
+        <source>authentication.internal</source>
+        <target state="translated">Interne</target>
+      </trans-unit>
+      <trans-unit id="DI8vH1J" resname="copy_to_clipboard">
+        <source>copy_to_clipboard</source>
+        <target state="translated">copier dans le presse-papiers</target>
+      </trans-unit>
+      <trans-unit id="netluHi" resname="approval">
+        <source>approval</source>
+        <target state="translated">Approbation</target>
+      </trans-unit>
+      <trans-unit id="9SkAbbx" resname="approval_required">
+        <source>approval_required</source>
+        <target state="translated">Approbation requise</target>
+      </trans-unit>
+      <trans-unit id="7dLJTuj" resname="fill_day">
+        <source>fill_day</source>
+        <target state="translated">Couvre la durée de travail prévue</target>
+      </trans-unit>
+      <trans-unit id="O6IGTDm" resname="Absence types">
+        <source>Absence types</source>
+        <target state="translated">Types d'absences</target>
+      </trans-unit>
+      <trans-unit id="2mFc5.v" resname="absence_type.category.help">
+        <source>absence_type.category.help</source>
+        <target state="translated">Cette catégorie définit la manière dont les réservations sont calculées (par exemple, par rapport aux jours de congé ou au compte de temps de travail) et l'endroit où le type est affiché. Elle ne peut pas être modifiée ultérieurement.</target>
+      </trans-unit>
+      <trans-unit id="4YKqwfo" resname="absence_type.half_day">
+        <source>absence_type.half_day</source>
+        <target state="translated">Prévoyez des demi-journées</target>
+      </trans-unit>
+      <trans-unit id="ukwjp0C" resname="absence_type.date_range">
+        <source>absence_type.date_range</source>
+        <target state="translated">Autoriser les réservations sur plusieurs jours</target>
+      </trans-unit>
+      <trans-unit id="j6S5GDf" resname="absence_type.duration">
+        <source>absence_type.duration</source>
+        <target state="translated">Autoriser la saisie d'une durée</target>
+      </trans-unit>
+      <trans-unit id="E7XVJxv" resname="absence_type.duration_required">
+        <source>absence_type.duration_required</source>
+        <target state="translated">La durée est un champ obligatoire</target>
+      </trans-unit>
+      <trans-unit id="W_6BSlE" resname="absence_type.max_days">
+        <source>absence_type.max_days</source>
+        <target state="translated">Nombre maximal de jours par réservation</target>
+      </trans-unit>
+      <trans-unit id="_cQHZDu" resname="fill_day.help">
+        <source>fill_day.help</source>
+        <target state="translated">Si aucune durée n'est saisie, c'est le temps de travail restant prévu pour la journée qui est pris en compte.</target>
+      </trans-unit>
+      <trans-unit id="fxkWjGQ" resname="password_current">
+        <source>password_current</source>
+        <target state="translated">Mot de passe actuel</target>
+      </trans-unit>
+      <trans-unit id="dIuCbHU" resname="absence_type.overbooking">
+        <source>absence_type.overbooking</source>
+        <target state="translated">Autoriser la surréservation jusqu'à</target>
+      </trans-unit>
+      <trans-unit id="Y9NoM.U" resname="absence_type.overbooking.help.holiday">
+        <source>absence_type.overbooking.help.holiday</source>
+        <target state="translated">0 = la surréservation n'est pas autorisée. Nombre de jours pouvant être réservés au-delà des jours de congé disponibles.</target>
+      </trans-unit>
+      <trans-unit id="c1z3ItA" resname="absence_type.overbooking.help.time_off">
+        <source>absence_type.overbooking.help.time_off</source>
+        <target state="translated">0 = la surréservation n'est pas autorisée. Nombre d'heures pendant lesquelles le compte de temps de travail peut être négatif.</target>
       </trans-unit>
     </body>
   </file>

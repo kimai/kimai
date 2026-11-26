@@ -19,6 +19,7 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Tests\Mocks\RateServiceFactory;
+use App\Timesheet\RateCalculator\DecimalRateCalculator;
 use App\Timesheet\RateService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -51,6 +52,41 @@ class RateServiceTest extends TestCase
         $sut = $this->getSut();
         $rate = $sut->calculate($record);
         self::assertEquals(50, $rate->getRate());
+    }
+
+    /**
+     * @return iterable<string, array{?string, float, float}>
+     */
+    public static function getCurrencyRoundingData(): iterable
+    {
+        yield 'EUR' => ['EUR', 1234.57, 99.5];
+        yield 'JPY' => ['JPY', 1235.0, 100.0];
+        yield 'KWD' => ['KWD', 1234.568, 99.5];
+        yield 'no currency' => [null, 1234.57, 99.5];
+    }
+
+    #[DataProvider('getCurrencyRoundingData')]
+    public function testCalculateRoundsToCustomerCurrency(?string $currency, float $expectedRate, float $expectedInternalRate): void
+    {
+        $customer = new Customer('foo');
+        if ($currency !== null) {
+            $customer->setCurrency($currency);
+        }
+        $project = new Project();
+        $project->setCustomer($customer);
+
+        $record = new Timesheet();
+        $record->setEnd(self::createDateTime());
+        $record->setDuration(3600);
+        $record->setProject($project);
+        $record->setActivity(new Activity());
+        $record->setUser($this->getTestUser(1234.5678, 99.5));
+
+        $sut = (new RateServiceFactory($this))->create([], [], new DecimalRateCalculator());
+        $rate = $sut->calculate($record);
+
+        self::assertSame($expectedRate, $rate->getRate());
+        self::assertSame($expectedInternalRate, $rate->getInternalRate());
     }
 
     public function testCalculateWithTimesheetFixedRate(): void

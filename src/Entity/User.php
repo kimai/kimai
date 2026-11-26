@@ -51,6 +51,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Constraints\User(groups: ['UserCreate', 'Registration', 'Default', 'Profile'])]
 class User implements UserInterface, EquatableInterface, ThemeUserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
+    public const PREFERENCE_PASSWORD_RESET = '__pw_reset__';
+    /**
+     * Hash of the login link that was created as password reset, see LoginLinkSuccessHandler
+     */
+    public const PREFERENCE_PASSWORD_RESET_LINK = '__pw_reset_link__';
+
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
@@ -63,6 +69,25 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public const AUTH_INTERNAL = 'kimai';
     public const AUTH_LDAP = 'ldap';
     public const AUTH_SAML = 'saml';
+    /**
+     * Methods that must never be called by the attribute mapping of an external user source.
+     * Lowercase, because PHP method names are case-insensitive.
+     */
+    private const EXTERNAL_MAPPING_ALLOWLIST = [
+        'setemail',
+        'setavatar',
+        'setalias',
+        'settitle',
+        'setaccountnumber',
+        'setenabled',
+        'setlanguage',
+        'setlocale',
+        'settimezone',
+        // these are necessary for LDAP
+        'setroles',
+        'setusername',
+        'setuseridentifier',
+    ];
 
     public const WIZARDS = ['intro', 'profile'];
 
@@ -107,7 +132,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      */
     #[ORM\Column(name: 'avatar', type: Types::STRING, length: 255, nullable: true)]
     #[Assert\Url]
-    #[Assert\Length(max: 255, groups: ['Profile'])]
+    #[Assert\Length(max: 255)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?string $avatar = null;
@@ -133,14 +158,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * if a currently logged-in user will be deleted and then refreshed from the session from one of the UserProvider
      * e.g. see LdapUserProvider::refreshUser() it might crash if $user->getPreferenceValue() is called
      *
-     * @var Collection<UserPreference>|null
+     * @var Collection<int, UserPreference>|null
      */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserPreference::class, cascade: ['persist'])]
     private ?Collection $preferences = null;
     /**
      * List of all team memberships.
      *
-     * @var Collection<TeamMember>
+     * @var Collection<int, TeamMember>
      */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: TeamMember::class, cascade: ['persist'], fetch: 'LAZY', orphanRemoval: true)]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
@@ -199,6 +224,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      */
     #[Assert\NotBlank(groups: ['Registration', 'PasswordUpdate', 'UserCreate'])]
     #[Assert\Length(min: 8, max: 60, groups: ['Registration', 'PasswordUpdate', 'UserCreate', 'ResetPassword', 'ChangePassword'])]
+    #[Constraints\PasswordPolicy(groups: ['Registration', 'PasswordUpdate', 'UserCreate', 'ResetPassword', 'ChangePassword'])]
     private ?string $plainPassword = null;
     #[ORM\Column(name: 'last_login', type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTime $lastLogin = null;
@@ -213,7 +239,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * List of all role names
      */
-    #[ORM\Column(name: 'roles', type: Types::ARRAY, nullable: false)] // @phpstan-ignore classConstant.deprecated
+    #[ORM\Column(name: 'roles', type: Types::JSON, nullable: false)]
     #[Serializer\Expose]
     #[Serializer\Groups(['User_Entity'])]
     #[Serializer\Type('array<string>')]
@@ -390,7 +416,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     }
 
     /**
-     * @return Collection<UserPreference>
+     * @return Collection<int, UserPreference>
      */
     public function getPreferences(): Collection
     {
@@ -614,7 +640,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     }
 
     /**
-     * @return Collection<TeamMember>
+     * @return Collection<int, TeamMember>
      */
     public function getMemberships(): Collection
     {
@@ -715,10 +741,15 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * This will reset all security signatures and therefor invalidate:
      * - login links
      * - remember me cookies
+     * - sessions
+     *
+     * @see \App\Doctrine\UserSecuritySignatureSubscriber
      */
     public function resetSecuritySignature(): void
     {
-        $this->signatureDate = new \DateTimeImmutable('now', $this->getDateTimezone());
+        // UTC without microseconds: same value before and after persisting, which is required for a stable signature
+        $timestamp = max(time(), ($this->signatureDate?->getTimestamp() ?? 0) + 1);
+        $this->signatureDate = new \DateTimeImmutable('@' . $timestamp);
     }
 
     /**
@@ -877,6 +908,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function setAuth(string $auth): User
     {
+        // a changed authentication invalidates the local password, so it cannot be used for the form login:
+        // after switching back to the internal authentication, a new password has to be set manually
+        if ($auth !== ($this->auth ?? self::AUTH_INTERNAL)) {
+            $this->setUnusablePassword();
+        }
         $this->auth = $auth;
 
         return $this;
@@ -895,6 +931,21 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function isInternalUser(): bool
     {
         return $this->auth === null || $this->auth === self::AUTH_INTERNAL;
+    }
+
+    /**
+     * Switches an LDAP or SAML account back to the internal authentication.
+     * Values of the previous authentication are removed and the password is cleared.
+     */
+    public function switchToInternalAuth(): void
+    {
+        if ($this->isInternalUser()) {
+            return;
+        }
+
+        $this->auth = self::AUTH_INTERNAL;
+        $this->password = '';
+        $this->getPreference('ldap_dn')?->setValue(null);
     }
 
     public function addRole(string $role): void
@@ -1046,14 +1097,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setPassword($password): User
+    public function setPassword(#[\SensitiveParameter] $password): User
     {
         $this->password = $password;
 
         return $this;
     }
 
-    public function setPlainPassword($password): User
+    public function setPlainPassword(#[\SensitiveParameter] $password): User
     {
         $this->plainPassword = $password;
 
@@ -1071,7 +1122,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setConfirmationToken($confirmationToken): void
+    public function setConfirmationToken(#[\SensitiveParameter] $confirmationToken): void
     {
         $this->confirmationToken = $confirmationToken;
     }
@@ -1125,6 +1176,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             return false;
         }
 
+        // a reset security signature (e.g. after changing the email) invalidates all existing sessions
+        if ($this->getSignatureDate() !== $user->getSignatureDate()) {
+            return false;
+        }
+
         return true;
     }
 
@@ -1136,6 +1192,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             'enabled' => $this->enabled,
             'email' => $this->email,
             'password' => $this->password,
+            'signatureDate' => $this->signatureDate,
         ];
     }
 
@@ -1149,6 +1206,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         $this->enabled = $data['enabled'];
         $this->email = $data['email'];
         $this->password = $data['password'];
+        $this->signatureDate = $data['signatureDate'] ?? null;
     }
 
     public function __toString(): string
@@ -1226,16 +1284,56 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             return false;
         }
 
-        return $this->getPreferenceValue('__pw_reset__') === '1';
+        return $this->getPreferenceValue(self::PREFERENCE_PASSWORD_RESET) === '1';
     }
 
     public function setRequiresPasswordReset(bool $require = true): void
     {
-        $this->setPreferenceValue('__pw_reset__', ($require ? '1' : '0'));
+        $this->setPreferenceValue(self::PREFERENCE_PASSWORD_RESET, ($require ? '1' : '0'));
+
+        // the reset link is used up: it was consumed, an admin required the reset or the password was changed
+        if (null !== ($link = $this->getPreference(self::PREFERENCE_PASSWORD_RESET_LINK))) {
+            $link->setValue(null);
+        }
 
         if (!$require) {
             $this->passwordRequestedAt = null;
         }
+    }
+
+    /**
+     * Binds the password reset to one specific login link: only this link requires a password change when used.
+     * The hash is not stored in plain text, as it would allow to recreate the login link.
+     */
+    public function markPasswordResetLink(string $loginLink): void
+    {
+        $this->setPreferenceValue(self::PREFERENCE_PASSWORD_RESET_LINK, hash('sha256', $this->getLoginLinkHash($loginLink)));
+    }
+
+    /**
+     * The hash identifies the login link, it is validated by the LoginLinkHandler when the link is used.
+     */
+    private function getLoginLinkHash(string $loginLink): string
+    {
+        parse_str((string) parse_url($loginLink, PHP_URL_QUERY), $query);
+        $hash = $query['hash'] ?? null;
+
+        if (!\is_string($hash) || $hash === '') {
+            throw new \RuntimeException('Login link without hash');
+        }
+
+        return $hash;
+    }
+
+    public function isPasswordResetLink(string $loginLinkHash): bool
+    {
+        $stored = $this->getPreferenceValue(self::PREFERENCE_PASSWORD_RESET_LINK);
+
+        if (!\is_string($stored) || $stored === '') {
+            return false;
+        }
+
+        return hash_equals($stored, hash('sha256', $loginLinkHash));
     }
 
     public function hasSeenWizard(string $wizard): bool
@@ -1270,7 +1368,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     // --------------- 2 Factor Authentication ---------------
 
-    public function setTotpSecret(?string $secret): void
+    public function setTotpSecret(#[\SensitiveParameter] ?string $secret): void
     {
         $this->totpSecret = $secret;
     }
@@ -1298,6 +1396,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function disableTotpAuthentication(): void
     {
         $this->totpEnabled = false;
+        $this->totpSecret = null;
     }
 
     public function getTotpAuthenticationUsername(): string
@@ -1307,7 +1406,16 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function getTotpAuthenticationConfiguration(): TotpConfigurationInterface
     {
-        return new TotpConfiguration($this->totpSecret, TotpConfiguration::ALGORITHM_SHA1, 30, 6);
+        if ($this->totpSecret === null) {
+            throw new \LogicException('Cannot create TOTP configuration, user has no TOTP secret');
+        }
+
+        return $this->createTotpAuthenticationConfiguration($this->totpSecret);
+    }
+
+    public function createTotpAuthenticationConfiguration(#[\SensitiveParameter] string $secret): TotpConfigurationInterface
+    {
+        return new TotpConfiguration($secret, TotpConfiguration::ALGORITHM_SHA1, 30, 6);
     }
 
     /**
@@ -1557,5 +1665,25 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function setWorkContractMode(string $mode): void
     {
         $this->setPreferenceValue(UserPreference::WORK_CONTRACT_TYPE, $mode);
+    }
+
+    /**
+     * Removes the current password hash immediately and sets a random plain password, which is unknown to everyone.
+     *
+     * The plain password is hashed when the user is saved via UserService (it is also required to pass the
+     * validation of new users), so the password column never contains a known value.
+     */
+    public function setUnusablePassword(): void
+    {
+        $this->password = '';
+        $this->plainPassword = bin2hex(random_bytes(25));
+    }
+
+    /**
+     * Whether the given method may be called by the attribute mapping of an external user directory (LDAP, SAML).
+     */
+    public function isExternalMappingAllowed(string $method): bool
+    {
+        return \in_array(strtolower($method), self::EXTERNAL_MAPPING_ALLOWLIST, true);
     }
 }

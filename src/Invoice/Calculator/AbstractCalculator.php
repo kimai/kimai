@@ -12,6 +12,7 @@ namespace App\Invoice\Calculator;
 use App\Invoice\InvoiceItem;
 use App\Invoice\InvoiceModel;
 use App\Invoice\TaxRow;
+use App\Utils\MoneyRounding;
 
 abstract class AbstractCalculator
 {
@@ -44,8 +45,12 @@ abstract class AbstractCalculator
                     $entry->setDuration($this->model->getRateCalculatorMode()->roundDuration($entry->getDuration()));
                     // when merging many entries, we might run into rounding issues
                     // so we have to recalculate the hourly rate here
-                    $entry->setRate($this->model->getRateCalculatorMode()->calculateRate($entry->getHourlyRate(), $entry->getDuration()));
+                    $entry->setRate($this->model->getRateCalculatorMode()->calculateRate($entry->getHourlyRate(), $entry->getDuration(), $this->model->getCurrency()));
                 }
+
+                // every invoice line must be rounded to the currency precision, otherwise
+                // the sum of all (rounded) lines differs from the subtotal (e.g. EN 16931 rule BR-CO-10)
+                $entry->setRate(MoneyRounding::round($entry->getRate(), $this->model->getCurrency()));
 
                 $this->cached[] = $entry;
             }
@@ -82,7 +87,8 @@ abstract class AbstractCalculator
             $amount += $entry->getRate();
         }
 
-        return round($amount, 2, PHP_ROUND_HALF_UP);
+        // lines are already rounded, this only removes floating point inaccuracies
+        return MoneyRounding::round($amount, $this->model->getCurrency());
     }
 
     /**
@@ -100,7 +106,7 @@ abstract class AbstractCalculator
     {
         $rows = [];
         foreach ($this->model->getTemplate()->getTaxRates() as $taxRate) {
-            $rows[] = new TaxRow($taxRate, $this->getSubtotal());
+            $rows[] = new TaxRow($taxRate, $this->getSubtotal(), $this->model->getCurrency());
         }
 
         return $rows;
@@ -113,12 +119,12 @@ abstract class AbstractCalculator
             $tax += $row->getAmount();
         }
 
-        return round($tax, 2, PHP_ROUND_HALF_UP);
+        return MoneyRounding::round($tax, $this->model->getCurrency());
     }
 
     public function getTotal(): float
     {
-        return round($this->getSubtotal() + $this->getTax(), 2, PHP_ROUND_HALF_UP);
+        return MoneyRounding::round($this->getSubtotal() + $this->getTax(), $this->model->getCurrency());
     }
 
     /**

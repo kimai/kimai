@@ -9,12 +9,17 @@
 
 namespace App\Timesheet\RateCalculator;
 
+/**
+ * @internal
+ */
 interface RateCalculatorMode
 {
     /**
      * Calculates the rate by an hourly rate and a given duration in seconds.
+     *
+     * @param string|null $currency the currency of the customer, used to round the rate to the currency precision
      */
-    public function calculateRate(float $hourlyRate, int $seconds): float;
+    public function calculateRate(float $hourlyRate, int $seconds, ?string $currency = null): float;
 
     /**
      * * Makes sure tha the duration is fully rounded.

@@ -8,6 +8,7 @@ includes:
     - %rootDir%/../phpstan/conf/bleedingEdge.neon
 
 parameters:
+    phpVersion: 80233
     featureToggles:
         skipCheckGenericClasses:
             - Symfony\Component\Form\AbstractType
@@ -31,6 +32,7 @@ parameters:
     paths:
         - src
     tmpDir: %rootDir%/../../../var/cache/phpstan
+    resultCachePath: %tmpDir%/phpstan.php
     excludePaths:
         - %rootDir%/../../../src/Ldap/LdapDriver.php
         - %rootDir%/../../../src/Event/PageActionsEvent.php
@@ -46,21 +48,25 @@ parameters:
         - message: '#^Method .*\(\) has parameter \$builder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
         - message: '#^Call to deprecated method setApiToken\(\) of class App\\Entity\\User#'
         - message: '#^Call to deprecated method getPlainApiToken\(\) of class App\\Entity\\User#'
+        - message: '#^Access to constant on internal class Twig\\Extension\\SandboxExtension#'
+        - message: '#^Instantiation of internal class Twig\\Extension\\SandboxExtension#'
+        - message: '#^Call to method disableSandbox\(\) of internal class Twig\\Extension\\SandboxExtension from outside its root namespace Twig#'
+        - message: '#^Call to method enableSandbox\(\) of internal class Twig\\Extension\\SandboxExtension from outside its root namespace Twig#'
+        - message: '#^Call to method isSandboxed\(\) of internal class Twig\\Extension\\SandboxExtension from outside its root namespace Twig#'
+        - message: '#^Call to deprecated method enableSandbox\(\) of class Twig\\Extension\\SandboxExtension#'
+        - message: '#^Call to deprecated method disableSandbox\(\) of class Twig\\Extension\\SandboxExtension#'
+        - message: '#^Call to method __construct\(\) of internal class Twig\\Extension\\SandboxExtension from outside its root namespace Twig#'
+
+        # temporary to silence the OpenAPI deprecations
+        - message: '#^Attribute class OpenApi\\Attributes(.*)#'
+        - message: '#^Attribute references deprecated class OpenApi\\Attributes(.*)#'
+        - message: '#^Call to method __construct\(\) of deprecated class OpenApi\\Attributes(.*)#'
+        - message: '#^Instantiation of deprecated class OpenApi\\Attributes(.*)#'
 
         -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Activity\\:\\:getMetaField\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/API/ActivityController.php
-
-        -
-            message: "#^Method App\\\\API\\\\Authentication\\\\TokenAuthenticator\\:\\:getCredentials\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/API/Authentication/TokenAuthenticator.php
-
-        -
-            message: "#^Parameter \\#2 \\$plainPassword of method Symfony\\\\Component\\\\PasswordHasher\\\\PasswordHasherInterface\\:\\:verify\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/API/Authentication/TokenAuthenticator.php
 
         -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Customer\\:\\:getMetaField\\(\\) expects string, mixed given\\.$#"
@@ -96,11 +102,6 @@ parameters:
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Project\\:\\:getMetaField\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/API/ProjectController.php
-
-        -
-            message: "#^Method App\\\\API\\\\Serializer\\\\ValidationFailedExceptionErrorHandler\\:\\:getSubscribingMethods\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/API/Serializer/ValidationFailedExceptionErrorHandler.php
 
         -
             message: "#^Method App\\\\API\\\\Serializer\\\\ValidationFailedExceptionErrorHandler\\:\\:serializeExceptionToJson\\(\\) has no return type specified\\.$#"
@@ -208,26 +209,6 @@ parameters:
             path: src/Command/ChangePasswordCommand.php
 
         -
-            message: "#^Parameter \\#1 \\$email of method App\\\\Entity\\\\User\\:\\:setEmail\\(\\) expects string\\|null, mixed given\\.$#"
-            count: 1
-            path: src/Command/CreateUserCommand.php
-
-        -
-            message: "#^Parameter \\#1 \\$identifier of method App\\\\Entity\\\\User\\:\\:setUserIdentifier\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/Command/CreateUserCommand.php
-
-        -
-            message: "#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#"
-            count: 1
-            path: src/Command/CreateUserCommand.php
-
-        -
-            message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
-            count: 1
-            path: src/Command/CreateUserCommand.php
-
-        -
             message: "#^Parameter \\#1 \\$username of method App\\\\User\\\\UserService\\:\\:findUserByUsernameOrThrowException\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/Command/DeactivateUserCommand.php
@@ -303,7 +284,7 @@ parameters:
             path: src/Command/InstallCommand.php
 
         -
-            message: "#^Binary operation \"\\.\" between non\\-empty\\-string and non\\-empty\\-list\\<string\\>\\|string results in an error\\.$#"
+            message: "#^Binary operation \"\\.\" between non\\-falsy\\-string and non\\-empty\\-list\\<string\\>\\|string results in an error\\.$#"
             count: 1
             path: src/Command/InvoiceCreateCommand.php
 
@@ -688,16 +669,6 @@ parameters:
             path: src/Controller/DoctorController.php
 
         -
-            message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 2
-            path: src/Controller/ExportController.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Controller/ExportController.php
-
-        -
             message: "#^Cannot call method getEntries\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
             count: 1
             path: src/Controller/InvoiceController.php
@@ -858,16 +829,6 @@ parameters:
             path: src/Controller/TimesheetAbstractController.php
 
         -
-            message: "#^PHPDoc tag @var for variable \\$teams contains generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Controller/TimesheetTeamController.php
-
-        -
-            message: "#^PHPDoc tag @var for variable \\$users contains generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Controller/TimesheetTeamController.php
-
-        -
             message: "#^Parameter \\#2 \\$replace of method App\\\\User\\\\UserService\\:\\:deleteUser\\(\\) expects App\\\\Entity\\\\User\\|null, mixed given\\.$#"
             count: 1
             path: src/Controller/UserController.php
@@ -938,27 +899,12 @@ parameters:
             path: src/Entity/Activity.php
 
         -
-            message: "#^Method App\\\\Entity\\\\Activity\\:\\:getTeams\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Activity.php
-
-        -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Activity\\:\\:getMetaField\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Entity/Activity.php
 
         -
             message: "#^Parameter \\#1 \\$string of function strtolower expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Entity/Activity.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\Activity\\:\\:\\$meta with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Activity.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\Activity\\:\\:\\$teams with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/Activity.php
 
@@ -993,27 +939,12 @@ parameters:
             path: src/Entity/Customer.php
 
         -
-            message: "#^Method App\\\\Entity\\\\Customer\\:\\:getTeams\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Customer.php
-
-        -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Customer\\:\\:getMetaField\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Entity/Customer.php
 
         -
             message: "#^Parameter \\#1 \\$string of function strtolower expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Entity/Customer.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\Customer\\:\\:\\$meta with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Customer.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\Customer\\:\\:\\$teams with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/Customer.php
 
@@ -1053,11 +984,6 @@ parameters:
             path: src/Entity/Invoice.php
 
         -
-            message: "#^Property App\\\\Entity\\\\Invoice\\:\\:\\$meta with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Invoice.php
-
-        -
             message: "#^Method App\\\\Entity\\\\InvoiceTemplate\\:\\:__toString\\(\\) should return string but returns string\\|null\\.$#"
             count: 1
             path: src/Entity/InvoiceTemplate.php
@@ -1073,27 +999,12 @@ parameters:
             path: src/Entity/Project.php
 
         -
-            message: "#^Method App\\\\Entity\\\\Project\\:\\:getTeams\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Project.php
-
-        -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Project\\:\\:getMetaField\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Entity/Project.php
 
         -
             message: "#^Parameter \\#1 \\$string of function strtolower expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Entity/Project.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\Project\\:\\:\\$meta with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Project.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\Project\\:\\:\\$teams with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/Project.php
 
@@ -1113,57 +1024,12 @@ parameters:
             path: src/Entity/Team.php
 
         -
-            message: "#^Method App\\\\Entity\\\\Team\\:\\:getActivities\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Team\\:\\:getCustomers\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Team\\:\\:getMembers\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Team\\:\\:getProjects\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\Team\\:\\:\\$activities with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\Team\\:\\:\\$customers with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\Team\\:\\:\\$members with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\Team\\:\\:\\$projects with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
             message: "#^Method App\\\\Entity\\\\Timesheet\\:\\:getCategory\\(\\) should return string but returns string\\|null\\.$#"
             count: 1
             path: src/Entity/Timesheet.php
 
         -
             message: "#^Method App\\\\Entity\\\\Timesheet\\:\\:getMetaFields\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Timesheet.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Timesheet\\:\\:getTags\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/Timesheet.php
 
@@ -1183,17 +1049,17 @@ parameters:
             path: src/Entity/Timesheet.php
 
         -
-            message: "#^Property App\\\\Entity\\\\Timesheet\\:\\:\\$meta with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
+            message: "#^Property App\\\\Entity\\\\User\\:\\:\\$preferences type mapping mismatch\\: database can contain Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\UserPreference\\> but property expects Doctrine\\\\Common\\\\Collections\\\\Collection\\<int, App\\\\Entity\\\\UserPreference\\>\\|null\\.$#"
             count: 1
-            path: src/Entity/Timesheet.php
+            path: src/Entity/User.php
 
         -
-            message: "#^Property App\\\\Entity\\\\Timesheet\\:\\:\\$tags with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
+            message: "#^Argument of an invalid type Doctrine\\\\Common\\\\Collections\\\\Collection\\<int, App\\\\Entity\\\\UserPreference\\>\\|null supplied for foreach, only iterables are supported\\.$#"
             count: 1
-            path: src/Entity/Timesheet.php
+            path: src/Entity/User.php
 
         -
-            message: "#^Argument of an invalid type \\(Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\UserPreference\\>\\)\\|null supplied for foreach, only iterables are supported\\.$#"
+            message: "#^Method App\\\\Entity\\\\User\\:\\:getPreferences\\(\\) should return Doctrine\\\\Common\\\\Collections\\\\Collection\\<int, App\\\\Entity\\\\UserPreference\\> but returns Doctrine\\\\Common\\\\Collections\\\\Collection\\<int, App\\\\Entity\\\\UserPreference\\>\\|null\\.$#"
             count: 1
             path: src/Entity/User.php
 
@@ -1204,21 +1070,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Entity\\\\User\\:\\:getFirstDayOfWeek\\(\\) should return string but returns bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:getMemberships\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:getPreferences\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:getPreferences\\(\\) should return Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\UserPreference\\> but returns \\(Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\UserPreference\\>\\)\\|null\\.$#"
             count: 1
             path: src/Entity/User.php
 
@@ -1259,21 +1110,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Entity\\\\User\\:\\:setRoles\\(\\) has parameter \\$roles with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Parameter \\#1 \\$secret of class Scheb\\\\TwoFactorBundle\\\\Model\\\\Totp\\\\TotpConfiguration constructor expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\User\\:\\:\\$memberships with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\User\\:\\:\\$preferences with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/User.php
 
@@ -1643,26 +1479,6 @@ parameters:
             path: src/Form/InvoiceDocumentUploadForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Model\\\\MultiUserTimesheet\\:\\:getTeams\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/Model/MultiUserTimesheet.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Model\\\\MultiUserTimesheet\\:\\:getUsers\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/Model/MultiUserTimesheet.php
-
-        -
-            message: "#^Property App\\\\Form\\\\Model\\\\MultiUserTimesheet\\:\\:\\$teams with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/Model/MultiUserTimesheet.php
-
-        -
-            message: "#^Property App\\\\Form\\\\Model\\\\MultiUserTimesheet\\:\\:\\$users with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/Model/MultiUserTimesheet.php
-
-        -
             message: "#^Method App\\\\Form\\\\Model\\\\SystemConfiguration\\:\\:getTranslation\\(\\) should return string but returns string\\|null\\.$#"
             count: 1
             path: src/Form/Model/SystemConfiguration.php
@@ -1688,11 +1504,6 @@ parameters:
             path: src/Form/MultiUpdate/TimesheetMultiUpdate.php
 
         -
-            message: "#^Method App\\\\Form\\\\MultiUpdate\\\\TimesheetMultiUpdateDTO\\:\\:getMetaFields\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/MultiUpdate/TimesheetMultiUpdateDTO.php
-
-        -
             message: "#^Method App\\\\Entity\\\\ExportableItem\\:\\:getMetaFields\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/ExportableItem.php
@@ -1714,11 +1525,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$string of function strtolower expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Form/MultiUpdate/TimesheetMultiUpdateDTO.php
-
-        -
-            message: "#^Property App\\\\Form\\\\MultiUpdate\\\\TimesheetMultiUpdateDTO\\:\\:\\$meta with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Form/MultiUpdate/TimesheetMultiUpdateDTO.php
 
@@ -1933,12 +1739,7 @@ parameters:
             path: src/Form/Type/EntityMetaDefinitionType.php
 
         -
-            message: "#^PHPDoc tag @var for variable \\$collection contains generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/Type/MetaFieldsCollectionType.php
-
-        -
-            message: "#^Parameter \\#1 \\$key of method Doctrine\\\\Common\\\\Collections\\\\ArrayCollection\\<\\(int\\|string\\),mixed\\>\\:\\:set\\(\\) expects \\(int\\|string\\), string\\|null given\\.$#"
+            message: "#^Parameter \\#1 \\$key of method Doctrine\\\\Common\\\\Collections\\\\ArrayCollection\\<int\\|string,App\\\\Entity\\\\MetaTableTypeInterface\\>\\:\\:set\\(\\) expects int\\|string, string\\|null given\\.$#"
             count: 1
             path: src/Form/Type/MetaFieldsCollectionType.php
 
@@ -2513,11 +2314,6 @@ parameters:
             path: src/Repository/TimesheetRepository.php
 
         -
-            message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
             count: 1
             path: src/Repository/TimesheetRepository.php
@@ -2898,11 +2694,6 @@ parameters:
             path: src/Utils/DataTable.php
 
         -
-            message: "#^Method App\\\\Utils\\\\DataTable\\:\\:getIterator\\(\\) should return Traversable\\<mixed, mixed\\> but returns Traversable\\<\\(int\\|string\\), mixed\\>\\|null\\.$#"
-            count: 1
-            path: src/Utils/DataTable.php
-
-        -
             message: "#^Method App\\\\Utils\\\\DataTable\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Utils/DataTable.php
@@ -2988,11 +2779,6 @@ parameters:
             path: src/Utils/LocaleFormatter.php
 
         -
-            message: "#^Parameter \\#2 \\$currency of method NumberFormatter\\:\\:formatCurrency\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Utils/LocaleFormatter.php
-
-        -
             message: "#^Method App\\\\Utils\\\\MenuItemModel\\:\\:__construct\\(\\) has parameter \\$routeArgs with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Utils/MenuItemModel.php
@@ -3031,11 +2817,6 @@ parameters:
             message: "#^Property App\\\\Utils\\\\PageSetup\\:\\:\\$actionPayload type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Utils/PageSetup.php
-
-        -
-            message: "#^Class App\\\\Utils\\\\Pagination extends generic class Pagerfanta\\\\Pagerfanta but does not specify its types\\: T$#"
-            count: 1
-            path: src/Utils/Pagination.php
 
         -
             message: "#^Parameter \\#1 \\$class of method App\\\\Utils\\\\PaginationTemplate\\:\\:linkLi\\(\\) expects string, mixed given\\.$#"
@@ -3188,16 +2969,6 @@ parameters:
             path: src/Widget/WidgetService.php
 
         -
-            message: "#^Property App\\\\Form\\\\MultiUpdate\\\\MultiUpdateTableDTO\\:\\:\\$entities with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/MultiUpdate/MultiUpdateTableDTO.php
-
-        -
             message: "#^Method App\\\\Form\\\\MultiUpdate\\\\MultiUpdateTableDTO\\:\\:getEntities\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/MultiUpdate/MultiUpdateTableDTO.php
-
-        -
-            message: "#^Method App\\\\Form\\\\MultiUpdate\\\\MultiUpdateTableDTO\\:\\:setEntities\\(\\) has parameter \\$entities with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection but does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Form/MultiUpdate/MultiUpdateTableDTO.php

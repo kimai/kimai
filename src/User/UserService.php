@@ -75,6 +75,7 @@ class UserService
         $user->setRoles([User::DEFAULT_ROLE]);
         $user->setTimezone($this->configuration->getUserDefaultTimezone());
         $user->setLanguage($this->configuration->getUserDefaultLanguage());
+        $user->setLocale($this->configuration->getUserDefaultLocale());
         $user->setPreferenceValue(UserPreference::SKIN, $this->configuration->getUserDefaultTheme());
 
         // Attention: PrepareUserEvent cannot be dispatched on console, as it calls isGranted()

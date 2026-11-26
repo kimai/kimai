@@ -11,7 +11,6 @@ namespace App\Tests\Widget\Type;
 
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
-use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Widget\Type\AbstractCounterYear;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\UserAmountYear;
@@ -34,10 +33,9 @@ class UserAmountYearTest extends AbstractWidgetTypeTestCase
     public function createSut(): AbstractWidgetType
     {
         $repository = $this->createMock(TimesheetRepository::class);
-        $configuration = SystemConfigurationFactory::createStub();
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
 
-        $widget = new UserAmountYear($repository, $configuration, $dispatcher);
+        $widget = new UserAmountYear($repository, $dispatcher);
         $widget->setUser(new User());
 
         return $widget;

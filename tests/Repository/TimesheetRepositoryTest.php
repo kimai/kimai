@@ -10,11 +10,16 @@
 namespace App\Tests\Repository;
 
 use App\Entity\Activity;
+use App\Entity\ActivityRate;
 use App\Entity\Customer;
+use App\Entity\CustomerRate;
 use App\Entity\Project;
+use App\Entity\ProjectRate;
+use App\Entity\RateInterface;
 use App\Entity\Tag;
 use App\Entity\Team;
 use App\Entity\Timesheet;
+use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
@@ -22,6 +27,7 @@ use App\Repository\Query\TimesheetQuery;
 use App\Repository\Query\TimesheetQueryHint;
 use App\Repository\TimesheetRepository;
 use App\Utils\Pagination;
+use App\Utils\SearchTerm;
 use Doctrine\ORM\PersistentCollection;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
@@ -102,6 +108,75 @@ class TimesheetRepositoryTest extends AbstractRepositoryTestCase
         self::assertCount($amount, array_unique($collected), 'Pagination returned the same timesheet on more than one page');
     }
 
+    public function testGetQueryBuilderForQuery(): void
+    {
+        /** @var TimesheetRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Timesheet::class);
+
+        $query = new TimesheetQuery();
+        $query->setMaxResults(7);
+        $query->setOrderBy('customer');
+        $query->setSearchTerm(new SearchTerm('foo:~'));
+
+        $qb = $repository->getQueryBuilderForQuery($query);
+
+        self::assertSame([Timesheet::class], $qb->getRootEntities());
+        self::assertSame(['t'], $qb->getRootAliases());
+        self::assertSame(7, $qb->getMaxResults());
+        // joins which are required for sorting and searching
+        self::assertContains('p', $qb->getAllAliases());
+        self::assertContains('c', $qb->getAllAliases());
+        self::assertContains('meta0', $qb->getAllAliases());
+        self::assertSame('foo', $qb->getParameter('metaName0')?->getValue());
+        // the builder is a valid query, which can be modified by the caller
+        self::assertIsArray($qb->getQuery()->getResult());
+    }
+
+    public function testTimesheetResultCountsEveryTimesheetOnceForMissingMetaField(): void
+    {
+        $em = $this->getEntityManager();
+        /** @var ActivityRepository $activityRepository */
+        $activityRepository = $em->getRepository(Activity::class);
+        $activity = $activityRepository->find(1);
+        /** @var ProjectRepository $projectRepository */
+        $projectRepository = $em->getRepository(Project::class);
+        $project = $projectRepository->find(1);
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        // every timesheet has several meta-fields, the last one is not matched by the search
+        foreach ([['one', 'two', 'three'], ['one', 'two'], ['one', 'foo']] as $names) {
+            $timesheet = new Timesheet();
+            $timesheet
+                ->setBegin(new \DateTime('2015-07-15 10:00:00'))
+                ->setEnd(new \DateTime('2015-07-15 11:00:00'))
+                ->setUser($user)
+                ->setActivity($activity)
+                ->setProject($project);
+            foreach ($names as $name) {
+                $meta = new TimesheetMeta();
+                $meta->setName($name);
+                $meta->setValue('value');
+                $timesheet->setMetaField($meta);
+            }
+            $em->persist($timesheet);
+        }
+        $em->flush();
+        $em->clear();
+
+        $query = new TimesheetQuery();
+        $query->setBegin(new \DateTime('2015-07-15 00:00:00'));
+        $query->setEnd(new \DateTime('2015-07-15 23:59:59'));
+        $query->setSearchTerm(new SearchTerm('foo:~'));
+
+        /** @var TimesheetRepository $repository */
+        $repository = $em->getRepository(Timesheet::class);
+        $result = $repository->getTimesheetResult($query);
+
+        self::assertCount(2, $result->getResults());
+        self::assertSame(2, $result->getStatistic()->getCount());
+        self::assertSame(7200, $result->getStatistic()->getDuration());
+    }
+
     public function testSave(): void
     {
         $em = $this->getEntityManager();
@@ -161,10 +236,14 @@ class TimesheetRepositoryTest extends AbstractRepositoryTestCase
         $repository->save($timesheet);
         self::assertNotNull($timesheet->getId());
         self::assertEquals(2, $timesheet->getTags()->count());
-        self::assertEquals('Travel', $timesheet->getTags()->get(0)->getName());
-        self::assertNotNull($timesheet->getTags()->get(0)->getId());
-        self::assertEquals('Picture', $timesheet->getTags()->get(1)->getName());
-        self::assertNotNull($timesheet->getTags()->get(1)->getId());
+        $firstTag = $timesheet->getTags()->get(0);
+        self::assertInstanceOf(Tag::class, $firstTag);
+        self::assertEquals('Travel', $firstTag->getName());
+        self::assertNotNull($firstTag->getId());
+        $secondTag = $timesheet->getTags()->get(1);
+        self::assertInstanceOf(Tag::class, $secondTag);
+        self::assertEquals('Picture', $secondTag->getName());
+        self::assertNotNull($secondTag->getId());
     }
 
     /**
@@ -376,5 +455,205 @@ class TimesheetRepositoryTest extends AbstractRepositoryTestCase
         $repository = $em->getRepository(Timesheet::class);
 
         self::assertCount(0, $repository->findTimesheetsById($teamlead, [$restrictedId]));
+    }
+
+    /**
+     * A team restriction can be added to a project/activity after timesheets were already recorded against it.
+     * getRecentActivityIds() must not "spend" one of its $limit slots on such a now-invisible combination, otherwise the caller
+     * ends up with fewer than $limit recent activities even though older, visible ones exist.
+     */
+    public function testGetRecentActivityIdsHidesForeignTeamRestrictedActivity(): void
+    {
+        $em = $this->getEntityManager();
+
+        $member = $this->getUserByRole(User::ROLE_USER);
+
+        $foreignTeam = new Team('recent-activities foreign team');
+        $foreignTeam->addTeamlead($this->getUserByRole(User::ROLE_TEAMLEAD));
+        $em->persist($foreignTeam);
+
+        $customer = new Customer('recent-activities customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('recent-activities project');
+        $project->setCustomer($customer);
+        $em->persist($project);
+
+        $visibleActivity = new Activity();
+        $visibleActivity->setName('recent-activities visible activity');
+        $visibleActivity->setProject($project);
+        $em->persist($visibleActivity);
+
+        // member is not part of the foreign team, so this activity is invisible to them
+        $restrictedActivity = new Activity();
+        $restrictedActivity->setName('recent-activities restricted activity');
+        $restrictedActivity->setProject($project);
+        $foreignTeam->addActivity($restrictedActivity);
+        $em->persist($restrictedActivity);
+
+        $em->flush();
+
+        $visible = new Timesheet();
+        $visible->setBegin(new \DateTime('2020-01-01 10:00:00'))
+            ->setEnd(new \DateTime('2020-01-01 11:00:00'))
+            ->setUser($member)
+            ->setProject($project)
+            ->setActivity($visibleActivity);
+        $em->persist($visible);
+
+        // recorded while the activity was still accessible, restricted afterwards
+        $restricted = new Timesheet();
+        $restricted->setBegin(new \DateTime('2020-01-01 12:00:00'))
+            ->setEnd(new \DateTime('2020-01-01 13:00:00'))
+            ->setUser($member)
+            ->setProject($project)
+            ->setActivity($restrictedActivity);
+        $em->persist($restricted);
+
+        $em->flush();
+        $visibleId = $visible->getId();
+        $restrictedId = $restricted->getId();
+        self::assertIsInt($visibleId);
+        self::assertIsInt($restrictedId);
+        $em->clear();
+
+        /** @var TimesheetRepository $repository */
+        $repository = $em->getRepository(Timesheet::class);
+
+        $ids = $repository->getRecentActivityIds($member, null, 1);
+
+        self::assertContains($visibleId, $ids);
+        self::assertNotContains($restrictedId, $ids);
+    }
+
+    /**
+     * @return array{0: Customer, 1: Project, 2: Activity}
+     */
+    private function createRatesFixture(User $user, User $otherUser): array
+    {
+        $em = $this->getEntityManager();
+
+        $customer = new Customer('rates customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('rates project');
+        $project->setCustomer($customer);
+        $em->persist($project);
+
+        $activity = new Activity();
+        $activity->setName('rates activity');
+        $activity->setProject($project);
+        $em->persist($activity);
+
+        // global rate: matches every user
+        $activityRate = new ActivityRate();
+        $activityRate->setActivity($activity);
+        $activityRate->setRate(11.0);
+        $em->persist($activityRate);
+
+        // user specific rate: matches only $user
+        $projectRate = new ProjectRate();
+        $projectRate->setProject($project);
+        $projectRate->setUser($user);
+        $projectRate->setRate(22.0);
+        $em->persist($projectRate);
+
+        // user specific rate for another user: never matches $user
+        $customerRate = new CustomerRate();
+        $customerRate->setCustomer($customer);
+        $customerRate->setUser($otherUser);
+        $customerRate->setRate(33.0);
+        $em->persist($customerRate);
+
+        $em->flush();
+
+        return [$customer, $project, $activity];
+    }
+
+    /**
+     * @param array<RateInterface> $rates
+     * @return array<float>
+     */
+    private function getRateValues(array $rates): array
+    {
+        $values = array_map(fn (RateInterface $rate) => $rate->getRate(), $rates);
+        sort($values);
+
+        return $values;
+    }
+
+    public function testFindMatchingRates(): void
+    {
+        $user = $this->getUserByRole(User::ROLE_USER);
+        $otherUser = $this->getUserByRole(User::ROLE_TEAMLEAD);
+        [, $project, $activity] = $this->createRatesFixture($user, $otherUser);
+
+        /** @var TimesheetRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Timesheet::class);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($user)->setProject($project)->setActivity($activity);
+        self::assertEquals([11.0, 22.0], $this->getRateValues($repository->findMatchingRates($timesheet)));
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($otherUser)->setProject($project)->setActivity($activity);
+        self::assertEquals([11.0, 33.0], $this->getRateValues($repository->findMatchingRates($timesheet)));
+    }
+
+    public function testFindMatchingRatesWithUnsavedUser(): void
+    {
+        $user = $this->getUserByRole(User::ROLE_USER);
+        $otherUser = $this->getUserByRole(User::ROLE_TEAMLEAD);
+        [, $project, $activity] = $this->createRatesFixture($user, $otherUser);
+
+        /** @var TimesheetRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Timesheet::class);
+
+        $newUser = new User();
+        $newUser->setUserIdentifier('unsaved-rate-user');
+
+        // only global rates can match a user that was not yet saved
+        $timesheet = new Timesheet();
+        $timesheet->setUser($newUser)->setProject($project)->setActivity($activity);
+        self::assertEquals([11.0], $this->getRateValues($repository->findMatchingRates($timesheet)));
+    }
+
+    public function testFindMatchingRatesWithUnsavedEntities(): void
+    {
+        $user = $this->getUserByRole(User::ROLE_USER);
+        $otherUser = $this->getUserByRole(User::ROLE_TEAMLEAD);
+        [$customer, $project] = $this->createRatesFixture($user, $otherUser);
+
+        /** @var TimesheetRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Timesheet::class);
+
+        // unsaved activity, e.g. created during an import
+        $newActivity = new Activity();
+        $newActivity->setName('unsaved activity');
+        $timesheet = new Timesheet();
+        $timesheet->setUser($user)->setProject($project)->setActivity($newActivity);
+        self::assertEquals([22.0], $this->getRateValues($repository->findMatchingRates($timesheet)));
+
+        // unsaved project for a saved customer
+        $newProject = new Project();
+        $newProject->setName('unsaved project');
+        $newProject->setCustomer($customer);
+        $timesheet = new Timesheet();
+        $timesheet->setUser($otherUser)->setProject($newProject)->setActivity($newActivity);
+        self::assertEquals([33.0], $this->getRateValues($repository->findMatchingRates($timesheet)));
+
+        // unsaved customer, project and activity
+        $newProject = new Project();
+        $newProject->setName('unsaved project');
+        $newProject->setCustomer(new Customer('unsaved customer'));
+        $timesheet = new Timesheet();
+        $timesheet->setUser($user)->setProject($newProject)->setActivity($newActivity);
+        self::assertEquals([], $repository->findMatchingRates($timesheet));
     }
 }

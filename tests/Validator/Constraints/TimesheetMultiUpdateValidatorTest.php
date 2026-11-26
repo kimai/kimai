@@ -12,10 +12,16 @@ namespace App\Tests\Validator\Constraints;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\Team;
+use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Form\MultiUpdate\TimesheetMultiUpdateDTO;
+use App\Security\RolePermissionManager;
+use App\User\PermissionService;
 use App\Validator\Constraints\TimesheetMultiUpdate as TimesheetMultiUpdateConstraint;
 use App\Validator\Constraints\TimesheetMultiUpdateValidator;
 use PHPUnit\Framework\Attributes\CoversClass;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
@@ -27,9 +33,24 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 #[CoversClass(TimesheetMultiUpdateValidator::class)]
 class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
 {
+    private User $user;
+
+    protected function setUp(): void
+    {
+        $this->user = new User();
+        parent::setUp();
+    }
+
     protected function createValidator(): TimesheetMultiUpdateValidator
     {
-        return new TimesheetMultiUpdateValidator();
+        $security = $this->createMock(Security::class);
+        $security->method('getUser')->willReturnCallback(fn () => $this->user);
+
+        $permissionService = $this->createMock(PermissionService::class);
+        $permissionService->method('getPermissions')->willReturn([]);
+        $permissionManager = new RolePermissionManager($permissionService, [], []);
+
+        return new TimesheetMultiUpdateValidator($security, $permissionManager);
     }
 
     public function testConstraintIsInvalid(): void
@@ -132,5 +153,154 @@ class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
             ->atPath('property.path.customer')
             ->setCode(TimesheetMultiUpdateConstraint::DISABLED_CUSTOMER_ERROR)
             ->assertRaised();
+    }
+
+    private function createLockedProjectDto(?string $lockedUntil, string $begin): TimesheetMultiUpdateDTO
+    {
+        $project = new Project();
+        $project->setName('foo');
+        $project->setCustomer(new Customer('bar'));
+        if ($lockedUntil !== null) {
+            $project->setLockedUntil(new \DateTimeImmutable($lockedUntil));
+        }
+
+        $activity = new Activity();
+        $activity->setName('an activity');
+
+        $timesheet = new Timesheet();
+        $timesheet->setBegin(new \DateTime($begin));
+
+        $dto = new TimesheetMultiUpdateDTO();
+        $dto->setEntities([$timesheet]);
+        $dto->setActivity($activity);
+        $dto->setProject($project);
+
+        return $dto;
+    }
+
+    public function testCannotAssignProjectWithLockedPeriod(): void
+    {
+        // the selected records would end up inside the locked period of the new project
+        $dto = $this->createLockedProjectDto('2020-06-30 23:59:59', '2020-06-15 10:00:00');
+
+        $this->validator->validate($dto, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
+
+        $this->buildViolation('The project is locked for the selected times.')
+            ->atPath('property.path.project')
+            ->setCode(TimesheetMultiUpdateConstraint::LOCKED_PROJECT_ERROR)
+            ->assertRaised();
+    }
+
+    public function testCanAssignProjectWhenRecordsAreAfterTheLockedPeriod(): void
+    {
+        $dto = $this->createLockedProjectDto('2020-06-30 23:59:59', '2020-07-01 00:00:00');
+
+        $this->validator->validate($dto, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
+
+        $this->assertNoViolation();
+    }
+
+    public function testCanAssignProjectWithoutLockDate(): void
+    {
+        $dto = $this->createLockedProjectDto(null, '2020-06-15 10:00:00');
+
+        $this->validator->validate($dto, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
+
+        $this->assertNoViolation();
+    }
+
+    public function testLockedProjectIsOnlyReportedOnce(): void
+    {
+        // several locked records must not produce one violation each
+        $dto = $this->createLockedProjectDto('2020-06-30 23:59:59', '2020-06-15 10:00:00');
+        $second = new Timesheet();
+        $second->setBegin(new \DateTime('2020-06-16 10:00:00'));
+        $entities = $dto->getEntities();
+        $entities[] = $second;
+        $dto->setEntities($entities);
+
+        $this->validator->validate($dto, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
+
+        self::assertCount(1, $this->context->getViolations());
+    }
+
+    /**
+     * @return array{0: Project, 1: Activity, 2: Team}
+     */
+    private function createTeamRestrictedProject(): array
+    {
+        $customer = new Customer('foo');
+        $project = new Project();
+        $project->setCustomer($customer);
+        $team = new Team('foreign team');
+        $team->addProject($project);
+        $project->addTeam($team);
+
+        $activity = new Activity();
+
+        return [$project, $activity, $team];
+    }
+
+    public function testCannotAssignProjectOfForeignTeam(): void
+    {
+        [$project, $activity] = $this->createTeamRestrictedProject();
+
+        $dto = new TimesheetMultiUpdateDTO();
+        $dto->setProject($project);
+        $dto->setActivity($activity);
+
+        $this->validator->validate($dto, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
+
+        $this->buildViolation('You are not allowed to use this project.')
+            ->atPath('property.path.project')
+            ->setCode(TimesheetMultiUpdateConstraint::PROJECT_ACCESS_ERROR)
+            ->assertRaised();
+    }
+
+    public function testCannotAssignActivityOfForeignTeam(): void
+    {
+        $activity = new Activity();
+        $team = new Team('foreign team');
+        $team->addActivity($activity);
+        $activity->addTeam($team);
+
+        $dto = new TimesheetMultiUpdateDTO();
+        $dto->setActivity($activity);
+
+        $this->validator->validate($dto, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
+
+        $this->buildViolation('You are not allowed to use this activity.')
+            ->atPath('property.path.activity')
+            ->setCode(TimesheetMultiUpdateConstraint::ACTIVITY_ACCESS_ERROR)
+            ->assertRaised();
+    }
+
+    public function testCanAssignProjectOfOwnTeam(): void
+    {
+        [$project, $activity, $team] = $this->createTeamRestrictedProject();
+        $team->addUser($this->user);
+
+        $dto = new TimesheetMultiUpdateDTO();
+        $dto->setProject($project);
+        $dto->setActivity($activity);
+
+        $this->validator->validate($dto, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
+
+        $this->assertNoViolation();
+    }
+
+    public function testTeamAccessIsNotCheckedForUsersSeeingAllData(): void
+    {
+        $this->user->initCanSeeAllData(true);
+
+        [$project, $activity] = $this->createTeamRestrictedProject();
+
+        $dto = new TimesheetMultiUpdateDTO();
+        $dto->setProject($project);
+        $dto->setActivity($activity);
+
+        $this->validator->validate($dto, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
+
+        $this->assertNoViolation();
     }
 }
