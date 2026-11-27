@@ -531,6 +531,47 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
+     * Limits a query on timesheets (root alias "t") to the records the given user is allowed to see:
+     * all of his own ones (like in his own timesheet listing) and the ones of other users, if he
+     * has access to their customer, project and activity (like in the team timesheet listing).
+     *
+     * For reports, which build their own statistic queries instead of using a TimesheetQuery.
+     *
+     * @internal
+     */
+    public function addPermissionCriteriaForUser(QueryBuilder $qb, User $user): void
+    {
+        $permissions = $this->getEntityManager()->createQueryBuilder();
+        $aliases = $this->addPermissionCriteria($permissions, $user);
+
+        if (\count($aliases) === 0) {
+            return;
+        }
+
+        $qb->andWhere($qb->expr()->orX(
+            $qb->expr()->eq('t.user', ':permission_user'),
+            $permissions->getDQLPart('where')
+        ));
+        $qb->setParameter('permission_user', $user);
+
+        foreach ($permissions->getParameters() as $parameter) {
+            $qb->setParameter($parameter->getName(), $parameter->getValue());
+        }
+
+        if (\in_array('p', $aliases, true) || \in_array('c', $aliases, true)) {
+            $qb->leftJoin('t.project', 'p');
+        }
+
+        if (\in_array('c', $aliases, true)) {
+            $qb->leftJoin('p.customer', 'c');
+        }
+
+        if (\in_array('a', $aliases, true)) {
+            $qb->leftJoin('t.activity', 'a');
+        }
+    }
+
+    /**
      * @return Pagination<Timesheet>
      */
     public function getPagerfantaForQuery(TimesheetQuery $query): Pagination

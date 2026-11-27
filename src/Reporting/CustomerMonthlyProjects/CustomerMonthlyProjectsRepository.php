@@ -32,7 +32,7 @@ final class CustomerMonthlyProjectsRepository
      * @return array
      * @internal
      */
-    public function getGroupedByCustomerProjectActivityUser(DateTime $begin, DateTime $end, array $users, ?Customer $customer): array
+    public function getGroupedByCustomerProjectActivityUser(DateTime $begin, DateTime $end, array $users, ?Customer $customer, ?User $currentUser = null): array
     {
         $stats = [];
 
@@ -54,6 +54,11 @@ final class CustomerMonthlyProjectsRepository
             ->addGroupBy('activity')
             ->addGroupBy('user')
         ;
+
+        if ($currentUser !== null) {
+            // records of other users are limited to the ones the current user is allowed to see
+            $this->repository->addPermissionCriteriaForUser($qb, $currentUser);
+        }
 
         if ($customer !== null) {
             $qb2 = $this->entityManager->createQueryBuilder();

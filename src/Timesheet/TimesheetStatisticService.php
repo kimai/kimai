@@ -15,6 +15,7 @@ use App\Model\DailyStatistic;
 use App\Model\MonthlyStatistic;
 use App\Repository\Query\TimesheetStatisticQuery;
 use App\Repository\TimesheetRepository;
+use Doctrine\ORM\QueryBuilder;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class TimesheetStatisticService
@@ -24,6 +25,19 @@ final class TimesheetStatisticService
         private readonly EventDispatcherInterface $eventDispatcher
     )
     {
+    }
+
+    /**
+     * A teamlead can select his team members in the reports, but must not see their
+     * records for customers, projects and activities which he cannot access himself.
+     */
+    private function addPermissionCriteria(QueryBuilder $qb, TimesheetStatisticQuery $query): void
+    {
+        $currentUser = $query->getCurrentUser();
+
+        if ($currentUser !== null) {
+            $this->repository->addPermissionCriteriaForUser($qb, $currentUser);
+        }
     }
 
     /**
@@ -76,6 +90,7 @@ final class TimesheetStatisticService
             ;
         }
 
+        $this->addPermissionCriteria($qb, $query);
         $this->eventDispatcher->dispatch(new TimesheetStatisticsQueryEvent($qb));
 
         $results = $qb->getQuery()->getResult();
@@ -144,6 +159,7 @@ final class TimesheetStatisticService
             ->addGroupBy('billable')
         ;
 
+        $this->addPermissionCriteria($qb, $query);
         $this->eventDispatcher->dispatch(new TimesheetStatisticsQueryEvent($qb));
 
         $results = $qb->getQuery()->getResult();
@@ -226,6 +242,7 @@ final class TimesheetStatisticService
             ->addGroupBy('billable')
         ;
 
+        $this->addPermissionCriteria($qb, $query);
         $this->eventDispatcher->dispatch(new TimesheetStatisticsQueryEvent($qb));
 
         $results = $qb->getQuery()->getResult();
@@ -325,6 +342,7 @@ final class TimesheetStatisticService
             ;
         }
 
+        $this->addPermissionCriteria($qb, $query);
         $this->eventDispatcher->dispatch(new TimesheetStatisticsQueryEvent($qb));
 
         $results = $qb->getQuery()->getResult();
