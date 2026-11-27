@@ -2725,16 +2725,16 @@
         },
         {
             "name": "kevinpapst/tabler-bundle",
-            "version": "2.4.2",
+            "version": "2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "e13b0afe68fcf6a16243c03299090807b588f06a"
+                "reference": "4874c66918725fb5aa40d07848eb66eb8c55b514"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/e13b0afe68fcf6a16243c03299090807b588f06a",
-                "reference": "e13b0afe68fcf6a16243c03299090807b588f06a",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/4874c66918725fb5aa40d07848eb66eb8c55b514",
+                "reference": "4874c66918725fb5aa40d07848eb66eb8c55b514",
                 "shasum": ""
             },
             "require": {
@@ -2784,7 +2784,7 @@
             "description": "Admin/Backend theme bundle for Symfony based on Tabler.io",
             "support": {
                 "issues": "https://github.com/kevinpapst/TablerBundle/issues",
-                "source": "https://github.com/kevinpapst/TablerBundle/tree/2.4.2"
+                "source": "https://github.com/kevinpapst/TablerBundle/tree/2.5.0"
             },
             "funding": [
                 {
@@ -2796,8 +2796,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-01T00:09:12+00:00",
-            "published-time": "2026-11-01T00:10:57+00:00"
+            "time": "2026-11-27T14:33:16+00:00",
+            "published-time": "2026-11-27T14:35:13+00:00"
         },
         {
             "name": "league/csv",
