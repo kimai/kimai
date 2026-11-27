@@ -45,6 +45,7 @@ tabler:
         barcode: fas fa-barcode
         bookmark: far fa-star
         bookmarked: fas fa-star
+        boards: fas fa-columns
         break: fas fa-utensils
         calendar: far fa-calendar-alt
         cancel: fas fa-times
@@ -67,6 +68,7 @@ tabler:
         documentation: fas fa-book
         dot: fas fa-circle
         download: fas fa-download
+        dragdrop: fas fa-grip-vertical
         duration: fas fa-stopwatch
         edit: far fa-edit
         end: fas fa-hourglass-end
@@ -147,3 +149,5 @@ tabler:
         widget_remove: fas fa-folder-minus
         work_times: fas fa-calculator
         xlsx: fas fa-file-excel
+        work_open: fas fa-check
+        work_done: far fa-check-circle

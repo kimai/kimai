@@ -35,6 +35,12 @@ h1.navbar-brand a {
     z-index: 1021;
 }
 
+/* long dropdowns (e.g. many children in page actions, like dozens of absence types) must stay reachable */
+.page-actions .dropdown-menu {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
 /* reduce the default font size for the brand header */
 .navbar {
     --tblr-navbar-brand-font-size: 1rem;
