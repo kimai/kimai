@@ -121,11 +121,14 @@ trait ToolbarFormTrait
                     'project_select' => $multiProject ? 'projects' : 'project',
                     'end_date_param' => '%daterange%',
                     'start_date_param' => '%daterange%',
-                    'query_builder' => function (CustomerRepository $repo) use ($builder, $data, $name) {
+                    'query_builder' => function (CustomerRepository $repo) use ($builder, $data, $name, $options) {
                         $query = new CustomerFormTypeQuery();
                         $tu = $builder->getOption('user');
                         if ($tu instanceof User) {
                             $query->setUser($tu);
+                        }
+                        if (true === $options['pre_select_customer']) {
+                            $query->setAllowCustomerPreselect(true);
                         }
 
                         if (\array_key_exists($name, $data) && $data[$name] !== null && $data[$name] !== '') {

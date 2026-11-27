@@ -9,6 +9,9 @@
 
 namespace App\Tests\Controller\Reporting;
 
+use App\Entity\Customer;
+use App\Entity\Project;
+use App\Entity\Team;
 use App\Entity\User;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
 use App\Tests\DataFixtures\ActivityFixtures;
@@ -59,5 +62,44 @@ class ProjectDetailsControllerTest extends AbstractControllerBaseTestCase
 
         $rows = $client->getCrawler()->filterXPath("//div[@id='reporting-content']//ul[contains(@class, 'nav-pills')]");
         self::assertGreaterThan(1, $rows->count());
+    }
+
+    /**
+     * The submitted project ID was OR-ed with the team permission criteria of the project select,
+     * which rendered the name of a team-restricted project (and its customer) as selected option.
+     */
+    public function testReportDoesNotDiscloseForeignTeamProject(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $ownTeam = new Team('project details own team');
+        $ownTeam->addTeamlead($this->getUserByRole(User::ROLE_TEAMLEAD));
+        $em->persist($ownTeam);
+
+        $foreignTeam = new Team('project details foreign team');
+        $em->persist($foreignTeam);
+
+        $customer = new Customer('GHSA details secret customer');
+        $customer->setCountry('DE');
+        $customer->setCurrency('EUR');
+        $customer->setTimezone('Europe/Berlin');
+        $foreignTeam->addCustomer($customer);
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('GHSA details secret project');
+        $project->setCustomer($customer);
+        $foreignTeam->addProject($project);
+        $em->persist($project);
+
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/reporting/project_details?project=' . $project->getId());
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+
+        self::assertStringNotContainsString('GHSA details secret customer', $content, 'Name of a foreign team customer was disclosed');
+        self::assertStringNotContainsString('GHSA details secret project', $content, 'Name of a foreign team project was disclosed');
     }
 }
