@@ -28,11 +28,11 @@
       </trans-unit>
       <trans-unit id="F1_rg1R" resname="task.reopen">
         <source>task.reopen</source>
-        <target>Aufgabe erneut öffnen</target>
+        <target>Wieder öffnen</target>
       </trans-unit>
       <trans-unit id="duBK63z" resname="task.close">
         <source>task.close</source>
-        <target>Aufgabe abschließen</target>
+        <target>Abschließen</target>
       </trans-unit>
       <trans-unit id="t.y642H" resname="task.create">
         <source>task.create</source>
@@ -133,6 +133,10 @@
       <trans-unit id="K.9A2XH" resname="board.close_task">
         <source>board.close_task</source>
         <target>Diese Aufgabe abschließen?</target>
+      </trans-unit>
+      <trans-unit id="CDvqk17" resname="board.reopen_task">
+        <source>board.reopen_task</source>
+        <target>Diese Aufgabe wieder öffnen?</target>
       </trans-unit>
       <trans-unit id="Hj3qdDA" resname="board.delete_confirm">
         <source>board.delete_confirm</source>

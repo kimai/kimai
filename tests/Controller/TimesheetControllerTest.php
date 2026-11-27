@@ -1214,4 +1214,163 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         self::assertStringNotContainsString('/timesheet/' . $timesheet->getId() . '/duplicate', $content);
         self::assertStringNotContainsString('/timesheet/' . $timesheet->getId() . '/delete', $content);
     }
+
+    /**
+     * Creates a customer, project and activity which are restricted to a team the given user is not a member of,
+     * plus a global activity which is restricted to that foreign team.
+     *
+     * @return array{customer: Customer, project: Project, activity: Activity, global: Activity}
+     */
+    private function createForeignTeamEntities(User $user): array
+    {
+        $em = $this->getEntityManager();
+
+        $ownTeam = new Team('toolbar own team');
+        $ownTeam->addUser($user);
+        $em->persist($ownTeam);
+
+        $foreignTeam = new Team('toolbar foreign team');
+        $em->persist($foreignTeam);
+
+        $customer = new Customer('GHSA toolbar secret customer');
+        $customer->setCountry('DE');
+        $customer->setCurrency('EUR');
+        $customer->setTimezone('Europe/Berlin');
+        $foreignTeam->addCustomer($customer);
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('GHSA toolbar secret project');
+        $project->setCustomer($customer);
+        $foreignTeam->addProject($project);
+        $em->persist($project);
+
+        $activity = new Activity();
+        $activity->setName('GHSA toolbar secret activity');
+        $activity->setProject($project);
+        $foreignTeam->addActivity($activity);
+        $em->persist($activity);
+
+        $global = new Activity();
+        $global->setName('GHSA toolbar secret global activity');
+        $foreignTeam->addActivity($global);
+        $em->persist($global);
+
+        $em->flush();
+
+        return ['customer' => $customer, 'project' => $project, 'activity' => $activity, 'global' => $global];
+    }
+
+    /**
+     * Submitted filter IDs were OR-ed with the team permission criteria of the toolbar selects,
+     * which rendered the names of team-restricted projects, customers and activities as selected options.
+     */
+    public function testToolbarDoesNotDiscloseForeignTeamProjectAndActivity(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $entities = $this->createForeignTeamEntities($this->getUserByRole(User::ROLE_USER));
+
+        $this->assertAccessIsGranted($client, '/timesheet/?projects[]=' . $entities['project']->getId() . '&activities[]=' . $entities['activity']->getId());
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+
+        self::assertStringNotContainsString('GHSA toolbar secret customer', $content, 'Name of a foreign team customer was disclosed');
+        self::assertStringNotContainsString('GHSA toolbar secret project', $content, 'Name of a foreign team project was disclosed');
+        self::assertStringNotContainsString('GHSA toolbar secret activity', $content, 'Name of a foreign team activity was disclosed');
+    }
+
+    public function testToolbarDoesNotDiscloseForeignTeamCustomer(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $entities = $this->createForeignTeamEntities($this->getUserByRole(User::ROLE_USER));
+
+        $this->assertAccessIsGranted($client, '/timesheet/?customers[]=' . $entities['customer']->getId());
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+
+        self::assertStringNotContainsString('GHSA toolbar secret customer', $content, 'Name of a foreign team customer was disclosed');
+    }
+
+    /**
+     * The activity select of the toolbar never received the current user, so no team criteria were applied at all.
+     */
+    public function testToolbarDoesNotOfferGlobalActivityOfForeignTeam(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->createForeignTeamEntities($this->getUserByRole(User::ROLE_USER));
+
+        $this->assertAccessIsGranted($client, '/timesheet/');
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+
+        self::assertStringNotContainsString('GHSA toolbar secret global activity', $content, 'A global activity of a foreign team is offered');
+    }
+
+    /**
+     * Hidden entities are not a security barrier: records using an ended and hidden project
+     * of the users own team must stay editable after limiting the "include" option by permissions.
+     */
+    public function testEditActionWithHiddenProjectAndActivityOfOwnTeam(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
+        $em = $this->getEntityManager();
+
+        $ownTeam = new Team('hidden entities own team');
+        $ownTeam->addUser($user);
+        $em->persist($ownTeam);
+
+        $customer = new Customer('hidden entities customer');
+        $customer->setCountry('DE');
+        $customer->setCurrency('EUR');
+        $customer->setTimezone('Europe/Berlin');
+        $customer->setVisible(false);
+        $ownTeam->addCustomer($customer);
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('hidden entities project');
+        $project->setCustomer($customer);
+        $project->setStart(new \DateTime('2025-01-01 00:00:00'));
+        $project->setEnd(new \DateTime('2025-01-31 23:59:59'));
+        $project->setVisible(false);
+        $ownTeam->addProject($project);
+        $em->persist($project);
+
+        $activity = new Activity();
+        $activity->setName('hidden entities activity');
+        $activity->setProject($project);
+        $activity->setVisible(false);
+        $ownTeam->addActivity($activity);
+        $em->persist($activity);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($user);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+        $timesheet->setBegin(new \DateTime('2025-01-10 10:00:00'));
+        $timesheet->setEnd(new \DateTime('2025-01-10 12:00:00'));
+        $em->persist($timesheet);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/timesheet/' . $timesheet->getId() . '/edit');
+        $crawler = $client->getCrawler();
+        self::assertCount(1, $crawler->filter('#timesheet_edit_form_project option[value="' . $project->getId() . '"][selected]'), 'Hidden project is not selectable');
+        self::assertCount(1, $crawler->filter('#timesheet_edit_form_activity option[value="' . $activity->getId() . '"][selected]'), 'Hidden activity is not selectable');
+
+        $form = $crawler->filter('form[name=timesheet_edit_form]')->form();
+        $client->submit($form, [
+            'timesheet_edit_form' => [
+                'description' => 'edited hidden entities',
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($timesheet->getId());
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertEquals('edited hidden entities', $reloaded->getDescription());
+        self::assertEquals($project->getId(), $reloaded->getProject()?->getId());
+        self::assertEquals($activity->getId(), $reloaded->getActivity()?->getId());
+    }
 }
