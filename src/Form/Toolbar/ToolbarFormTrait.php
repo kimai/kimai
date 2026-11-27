@@ -127,7 +127,7 @@ trait ToolbarFormTrait
                         if ($tu instanceof User) {
                             $query->setUser($tu);
                         }
-                        if (true === $options['pre_select_customer']) {
+                        if (\array_key_exists('pre_select_customer', $options) && true === $options['pre_select_customer']) {
                             $query->setAllowCustomerPreselect(true);
                         }
 
