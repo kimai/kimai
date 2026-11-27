@@ -42,6 +42,7 @@ import KimaiDurationForm from "./forms/KimaiDurationForm";
 import KimaiNotification from "./plugins/KimaiNotification";
 import KimaiHotkeys from "./plugins/KimaiHotkeys";
 import KimaiRemoteModal from "./plugins/KimaiRemoteModal";
+import KimaiEditAfterStop from "./plugins/KimaiEditAfterStop";
 import KimaiUser from "./plugins/KimaiUser";
 import KimaiAutocompleteTags from "./forms/KimaiAutocompleteTags";
 
@@ -91,6 +92,7 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiRemoteModal());
         kimai.registerPlugin(new KimaiActiveRecords());
         kimai.registerPlugin(new KimaiAPILink('api-link'));
+        kimai.registerPlugin(new KimaiEditAfterStop());
         kimai.registerPlugin(new KimaiMultiUpdateTable());
         kimai.registerPlugin(new KimaiThemeInitializer());
 
