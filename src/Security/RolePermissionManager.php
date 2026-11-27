@@ -118,7 +118,7 @@ final class RolePermissionManager
     /**
      * @param array<int, Team>|Collection<int, Team> $teams
      */
-    private function checkTeamAccess(Collection|array $teams, User $user): bool
+    public function checkTeamAccess(Collection|array $teams, User $user): bool
     {
         if ($user->canSeeAllData()) {
             return true;

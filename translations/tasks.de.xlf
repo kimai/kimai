@@ -178,6 +178,10 @@
         <source>board.only_mine</source>
         <target>Nur meine Aufgaben</target>
       </trans-unit>
+      <trans-unit id="bhxY_gb" resname="board.my_boards">
+        <source>board.my_boards</source>
+        <target>Meine Boards</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
