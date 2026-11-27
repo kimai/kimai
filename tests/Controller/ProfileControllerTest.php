@@ -20,6 +20,7 @@ use App\Tests\DataFixtures\TimesheetFixtures;
 use App\User\PermissionService;
 use App\User\UserService;
 use App\WorkingTime\Mode\WorkingTimeModeDay;
+use Laminas\Ldap\Ldap;
 use OTPHP\TOTP;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
