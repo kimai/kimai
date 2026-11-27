@@ -2218,6 +2218,22 @@
         <source>absence_type.overbooking.help.time_off</source>
         <target>0 = overbooking is not allowed. Number of hours the working time account may go into the negative.</target>
       </trans-unit>
+      <trans-unit id="1vgO1Gj" resname="year_overview">
+        <source>year_overview</source>
+        <target>Annual overview</target>
+      </trans-unit>
+      <trans-unit id="KMH3o.M" resname="utilization">
+        <source>utilization</source>
+        <target>Utilization</target>
+      </trans-unit>
+      <trans-unit id="XZSy7HO" resname="holidays_used">
+        <source>holidays_used</source>
+        <target>Taken</target>
+      </trans-unit>
+      <trans-unit id="bK2WHrZ" resname="holidays_left">
+        <source>holidays_left</source>
+        <target>Remaining holidays</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

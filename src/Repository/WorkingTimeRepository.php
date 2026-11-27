@@ -59,6 +59,46 @@ class WorkingTimeRepository extends EntityRepository
     }
 
     /**
+     * Loads the working times of several users with one query.
+     *
+     * @param array<User> $users
+     * @return array<int, array<WorkingTime>> working times indexed by user ID
+     */
+    public function findForYearAndUsers(array $users, \DateTimeInterface $year): array
+    {
+        $userIds = [];
+        foreach ($users as $user) {
+            if ($user->getId() !== null) {
+                $userIds[] = $user->getId();
+            }
+        }
+
+        if (\count($userIds) === 0) {
+            return [];
+        }
+
+        $qb = $this->createQueryBuilder('w');
+        $qb->select('w')
+            ->where($qb->expr()->in('w.user', ':users'))
+            ->setParameter('users', $userIds)
+            ->andWhere($qb->expr()->eq('YEAR(w.date)', ':date'))
+            ->setParameter('date', $year->format('Y'))
+            ->orderBy('w.date')
+        ;
+
+        $result = [];
+        /** @var WorkingTime $workingTime */
+        foreach ($qb->getQuery()->getResult() as $workingTime) {
+            $userId = $workingTime->getUser()?->getId();
+            if ($userId !== null) {
+                $result[$userId][] = $workingTime;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * @deprecated since 2.25.0 - kept for BC with old plugin versions
      */
     public function getLatestApproval(User $user): ?WorkingTime
