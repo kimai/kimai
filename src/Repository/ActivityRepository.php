@@ -167,13 +167,20 @@ class ActivityRepository extends EntityRepository
         $mainQuery->add($qb->expr()->eq('a.visible', ':visible'));
         $qb->setParameter('visible', true, ParameterType::BOOLEAN);
 
-        if (!$query->isGlobalsOnly()) {
+        $globalsOnly = $query->isGlobalsOnly();
+        // included activities might be passed as IDs, which are treated as "globals only" (see ActivityFormTypeQuery::isGlobalsOnly()),
+        // so we need the project and customer to validate the permissions of non-global activities as well
+        $withProject = !$globalsOnly || $query->hasActivities();
+
+        if ($withProject) {
             $qb
                 ->addSelect('p')
                 ->addSelect('c')
                 ->leftJoin('a.project', 'p')
                 ->leftJoin('p.customer', 'c');
+        }
 
+        if (!$globalsOnly) {
             $mainQuery->add(
                 $qb->expr()->orX(
                     $qb->expr()->isNull('a.project'),
@@ -187,7 +194,7 @@ class ActivityRepository extends EntityRepository
             $qb->setParameter('is_visible', true, ParameterType::BOOLEAN);
         }
 
-        if ($query->isGlobalsOnly()) {
+        if ($globalsOnly) {
             $mainQuery->add($qb->expr()->isNull('a.project'));
         } elseif ($query->hasProjects()) {
             $orX = $qb->expr()->orX(
@@ -215,13 +222,9 @@ class ActivityRepository extends EntityRepository
             $qb->setParameter('project', $query->getProjects());
         }
 
-        $permissions = $this->getPermissionCriteria($qb, $query->getUser(), $query->getTeams(), $query->isGlobalsOnly());
-        if ($permissions->count() > 0) {
-            $mainQuery->add($permissions);
-        }
-
         $outerQuery = $qb->expr()->orX();
 
+        // included activities bypass visibility and project criteria, but never the permission criteria (see below)
         if ($query->hasActivities()) {
             $outerQuery->add($qb->expr()->in('a.id', ':activity'));
             $qb->setParameter('activity', $query->getActivities());
@@ -238,6 +241,12 @@ class ActivityRepository extends EntityRepository
         $outerQuery->add($mainQuery);
 
         $qb->andWhere($outerQuery);
+
+        // permissions apply to all activities, including the explicitly included ones
+        $permissions = $this->getPermissionCriteria($qb, $query->getUser(), $query->getTeams(), !$withProject);
+        if ($permissions->count() > 0) {
+            $qb->andWhere($permissions);
+        }
 
         return $qb;
     }

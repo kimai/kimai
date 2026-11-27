@@ -181,13 +181,9 @@ class ProjectRepository extends EntityRepository
             $qb->setParameter('customer', $query->getCustomers());
         }
 
-        $permissions = $this->getPermissionCriteria($qb, $query->getUser(), $query->getTeams());
-        if ($permissions->count() > 0) {
-            $mainQuery->add($permissions);
-        }
-
         $outerQuery = $qb->expr()->orX();
 
+        // included projects bypass visibility, date and customer criteria, but never the permission criteria (see below)
         if ($query->hasProjects()) {
             $outerQuery->add($qb->expr()->in('p.id', ':project'));
             $qb->setParameter('project', $query->getProjects());
@@ -203,6 +199,12 @@ class ProjectRepository extends EntityRepository
 
         $outerQuery->add($mainQuery);
         $qb->andWhere($outerQuery);
+
+        // permissions apply to all projects, including the explicitly included ones
+        $permissions = $this->getPermissionCriteria($qb, $query->getUser(), $query->getTeams());
+        if ($permissions->count() > 0) {
+            $qb->andWhere($permissions);
+        }
 
         return $qb;
     }
