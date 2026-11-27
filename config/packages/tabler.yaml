@@ -59,6 +59,7 @@ tabler:
         create: fas fa-plus
         csv: fas fa-table
         customer: fas fa-user-tie
+        down: fas fa-chevron-down
         dashboard: fas fa-tachometer-alt
         debug: far fa-file-alt
         delete: far fa-trash-alt
@@ -139,6 +140,7 @@ tabler:
         time-off: fas fa-couch
         trash: far fa-trash-alt
         unlocked: fas fa-unlock-alt
+        up: fas fa-chevron-up
         upload: fas fa-upload
         user: fas fa-user
         users: fas fa-user-friends
