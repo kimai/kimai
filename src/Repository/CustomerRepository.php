@@ -147,14 +147,9 @@ class CustomerRepository extends EntityRepository
         $mainQuery->add($qb->expr()->eq('c.visible', ':visible'));
         $qb->setParameter('visible', true, ParameterType::BOOLEAN);
 
-        $permissions = $this->getPermissionCriteria($qb, $query->getUser(), $query->getTeams());
-        if ($permissions->count() > 0) {
-            $mainQuery->add($permissions);
-        }
-
         $outerQuery = $qb->expr()->orX();
 
-        // this is a risk, as a user can manipulate the query and inject IDs that would be hidden otherwise
+        // pre-selected customers bypass the visibility, but never the permission criteria (see below)
         if ($query->isAllowCustomerPreselect() && $query->hasCustomers()) {
             $outerQuery->add($qb->expr()->in('c.id', ':customer'));
             $qb->setParameter('customer', $query->getCustomers());
@@ -170,6 +165,12 @@ class CustomerRepository extends EntityRepository
 
         $outerQuery->add($mainQuery);
         $qb->andWhere($outerQuery);
+
+        // permissions apply to all customers, including the pre-selected ones
+        $permissions = $this->getPermissionCriteria($qb, $query->getUser(), $query->getTeams());
+        if ($permissions->count() > 0) {
+            $qb->andWhere($permissions);
+        }
 
         return $qb;
     }

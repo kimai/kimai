@@ -31,7 +31,7 @@ final class TimesheetToolbarForm extends AbstractType
 
         $this->addSearchTermInputField($builder);
         $this->addDateRange($builder, ['timezone' => $options['timezone']]);
-        $this->addCustomerMultiChoice($builder, $newOptions, true);
+        $this->addCustomerMultiChoice($builder, array_merge(['pre_select_customer' => true], $newOptions), true);
         $this->addProjectMultiChoice($builder, $newOptions, true, true);
         $this->addActivityMultiChoice($builder, [], true);
         $this->addTagInputField($builder);

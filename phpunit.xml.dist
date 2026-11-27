@@ -9,6 +9,8 @@
          displayDetailsOnTestsThatTriggerErrors="true"
          displayDetailsOnTestsThatTriggerNotices="true"
          displayDetailsOnTestsThatTriggerWarnings="true"
+         failOnNotice="true"
+         failOnWarning="true"
          displayDetailsOnPhpunitDeprecations="true">
   <php>
     <ini name="error_reporting" value="-1"/>

@@ -11,7 +11,10 @@ namespace App\Tests\Repository;
 
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\Team;
+use App\Entity\User;
 use App\Repository\ProjectRepository;
+use App\Repository\Query\ProjectFormTypeQuery;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -95,5 +98,118 @@ class ProjectRepositoryTest extends AbstractRepositoryTestCase
         } finally {
             date_default_timezone_set($default);
         }
+    }
+
+    /**
+     * @return array{own: Project, hidden: Project, foreign: Project, foreignCustomer: Project}
+     */
+    private function createTeamProjects(User $user): array
+    {
+        $em = $this->getEntityManager();
+
+        $ownTeam = new Team('form type own team');
+        $ownTeam->addUser($user);
+        $em->persist($ownTeam);
+
+        $foreignTeam = new Team('form type foreign team');
+        $em->persist($foreignTeam);
+
+        $openCustomer = new Customer('form type open customer');
+        $openCustomer->setCountry('DE');
+        $openCustomer->setTimezone('Europe/Berlin');
+        $em->persist($openCustomer);
+
+        $foreignCustomer = new Customer('form type foreign customer');
+        $foreignCustomer->setCountry('DE');
+        $foreignCustomer->setTimezone('Europe/Berlin');
+        $foreignTeam->addCustomer($foreignCustomer);
+        $em->persist($foreignCustomer);
+
+        $own = new Project();
+        $own->setName('form type own project');
+        $own->setCustomer($openCustomer);
+        $ownTeam->addProject($own);
+        $em->persist($own);
+
+        $hidden = new Project();
+        $hidden->setName('form type hidden own project');
+        $hidden->setCustomer($openCustomer);
+        $hidden->setVisible(false);
+        $ownTeam->addProject($hidden);
+        $em->persist($hidden);
+
+        // restricted on project level
+        $foreign = new Project();
+        $foreign->setName('form type foreign project');
+        $foreign->setCustomer($openCustomer);
+        $foreignTeam->addProject($foreign);
+        $em->persist($foreign);
+
+        // unrestricted project, but restricted on customer level
+        $foreignCustomerProject = new Project();
+        $foreignCustomerProject->setName('form type project of foreign customer');
+        $foreignCustomerProject->setCustomer($foreignCustomer);
+        $em->persist($foreignCustomerProject);
+
+        $em->flush();
+
+        return ['own' => $own, 'hidden' => $hidden, 'foreign' => $foreign, 'foreignCustomer' => $foreignCustomerProject];
+    }
+
+    /**
+     * @return array<int|null>
+     */
+    private function findProjectIdsForFormType(ProjectFormTypeQuery $query): array
+    {
+        /** @var ProjectRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Project::class);
+
+        return array_map(fn (Project $project) => $project->getId(), $repository->getQueryBuilderForFormType($query)->getQuery()->getResult());
+    }
+
+    /**
+     * @return \Generator<string, array{0: string}>
+     */
+    public static function getForeignProjects(): \Generator
+    {
+        yield 'restricted project' => ['foreign'];
+        yield 'project of restricted customer' => ['foreignCustomer'];
+    }
+
+    /**
+     * IDs passed to the "include" option must not bypass the team permission criteria.
+     * The IDs are passed as integers, as the toolbar forms do with the submitted request data.
+     */
+    #[DataProvider('getForeignProjects')]
+    public function testFormTypeQueryDoesNotIncludeProjectsOfForeignTeam(string $key): void
+    {
+        $user = $this->getUserByRole(User::ROLE_USER);
+        $projects = $this->createTeamProjects($user);
+
+        $query = new ProjectFormTypeQuery((int) $projects[$key]->getId());
+        $query->setUser($user);
+        $query->setIgnoreDate(true);
+
+        $ids = $this->findProjectIdsForFormType($query);
+
+        self::assertContains($projects['own']->getId(), $ids);
+        self::assertNotContains($projects[$key]->getId(), $ids, 'Project of a foreign team was included');
+    }
+
+    /**
+     * Guard for the intended use of the "include" option: allow a hidden (but accessible) project, e.g. for existing records.
+     */
+    public function testFormTypeQueryIncludesHiddenProjectOfOwnTeam(): void
+    {
+        $user = $this->getUserByRole(User::ROLE_USER);
+        $projects = $this->createTeamProjects($user);
+
+        $query = new ProjectFormTypeQuery();
+        $query->setUser($user);
+        $query->setIgnoreDate(true);
+        self::assertNotContains($projects['hidden']->getId(), $this->findProjectIdsForFormType($query));
+
+        $query->addProject((int) $projects['hidden']->getId());
+        self::assertContains($projects['hidden']->getId(), $this->findProjectIdsForFormType($query));
     }
 }
