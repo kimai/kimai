@@ -114,7 +114,7 @@ abstract class BaseApiController extends AbstractController
     /**
      * For collections that return all entries unless the client asks for a page.
      */
-    protected function isPaginationRequested(ParamFetcherInterface $paramFetcher): bool
+    protected function isPaginatedRequest(ParamFetcherInterface $paramFetcher): bool
     {
         $all = $paramFetcher->all();
 

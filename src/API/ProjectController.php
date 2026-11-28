@@ -170,7 +170,7 @@ final class ProjectController extends BaseApiController
             $query->setSearchTerm(new SearchTerm($term));
         }
 
-        if ($this->isPaginationRequested($paramFetcher)) {
+        if ($this->isPaginatedRequest($paramFetcher)) {
             $data = $this->repository->getPagerfantaForQuery($query);
         } else {
             $data = $this->repository->getProjectsForQuery($query);
