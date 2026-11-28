@@ -69,7 +69,6 @@ final class TeamController extends BaseApiController
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         $query = $this->prepareQuery(new TeamQuery(), $paramFetcher);
-        $query->setCurrentUser($this->getUser());
 
         if ($this->isPaginatedRequest($paramFetcher)) {
             $data = $this->repository->getPagerfantaForQuery($query);
