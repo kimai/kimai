@@ -73,14 +73,14 @@ abstract class BaseApiController extends AbstractController
         // there is no function has() in ParamFetcherInterface, so we need to use all() and check for the key
         $all = $paramFetcher->all();
 
-        if (\array_key_exists('page', $all)) {
+        if (isset($all['page'])) {
             $page = $all['page'];
             if (is_numeric($page)) {
                 $query->setPage((int) $page);
             }
         }
 
-        if (\array_key_exists('size', $all)) {
+        if (isset($all['size'])) {
             $size = $all['size'];
             if (is_numeric($size)) {
                 $size = (int) $size;
@@ -94,14 +94,14 @@ abstract class BaseApiController extends AbstractController
             }
         }
 
-        if (\array_key_exists('order', $all)) {
+        if (isset($all['order'])) {
             $order = $all['order'];
             if (\is_string($order) && $order !== '') {
                 $query->setOrder($order);
             }
         }
 
-        if (\array_key_exists('orderBy', $all)) {
+        if (isset($all['orderBy'])) {
             $orderBy = $all['orderBy'];
             if (\is_string($orderBy) && $orderBy !== '') {
                 $query->setOrderBy($orderBy);
