@@ -118,6 +118,6 @@ abstract class BaseApiController extends AbstractController
     {
         $all = $paramFetcher->all();
 
-        return \array_key_exists('page', $all) || \array_key_exists('size', $all);
+        return isset($all['page'], $all['size']);
     }
 }
