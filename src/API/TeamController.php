@@ -22,6 +22,8 @@ use App\Repository\ProjectRepository;
 use App\Repository\Query\TeamQuery;
 use App\Repository\TeamRepository;
 use App\User\TeamService;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use OpenApi\Attributes as OA;
@@ -32,6 +34,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Validator\Constraints;
 
 #[Route(path: '/teams')]
 #[IsGranted('API')]
@@ -62,12 +65,18 @@ final class TeamController extends BaseApiController
     #[IsGranted('view_team')]
     #[OA\Response(response: 200, description: 'Returns a collection of teams', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TeamCollection')))]
     #[Route(methods: ['GET'], path: '', name: 'get_teams')]
-    public function cgetAction(): Response
+    #[Rest\QueryParam(name: 'page', requirements: [new Constraints\GreaterThanOrEqual(1)], strict: true, nullable: true, description: 'The page to display (default: 1). Renders a 404 if not found. Without "page" or "size", all items are returned.')]
+    #[Rest\QueryParam(name: 'size', requirements: [new Constraints\Range(min: 1, max: 500)], strict: true, nullable: true, description: 'The amount of items for each page (default: 50, min: 1, max: 500). Without "page" or "size", all items are returned.')]
+    public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
-        $query = new TeamQuery();
+        $query = $this->prepareQuery(new TeamQuery(), $paramFetcher);
         $query->setCurrentUser($this->getUser());
 
-        $data = $this->repository->getTeamsForQuery($query);
+        if ($this->isPaginatedRequest($paramFetcher)) {
+            $data = $this->repository->getPagerfantaForQuery($query);
+        } else {
+            $data = $this->repository->getTeamsForQuery($query);
+        }
 
         $view = new View($data, 200);
         $view->getContext()->setGroups(self::GROUPS_COLLECTION);
