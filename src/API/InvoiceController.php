@@ -58,8 +58,8 @@ final class InvoiceController extends BaseApiController
     #[Rest\QueryParam(name: 'end', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only invoices created before or at this date-time will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
     #[Rest\QueryParam(name: 'customers', map: true, requirements: '\d+', strict: true, nullable: true, default: [], description: 'List of customer IDs to filter, e.g.: customers[]=1&customers[]=2')]
     #[Rest\QueryParam(name: 'status', map: true, requirements: 'pending|paid|canceled|new', strict: true, nullable: true, default: [], description: 'Invoice status: pending, paid, canceled, new. Default: all')]
-    #[Rest\QueryParam(name: 'page', requirements: [new Constraints\GreaterThanOrEqual(1)], strict: true, nullable: true, description: 'The page to display, renders a 404 if not found (default: 1)')]
-    #[Rest\QueryParam(name: 'size', requirements: [new Constraints\Range(min: 1, max: 500)], strict: true, nullable: true, description: 'The amount of items for each page (default: 50, min: 1, max: 500)')]
+    #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display, renders a 404 if not found (default: 1)')]
+    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page (default: 50)')]
     public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository): Response
     {
         $query = new InvoiceArchiveQuery();

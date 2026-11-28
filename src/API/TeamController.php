@@ -34,7 +34,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\Validator\Constraints;
 
 #[Route(path: '/teams')]
 #[IsGranted('API')]
@@ -65,8 +64,8 @@ final class TeamController extends BaseApiController
     #[IsGranted('view_team')]
     #[OA\Response(response: 200, description: 'Returns a collection of teams', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TeamCollection')))]
     #[Route(methods: ['GET'], path: '', name: 'get_teams')]
-    #[Rest\QueryParam(name: 'page', requirements: [new Constraints\GreaterThanOrEqual(1)], strict: true, nullable: true, description: 'The page to display (default: 1). Renders a 404 if not found. Without "page" or "size", all items are returned.')]
-    #[Rest\QueryParam(name: 'size', requirements: [new Constraints\Range(min: 1, max: 500)], strict: true, nullable: true, description: 'The amount of items for each page (default: 50, min: 1, max: 500). Without "page" or "size", all items are returned.')]
+    #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display (default: 1). Renders a 404 if not found. Without "page" or "size", all items are returned.')]
+    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of items for each page (default: 50, max: 500). Without "page" or "size", all items are returned.')]
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         $query = $this->prepareQuery(new TeamQuery(), $paramFetcher);
