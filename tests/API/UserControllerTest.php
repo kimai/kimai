@@ -63,6 +63,74 @@ class UserControllerTest extends APIControllerBaseTestCase
         }
     }
 
+    public function testGetCollectionWithPagination(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $this->assertAccessIsGranted($client, '/api/users', 'GET', ['orderBy' => 'id']);
+        self::assertFalse($client->getResponse()->headers->has('X-Page'));
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $all = json_decode($content, true);
+        self::assertIsArray($all);
+        self::assertCount(7, $all);
+
+        $this->assertAccessIsGranted($client, '/api/users', 'GET', ['orderBy' => 'id', 'page' => 2, 'size' => 3]);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        $this->assertPagination($client->getResponse(), 2, 3, 3, 7);
+        self::assertEquals(array_column(\array_slice($all, 3, 3), 'id'), array_column($result, 'id'));
+        self::assertIsArray($result[0]);
+        self::assertApiResponseTypeStructure('UserCollection', $result[0]);
+    }
+
+    public function testGetCollectionWithSizeOnly(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $this->assertAccessIsGranted($client, '/api/users', 'GET', ['size' => 3]);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertCount(3, $result);
+        $this->assertPagination($client->getResponse(), 1, 3, 3, 7);
+    }
+
+    public function testGetCollectionFailsWith404OnOutOfRangePage(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        // the last page exists, the one after it does not
+        $this->assertAccessIsGranted($client, '/api/users', 'GET', ['size' => 2]);
+        $lastPage = (int) $client->getResponse()->headers->get('X-Total-Pages');
+        self::assertGreaterThan(0, $lastPage);
+        $this->assertAccessIsGranted($client, '/api/users', 'GET', ['page' => $lastPage, 'size' => 2]);
+        $this->request($client, '/api/users', 'GET', ['page' => $lastPage + 1, 'size' => 2]);
+        $this->assertApiException($client->getResponse(), ['code' => Response::HTTP_NOT_FOUND, 'message' => 'Not Found']);
+    }
+
+    /**
+     * @param array<string, int|string> $parameters
+     */
+    #[DataProvider('getInvalidPaginationParameters')]
+    public function testGetCollectionWithInvalidPagination(array $parameters): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertInvalidPaginationIsRejected($client, '/api/users', $parameters);
+    }
+
+    /**
+     * @param array<string, int> $parameters
+     */
+    #[DataProvider('getFallbackPaginationParameters')]
+    public function testGetCollectionWithFallbackPagination(array $parameters, int $page, int $pageSize): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertPaginationFallback($client, '/api/users', $parameters, $page, $pageSize);
+    }
+
     public function testGetCollectionFull(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
@@ -75,6 +143,27 @@ class UserControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertNotEmpty($result);
         self::assertEquals(7, \count($result));
+        foreach ($result as $user) {
+            self::assertIsArray($user);
+            self::assertApiResponseTypeStructure('UserEntity', $user);
+        }
+    }
+
+    /**
+     * The paginated users must be prepared (PrepareUserEvent) and serialized with all entity fields.
+     */
+    public function testGetCollectionFullWithPagination(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/api/users', 'GET', ['full' => 'true', 'orderBy' => 'id', 'page' => 2, 'size' => 3]);
+        $this->assertPagination($client->getResponse(), 2, 3, 3, 7);
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertCount(3, $result);
         foreach ($result as $user) {
             self::assertIsArray($user);
             self::assertApiResponseTypeStructure('UserEntity', $user);

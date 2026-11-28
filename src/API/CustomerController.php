@@ -14,7 +14,6 @@ use App\Customer\CustomerService;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
 use App\Entity\CustomerRate;
-use App\Entity\User;
 use App\Form\API\CommentApiForm;
 use App\Form\API\CustomerApiEditForm;
 use App\Form\API\CustomerRateApiForm;
@@ -86,24 +85,13 @@ final class CustomerController extends BaseApiController
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name (default: name)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term', nullable: true)]
     #[Rest\QueryParam(name: 'full', requirements: '0|1', strict: true, nullable: true, description: 'Allows to fetch objects with full details (needs `details_customer` permission). Allowed values: 0|1 (default: 0)')]
+    #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display (default: 1). Renders a 404 if not found. Without "page" or "size", all items are returned.')]
+    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of items for each page (default: 50, max: 500). Without "page" or "size", all items are returned.')]
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
-        /** @var User $user */
-        $user = $this->getUser();
-
         $query = new CustomerQuery();
         $query->loadTeams();
-        $query->setCurrentUser($user);
-
-        $order = $paramFetcher->get('order');
-        if (\is_string($order) && $order !== '') {
-            $query->setOrder($order);
-        }
-
-        $orderBy = $paramFetcher->get('orderBy');
-        if (\is_string($orderBy) && $orderBy !== '') {
-            $query->setOrderBy($orderBy);
-        }
+        $this->prepareQuery($query, $paramFetcher);
 
         $visible = $paramFetcher->get('visible');
         if (is_numeric($visible)) {
@@ -115,8 +103,11 @@ final class CustomerController extends BaseApiController
             $query->setSearchTerm(new SearchTerm($term));
         }
 
-        $query->setIsApiCall(true);
-        $data = $this->repository->getCustomersForQuery($query);
+        if ($this->isPaginatedRequest($paramFetcher)) {
+            $data = $this->repository->getPagerfantaForQuery($query);
+        } else {
+            $data = $this->repository->getCustomersForQuery($query);
+        }
 
         $groups = self::GROUPS_COLLECTION;
         if ($paramFetcher->get('full') === '1' && $this->isGranted('details_customer')) {

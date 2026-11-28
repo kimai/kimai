@@ -10,6 +10,7 @@
 namespace App\Tests\API;
 
 use App\API\BaseApiController;
+use App\API\TimesheetController;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -1507,6 +1508,54 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
 
         $this->request($client, '/api/timesheets/' . $id, 'DELETE');
         self::assertTrue($client->getResponse()->isSuccessful());
+    }
+
+    /**
+     * @param array<string, int|string> $parameters
+     */
+    #[DataProvider('getInvalidPaginationParameters')]
+    public function testGetCollectionWithInvalidPagination(array $parameters): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertInvalidPaginationIsRejected($client, '/api/timesheets', $parameters);
+    }
+
+    /**
+     * @param array<string, int> $parameters
+     */
+    #[DataProvider('getFallbackPaginationParameters')]
+    public function testGetCollectionWithFallbackPagination(array $parameters, int $page, int $pageSize): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertPaginationFallback($client, '/api/timesheets', $parameters, $page, $pageSize);
+    }
+
+    /**
+     * @return array<string, array{0: int|string}>
+     */
+    public static function getInvalidRecentSizes(): array
+    {
+        return [
+            'negative' => [-1],
+            'non-numeric' => ['abc'],
+        ];
+    }
+
+    #[DataProvider('getInvalidRecentSizes')]
+    public function testGetRecentActionWithInvalidSize(int|string $size): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->request($client, '/api/timesheets/recent', 'GET', ['size' => $size]);
+        self::assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * Sizes above the maximum are accepted for backward compatibility and reduced to the maximum.
+     */
+    public function testGetRecentActionWithSizeAboveMaximum(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/api/timesheets/recent', 'GET', ['size' => TimesheetController::RECENT_ACTIVITIES_MAX_SIZE + 1]);
     }
 
     public function testGetRecentAction(): void

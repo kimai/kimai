@@ -21,8 +21,10 @@ use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
+use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
 use App\Tests\Mocks\CustomerTestUrlMetaFieldSubscriberMock;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
@@ -153,6 +155,97 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertEquals(1, \count($result));
         self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('CustomerCollection', $result[0], self::BUDGET_FIELDS);
+    }
+
+    public function testGetCollectionWithoutPaginationReturnsAll(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $fixture = new CustomerFixtures(60);
+        $fixture->setIsVisible(true);
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/api/customers');
+        $response = $client->getResponse();
+        self::assertFalse($response->headers->has('X-Page'));
+
+        $content = $response->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertCount(61, $result);
+    }
+
+    public function testGetCollectionWithPagination(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $fixture = new CustomerFixtures(11);
+        $fixture->setIsVisible(true);
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/api/customers', 'GET', ['orderBy' => 'id']);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $all = json_decode($content, true);
+        self::assertIsArray($all);
+        self::assertCount(12, $all);
+
+        $this->assertAccessIsGranted($client, '/api/customers', 'GET', ['orderBy' => 'id', 'page' => 2, 'size' => 5]);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        $this->assertPagination($client->getResponse(), 2, 5, 3, 12);
+        self::assertEquals(array_column(\array_slice($all, 5, 5), 'id'), array_column($result, 'id'));
+        self::assertIsArray($result[0]);
+        self::assertApiResponseTypeStructure('CustomerCollection', $result[0], self::BUDGET_FIELDS);
+    }
+
+    public function testGetCollectionWithSizeOnly(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $fixture = new CustomerFixtures(11);
+        $fixture->setIsVisible(true);
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/api/customers', 'GET', ['size' => 5]);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertCount(5, $result);
+        $this->assertPagination($client->getResponse(), 1, 5, 3, 12);
+    }
+
+    public function testGetCollectionFailsWith404OnOutOfRangePage(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        // the last page exists, the one after it does not
+        $this->assertAccessIsGranted($client, '/api/customers', 'GET', ['size' => 2]);
+        $lastPage = (int) $client->getResponse()->headers->get('X-Total-Pages');
+        self::assertGreaterThan(0, $lastPage);
+        $this->assertAccessIsGranted($client, '/api/customers', 'GET', ['page' => $lastPage, 'size' => 2]);
+        $this->request($client, '/api/customers', 'GET', ['page' => $lastPage + 1, 'size' => 2]);
+        $this->assertApiException($client->getResponse(), ['code' => Response::HTTP_NOT_FOUND, 'message' => 'Not Found']);
+    }
+
+    /**
+     * @param array<string, int|string> $parameters
+     */
+    #[DataProvider('getInvalidPaginationParameters')]
+    public function testGetCollectionWithInvalidPagination(array $parameters): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertInvalidPaginationIsRejected($client, '/api/customers', $parameters);
+    }
+
+    /**
+     * @param array<string, int> $parameters
+     */
+    #[DataProvider('getFallbackPaginationParameters')]
+    public function testGetCollectionWithFallbackPagination(array $parameters, int $page, int $pageSize): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertPaginationFallback($client, '/api/customers', $parameters, $page, $pageSize);
     }
 
     public function testGetCollectionFull(): void
