@@ -12,11 +12,11 @@
       </trans-unit>
       <trans-unit id="XjAwhoV" resname="task.start">
         <source>task.start</source>
-        <target>Start processing</target>
+        <target>Start work</target>
       </trans-unit>
       <trans-unit id="XD7TZh7" resname="task.stop">
         <source>task.stop</source>
-        <target>Pause processing</target>
+        <target>Pause work</target>
       </trans-unit>
       <trans-unit id="sG_9DvK" resname="task.assign">
         <source>task.assign</source>
@@ -28,11 +28,11 @@
       </trans-unit>
       <trans-unit id="F1_rg1R" resname="task.reopen">
         <source>task.reopen</source>
-        <target>Re-open task</target>
+        <target>Reopen</target>
       </trans-unit>
       <trans-unit id="duBK63z" resname="task.close">
         <source>task.close</source>
-        <target>Complete task</target>
+        <target>Complete</target>
       </trans-unit>
       <trans-unit id="t.y642H" resname="task.create">
         <source>task.create</source>
@@ -134,6 +134,10 @@
         <source>board.close_task</source>
         <target>Complete this task?</target>
       </trans-unit>
+      <trans-unit id="CDvqk17" resname="board.reopen_task">
+        <source>board.reopen_task</source>
+        <target>Reopen this task?</target>
+      </trans-unit>
       <trans-unit id="Hj3qdDA" resname="board.delete_confirm">
         <source>board.delete_confirm</source>
         <target>Delete this board?</target>
@@ -177,6 +181,10 @@
       <trans-unit id="9rA4ixj" resname="board.only_mine">
         <source>board.only_mine</source>
         <target>Only my tasks</target>
+      </trans-unit>
+      <trans-unit id="bhxY_gb" resname="board.my_boards">
+        <source>board.my_boards</source>
+        <target>My boards</target>
       </trans-unit>
     </body>
   </file>

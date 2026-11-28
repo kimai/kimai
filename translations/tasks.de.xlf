@@ -28,11 +28,11 @@
       </trans-unit>
       <trans-unit id="F1_rg1R" resname="task.reopen">
         <source>task.reopen</source>
-        <target>Aufgabe erneut öffnen</target>
+        <target>Wieder öffnen</target>
       </trans-unit>
       <trans-unit id="duBK63z" resname="task.close">
         <source>task.close</source>
-        <target>Aufgabe abschließen</target>
+        <target>Abschließen</target>
       </trans-unit>
       <trans-unit id="t.y642H" resname="task.create">
         <source>task.create</source>
@@ -134,6 +134,10 @@
         <source>board.close_task</source>
         <target>Diese Aufgabe abschließen?</target>
       </trans-unit>
+      <trans-unit id="CDvqk17" resname="board.reopen_task">
+        <source>board.reopen_task</source>
+        <target>Diese Aufgabe wieder öffnen?</target>
+      </trans-unit>
       <trans-unit id="Hj3qdDA" resname="board.delete_confirm">
         <source>board.delete_confirm</source>
         <target>Dieses Board löschen?</target>
@@ -177,6 +181,10 @@
       <trans-unit id="9rA4ixj" resname="board.only_mine">
         <source>board.only_mine</source>
         <target>Nur meine Aufgaben</target>
+      </trans-unit>
+      <trans-unit id="bhxY_gb" resname="board.my_boards">
+        <source>board.my_boards</source>
+        <target>Meine Boards</target>
       </trans-unit>
     </body>
   </file>

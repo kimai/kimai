@@ -414,7 +414,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'locale' => 'string',
                     'timezone' => 'string',
                     // TODO more info in entity than in collection
-                    'supervisor' => ['result' => 'object', 'type' => '@UserEntity'],
+                    'supervisor' => ['result' => 'object', 'type' => '@User'],
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                     'roles' => ['result' => 'array', 'type' => 'string'],
                     'memberships' => ['result' => 'array', 'type' => 'TeamMembership'],

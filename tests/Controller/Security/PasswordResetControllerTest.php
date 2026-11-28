@@ -103,7 +103,7 @@ class PasswordResetControllerTest extends AbstractControllerBaseTestCase
         self::assertNotFalse($content);
         self::assertStringContainsString('<title>Kimai</title>', $content);
         self::assertStringContainsString('Reset your password', $content);
-        self::assertStringContainsString('<form class="card-body security-password-reset" action="/en/resetting/send-email" method="post" autocomplete="off">', $content);
+        self::assertStringContainsString('<form class="card-body security-password-reset" action="/en/resetting/send-email" method="post">', $content);
         self::assertStringContainsString('<input autocomplete="username" type="text"', $content);
         self::assertStringContainsString('id="username" name="username" required="required"', $content);
         self::assertStringContainsString('Reset your password', $content);

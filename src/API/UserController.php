@@ -9,6 +9,7 @@
 
 namespace App\API;
 
+use App\API\Serializer\UserEntityExclusionStrategy;
 use App\Entity\AccessToken;
 use App\Entity\Role;
 use App\Entity\User;
@@ -53,6 +54,30 @@ final class UserController extends BaseApiController
     }
 
     /**
+     * Embedded users (like the supervisor) are not prepared for the current viewer,
+     * so only the given users will be serialized including their detail fields.
+     *
+     * @param array<string> $groups
+     * @param iterable<User> $users the users which were prepared via PrepareUserEvent
+     */
+    private function renderUserView(View $view, array $groups, iterable $users): Response
+    {
+        $context = $view->getContext();
+        $context->setGroups($groups);
+        $context->addExclusionStrategy(new UserEntityExclusionStrategy($users));
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Use only for users which were prepared via PrepareUserEvent.
+     */
+    private function renderEntity(User $user): Response
+    {
+        return $this->renderUserView(new View($user, Response::HTTP_OK), self::GROUPS_ENTITY, [$user]);
+    }
+
+    /**
      * Fetch users
      */
     #[IsGranted('view_user')]
@@ -65,7 +90,7 @@ final class UserController extends BaseApiController
     #[Rest\QueryParam(name: 'full', requirements: '0|1|true|false', strict: true, nullable: true, description: 'Allows to fetch full objects including subresources. Allowed values: 0|1|false|true (default: false)')]
     #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display, renders a 404 if not found. Without page and size, all users are returned (default: 1)')]
     #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page. Without page and size, all users are returned (default: 50, max: 500)')]
-    public function cgetAction(ParamFetcherInterface $paramFetcher): Response
+    public function cgetAction(ParamFetcherInterface $paramFetcher, EventDispatcherInterface $dispatcher): Response
     {
         $query = new UserQuery();
         $this->prepareQuery($query, $paramFetcher);
@@ -89,10 +114,15 @@ final class UserController extends BaseApiController
 
         $full = $paramFetcher->get('full');
         if ($full === '1' || $full === 'true') {
-            $view->getContext()->setGroups(self::GROUPS_COLLECTION_FULL);
-        } else {
-            $view->getContext()->setGroups(self::GROUPS_COLLECTION);
+            // we need to prepare the user preferences, which is done via an EventSubscriber
+            foreach ($data as $user) {
+                $dispatcher->dispatch(new PrepareUserEvent($user));
+            }
+
+            return $this->renderUserView($view, self::GROUPS_COLLECTION_FULL, $data);
         }
+
+        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
         return $this->viewHandler->handle($view);
     }
@@ -110,10 +140,7 @@ final class UserController extends BaseApiController
         $event = new PrepareUserEvent($profile);
         $dispatcher->dispatch($event);
 
-        $view = new View($profile, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($profile);
     }
 
     /**
@@ -123,10 +150,8 @@ final class UserController extends BaseApiController
     #[Route(methods: ['GET'], path: '/me', name: 'me_user')]
     public function meAction(): Response
     {
-        $view = new View($this->getUser(), 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        // the current user was already prepared, see UserProfileSubscriber
+        return $this->renderEntity($this->getUser());
     }
 
     /**
@@ -136,7 +161,7 @@ final class UserController extends BaseApiController
     #[OA\Post(description: 'Creates a new user and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created user', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/UserCreateForm'))]
     #[Route(path: '', name: 'post_user', methods: ['POST'])]
-    public function postAction(Request $request, UserService $userService): Response
+    public function postAction(Request $request, UserService $userService, EventDispatcherInterface $dispatcher): Response
     {
         $user = $userService->createNewUser();
 
@@ -151,10 +176,9 @@ final class UserController extends BaseApiController
         if ($form->isValid()) {
             $user = $userService->saveNewUser($user);
 
-            $view = new View($user, 200);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
+            $dispatcher->dispatch(new PrepareUserEvent($user));
 
-            return $this->viewHandler->handle($view);
+            return $this->renderEntity($user);
         }
 
         $view = new View($form);
@@ -171,8 +195,10 @@ final class UserController extends BaseApiController
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/UserEditForm'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to update', required: true)]
     #[Route(methods: ['PATCH'], path: '/{id}', name: 'patch_user', requirements: ['id' => '\d+'])]
-    public function patchAction(Request $request, User $profile): Response
+    public function patchAction(Request $request, User $profile, EventDispatcherInterface $dispatcher): Response
     {
+        $dispatcher->dispatch(new PrepareUserEvent($profile));
+
         $form = $this->createForm(UserApiEditForm::class, $profile, [
             'include_roles' => $this->isGranted('roles', $profile),
             'include_active_flag' => ($profile->getId() !== $this->getUser()->getId()),
@@ -193,10 +219,7 @@ final class UserController extends BaseApiController
 
         $this->repository->saveUser($profile);
 
-        $view = new View($profile, Response::HTTP_OK);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($profile);
     }
 
     /**
@@ -308,9 +331,6 @@ final class UserController extends BaseApiController
             $userService->saveUser($profile);
         }
 
-        $view = new View($profile, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($profile);
     }
 }

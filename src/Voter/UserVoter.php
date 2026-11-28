@@ -105,9 +105,11 @@ final class UserVoter extends Voter
             return $user->isSuperAdmin();
         }
 
-        // a user must not edit the roles of someone who holds a role they are not allowed to assign
-        // themselves - otherwise a lower-privileged user could strip a higher role from the subject
-        if ($attribute === 'roles' && !$this->canManageAllRolesOf($subject, $user)) {
+        // a user must not
+        // - edit the "roles" of someone who holds a role they are not allowed to assign themselves: otherwise a lower-privileged user could strip a higher role from the subject
+        // - edit the "password" or "api-token" of a higher privileged user, otherwise it could lead to account takeover
+        // - "edit" the profile of a higher privileged user, otherwise changing the email and using "password forgotten" could lead to account takeover
+        if (\in_array($attribute, ['api-token', 'password', 'roles', 'edit'], true) && !$this->canManageAllRolesOf($subject, $user)) {
             return false;
         }
 

@@ -20,6 +20,7 @@ use App\Tests\Security\TestUserEntity;
 use App\WorkingTime\Mode\WorkingTimeModeDay;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Scheb\TwoFactorBundle\Model\Totp\TotpConfiguration;
@@ -262,6 +263,121 @@ class UserTest extends TestCase
         $user->switchToInternalAuth();
         self::assertTrue($user->isInternalUser());
         self::assertEquals('', $user->getPassword());
+    }
+
+    public function testSetUnusablePassword(): void
+    {
+        $user = new User();
+        $user->setPassword('hash-of-a-known-password');
+        $user->setUnusablePassword();
+
+        self::assertSame('', $user->getPassword());
+        $plain = $user->getPlainPassword();
+        self::assertNotNull($plain);
+        self::assertSame(50, \strlen($plain));
+
+        $user->setUnusablePassword();
+        self::assertNotSame($plain, $user->getPlainPassword());
+    }
+
+    /**
+     * @return array<string, array{0: string, 1: string, 2: bool}>
+     */
+    public static function getAuthChanges(): array
+    {
+        return [
+            'internal stays internal' => [User::AUTH_INTERNAL, User::AUTH_INTERNAL, false],
+            'saml stays saml' => [User::AUTH_SAML, User::AUTH_SAML, false],
+            'ldap stays ldap' => [User::AUTH_LDAP, User::AUTH_LDAP, false],
+            // the password must not be usable for the form login
+            'internal to saml' => [User::AUTH_INTERNAL, User::AUTH_SAML, true],
+            'internal to ldap' => [User::AUTH_INTERNAL, User::AUTH_LDAP, true],
+            'saml to ldap' => [User::AUTH_SAML, User::AUTH_LDAP, true],
+            'ldap to saml' => [User::AUTH_LDAP, User::AUTH_SAML, true],
+            // a new password has to be set manually
+            'saml to internal' => [User::AUTH_SAML, User::AUTH_INTERNAL, true],
+            'ldap to internal' => [User::AUTH_LDAP, User::AUTH_INTERNAL, true],
+        ];
+    }
+
+    #[DataProvider('getAuthChanges')]
+    public function testSetAuthInvalidatesPasswordOnChange(string $from, string $to, bool $invalidated): void
+    {
+        $user = new User();
+        $user->setAuth($from);
+        $user->setPassword('hash-of-a-known-password');
+        $user->eraseCredentials();
+
+        $user->setAuth($to);
+
+        self::assertSame($to, $user->getAuth());
+        if ($invalidated) {
+            self::assertSame('', $user->getPassword());
+            self::assertNotEmpty($user->getPlainPassword());
+        } else {
+            self::assertSame('hash-of-a-known-password', $user->getPassword());
+            self::assertNull($user->getPlainPassword());
+        }
+    }
+
+    public function testSetAuthKeepsPasswordForLegacyInternalUser(): void
+    {
+        $user = new User();
+        $user->setPassword('hash-of-a-known-password');
+
+        // accounts created by old versions might have no auth value, they are internal users
+        $property = new \ReflectionProperty(User::class, 'auth');
+        $property->setValue($user, null);
+        self::assertTrue($user->isInternalUser());
+
+        $user->setAuth(User::AUTH_INTERNAL);
+        self::assertSame('hash-of-a-known-password', $user->getPassword());
+        self::assertNull($user->getPlainPassword());
+    }
+
+    public function testIsExternalMappingAllowed(): void
+    {
+        $user = new User();
+
+        $allow = [
+            'setemail',
+            'setavatar',
+            'setalias',
+            'settitle',
+            'settitle',
+            'setaccountnumber',
+            'setenabled',
+            'setlanguage',
+            'setlocale',
+            'settimezone',
+            // these are necessary for LDAP
+            'setroles',
+            'setusername',
+            'setuseridentifier',
+        ];
+
+        foreach ($allow as $method) {
+            self::assertTrue(method_exists($user, $method), 'Unknown method in denylist: ' . $method);
+            self::assertTrue($user->isExternalMappingAllowed($method));
+            self::assertTrue($user->isExternalMappingAllowed(strtoupper($method)));
+        }
+
+        $deny = [
+            'setAuth',
+            'setPassword',
+            'setPlainPassword',
+            'setUnusablePassword',
+            'switchToInternalAuth',
+            'setApiToken',
+            'setPlainApiToken',
+            'setConfirmationToken',
+            'setTotpSecret',
+        ];
+
+        foreach ($deny as $method) {
+            self::assertFalse($user->isExternalMappingAllowed($method));
+            self::assertFalse($user->isExternalMappingAllowed(strtolower($method)));
+        }
     }
 
     public function testDatetime(): void

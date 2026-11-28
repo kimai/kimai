@@ -69,6 +69,25 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public const AUTH_INTERNAL = 'kimai';
     public const AUTH_LDAP = 'ldap';
     public const AUTH_SAML = 'saml';
+    /**
+     * Methods that must never be called by the attribute mapping of an external user source.
+     * Lowercase, because PHP method names are case-insensitive.
+     */
+    private const EXTERNAL_MAPPING_ALLOWLIST = [
+        'setemail',
+        'setavatar',
+        'setalias',
+        'settitle',
+        'setaccountnumber',
+        'setenabled',
+        'setlanguage',
+        'setlocale',
+        'settimezone',
+        // these are necessary for LDAP
+        'setroles',
+        'setusername',
+        'setuseridentifier',
+    ];
 
     public const WIZARDS = ['intro', 'profile'];
 
@@ -889,6 +908,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function setAuth(string $auth): User
     {
+        // a changed authentication invalidates the local password, so it cannot be used for the form login:
+        // after switching back to the internal authentication, a new password has to be set manually
+        if ($auth !== ($this->auth ?? self::AUTH_INTERNAL)) {
+            $this->setUnusablePassword();
+        }
         $this->auth = $auth;
 
         return $this;
@@ -1641,5 +1665,25 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function setWorkContractMode(string $mode): void
     {
         $this->setPreferenceValue(UserPreference::WORK_CONTRACT_TYPE, $mode);
+    }
+
+    /**
+     * Removes the current password hash immediately and sets a random plain password, which is unknown to everyone.
+     *
+     * The plain password is hashed when the user is saved via UserService (it is also required to pass the
+     * validation of new users), so the password column never contains a known value.
+     */
+    public function setUnusablePassword(): void
+    {
+        $this->password = '';
+        $this->plainPassword = bin2hex(random_bytes(25));
+    }
+
+    /**
+     * Whether the given method may be called by the attribute mapping of an external user directory (LDAP, SAML).
+     */
+    public function isExternalMappingAllowed(string $method): bool
+    {
+        return \in_array(strtolower($method), self::EXTERNAL_MAPPING_ALLOWLIST, true);
     }
 }

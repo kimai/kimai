@@ -13,8 +13,10 @@ use App\Entity\User;
 use App\Entity\WorkingTime;
 use App\Event\WorkingTimeApproveMonthEvent;
 use App\Event\WorkingTimeQueryStatsEvent;
+use App\Event\WorkingTimeQueryUsersStatsEvent;
 use App\Event\WorkingTimeUnlockMonthEvent;
 use App\Event\WorkingTimeYearEvent;
+use App\Event\WorkingTimeYearsEvent;
 use App\Event\WorkingTimeYearSummaryEvent;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
@@ -128,7 +130,73 @@ class WorkingTimeService
 
     public function getYear(User $user, \DateTimeInterface $yearDate, \DateTimeInterface $until): Year
     {
-        $yearTimes = $this->workingTimeRepository->findForYear($user, $yearDate);
+        $year = $this->createYear(
+            $user,
+            $yearDate,
+            $until,
+            $this->workingTimeRepository->findForYear($user, $yearDate),
+            fn () => $this->getYearStatistics($yearDate, $user)
+        );
+
+        $event = new WorkingTimeYearEvent($year, $until);
+        $this->eventDispatcher->dispatch($event);
+
+        return $year;
+    }
+
+    /**
+     * Loads the working times of several users with a fixed amount of queries,
+     * instead of calling getYear() for every user.
+     *
+     * The year is normalized to the start of the year in each users timezone.
+     *
+     * @param array<User> $users
+     * @return array<int, Year> indexed by user ID
+     */
+    public function getYears(array $users, \DateTimeInterface $yearDate, \DateTimeInterface $until): array
+    {
+        $users = array_filter($users, fn (User $user) => $user->getId() !== null);
+        if (\count($users) === 0) {
+            return [];
+        }
+
+        $workingTimes = $this->workingTimeRepository->findForYearAndUsers($users, $yearDate);
+        $statistics = null;
+
+        $years = [];
+        foreach ($users as $user) {
+            /** @var int $userId */
+            $userId = $user->getId();
+            $userYear = DateTimeFactory::createByUser($user)->createStartOfYear($yearDate);
+
+            $years[$userId] = $this->createYear(
+                $user,
+                $userYear,
+                $until,
+                $workingTimes[$userId] ?? [],
+                function () use (&$statistics, $users, $yearDate, $userId): array {
+                    $statistics ??= $this->getYearStatisticsForUsers($yearDate, $users);
+
+                    return $statistics[$userId] ?? [];
+                }
+            );
+        }
+
+        $this->eventDispatcher->dispatch(new WorkingTimeYearsEvent(array_values($years), $until));
+
+        foreach ($years as $year) {
+            $this->eventDispatcher->dispatch(new WorkingTimeYearEvent($year, $until));
+        }
+
+        return $years;
+    }
+
+    /**
+     * @param array<WorkingTime> $yearTimes
+     * @param callable(): array<string, int> $statistics only called if required
+     */
+    private function createYear(User $user, \DateTimeInterface $yearDate, \DateTimeInterface $until, array $yearTimes, callable $statistics): Year
+    {
         $existing = [];
         foreach ($yearTimes as $workingTime) {
             $existing[$workingTime->getDate()->format('Y-m-d')] = $workingTime;
@@ -150,7 +218,7 @@ class WorkingTimeService
                 }
 
                 if ($stats === null) {
-                    $stats = $this->getYearStatistics($yearDate, $user);
+                    $stats = $statistics();
                 }
 
                 $dayDate = $day->getDay();
@@ -169,9 +237,6 @@ class WorkingTimeService
                 $day->setWorkingTime($result);
             }
         }
-
-        $event = new WorkingTimeYearEvent($year, $until);
-        $this->eventDispatcher->dispatch($event);
 
         return $year;
     }
@@ -267,6 +332,48 @@ class WorkingTimeService
         $durations = [];
         foreach ($results as $row) {
             $durations[$row['day']] = (int) $row['duration'];
+        }
+
+        return $durations;
+    }
+
+    /**
+     * Same as getYearStatistics(), but for several users with one query.
+     *
+     * @param non-empty-array<User> $users
+     * @return array<int, array<string, int>> durations by day, indexed by user ID
+     */
+    private function getYearStatisticsForUsers(\DateTimeInterface $year, array $users): array
+    {
+        // the date_tz column contains the local date of each user, so the same date range can be used for all users
+        $dateTimeFactory = DateTimeFactory::createByUser(reset($users));
+        $begin = $dateTimeFactory->createStartOfYear($year);
+        $end = $dateTimeFactory->createEndOfYear($year);
+
+        $qb = $this->timesheetRepository->createQueryBuilder('t');
+
+        $qb
+            ->select('COALESCE(SUM(t.duration), 0) as duration')
+            ->addSelect('DATE(t.date) as day')
+            ->addSelect('IDENTITY(t.user) as userId')
+            ->where($qb->expr()->isNotNull('t.end'))
+            ->andWhere($qb->expr()->between('t.date', ':begin', ':end'))
+            ->andWhere($qb->expr()->in('t.user', ':users'))
+            ->setParameter('begin', $begin->format('Y-m-d'))
+            ->setParameter('end', $end->format('Y-m-d'))
+            ->setParameter('users', array_values(array_map(fn (User $user) => $user->getId(), $users)))
+            ->addGroupBy('userId')
+            ->addGroupBy('day')
+        ;
+
+        $event = new WorkingTimeQueryUsersStatsEvent($qb, $users, $begin, $end);
+        $this->eventDispatcher->dispatch($event);
+
+        $results = $qb->getQuery()->getResult();
+
+        $durations = [];
+        foreach ($results as $row) {
+            $durations[(int) $row['userId']][$row['day']] = (int) $row['duration'];
         }
 
         return $durations;

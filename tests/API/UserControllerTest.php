@@ -193,6 +193,101 @@ class UserControllerTest extends APIControllerBaseTestCase
         self::assertEquals('', $result['alias']);
     }
 
+    private function assignSupervisorWithRates(string $username, string $supervisorName): User
+    {
+        $em = $this->getEntityManager();
+        $supervisor = $this->loadUserFromDatabase($supervisorName);
+        $supervisor->setPreferenceValue('hourly_rate', 175);
+        $supervisor->setPreferenceValue('internal_rate', 95);
+        $user = $this->loadUserFromDatabase($username);
+        $user->setSupervisor($supervisor);
+        $em->persist($supervisor);
+        $em->persist($user);
+        $em->flush();
+        $em->clear();
+
+        return $supervisor;
+    }
+
+    /**
+     * @param array<mixed> $supervisor
+     */
+    private function assertSupervisorWithoutDetails(array $supervisor, User $expected): void
+    {
+        self::assertApiResponseTypeStructure('User', $supervisor);
+        self::assertEquals($expected->getId(), $supervisor['id']);
+        foreach (['preferences', 'roles', 'teams', 'memberships', 'supervisor'] as $field) {
+            self::assertArrayNotHasKey($field, $supervisor);
+        }
+    }
+
+    public function testGetMyProfileDoesNotExposeSupervisorDetails(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $supervisor = $this->assignSupervisorWithRates(UserFixtures::USERNAME_USER, UserFixtures::USERNAME_TEAMLEAD);
+
+        $this->assertAccessIsGranted($client, '/api/users/me');
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('UserEntity', $result);
+        self::assertIsArray($result['supervisor']);
+        $this->assertSupervisorWithoutDetails($result['supervisor'], $supervisor);
+
+        // the users own preferences are still filtered
+        self::assertIsArray($result['preferences']);
+        $names = array_column($result['preferences'], 'name');
+        self::assertNotEmpty($names);
+        self::assertNotContains('hourly_rate', $names);
+        self::assertNotContains('internal_rate', $names);
+    }
+
+    public function testGetEntityDoesNotExposeSupervisorDetails(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $supervisor = $this->assignSupervisorWithRates(UserFixtures::USERNAME_USER, UserFixtures::USERNAME_TEAMLEAD);
+
+        $this->assertAccessIsGranted($client, '/api/users/' . $this->getAuthenticatedUserId(User::ROLE_USER));
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('UserEntity', $result);
+        self::assertIsArray($result['supervisor']);
+        $this->assertSupervisorWithoutDetails($result['supervisor'], $supervisor);
+
+        // the requested user itself is serialized with all details
+        self::assertIsArray($result['preferences']);
+        self::assertContains('hourly_rate', array_column($result['preferences'], 'name'));
+    }
+
+    public function testGetCollectionFullDoesNotExposeSupervisorDetails(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $supervisor = $this->assignSupervisorWithRates(UserFixtures::USERNAME_USER, UserFixtures::USERNAME_TEAMLEAD);
+
+        $this->assertAccessIsGranted($client, '/api/users?full=true');
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+
+        $found = false;
+        foreach ($result as $user) {
+            self::assertIsArray($user);
+            self::assertApiResponseTypeStructure('UserEntity', $user);
+            if ($user['id'] === $this->getAuthenticatedUserId(User::ROLE_USER)) {
+                self::assertIsArray($user['supervisor']);
+                $this->assertSupervisorWithoutDetails($user['supervisor'], $supervisor);
+                $found = true;
+            }
+        }
+        self::assertTrue($found);
+    }
+
     public function testNotFound(): void
     {
         $this->assertEntityNotFound(User::ROLE_SUPER_ADMIN, '/api/users/99');

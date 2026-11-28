@@ -18,7 +18,9 @@ use App\Repository\AccessTokenRepository;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\User\PermissionService;
+use App\User\UserService;
 use App\WorkingTime\Mode\WorkingTimeModeDay;
+use Laminas\Ldap\Ldap;
 use OTPHP\TOTP;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -248,9 +250,10 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         $user = $this->loadUserFromDatabase($username);
         $user->setAuth(User::AUTH_LDAP);
         $user->setPreferenceValue('ldap_dn', 'uid=' . $username . ',ou=users,dc=kimai,dc=org');
-        $em = $this->getEntityManager();
-        $em->persist($user);
-        $em->flush();
+        // like the LDAP login: the UserService hashes the random password, which was set by setAuth()
+        /** @var UserService $userService */
+        $userService = self::getContainer()->get(UserService::class);
+        $userService->updateUser($user);
     }
 
     public function testEditActionHidesAuthWithoutSystemConfiguration(): void
@@ -271,6 +274,10 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
 
     public function testEditActionHidesAuthForAdmin(): void
     {
+        if (!class_exists(Ldap::class)) {
+            $this->markTestSkipped('LDAP is not installed');
+        }
+
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->grantPermissionToAdmin('edit_other_profile');
         $this->prepareLdapUser(UserFixtures::USERNAME_USER);
@@ -295,6 +302,10 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
 
     public function testEditActionSwitchesLdapUserToInternal(): void
     {
+        if (!class_exists(Ldap::class)) {
+            $this->markTestSkipped('LDAP is not installed');
+        }
+
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->prepareLdapUser(UserFixtures::USERNAME_USER);
         $this->setSystemConfiguration('ldap.activate', true);
@@ -324,6 +335,10 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
 
     public function testEditActionCannotSwitchToOtherAuth(): void
     {
+        if (!class_exists(Ldap::class)) {
+            $this->markTestSkipped('LDAP is not installed');
+        }
+
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->prepareLdapUser(UserFixtures::USERNAME_USER);
         $this->setSystemConfiguration('ldap.activate', true);

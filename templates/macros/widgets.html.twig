@@ -255,8 +255,8 @@
     <span class="badge"{% if color is not null %} style="background-color:{{ color }}; color:{{ color|font_contrast }}"{% endif %}>{{ title }}</span>
 {% endmacro %}
 
-{% macro badge_type(title, type = null) %}
-    {% set class = (type is not empty ? 'bg-' ~ type ~ ' text-' ~ type ~ '-fg' : '') %}
+{% macro badge_type(title, type = null, text = null) %}
+    {% set class = (type is not empty ? 'bg-' ~ type ~ ' text-' ~ (text ?? (type ~ '-fg')) : '') %}
     <span class="badge {{ class }}">{{ title }}</span>
 {% endmacro %}
 

@@ -107,22 +107,24 @@ final class SamlProvider
                 continue;
             }
             $setter = 'set' . ucfirst($field);
-            if (method_exists($user, $setter)) {
-                $user->$setter($value);
-            } else {
-                // this should never happen, because it is validated when the container is built
+            if (!method_exists($user, $setter)) {
                 throw new \RuntimeException('Invalid SAML mapping field: ' . $field);
+            }
+
+            if (!$user->isExternalMappingAllowed($setter)) {
+                // the identity provider must never define e.g. local credentials or the authentication type
+                $this->logger->warning('Ignoring forbidden SAML mapping field: ' . $field);
+            } else {
+                $user->$setter($value);
             }
         }
 
-        // change after hydrating account, so it can't be overwritten by mapping attributes
         if ($user->getId() === null) {
-            // set a plain password to satisfy the validator
-            $user->setPlainPassword(substr(bin2hex(random_bytes(100)), 0, 50));
-            $user->setPassword('');
+            $user->setUnusablePassword();
         }
 
         $user->setUserIdentifier($token->getUserIdentifier());
+        // switching from another authentication invalidates the local password (see User::setAuth())
         $user->setAuth(User::AUTH_SAML);
 
         // a broken attribute mapping must not prevent the login
