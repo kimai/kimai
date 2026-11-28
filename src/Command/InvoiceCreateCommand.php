@@ -120,7 +120,7 @@ final class InvoiceCreateCommand extends Command
         }
 
         $timezone = new \DateTimeZone($timezone);
-        $dateFactory = new DateTimeFactory($timezone, $user->isFirstDayOfWeekSunday());
+        $dateFactory = new DateTimeFactory($timezone, $user->getFirstDayOfWeek());
 
         if (!empty($input->getOption('start')) && empty($input->getOption('end'))) {
             $io->error('You need to supply a end date if a start date was given');

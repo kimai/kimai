@@ -20,7 +20,8 @@ final class FirstWeekDayType extends AbstractType
 {
     public const CHOICES = [
         'Monday' => 'monday',
-        'Sunday' => 'sunday'
+        'Sunday' => 'sunday',
+        'Saturday' => 'saturday',
     ];
 
     public function configureOptions(OptionsResolver $resolver): void
