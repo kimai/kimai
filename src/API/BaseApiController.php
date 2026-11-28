@@ -118,6 +118,6 @@ abstract class BaseApiController extends AbstractController
     {
         $all = $paramFetcher->all();
 
-        return isset($all['page'], $all['size']);
+        return isset($all['page']) || isset($all['size']);
     }
 }
