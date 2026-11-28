@@ -234,6 +234,26 @@ class ProjectControllerTest extends APIControllerBaseTestCase
     }
 
     /**
+     * @param array<string, int|string> $parameters
+     */
+    #[DataProvider('getInvalidPaginationParameters')]
+    public function testGetCollectionWithInvalidPagination(array $parameters): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertInvalidPaginationIsRejected($client, '/api/projects', $parameters);
+    }
+
+    /**
+     * @param array<string, int> $parameters
+     */
+    #[DataProvider('getFallbackPaginationParameters')]
+    public function testGetCollectionWithFallbackPagination(array $parameters, int $page, int $pageSize): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertPaginationFallback($client, '/api/projects', $parameters, $page, $pageSize);
+    }
+
+    /**
      * @return array{0: Project, 1: Project, 2: Project, 3: Project, 4: Project}
      */
     protected function loadProjectTestData(): array

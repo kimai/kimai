@@ -111,6 +111,26 @@ class UserControllerTest extends APIControllerBaseTestCase
         $this->assertApiException($client->getResponse(), ['code' => Response::HTTP_NOT_FOUND, 'message' => 'Not Found']);
     }
 
+    /**
+     * @param array<string, int|string> $parameters
+     */
+    #[DataProvider('getInvalidPaginationParameters')]
+    public function testGetCollectionWithInvalidPagination(array $parameters): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertInvalidPaginationIsRejected($client, '/api/users', $parameters);
+    }
+
+    /**
+     * @param array<string, int> $parameters
+     */
+    #[DataProvider('getFallbackPaginationParameters')]
+    public function testGetCollectionWithFallbackPagination(array $parameters, int $page, int $pageSize): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertPaginationFallback($client, '/api/users', $parameters, $page, $pageSize);
+    }
+
     public function testGetCollectionFull(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
@@ -123,6 +143,27 @@ class UserControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertNotEmpty($result);
         self::assertEquals(7, \count($result));
+        foreach ($result as $user) {
+            self::assertIsArray($user);
+            self::assertApiResponseTypeStructure('UserEntity', $user);
+        }
+    }
+
+    /**
+     * The paginated users must be prepared (PrepareUserEvent) and serialized with all entity fields.
+     */
+    public function testGetCollectionFullWithPagination(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/api/users', 'GET', ['full' => 'true', 'orderBy' => 'id', 'page' => 2, 'size' => 3]);
+        $this->assertPagination($client->getResponse(), 2, 3, 3, 7);
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertCount(3, $result);
         foreach ($result as $user) {
             self::assertIsArray($user);
             self::assertApiResponseTypeStructure('UserEntity', $user);

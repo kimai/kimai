@@ -24,6 +24,7 @@ use App\Repository\CustomerRepository;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
 use App\Tests\Mocks\CustomerTestUrlMetaFieldSubscriberMock;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
@@ -225,6 +226,26 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         $this->assertAccessIsGranted($client, '/api/customers', 'GET', ['page' => $lastPage, 'size' => 2]);
         $this->request($client, '/api/customers', 'GET', ['page' => $lastPage + 1, 'size' => 2]);
         $this->assertApiException($client->getResponse(), ['code' => Response::HTTP_NOT_FOUND, 'message' => 'Not Found']);
+    }
+
+    /**
+     * @param array<string, int|string> $parameters
+     */
+    #[DataProvider('getInvalidPaginationParameters')]
+    public function testGetCollectionWithInvalidPagination(array $parameters): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertInvalidPaginationIsRejected($client, '/api/customers', $parameters);
+    }
+
+    /**
+     * @param array<string, int> $parameters
+     */
+    #[DataProvider('getFallbackPaginationParameters')]
+    public function testGetCollectionWithFallbackPagination(array $parameters, int $page, int $pageSize): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertPaginationFallback($client, '/api/customers', $parameters, $page, $pageSize);
     }
 
     public function testGetCollectionFull(): void

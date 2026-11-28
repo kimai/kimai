@@ -74,6 +74,133 @@ class TeamControllerTest extends APIControllerBaseTestCase
         self::assertApiResponseTypeStructure('TeamCollection', $result[0]);
     }
 
+    public function testGetCollectionWithoutPaginationReturnsAll(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $fixture = new TeamFixtures();
+        $fixture->setAmount(59);
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/api/teams');
+        $response = $client->getResponse();
+        self::assertFalse($response->headers->has('X-Page'));
+
+        $content = $response->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertCount(60, $result);
+    }
+
+    public function testGetCollectionWithPagination(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $fixture = new TeamFixtures();
+        $fixture->setAmount(11);
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/api/teams');
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $all = json_decode($content, true);
+        self::assertIsArray($all);
+        self::assertCount(12, $all);
+
+        $this->assertAccessIsGranted($client, '/api/teams', 'GET', ['page' => 2, 'size' => 5]);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        $this->assertPagination($client->getResponse(), 2, 5, 3, 12);
+        self::assertEquals(array_column(\array_slice($all, 5, 5), 'id'), array_column($result, 'id'));
+        self::assertIsArray($result[0]);
+        self::assertApiResponseTypeStructure('TeamCollection', $result[0]);
+    }
+
+    public function testGetCollectionWithSizeOnly(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $fixture = new TeamFixtures();
+        $fixture->setAmount(11);
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/api/teams', 'GET', ['size' => 5]);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertCount(5, $result);
+        $this->assertPagination($client->getResponse(), 1, 5, 3, 12);
+    }
+
+    public function testGetCollectionFailsWith404OnOutOfRangePage(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $fixture = new TeamFixtures();
+        $fixture->setAmount(4);
+        $this->importFixture($fixture);
+
+        // the last page exists, the one after it does not
+        $this->assertAccessIsGranted($client, '/api/teams', 'GET', ['size' => 2]);
+        $lastPage = (int) $client->getResponse()->headers->get('X-Total-Pages');
+        self::assertGreaterThan(0, $lastPage);
+        $this->assertAccessIsGranted($client, '/api/teams', 'GET', ['page' => $lastPage, 'size' => 2]);
+        $this->request($client, '/api/teams', 'GET', ['page' => $lastPage + 1, 'size' => 2]);
+        $this->assertApiException($client->getResponse(), ['code' => Response::HTTP_NOT_FOUND, 'message' => 'Not Found']);
+    }
+
+    /**
+     * @param array<string, int|string> $parameters
+     */
+    #[DataProvider('getInvalidPaginationParameters')]
+    public function testGetCollectionWithInvalidPagination(array $parameters): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertInvalidPaginationIsRejected($client, '/api/teams', $parameters);
+    }
+
+    /**
+     * @param array<string, int> $parameters
+     */
+    #[DataProvider('getFallbackPaginationParameters')]
+    public function testGetCollectionWithFallbackPagination(array $parameters, int $page, int $pageSize): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertPaginationFallback($client, '/api/teams', $parameters, $page, $pageSize);
+    }
+
+    /**
+     * The paginated collection must apply the same permission filter as the unpaginated one.
+     */
+    public function testGetCollectionWithPaginationIsLimitedToLeadTeams(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $ownTeam = $this->prepareAttackerTeamleadWithEditTeam('PAGINATION', 'view_team');
+        $teamlead = $this->getUserByName(UserFixtures::USERNAME_TEAMLEAD);
+        $superAdmin = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+
+        $memberTeam = new Team('member team');
+        $memberTeam->addUser($teamlead);
+        $memberTeam->addTeamlead($superAdmin);
+        $em->persist($memberTeam);
+        $em->flush();
+
+        $fixture = new TeamFixtures();
+        $fixture->setAmount(5);
+        $fixture->addUserToIgnore($teamlead);
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/api/teams', 'GET', ['page' => 1, 'size' => 2]);
+        $this->assertPagination($client->getResponse(), 1, 2, 1, 1);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertEquals([$ownTeam->getId()], array_column($result, 'id'));
+    }
+
     public function testGetEntity(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);

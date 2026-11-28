@@ -357,6 +357,26 @@ class ActivityControllerTest extends APIControllerBaseTestCase
         $this->assertApiException($client->getResponse(), ['code' => Response::HTTP_NOT_FOUND, 'message' => 'Not Found']);
     }
 
+    /**
+     * @param array<string, int|string> $parameters
+     */
+    #[DataProvider('getInvalidPaginationParameters')]
+    public function testGetCollectionWithInvalidPagination(array $parameters): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertInvalidPaginationIsRejected($client, '/api/activities', $parameters);
+    }
+
+    /**
+     * @param array<string, int> $parameters
+     */
+    #[DataProvider('getFallbackPaginationParameters')]
+    public function testGetCollectionWithFallbackPagination(array $parameters, int $page, int $pageSize): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertPaginationFallback($client, '/api/activities', $parameters, $page, $pageSize);
+    }
+
     public function testGetEntityIsSecure(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/api/activities/1');

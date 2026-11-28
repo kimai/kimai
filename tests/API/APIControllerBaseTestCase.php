@@ -9,8 +9,10 @@
 
 namespace App\Tests\API;
 
+use App\API\BaseApiController;
 use App\DataFixtures\UserFixtures;
 use App\Entity\User;
+use App\Repository\Query\BaseQuery;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
 use PHPUnit\Framework\Constraint\IsType;
 use Symfony\Component\DomCrawler\Crawler;
@@ -57,6 +59,57 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
     protected function createUrl(string $url): string
     {
         return '/' . ltrim($url, '/');
+    }
+
+    /**
+     * Pagination parameters which must be rejected by every paginated collection endpoint.
+     *
+     * @return array<string, array{0: array<string, int|string>}>
+     */
+    public static function getInvalidPaginationParameters(): array
+    {
+        return [
+            'negative page' => [['page' => -1]],
+            'non-numeric page' => [['page' => 'abc']],
+            'negative size' => [['size' => -1]],
+            'non-numeric size' => [['size' => 'abc']],
+        ];
+    }
+
+    /**
+     * Pagination parameters which are accepted for backward compatibility, but replaced by a fallback value.
+     *
+     * @return array<string, array{0: array<string, int>, 1: int, 2: int}>
+     */
+    public static function getFallbackPaginationParameters(): array
+    {
+        return [
+            'page zero uses first page' => [['page' => 0], 1, BaseQuery::DEFAULT_PAGESIZE],
+            'size zero uses default size' => [['size' => 0], 1, BaseQuery::DEFAULT_PAGESIZE],
+            'size above maximum uses maximum' => [['size' => BaseApiController::MAX_PAGE_SIZE + 1], 1, BaseApiController::MAX_PAGE_SIZE],
+        ];
+    }
+
+    /**
+     * @param array<string, int> $parameters
+     */
+    protected function assertPaginationFallback(HttpKernelBrowser $client, string $url, array $parameters, int $page, int $pageSize): void
+    {
+        $this->assertAccessIsGranted($client, $url, 'GET', $parameters);
+        $response = $client->getResponse();
+        self::assertEquals((string) $page, $response->headers->get('X-Page'));
+        self::assertEquals((string) $pageSize, $response->headers->get('X-Per-Page'));
+    }
+
+    /**
+     * @param array<string, int|string> $parameters
+     */
+    protected function assertInvalidPaginationIsRejected(HttpKernelBrowser $client, string $url, array $parameters): void
+    {
+        $this->request($client, $url, 'GET', $parameters);
+        $response = $client->getResponse();
+        self::assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
+        self::assertFalse($response->headers->has('X-Page'));
     }
 
     protected function assertPagination(Response $response, int $page, int $pageSize, int $totalPages, int $totalResults): void
