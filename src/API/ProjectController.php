@@ -108,8 +108,8 @@ final class ProjectController extends BaseApiController
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name|customer', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name, customer (default: name)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term', nullable: true)]
-    #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display, renders a 404 if not found. Without page and size, all projects are returned (default: 1)')]
-    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page. Without page and size, all projects are returned (default: 50, max: 500)')]
+    #[Rest\QueryParam(name: 'page', requirements: [new Constraints\GreaterThanOrEqual(1)], strict: true, nullable: true, description: 'The page to display (default: 1). Renders a 404 if not found. Without "page" or "size", all items are returned.')]
+    #[Rest\QueryParam(name: 'size', requirements: [new Constraints\Range(min: 1, max: 500)], strict: true, nullable: true, description: 'The amount of items for each page (default: 50, min: 1, max: 500). Without "page" or "size", all items are returned.')]
     public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository): Response
     {
         $query = new ProjectQuery();

@@ -36,6 +36,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Validator\Constraints;
 
 #[Route(path: '/users')]
 #[IsGranted('API')]
@@ -88,8 +89,8 @@ final class UserController extends BaseApiController
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term', nullable: true)]
     #[Rest\QueryParam(name: 'full', requirements: '0|1|true|false', strict: true, nullable: true, description: 'Allows to fetch full objects including subresources. Allowed values: 0|1|false|true (default: false)')]
-    #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display, renders a 404 if not found. Without page and size, all users are returned (default: 1)')]
-    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page. Without page and size, all users are returned (default: 50, max: 500)')]
+    #[Rest\QueryParam(name: 'page', requirements: [new Constraints\GreaterThanOrEqual(1)], strict: true, nullable: true, description: 'The page to display (default: 1). Renders a 404 if not found. Without "page" or "size", all items are returned.')]
+    #[Rest\QueryParam(name: 'size', requirements: [new Constraints\Range(min: 1, max: 500)], strict: true, nullable: true, description: 'The amount of items for each page (default: 50, min: 1, max: 500). Without "page" or "size", all items are returned.')]
     public function cgetAction(ParamFetcherInterface $paramFetcher, EventDispatcherInterface $dispatcher): Response
     {
         $query = new UserQuery();
