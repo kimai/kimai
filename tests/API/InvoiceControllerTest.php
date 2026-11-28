@@ -114,6 +114,26 @@ class InvoiceControllerTest extends APIControllerBaseTestCase
         self::assertApiResponseTypeStructure('InvoiceCollection', $result[0]);
     }
 
+    /**
+     * @param array<string, int|string> $parameters
+     */
+    #[DataProvider('getInvalidPaginationParameters')]
+    public function testGetCollectionWithInvalidPagination(array $parameters): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->assertInvalidPaginationIsRejected($client, '/api/invoices', $parameters);
+    }
+
+    /**
+     * @param array<string, int> $parameters
+     */
+    #[DataProvider('getFallbackPaginationParameters')]
+    public function testGetCollectionWithFallbackPagination(array $parameters, int $page, int $pageSize): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->assertPaginationFallback($client, '/api/invoices', $parameters, $page, $pageSize);
+    }
+
     public function testGetEntityIsSecure(): void
     {
         $client = $this->getClientForAuthenticatedUser();
